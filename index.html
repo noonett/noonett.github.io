@@ -252,6 +252,175 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://noonett.github.io/2020/02/18/curl%E5%92%8Cwget%E4%BA%86%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/18/curl%E5%92%8Cwget%E4%BA%86%E8%A7%A3/" itemprop="url">curl和wget</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-18T16:31:58+08:00">
+                2020-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h1>curl</h1>
+<p>curl是系统自带的c库，简单过一下，记录一下参数。<br>
+不带参数就是，GET请求。</p>
+<h2 id="A"><a class="header-anchor" href="#A">¶</a>-A</h2>
+<p>指定客户端的代理标头</p>
+<h2 id="B"><a class="header-anchor" href="#B">¶</a>-B</h2>
+<p>发送cookie</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -b <span class="string">'foo1=bar;foo2=bar2'</span> https://google.com</span><br></pre></td></tr></table></figure>
+<h2 id="X"><a class="header-anchor" href="#X">¶</a>-X</h2>
+<p>用指定方式请求</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X Post https://google.com</span><br></pre></td></tr></table></figure>
+<h2 id="d"><a class="header-anchor" href="#d">¶</a>-d</h2>
+<p>用Post请求</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -d <span class="string">"a=1&amp;b=1"</span> https://google.com</span><br></pre></td></tr></table></figure>
+<h2 id="L"><a class="header-anchor" href="#L">¶</a>-L</h2>
+<p>跟随服务器重定向</p>
+<h2 id="H"><a class="header-anchor" href="#H">¶</a>-H</h2>
+<p>设置http请求头信息</p>
+<h2 id="k"><a class="header-anchor" href="#k">¶</a>-k</h2>
+<p>跳过ssl检测(https)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -k https://www.example.com</span><br></pre></td></tr></table></figure>
+<h2 id="O"><a class="header-anchor" href="#O">¶</a>-O</h2>
+<p>以远程的文件名下载保存</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -O https://httpbin.org/image/jpeg</span><br></pre></td></tr></table></figure>
+<h2 id="o"><a class="header-anchor" href="#o">¶</a>-o</h2>
+<p>以自定的文件名下载保存</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o wolf.jpeg https://httpbin.org/image/jpeg</span><br></pre></td></tr></table></figure>
+<h2 id="s"><a class="header-anchor" href="#s">¶</a>-s</h2>
+<p>不显示无关信息</p>
+<h2 id="v"><a class="header-anchor" href="#v">¶</a>-v</h2>
+<h2 id="显示所有信息"><a class="header-anchor" href="#显示所有信息">¶</a>显示所有信息</h2>
+<h1>wget</h1>
+<p>系统自带的下载文件的工具。</p>
+<h1>-O</h1>
+<p>以指定文件名存文件</p>
+<h1>–limit-rate=</h1>
+<p>限速</p>
+<h1>-c</h1>
+<p>断点续传</p>
+<h1>-b</h1>
+<p>后台下载</p>
+<h1>-U</h1>
+<p>设置user-agent</p>
+<h1>-mirror</h1>
+<p>镜像某个网站</p>
+<h1>-p</h1>
+<p>下载网页的所有内容</p>
+<h1>-r</h1>
+<p>递归下载所有网页中所有链接</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://noonett.github.io/2020/02/17/http/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -663,7 +832,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -676,7 +845,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

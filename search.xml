@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>curl和wget</title>
+    <url>/2020/02/18/curl%E5%92%8Cwget%E4%BA%86%E8%A7%A3/</url>
+    <content><![CDATA[<a id="more"></a>
+<h1>curl</h1>
+<p>curl是系统自带的c库，简单过一下，记录一下参数。<br>
+不带参数就是，GET请求。</p>
+<h2 id="A"><a class="header-anchor" href="#A">¶</a>-A</h2>
+<p>指定客户端的代理标头</p>
+<h2 id="B"><a class="header-anchor" href="#B">¶</a>-B</h2>
+<p>发送cookie</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -b <span class="string">'foo1=bar;foo2=bar2'</span> https://google.com</span><br></pre></td></tr></table></figure>
+<h2 id="X"><a class="header-anchor" href="#X">¶</a>-X</h2>
+<p>用指定方式请求</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -X Post https://google.com</span><br></pre></td></tr></table></figure>
+<h2 id="d"><a class="header-anchor" href="#d">¶</a>-d</h2>
+<p>用Post请求</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -d <span class="string">"a=1&amp;b=1"</span> https://google.com</span><br></pre></td></tr></table></figure>
+<h2 id="L"><a class="header-anchor" href="#L">¶</a>-L</h2>
+<p>跟随服务器重定向</p>
+<h2 id="H"><a class="header-anchor" href="#H">¶</a>-H</h2>
+<p>设置http请求头信息</p>
+<h2 id="k"><a class="header-anchor" href="#k">¶</a>-k</h2>
+<p>跳过ssl检测(https)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -k https://www.example.com</span><br></pre></td></tr></table></figure>
+<h2 id="O"><a class="header-anchor" href="#O">¶</a>-O</h2>
+<p>以远程的文件名下载保存</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -O https://httpbin.org/image/jpeg</span><br></pre></td></tr></table></figure>
+<h2 id="o"><a class="header-anchor" href="#o">¶</a>-o</h2>
+<p>以自定的文件名下载保存</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -o wolf.jpeg https://httpbin.org/image/jpeg</span><br></pre></td></tr></table></figure>
+<h2 id="s"><a class="header-anchor" href="#s">¶</a>-s</h2>
+<p>不显示无关信息</p>
+<h2 id="v"><a class="header-anchor" href="#v">¶</a>-v</h2>
+<h2 id="显示所有信息"><a class="header-anchor" href="#显示所有信息">¶</a>显示所有信息</h2>
+<h1>wget</h1>
+<p>系统自带的下载文件的工具。</p>
+<h1>-O</h1>
+<p>以指定文件名存文件</p>
+<h1>–limit-rate=</h1>
+<p>限速</p>
+<h1>-c</h1>
+<p>断点续传</p>
+<h1>-b</h1>
+<p>后台下载</p>
+<h1>-U</h1>
+<p>设置user-agent</p>
+<h1>-mirror</h1>
+<p>镜像某个网站</p>
+<h1>-p</h1>
+<p>下载网页的所有内容</p>
+<h1>-r</h1>
+<p>递归下载所有网页中所有链接</p>
+]]></content>
+      <tags>
+        <tag>爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>http(超文本传输协议)</title>
     <url>/2020/02/17/http/</url>
     <content><![CDATA[<pre><code>基于TCP/IP的应用层协议，客户端和服务端数据传输的格式，默认端口：80。 基于请求与响应模式，无状态。
