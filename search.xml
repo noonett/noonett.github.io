@@ -1,49 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search> 
-  
-  
-    
-    <entry>
-      <title>我的博客是怎么创建的</title>
-      <link href="/2020/02/16/%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/"/>
-      <url>/2020/02/16/%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/</url>
-      
-        <content type="html"><![CDATA[<p>简单记录一下，博客的创建过程。</p><a id="more"></a><h2 id="安装环境"><a class="header-anchor" href="#安装环境">¶</a>安装环境</h2><pre><code>在创建博客之前，首先要有Github账号，还有确保系统里有git工具。</code></pre><hr><h4 id="下载hexo"><a class="header-anchor" href="#下载hexo">¶</a>下载hexo</h4><ol><li>直接去nodejs.org官网下载node.js</li><li>打开terminal下载hexo需要用到node.js的npm安装包管理器:</li></ol><h2 id="￼0"><a class="header-anchor" href="#￼0">¶</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo su                     ##获取最高权限</span><br><span class="line">npm install -g cnpm --registry&#x3D;&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org </span><br><span class="line">                            ##淘宝的镜像源，用cnpm下载比较快</span><br><span class="line">cnpm intall -g hexo-cli     ##开始下载hexo</span><br></pre></td></tr></table></figure></h2><h2 id="创建博客"><a class="header-anchor" href="#创建博客">¶</a>创建博客</h2><h4 id="初始化博客"><a class="header-anchor" href="#初始化博客">¶</a>初始化博客</h4><p>创建博客的代码也很简单：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir blog</span><br><span class="line">cd blog                     ##创个文件夹好管理</span><br><span class="line">sudo hexo init              ##初始化hexo</span><br><span class="line">hexo s                      ##可以在本地看一下，blog的模版，后续添加了内容也可以用这个指令去预览</span><br></pre></td></tr></table></figure><h3 id="创建新文章"><a class="header-anchor" href="#创建新文章">¶</a>创建新文章</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new 文章名.md</span><br></pre></td></tr></table></figure><p>一行代码即创建markdown格式的文章，也可以自己直接创建，一般存在 /blog/source/_posts 的路径下。</p><hr><h2 id="配置到远端仓库"><a class="header-anchor" href="#配置到远端仓库">¶</a>配置到远端仓库</h2><h4 id="创建github仓库"><a class="header-anchor" href="#创建github仓库">¶</a>创建github仓库</h4><p>这一步就是在github里面创建一个repository，就是存blog文件的，repository的name一定要是 github name + .github.io, <a href="http://xn--noonett-i22mo3ry3qkvkl5qky6a.github.io" target="_blank" rel="noopener">比如我的就是noonett.github.io</a></p><h4 id="修过配置文件"><a class="header-anchor" href="#修过配置文件">¶</a>修过配置文件</h4><p>在/blog/ 路径下有一个 _config.yml 文件，进入修改，找到deploy下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type: git</span><br><span class="line">repo: https:&#x2F;&#x2F;github.com&#x2F;noonett&#x2F;noonett.github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure><p>这里的repo就是repository仓库的地址。</p><h4 id="部署至仓库"><a class="header-anchor" href="#部署至仓库">¶</a>部署至仓库</h4><p>将本地现有的blog部署至远端仓库：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure><p>然后就有自己的博客啦： 就是你的repository名字。</p><h4 id="主题的更换"><a class="header-anchor" href="#主题的更换">¶</a>主题的更换</h4><p>主题的更换也很简单方便，网上找到主题，clone到自己的仓库里，然后修改yml里的theme改成主题的名字即可，百度上，知乎上挺多的。</p><hr><h2 id="结束语"><a class="header-anchor" href="#结束语">¶</a>结束语</h2><p>网上其实有很多教程，这里就是记录一下我的博客是如何创建的</p><hr><h2 id="参考文献"><a class="header-anchor" href="#参考文献">¶</a>参考文献</h2><p><a href="https://www.bilibili.com/video/av44544186?from=search&amp;seid=16653039335337070050" target="_blank" rel="noopener">https://www.bilibili.com/video/av44544186?from=search&amp;seid=16653039335337070050</a>  手把手教你从0开始搭建自己的个人博客 |无坑版视频教程| hexo</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 生活 </tag>
-            
-            <tag> 博客 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>我来网上冲浪了</title>
-      <link href="/2020/02/16/%E6%88%91%E6%9D%A5%E7%BD%91%E4%B8%8A%E5%86%B2%E6%B5%AA%E4%BA%86/"/>
-      <url>/2020/02/16/%E6%88%91%E6%9D%A5%E7%BD%91%E4%B8%8A%E5%86%B2%E6%B5%AA%E4%BA%86/</url>
-      
-        <content type="html"><![CDATA[<h1>hello world</h1><p>村通网了。</p><a id="more"></a><h1>Overview</h1><p>近期基于github和hexo创建了这个blog，用next主题美化。</p><h2 id="目的"><a class="header-anchor" href="#目的">¶</a>目的</h2><p>记录一下学习笔记，同时也是记录一下生活，说白了就是一个笔记本吧。</p><h2 id="接下来"><a class="header-anchor" href="#接下来">¶</a>接下来</h2><p>接下来可能会做一篇blog创建的简单教程</p>]]></content>
-      
-      
-      
-        <tags>
-            
-            <tag> 生活 </tag>
-            
-            <tag> 博客 </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-  
-  
+<search>
+  <entry>
+    <title>http(超文本传输协议)</title>
+    <url>/2020/02/17/http/</url>
+    <content><![CDATA[<pre><code>基于TCP/IP的应用层协议，客户端和服务端数据传输的格式，默认端口：80。 基于请求与响应模式，无状态。
+</code></pre>
+<a id="more"></a>
+<h1>http header</h1>
+<h2 id="请求报文"><a class="header-anchor" href="#请求报文">¶</a>请求报文</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;test.php HTTP&#x2F;1.1               &#x2F;&#x2F;请求行</span><br><span class="line">HOST：www.test.com                    &#x2F;&#x2F;请求头</span><br><span class="line">User-Agent：Mozilla&#x2F;5.0 （windows NT 6.1；rv：15.0）Gecko&#x2F;20100101 Firefox&#x2F;15.0        </span><br><span class="line">                                    &#x2F;&#x2F;空白行，代表请求头结束</span><br><span class="line">Username&#x3D;admin&amp;password&#x3D;admin       &#x2F;&#x2F;请求正文</span><br></pre></td></tr></table></figure>
+<p>请求行：请求方式 + 请求资源路径 + 版本<br>
+请求头：发起请求的主机信息<br>
+正文：  optional</p>
+<h3 id="请求头"><a class="header-anchor" href="#请求头">¶</a>请求头</h3>
+<ul>
+<li>Host 请求报头域主要用于指定被请求资源的Internet主机和端口。</li>
+<li>User-Agent 请求报头域允许客户端将它的操作系统、浏览器和其他属性告诉服务器。</li>
+<li>Referer 包含一个URL，代表当前访问URL的上一个URL，也就是说，用户是从什么地方来到本页面。当前请求的原始URL地址。</li>
+<li>Cookie 是非常重要的请求头，常用来表示请求者的身份等。</li>
+<li>Accept 这个消息头用于告诉服务器客户端愿意接受那些内容，比如图像类，办公文档格式等等。</li>
+</ul>
+<h3 id="请求方式"><a class="header-anchor" href="#请求方式">¶</a>请求方式</h3>
+<p><img src="/blog/public/imgaes/http%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F.png" alt="http请求方式"></p>
+<hr>
+<h2 id="响应报文"><a class="header-anchor" href="#响应报文">¶</a>响应报文</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK   					 &#x2F;&#x2F;响应行</span><br><span class="line">Date: Sun, 15 Nov 2015 11:02:04 GMT    &#x2F;&#x2F;响应头</span><br><span class="line">Server: bfe&#x2F;1.0.8.9</span><br><span class="line">Content-Length: 2605</span><br><span class="line">Content-Type: application&#x2F;javascript</span><br><span class="line">Cache-Control: max-age&#x3D;315360000</span><br><span class="line">Expires: Fri, 13 Jun 2025 09:54:00 GMT</span><br><span class="line">Content-Encoding: gzip</span><br><span class="line">Set-Cookie: H_PS_PSSID&#x3D;2022_1438_1944_1788; path&#x3D;&#x2F;; domain&#x3D;test.com</span><br><span class="line">Connection: keep-alive</span><br><span class="line">					      &#x2F;&#x2F;空白行，代表响应头结束</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;title&gt; Index.html &lt;&#x2F;title&gt;&lt;&#x2F;head&gt;  &#x2F;&#x2F;响应正文消息主题</span><br></pre></td></tr></table></figure>
+<p>响应行：版本+状态码<br>
+响应头：服务端的信息</p>
+<h3 id="响应头"><a class="header-anchor" href="#响应头">¶</a>响应头</h3>
+<p><img src="/blog/public/imgaes/http%E5%93%8D%E5%BA%94%E5%A4%B4.png" alt="http响应头"></p>
+<h3 id="状态码"><a class="header-anchor" href="#状态码">¶</a>状态码</h3>
+<p>常见的状态码描述如下：</p>
+<ul>
+<li>200：客户端请求成功，是最常见的状态。</li>
+<li>302：重定向。</li>
+<li>404：请求资源不存在，是最常见的状态。</li>
+<li>400：客户端请求有语法错误，不能被服务器所理解。</li>
+<li>401：请求未经授权。</li>
+<li>403：服务器收到请求，但是拒绝提供服务。</li>
+<li>500：服务器内部错误，是最常见的状态。</li>
+<li>503：服务器当前不能处理客户端的请求。</li>
+</ul>
+<hr>
+<h2 id="Q-A"><a class="header-anchor" href="#Q-A">¶</a>Q&amp;A</h2>
+<ul>
+<li>
+<p>get和post的区别<br>
+get请求的参数在url后面添加<br>
+post在请求体中间</p>
+</li>
+<li>
+<p>https加ssl, tsl, 证书</p>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>协议</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我的博客是怎么创建的</title>
+    <url>/2020/02/16/%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<p>简单记录一下，博客的创建过程。</p>
+<a id="more"></a>
+<h2 id="安装环境"><a class="header-anchor" href="#安装环境">¶</a>安装环境</h2>
+<pre><code>在创建博客之前，首先要有Github账号，还有确保系统里有git工具。
+</code></pre>
+<hr>
+<h4 id="下载hexo"><a class="header-anchor" href="#下载hexo">¶</a>下载hexo</h4>
+<ol>
+<li>直接去nodejs.org官网下载node.js</li>
+<li>打开terminal下载hexo需要用到node.js的npm安装包管理器:</li>
+</ol>
+<h2 id="￼0"><a class="header-anchor" href="#￼0">¶</a><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo su                     ##获取最高权限</span><br><span class="line">npm install -g cnpm --registry&#x3D;&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org </span><br><span class="line">                            ##淘宝的镜像源，用cnpm下载比较快</span><br><span class="line">cnpm intall -g hexo-cli     ##开始下载hexo</span><br></pre></td></tr></table></figure></h2>
+<h2 id="创建博客"><a class="header-anchor" href="#创建博客">¶</a>创建博客</h2>
+<h4 id="初始化博客"><a class="header-anchor" href="#初始化博客">¶</a>初始化博客</h4>
+<p>创建博客的代码也很简单：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir blog</span><br><span class="line">cd blog                     ##创个文件夹好管理</span><br><span class="line">sudo hexo init              ##初始化hexo</span><br><span class="line">hexo s                      ##可以在本地看一下，blog的模版，后续添加了内容也可以用这个指令去预览</span><br></pre></td></tr></table></figure>
+<h3 id="创建新文章"><a class="header-anchor" href="#创建新文章">¶</a>创建新文章</h3>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo new 文章名.md</span><br></pre></td></tr></table></figure>
+<p>一行代码即创建markdown格式的文章，也可以自己直接创建，一般存在 /blog/source/_posts 的路径下。</p>
+<hr>
+<h2 id="配置到远端仓库"><a class="header-anchor" href="#配置到远端仓库">¶</a>配置到远端仓库</h2>
+<h4 id="创建github仓库"><a class="header-anchor" href="#创建github仓库">¶</a>创建github仓库</h4>
+<p>这一步就是在github里面创建一个repository，就是存blog文件的，repository的name一定要是 github name + .github.io, <a href="http://xn--noonett-i22mo3ry3qkvkl5qky6a.github.io" target="_blank" rel="noopener">比如我的就是noonett.github.io</a></p>
+<h4 id="修过配置文件"><a class="header-anchor" href="#修过配置文件">¶</a>修过配置文件</h4>
+<p>在/blog/ 路径下有一个 _config.yml 文件，进入修改，找到deploy下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">type: git</span><br><span class="line">repo: https:&#x2F;&#x2F;github.com&#x2F;noonett&#x2F;noonett.github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure>
+<p>这里的repo就是repository仓库的地址。</p>
+<h4 id="部署至仓库"><a class="header-anchor" href="#部署至仓库">¶</a>部署至仓库</h4>
+<p>将本地现有的blog部署至远端仓库：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<p>然后就有自己的博客啦： 就是你的repository名字。</p>
+<h4 id="主题的更换"><a class="header-anchor" href="#主题的更换">¶</a>主题的更换</h4>
+<p>主题的更换也很简单方便，网上找到主题，clone到自己的仓库里，然后修改yml里的theme改成主题的名字即可，百度上，知乎上挺多的。</p>
+<hr>
+<h2 id="结束语"><a class="header-anchor" href="#结束语">¶</a>结束语</h2>
+<p>网上其实有很多教程，这里就是记录一下我的博客是如何创建的</p>
+<hr>
+<h2 id="参考文献"><a class="header-anchor" href="#参考文献">¶</a>参考文献</h2>
+<p><a href="https://www.bilibili.com/video/av44544186?from=search&amp;seid=16653039335337070050" target="_blank" rel="noopener">https://www.bilibili.com/video/av44544186?from=search&amp;seid=16653039335337070050</a>  手把手教你从0开始搭建自己的个人博客 |无坑版视频教程| hexo</p>
+]]></content>
+      <tags>
+        <tag>生活</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我来网上冲浪了</title>
+    <url>/2020/02/16/%E6%88%91%E6%9D%A5%E7%BD%91%E4%B8%8A%E5%86%B2%E6%B5%AA%E4%BA%86/</url>
+    <content><![CDATA[<h1>hello world</h1>
+<p>村通网了。</p>
+<a id="more"></a>
+<h1>Overview</h1>
+<p>近期基于github和hexo创建了这个blog，用next主题美化。</p>
+<h2 id="目的"><a class="header-anchor" href="#目的">¶</a>目的</h2>
+<p>记录一下学习笔记，同时也是记录一下生活，说白了就是一个笔记本吧。</p>
+<h2 id="接下来"><a class="header-anchor" href="#接下来">¶</a>接下来</h2>
+<p>接下来可能会做一篇blog创建的简单教程</p>
+]]></content>
+      <tags>
+        <tag>生活</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
 </search>
