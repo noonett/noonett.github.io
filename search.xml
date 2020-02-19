@@ -1,9 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>requests</title>
+    <url>/2020/02/19/requests/</url>
+    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br></pre></td></tr></table></figure>
+<p>requests比标准库的urllib方便很多，代码也很简洁明了。</p>
+<a id="more"></a>
+<h1>发送请求</h1>
+<h2 id="request发送get和post请求"><a class="header-anchor" href="#request发送get和post请求">¶</a>request发送get和post请求</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">r = requests.get(<span class="string">'https://api.github.com/events'</span>) <span class="comment">#发送get请求</span></span><br><span class="line">r = requests.post(<span class="string">'http://httpbin.org/post'</span>, data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;) <span class="comment">#发送post请求</span></span><br></pre></td></tr></table></figure>
+<h2 id="传递url参数"><a class="header-anchor" href="#传递url参数">¶</a>传递url参数</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">payload = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>: [<span class="string">'value2'</span>, <span class="string">'value3'</span>]&#125; <span class="comment">#可以添加一个列表</span></span><br><span class="line">r = requests.get(<span class="string">'https://api.github.com/events'</span>, params = payload) </span><br><span class="line">print(r.url) <span class="comment">#URL会被正确编码</span></span><br><span class="line"><span class="comment">#字典中的None值不会被添加到URL里</span></span><br><span class="line">r = requests.post(<span class="string">'http://httpbin.org/post'</span>, data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;) <span class="comment">#发送post请求</span></span><br><span class="line"><span class="comment">#http://httpbin.org/get?key1=value1&amp;key2=value2&amp;key2=value3</span></span><br></pre></td></tr></table></figure>
+<h2 id="响应内容"><a class="header-anchor" href="#响应内容">¶</a>响应内容</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">r.text    <span class="comment">#响应报文</span></span><br><span class="line">r.encoding <span class="comment">#查看编码方式</span></span><br><span class="line">r.encoding = <span class="string">'ISO-8859-1'</span> <span class="comment">#改变响应报文的编码方式</span></span><br><span class="line">r.content <span class="comment">#原本的报文</span></span><br><span class="line">r.json()  <span class="comment">#json解码</span></span><br></pre></td></tr></table></figure>
+<h2 id="定制请求头"><a class="header-anchor" href="#定制请求头">¶</a>定制请求头</h2>
+<h3 id="自定义user-agent"><a class="header-anchor" href="#自定义user-agent">¶</a>自定义user-agent</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ua = <span class="string">' Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Safari/605.1.15'</span></span><br><span class="line">headers = &#123;<span class="string">'user-agent'</span>:ua&#125;</span><br><span class="line">r = requests.get(<span class="string">'http://httpbin.org/headers'</span>, headers = headers)</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure>
+<h3 id="cookie"><a class="header-anchor" href="#cookie">¶</a>cookie</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">cookies = dict(userid = <span class="string">'123456'</span>, token = <span class="string">'#####'</span>)</span><br><span class="line">r = requests.get(<span class="string">'http://httpbin.org/cookies'</span>, cookies = cookies)</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure>
+<h3 id="basic-auth认证"><a class="header-anchor" href="#basic-auth认证">¶</a>basic-auth认证</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">r = requests.get(<span class="string">'http://httpbin.org/basic-auth/xxx/1123'</span>, auth = (<span class="string">'xxx'</span>,<span class="string">'1123'</span>))</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure>
+<h3 id="状态码"><a class="header-anchor" href="#状态码">¶</a>状态码</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">r = requests.get(<span class="string">'http://httpbin.org/status/404'</span>)</span><br><span class="line">r.status_code</span><br><span class="line">r.raise_for_status() <span class="comment">#抛出异常，4xx和5xx的</span></span><br></pre></td></tr></table></figure>
+<h3 id="session对象"><a class="header-anchor" href="#session对象">¶</a>session对象</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#session对象会保存服务器返回的set-cookie头信息里的内容</span></span><br><span class="line">s = requests.session()</span><br><span class="line">s.get(<span class="string">'http://httpbin.org/cookies/set/userid/123456789'</span>)</span><br><span class="line">s.get(<span class="string">'http://httpbin.org/cookies/set/token/######'</span>)</span><br><span class="line"><span class="comment">#下一次请求会将本地所有的cookies信息自动添加到请求头信息里</span></span><br><span class="line">r = s.get(<span class="string">'http://httpbin.org/cookies'</span>)</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure>
+<h3 id="在requests中使用代理"><a class="header-anchor" href="#在requests中使用代理">¶</a>在requests中使用代理</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="string">'不使用代理：'</span>, requests.get(<span class="string">'http://httpbin.org/ip'</span>).json())</span><br><span class="line">print(<span class="string">'使用代理：'</span>,requests.get(<span class="string">'http://httpbin.org/ip'</span>, proxies=&#123;<span class="string">'http'</span>:<span class="string">'http://iguye.com:41801'</span>&#125;).json())</span><br></pre></td></tr></table></figure>
+<h3 id="超时报错"><a class="header-anchor" href="#超时报错">¶</a>超时报错</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">r = requests.get(<span class="string">'http://httpbin.org/delay/5'</span>,timeout = <span class="number">5</span>)</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>url结构</title>
     <url>/2020/02/19/url%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<p><img src="/.io//timg.png" alt="url结构"></p>
+<a id="more"></a>
+<p>从上面的URL可以看出，一个完整的URL包括以下几部分：</p>
+<p>1、协议部分：该URL的协议部分为“http：”，这代表网页使用的是HTTP协议。在Internet中可以使用多种协议，如HTTP，FTP等等本例中使用的是HTTP协议。在&quot;HTTP&quot;后面的“//”为分隔符</p>
+<p>2、域名部分：该URL的域名部分为“<a href="http://www.aspxfans.com" target="_blank" rel="noopener">www.aspxfans.com</a>”。一个URL中，也可以使用IP地址作为域名使用</p>
+<p>3、端口部分：跟在域名后面的是端口，域名和端口之间使用“:”作为分隔符。端口不是一个URL必须的部分，如果省略端口部分，将采用默认端口80</p>
+<p>4、虚拟目录部分：从域名后的第一个“/”开始到最后一个“/”为止，是虚拟目录部分。虚拟目录也不是一个URL必须的部分。本例中的虚拟目录是“/news/”</p>
+<p>5、文件名部分：从域名后的最后一个“/”开始到“？”为止，是文件名部分，如果没有“?”,则是从域名后的最后一个“/”开始到“#”为止，是文件部分，如果没有“？”和“#”，那么从域名后的最后一个“/”开始到结束，都是文件名部分。本例中的文件名是“index.asp”。文件名部分也不是一个URL必须的部分，如果省略该部分，则使用默认的文件名</p>
+<p>6、锚部分：从“#”开始到最后，都是锚部分。本例中的锚部分是“name”。锚部分也不是一个URL必须的部分</p>
+<p>7、参数部分：从“？”开始到“#”为止之间的部分为参数部分，又称搜索部分、查询部分。本例中的参数部分为“boardID=5&amp;ID=24618&amp;page=1”。参数可以允许有多个参数，参数与参数之间用“&amp;”作为分隔符。</p>
+]]></content>
       <tags>
         <tag>爬虫</tag>
       </tags>
@@ -169,7 +212,6 @@ post在请求体中间</p>
 <p><a href="https://www.bilibili.com/video/av44544186?from=search&amp;seid=16653039335337070050" target="_blank" rel="noopener">https://www.bilibili.com/video/av44544186?from=search&amp;seid=16653039335337070050</a>  手把手教你从0开始搭建自己的个人博客 |无坑版视频教程| hexo</p>
 ]]></content>
       <tags>
-        <tag>生活</tag>
         <tag>博客</tag>
       </tags>
   </entry>
@@ -187,7 +229,6 @@ post在请求体中间</p>
 <p>接下来可能会做一篇blog创建的简单教程</p>
 ]]></content>
       <tags>
-        <tag>生活</tag>
         <tag>博客</tag>
       </tags>
   </entry>
