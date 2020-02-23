@@ -1,6 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>爬取豆瓣电影前250的数据</title>
+    <url>/2020/02/23/douban_movie-2/</url>
+    <content><![CDATA[<pre><code>爬一下豆瓣top250的电影做一下练习，今天效率比较低只做了一点，明天做完再重构一下代码，用多线程实现。
+</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#导入库</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> lxml</span><br></pre></td></tr></table></figure>
+<h1>发送请求</h1>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#send request</span></span><br><span class="line">url = <span class="string">"https://movie.douban.com/top250"</span></span><br><span class="line">headers = &#123;</span><br><span class="line">        <span class="string">'user-agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chro'</span></span><br><span class="line">                      <span class="string">'me/53.0.2785.104 Safari/537.36 Core/1.53.2372.400 QQBrowser/9.5.10548.400'</span></span><br><span class="line">&#125;</span><br><span class="line">r = requests.get(url,headers=headers)</span><br><span class="line">print(r.status_code)</span><br></pre></td></tr></table></figure>
+<pre><code>200
+</code></pre>
+<h1>提取数据</h1>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">selector = lxml.etree.HTML(r.text)</span><br><span class="line">titles = selector.xpath(<span class="string">'//div[@class = "hd"]/a/span[1]/text()'</span>)</span><br><span class="line">urls = selector.xpath(<span class="string">'//div[@class = "hd"]/a/@href'</span>)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">movie_text = []</span><br><span class="line"><span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">    sub_r = requests.get(url,headers=headers)</span><br><span class="line">    selector = lxml.etree.HTML(sub_r.text)</span><br><span class="line">    url_text = <span class="string">' '</span>.join(selector.xpath(<span class="string">'//span[@property="v:summary"]/text()'</span>)).replace(<span class="string">' '</span>,<span class="string">''</span>).replace(<span class="string">'\n'</span>,<span class="string">''</span>).replace(<span class="string">'\u3000'</span>,<span class="string">''</span>)</span><br><span class="line">    movie_text.append(url_text)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">data = &#123;&#125;</span><br><span class="line">data.update(zip(titles,movie_text))</span><br></pre></td></tr></table></figure>
+<h1>存入文件中</h1>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">filepath = os.curdir</span><br><span class="line">filename = <span class="string">'douban_top250.txt'</span>  </span><br><span class="line"><span class="keyword">with</span> open(filename,<span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    f.write(<span class="string">'DouBan Movie--Top 250'</span>)</span><br><span class="line">    <span class="keyword">for</span> key,value <span class="keyword">in</span> data.items():</span><br><span class="line">        f.write(<span class="string">'\n\n'</span>)</span><br><span class="line">        f.write(key)</span><br><span class="line">        f.write(<span class="string">'\n'</span>)</span><br><span class="line">        f.write(value)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>beatiful-soup和lxml</title>
+    <url>/2020/02/20/beatiful-soup/</url>
+    <content><![CDATA[<p>beautiful soup是一个从html或xml文件中提取数据的python库，很方便。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> beautifulsoup</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">html_doc = <span class="string">"""</span></span><br><span class="line"><span class="string">&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">&lt;p class="title"&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;p class="story"&gt;Once upon a time there were three little sisters; and their names were</span></span><br><span class="line"><span class="string">&lt;a href="http://example.com/elsie" class="sister" id="link1"&gt;Elsie&lt;/a&gt;,</span></span><br><span class="line"><span class="string">&lt;a href="http://example.com/lacie" class="sister" id="link2"&gt;Lacie&lt;/a&gt; and</span></span><br><span class="line"><span class="string">&lt;a href="http://example.com/tillie" class="sister" id="link3"&gt;Tillie&lt;/a&gt;;</span></span><br><span class="line"><span class="string">and they lived at the bottom of a well.&lt;/p&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;p class="story"&gt;...&lt;/p&gt;</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">soup = BeautifulSoup(html_doc, <span class="string">'html.parser'</span>) <span class="comment">#创建一个soup对象</span></span><br><span class="line">print(soup.prettify()) <span class="comment">#标准格式输出</span></span><br></pre></td></tr></table></figure>
+<h2 id="浏览结构化数据"><a class="header-anchor" href="#浏览结构化数据">¶</a>浏览结构化数据</h2>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">soup.title <span class="comment">#获取title</span></span><br><span class="line">soup.a.attrs <span class="comment">#取出a标签的树型</span></span><br><span class="line">soup.find(id=<span class="string">'link3'</span>) <span class="comment">#</span></span><br><span class="line"><span class="comment">#找到所有a标签的链接，find_all('')返回的是list</span></span><br><span class="line"><span class="keyword">for</span> link <span class="keyword">in</span> soup.find_all(<span class="string">'a'</span>):</span><br><span class="line">    print(link.get(<span class="string">'href'</span>))</span><br><span class="line">    <span class="comment"># http://example.com/elsie</span></span><br><span class="line">    <span class="comment"># http://example.com/lacie</span></span><br><span class="line">    <span class="comment"># http://example.com/tillie</span></span><br><span class="line">print(soup.get_text()) <span class="comment">#获取所有文字内容</span></span><br></pre></td></tr></table></figure>
+<h2 id="支持css选择器"><a class="header-anchor" href="#支持css选择器">¶</a>支持css选择器</h2>
+<h2 id="￼3"><a class="header-anchor" href="#￼3">¶</a><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">soup.select(<span class="string">'.story'</span>) <span class="comment">#查找类名为story的类标签</span></span><br><span class="line">soup.select(<span class="string">'#link'</span>) <span class="comment">#tag id查找也可以</span></span><br></pre></td></tr></table></figure></h2>
+<h1>lxml</h1>
+<p>用lxml作为解析的引擎。底层是c写的，速度比较快。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">soup_lxml = BeautifulSoup(html_doc, <span class="string">'lxml'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="xpath"><a class="header-anchor" href="#xpath">¶</a>xpath</h2>
+<p>xpath的性能挺不错，xml文档中查找信息的语言。</p>
+<h3 id="概念"><a class="header-anchor" href="#概念">¶</a>概念</h3>
+<h4 id="Node-节点"><a class="header-anchor" href="#Node-节点">¶</a>Node: 节点</h4>
+<p>元素，属性，文本，命名空间，文档（根）节点</p>
+<h4 id="节点关系"><a class="header-anchor" href="#节点关系">¶</a>节点关系</h4>
+<p>Parent 父<br>
+Children 子<br>
+Sibling：同胞，共用parent<br>
+Ancestor：先辈<br>
+Descendant：后代</p>
+<h3 id="xpath语法"><a class="header-anchor" href="#xpath语法">¶</a>xpath语法</h3>
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nodename</td>
+<td style="text-align:center">选取此节点的所有子节点的文本</td>
+</tr>
+<tr>
+<td>//</td>
+<td style="text-align:center">从任意子节点中选取文本</td>
+</tr>
+<tr>
+<td>/</td>
+<td style="text-align:center">从根节点中选取(已选择的节点的节点中)</td>
+</tr>
+<tr>
+<td>.</td>
+<td style="text-align:center">表示选取当前节点</td>
+</tr>
+<tr>
+<td>…</td>
+<td style="text-align:center">表示选取当前节点的父节点</td>
+</tr>
+<tr>
+<td>@</td>
+<td style="text-align:center">选取属性</td>
+</tr>
+</tbody>
+</table>
+<h2 id="￼5"><a class="header-anchor" href="#￼5">¶</a><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">r = requests.get(<span class="string">'http://iguye.com/books.xml'</span>)</span><br><span class="line">se = etree.HTML(r.text) <span class="comment">#创建一个选择器对象</span></span><br><span class="line">print(se.xpath(<span class="string">'//book'</span>)) <span class="comment">#//表示从任意子节点中选取</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book/author/text()'</span>)) <span class="comment">#选取书店下所有的书本的作者名字</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book/title/@lang'</span>))<span class="comment">#选取书店下所有的书本的语言信息</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[1]/title/text()'</span>)) <span class="comment">#第一本书</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[last()]/title/text()'</span>)) <span class="comment">#最后一本书</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[last()-1]/title/text()'</span>)) <span class="comment">#倒数第二本书</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[position()&lt;3]/title/text()'</span>)) <span class="comment">#前两本书</span></span><br><span class="line">print(se.xpath(<span class="string">'//book[@category="web"]/title/text()'</span>))<span class="comment">#选取所有分类为web的节点</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[price&gt;3]/price/text()'</span>))<span class="comment">#选取所有价格大于30.0元的书本</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[contains(@class,"book")]/@class/text()'</span>))<span class="comment">#类名中包含book的书本</span></span><br></pre></td></tr></table></figure></h2>
+<h1>解析器比较</h1>
+<p>re虽然速度最快，但是学习成本高。beautifulsoup则较慢。所有折中的方案选择lxml为佳。</p>
+]]></content>
+      <tags>
+        <tag>爬虫</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>requests</title>
     <url>/2020/02/19/requests/</url>
     <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br></pre></td></tr></table></figure>
