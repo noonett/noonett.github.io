@@ -1,415 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<search>
-  <entry>
-    <title>矩阵与Numpy</title>
-    <url>/2020/02/24/Math/</url>
-    <content><![CDATA[<h1>矩阵乘法实现</h1>
-<pre><code>这个函数还是很简单的，就是对应位置相乘就完事了，最后再用numpy来确认一下函数的正确性。
-</code></pre>
-<a id="more"></a>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Matrix_multiplication</span><span class="params">(A,B, data = [])</span>:</span></span><br><span class="line">    C = []</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">not</span> A) <span class="keyword">or</span> (<span class="keyword">not</span> B):</span><br><span class="line">        <span class="keyword">return</span> C</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(A)):</span><br><span class="line">        row = []</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(B[<span class="number">0</span>])):</span><br><span class="line">            temp = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> a,b <span class="keyword">in</span> zip(range(len(A[<span class="number">0</span>])),range(len(B))):</span><br><span class="line">                temp += A[i][a] * B[b][j]</span><br><span class="line">            row.append(temp)</span><br><span class="line">        C.append(row)</span><br><span class="line">    <span class="keyword">return</span> C</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">A = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">7</span>):</span><br><span class="line">    row = []</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">7</span>):</span><br><span class="line">        row.append(i+j)</span><br><span class="line">    A.append(row)</span><br><span class="line">print(<span class="string">'A:'</span>)</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> A:</span><br><span class="line">    print(row) </span><br><span class="line">    </span><br><span class="line">B = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>,<span class="number">9</span>):</span><br><span class="line">    row = []</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">6</span>):</span><br><span class="line">        row.append(i+j)</span><br><span class="line">    B.append(row)</span><br><span class="line">print(<span class="string">'B:'</span>)</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> B:</span><br><span class="line">    print(row)</span><br></pre></td></tr></table></figure>
-<pre><code>A:
-[2, 3, 4, 5, 6, 7]
-[3, 4, 5, 6, 7, 8]
-[4, 5, 6, 7, 8, 9]
-[5, 6, 7, 8, 9, 10]
-[6, 7, 8, 9, 10, 11]
-[7, 8, 9, 10, 11, 12]
-B:
-[3, 4, 5, 6, 7, 8]
-[4, 5, 6, 7, 8, 9]
-[5, 6, 7, 8, 9, 10]
-[6, 7, 8, 9, 10, 11]
-[7, 8, 9, 10, 11, 12]
-[8, 9, 10, 11, 12, 13]
-</code></pre>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#A = []</span></span><br><span class="line">Matrix_multiplication(A,B)</span><br></pre></td></tr></table></figure>
-<pre><code>[[166, 193, 220, 247, 274, 301],
- [199, 232, 265, 298, 331, 364],
- [232, 271, 310, 349, 388, 427],
- [265, 310, 355, 400, 445, 490],
- [298, 349, 400, 451, 502, 553],
- [331, 388, 445, 502, 559, 616]]
-</code></pre>
-<h1>Numpy</h1>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = np.array([</span><br><span class="line">(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>),</span><br><span class="line">(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>),</span><br><span class="line">(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>),</span><br><span class="line">(<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>),</span><br><span class="line">(<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>),</span><br><span class="line">(<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>)])</span><br><span class="line">b = np.array([</span><br><span class="line">(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>),</span><br><span class="line">(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>),</span><br><span class="line">(<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>),</span><br><span class="line">(<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>),</span><br><span class="line">(<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>),</span><br><span class="line">(<span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>)])</span><br></pre></td></tr></table></figure>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#矩阵乘法</span></span><br><span class="line">np.dot(a,b)</span><br></pre></td></tr></table></figure>
-<pre><code>array([[166, 193, 220, 247, 274, 301],
-       [199, 232, 265, 298, 331, 364],
-       [232, 271, 310, 349, 388, 427],
-       [265, 310, 355, 400, 445, 490],
-       [298, 349, 400, 451, 502, 553],
-       [331, 388, 445, 502, 559, 616]])
-</code></pre>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#矩阵加减</span></span><br><span class="line">print(a + b)</span><br><span class="line"><span class="comment">#矩阵平方</span></span><br><span class="line">print(a**<span class="number">2</span>)</span><br><span class="line"><span class="comment">#矩阵转置</span></span><br><span class="line">print(a.T)</span><br></pre></td></tr></table></figure>
-<pre><code>[[ 5  7  9 11 13 15]
- [ 7  9 11 13 15 17]
- [ 9 11 13 15 17 19]
- [11 13 15 17 19 21]
- [13 15 17 19 21 23]
- [15 17 19 21 23 25]]
-[[  4   9  16  25  36  49]
- [  9  16  25  36  49  64]
- [ 16  25  36  49  64  81]
- [ 25  36  49  64  81 100]
- [ 36  49  64  81 100 121]
- [ 49  64  81 100 121 144]]
-[[ 2  3  4  5  6  7]
- [ 3  4  5  6  7  8]
- [ 4  5  6  7  8  9]
- [ 5  6  7  8  9 10]
- [ 6  7  8  9 10 11]
- [ 7  8  9 10 11 12]]
-</code></pre>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 返回逆矩阵</span></span><br><span class="line">c = np.array([[<span class="number">1.0</span>, <span class="number">2.0</span>], [<span class="number">3.0</span>, <span class="number">4.0</span>]])</span><br><span class="line">print(np.linalg.inv(c))</span><br><span class="line"><span class="comment"># 矩阵的迹</span></span><br><span class="line">print(np.trace(c))</span><br></pre></td></tr></table></figure>
-<pre><code>[[-2.   1. ]
- [ 1.5 -0.5]]
-5.0
-</code></pre>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 特征值和特征向量</span></span><br><span class="line">eigenvalues, eigenvector = np.linalg.eig(c)</span><br><span class="line">print(eigenvalues)</span><br><span class="line">print(eigenvector)</span><br></pre></td></tr></table></figure>
-<pre><code>[-0.37228132  5.37228132]
-[[-0.82456484 -0.41597356]
- [ 0.56576746 -0.90937671]]
-</code></pre>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>数学</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>爬取豆瓣电影前250的数据</title>
-    <url>/2020/02/23/douban_movie-3/</url>
-    <content><![CDATA[<pre><code>爬一下豆瓣top250的电影做一下练习，今天效率比较低只做了一点，明天做完再重构一下代码，用多线程实现。
-2/24 封装了函数，最近得上课，慢慢更新了。
-</code></pre>
-<a id="more"></a>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#导入库</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> lxml</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure>
-<h1>发送请求</h1>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#send request</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_request</span><span class="params">(url, headers)</span>:</span></span><br><span class="line">    r = requests.get(url,headers=headers)</span><br><span class="line">    print(r.status_code)</span><br><span class="line">    <span class="keyword">return</span> r</span><br></pre></td></tr></table></figure>
-<h1>提取数据</h1>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#fetch data</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetch</span><span class="params">(resp, headers)</span>:</span></span><br><span class="line">    selector = lxml.etree.HTML(resp.text)    <span class="comment">#generate object</span></span><br><span class="line">    titles = selector.xpath(<span class="string">'//div[@class = "hd"]/a/span[1]/text()'</span>)<span class="comment">#fetching titles of movies       </span></span><br><span class="line">    urls = selector.xpath(<span class="string">'//div[@class = "hd"]/a/@href'</span>) <span class="comment">#fetching urls of description</span></span><br><span class="line">    <span class="comment">#visit the url to fetch the descriptions</span></span><br><span class="line">    movie_text = []</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        sub_r = requests.get(url,headers=headers)</span><br><span class="line">        selector = lxml.etree.HTML(sub_r.text)</span><br><span class="line">        url_text = <span class="string">' '</span>.join(selector.xpath(<span class="string">'//span[@property="v:summary"]/text()'</span>)).replace(<span class="string">' '</span>,<span class="string">''</span>).replace(<span class="string">'\n'</span>,<span class="string">''</span>).replace(<span class="string">'\u3000'</span>,<span class="string">''</span>)</span><br><span class="line">        movie_text.append(url_text)        </span><br><span class="line">    <span class="comment">#zip the content together</span></span><br><span class="line">    data = &#123;&#125;</span><br><span class="line">    data.update(zip(titles,movie_text))</span><br><span class="line">    <span class="keyword">return</span> data</span><br></pre></td></tr></table></figure>
-<h1>存入文件中</h1>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(data)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        filepath = os.curdir</span><br><span class="line">        filename = <span class="string">'douban_top250.txt'</span>  </span><br><span class="line">        <span class="keyword">with</span> open(filename,<span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(<span class="string">'DouBan Movie--Top 250'</span>)</span><br><span class="line">            <span class="keyword">for</span> key,value <span class="keyword">in</span> data.items():</span><br><span class="line">                f.write(<span class="string">'\n\n'</span>)</span><br><span class="line">                f.write(key)</span><br><span class="line">                f.write(<span class="string">'\n'</span>)</span><br><span class="line">                f.write(value)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">'Download error!!'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">'Download success!!'</span>)</span><br></pre></td></tr></table></figure>
-<h1>主函数</h1>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#main, 循环实现翻页</span></span><br><span class="line">headers = &#123;</span><br><span class="line">        <span class="string">'user-agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chro'</span></span><br><span class="line">                      <span class="string">'me/53.0.2785.104 Safari/537.36 Core/1.53.2372.400 QQBrowser/9.5.10548.400'</span></span><br><span class="line">&#125;</span><br><span class="line">a = <span class="number">0</span></span><br><span class="line">data = &#123;&#125;</span><br><span class="line"><span class="keyword">while</span>(a != <span class="number">250</span>):</span><br><span class="line">    url =  <span class="string">"https://movie.douban.com/top250?start="</span>+ str(a) +<span class="string">"&amp;filter="</span></span><br><span class="line">    resp = send_request(url, headers)</span><br><span class="line">    data_chunk = fetch(resp, headers)</span><br><span class="line">    data.update(data_chunk)</span><br><span class="line">    a += <span class="number">25</span></span><br><span class="line">download(data)</span><br></pre></td></tr></table></figure>
-<pre><code>200
-200
-200
-200
-200
-200
-200
-200
-200
-200
-Download success!!
-</code></pre>
-]]></content>
-      <tags>
-        <tag>爬虫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>beatiful-soup和lxml</title>
-    <url>/2020/02/20/beatiful-soup/</url>
-    <content><![CDATA[<p>beautiful soup是一个从html或xml文件中提取数据的python库，很方便。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> beautifulsoup</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">html_doc = <span class="string">"""</span></span><br><span class="line"><span class="string">&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">&lt;p class="title"&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;p class="story"&gt;Once upon a time there were three little sisters; and their names were</span></span><br><span class="line"><span class="string">&lt;a href="http://example.com/elsie" class="sister" id="link1"&gt;Elsie&lt;/a&gt;,</span></span><br><span class="line"><span class="string">&lt;a href="http://example.com/lacie" class="sister" id="link2"&gt;Lacie&lt;/a&gt; and</span></span><br><span class="line"><span class="string">&lt;a href="http://example.com/tillie" class="sister" id="link3"&gt;Tillie&lt;/a&gt;;</span></span><br><span class="line"><span class="string">and they lived at the bottom of a well.&lt;/p&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;p class="story"&gt;...&lt;/p&gt;</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">soup = BeautifulSoup(html_doc, <span class="string">'html.parser'</span>) <span class="comment">#创建一个soup对象</span></span><br><span class="line">print(soup.prettify()) <span class="comment">#标准格式输出</span></span><br></pre></td></tr></table></figure>
-<h2 id="浏览结构化数据"><a class="header-anchor" href="#浏览结构化数据">¶</a>浏览结构化数据</h2>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">soup.title <span class="comment">#获取title</span></span><br><span class="line">soup.a.attrs <span class="comment">#取出a标签的树型</span></span><br><span class="line">soup.find(id=<span class="string">'link3'</span>) <span class="comment">#</span></span><br><span class="line"><span class="comment">#找到所有a标签的链接，find_all('')返回的是list</span></span><br><span class="line"><span class="keyword">for</span> link <span class="keyword">in</span> soup.find_all(<span class="string">'a'</span>):</span><br><span class="line">    print(link.get(<span class="string">'href'</span>))</span><br><span class="line">    <span class="comment"># http://example.com/elsie</span></span><br><span class="line">    <span class="comment"># http://example.com/lacie</span></span><br><span class="line">    <span class="comment"># http://example.com/tillie</span></span><br><span class="line">print(soup.get_text()) <span class="comment">#获取所有文字内容</span></span><br></pre></td></tr></table></figure>
-<h2 id="支持css选择器"><a class="header-anchor" href="#支持css选择器">¶</a>支持css选择器</h2>
-<h2 id="￼3"><a class="header-anchor" href="#￼3">¶</a><figure class="highlight python"><table><tr><td class="code"><pre><span class="line">soup.select(<span class="string">'.story'</span>) <span class="comment">#查找类名为story的类标签</span></span><br><span class="line">soup.select(<span class="string">'#link'</span>) <span class="comment">#tag id查找也可以</span></span><br></pre></td></tr></table></figure></h2>
-<h1>lxml</h1>
-<p>用lxml作为解析的引擎。底层是c写的，速度比较快。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">soup_lxml = BeautifulSoup(html_doc, <span class="string">'lxml'</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="xpath"><a class="header-anchor" href="#xpath">¶</a>xpath</h2>
-<p>xpath的性能挺不错，xml文档中查找信息的语言。</p>
-<h3 id="概念"><a class="header-anchor" href="#概念">¶</a>概念</h3>
-<h4 id="Node-节点"><a class="header-anchor" href="#Node-节点">¶</a>Node: 节点</h4>
-<p>元素，属性，文本，命名空间，文档（根）节点</p>
-<h4 id="节点关系"><a class="header-anchor" href="#节点关系">¶</a>节点关系</h4>
-<p>Parent 父<br>
-Children 子<br>
-Sibling：同胞，共用parent<br>
-Ancestor：先辈<br>
-Descendant：后代</p>
-<h3 id="xpath语法"><a class="header-anchor" href="#xpath语法">¶</a>xpath语法</h3>
-<table>
-<thead>
-<tr>
-<th>表达式</th>
-<th style="text-align:center">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>nodename</td>
-<td style="text-align:center">选取此节点的所有子节点的文本</td>
-</tr>
-<tr>
-<td>//</td>
-<td style="text-align:center">从任意子节点中选取文本</td>
-</tr>
-<tr>
-<td>/</td>
-<td style="text-align:center">从根节点中选取(已选择的节点的节点中)</td>
-</tr>
-<tr>
-<td>.</td>
-<td style="text-align:center">表示选取当前节点</td>
-</tr>
-<tr>
-<td>…</td>
-<td style="text-align:center">表示选取当前节点的父节点</td>
-</tr>
-<tr>
-<td>@</td>
-<td style="text-align:center">选取属性</td>
-</tr>
-</tbody>
-</table>
-<h2 id="￼5"><a class="header-anchor" href="#￼5">¶</a><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">r = requests.get(<span class="string">'http://iguye.com/books.xml'</span>)</span><br><span class="line">se = etree.HTML(r.text) <span class="comment">#创建一个选择器对象</span></span><br><span class="line">print(se.xpath(<span class="string">'//book'</span>)) <span class="comment">#//表示从任意子节点中选取</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book/author/text()'</span>)) <span class="comment">#选取书店下所有的书本的作者名字</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book/title/@lang'</span>))<span class="comment">#选取书店下所有的书本的语言信息</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[1]/title/text()'</span>)) <span class="comment">#第一本书</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[last()]/title/text()'</span>)) <span class="comment">#最后一本书</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[last()-1]/title/text()'</span>)) <span class="comment">#倒数第二本书</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[position()&lt;3]/title/text()'</span>)) <span class="comment">#前两本书</span></span><br><span class="line">print(se.xpath(<span class="string">'//book[@category="web"]/title/text()'</span>))<span class="comment">#选取所有分类为web的节点</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[price&gt;3]/price/text()'</span>))<span class="comment">#选取所有价格大于30.0元的书本</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[contains(@class,"book")]/@class/text()'</span>))<span class="comment">#类名中包含book的书本</span></span><br></pre></td></tr></table></figure></h2>
-<h1>解析器比较</h1>
-<p>re虽然速度最快，但是学习成本高。beautifulsoup则较慢。所有折中的方案选择lxml为佳。</p>
-]]></content>
-      <tags>
-        <tag>爬虫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>requests</title>
-    <url>/2020/02/19/requests/</url>
-    <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br></pre></td></tr></table></figure>
-<p>requests比标准库的urllib方便很多，代码也很简洁明了。</p>
-<a id="more"></a>
-<h1>发送请求</h1>
-<h2 id="request发送get和post请求"><a class="header-anchor" href="#request发送get和post请求">¶</a>request发送get和post请求</h2>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">r = requests.get(<span class="string">'https://api.github.com/events'</span>) <span class="comment">#发送get请求</span></span><br><span class="line">r = requests.post(<span class="string">'http://httpbin.org/post'</span>, data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;) <span class="comment">#发送post请求</span></span><br></pre></td></tr></table></figure>
-<h2 id="传递url参数"><a class="header-anchor" href="#传递url参数">¶</a>传递url参数</h2>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">payload = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>: [<span class="string">'value2'</span>, <span class="string">'value3'</span>]&#125; <span class="comment">#可以添加一个列表</span></span><br><span class="line">r = requests.get(<span class="string">'https://api.github.com/events'</span>, params = payload) </span><br><span class="line">print(r.url) <span class="comment">#URL会被正确编码</span></span><br><span class="line"><span class="comment">#字典中的None值不会被添加到URL里</span></span><br><span class="line">r = requests.post(<span class="string">'http://httpbin.org/post'</span>, data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;) <span class="comment">#发送post请求</span></span><br><span class="line"><span class="comment">#http://httpbin.org/get?key1=value1&amp;key2=value2&amp;key2=value3</span></span><br></pre></td></tr></table></figure>
-<h2 id="响应内容"><a class="header-anchor" href="#响应内容">¶</a>响应内容</h2>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">r.text    <span class="comment">#响应报文</span></span><br><span class="line">r.encoding <span class="comment">#查看编码方式</span></span><br><span class="line">r.encoding = <span class="string">'ISO-8859-1'</span> <span class="comment">#改变响应报文的编码方式</span></span><br><span class="line">r.content <span class="comment">#原本的报文</span></span><br><span class="line">r.json()  <span class="comment">#json解码</span></span><br></pre></td></tr></table></figure>
-<h2 id="定制请求头"><a class="header-anchor" href="#定制请求头">¶</a>定制请求头</h2>
-<h3 id="自定义user-agent"><a class="header-anchor" href="#自定义user-agent">¶</a>自定义user-agent</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">ua = <span class="string">' Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Safari/605.1.15'</span></span><br><span class="line">headers = &#123;<span class="string">'user-agent'</span>:ua&#125;</span><br><span class="line">r = requests.get(<span class="string">'http://httpbin.org/headers'</span>, headers = headers)</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure>
-<h3 id="cookie"><a class="header-anchor" href="#cookie">¶</a>cookie</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">cookies = dict(userid = <span class="string">'123456'</span>, token = <span class="string">'#####'</span>)</span><br><span class="line">r = requests.get(<span class="string">'http://httpbin.org/cookies'</span>, cookies = cookies)</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure>
-<h3 id="basic-auth认证"><a class="header-anchor" href="#basic-auth认证">¶</a>basic-auth认证</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">r = requests.get(<span class="string">'http://httpbin.org/basic-auth/xxx/1123'</span>, auth = (<span class="string">'xxx'</span>,<span class="string">'1123'</span>))</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure>
-<h3 id="状态码"><a class="header-anchor" href="#状态码">¶</a>状态码</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">r = requests.get(<span class="string">'http://httpbin.org/status/404'</span>)</span><br><span class="line">r.status_code</span><br><span class="line">r.raise_for_status() <span class="comment">#抛出异常，4xx和5xx的</span></span><br></pre></td></tr></table></figure>
-<h3 id="session对象"><a class="header-anchor" href="#session对象">¶</a>session对象</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#session对象会保存服务器返回的set-cookie头信息里的内容</span></span><br><span class="line">s = requests.session()</span><br><span class="line">s.get(<span class="string">'http://httpbin.org/cookies/set/userid/123456789'</span>)</span><br><span class="line">s.get(<span class="string">'http://httpbin.org/cookies/set/token/######'</span>)</span><br><span class="line"><span class="comment">#下一次请求会将本地所有的cookies信息自动添加到请求头信息里</span></span><br><span class="line">r = s.get(<span class="string">'http://httpbin.org/cookies'</span>)</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure>
-<h3 id="在requests中使用代理"><a class="header-anchor" href="#在requests中使用代理">¶</a>在requests中使用代理</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">print(<span class="string">'不使用代理：'</span>, requests.get(<span class="string">'http://httpbin.org/ip'</span>).json())</span><br><span class="line">print(<span class="string">'使用代理：'</span>,requests.get(<span class="string">'http://httpbin.org/ip'</span>, proxies=&#123;<span class="string">'http'</span>:<span class="string">'http://iguye.com:41801'</span>&#125;).json())</span><br></pre></td></tr></table></figure>
-<h3 id="超时报错"><a class="header-anchor" href="#超时报错">¶</a>超时报错</h3>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">r = requests.get(<span class="string">'http://httpbin.org/delay/5'</span>,timeout = <span class="number">5</span>)</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>爬虫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>url结构</title>
-    <url>/2020/02/19/url%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<p><img src="/.io//timg.png" alt="url结构"></p>
-<a id="more"></a>
-<p>从上面的URL可以看出，一个完整的URL包括以下几部分：</p>
-<p>1、协议部分：该URL的协议部分为“http：”，这代表网页使用的是HTTP协议。在Internet中可以使用多种协议，如HTTP，FTP等等本例中使用的是HTTP协议。在&quot;HTTP&quot;后面的“//”为分隔符</p>
-<p>2、域名部分：该URL的域名部分为“<a href="http://www.aspxfans.com" target="_blank" rel="noopener">www.aspxfans.com</a>”。一个URL中，也可以使用IP地址作为域名使用</p>
-<p>3、端口部分：跟在域名后面的是端口，域名和端口之间使用“:”作为分隔符。端口不是一个URL必须的部分，如果省略端口部分，将采用默认端口80</p>
-<p>4、虚拟目录部分：从域名后的第一个“/”开始到最后一个“/”为止，是虚拟目录部分。虚拟目录也不是一个URL必须的部分。本例中的虚拟目录是“/news/”</p>
-<p>5、文件名部分：从域名后的最后一个“/”开始到“？”为止，是文件名部分，如果没有“?”,则是从域名后的最后一个“/”开始到“#”为止，是文件部分，如果没有“？”和“#”，那么从域名后的最后一个“/”开始到结束，都是文件名部分。本例中的文件名是“index.asp”。文件名部分也不是一个URL必须的部分，如果省略该部分，则使用默认的文件名</p>
-<p>6、锚部分：从“#”开始到最后，都是锚部分。本例中的锚部分是“name”。锚部分也不是一个URL必须的部分</p>
-<p>7、参数部分：从“？”开始到“#”为止之间的部分为参数部分，又称搜索部分、查询部分。本例中的参数部分为“boardID=5&amp;ID=24618&amp;page=1”。参数可以允许有多个参数，参数与参数之间用“&amp;”作为分隔符。</p>
-]]></content>
-      <tags>
-        <tag>爬虫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>curl和wget</title>
-    <url>/2020/02/18/curl%E5%92%8Cwget%E4%BA%86%E8%A7%A3/</url>
-    <content><![CDATA[<h1>curl</h1>
-<p>curl是系统自带的c库，简单过一下，记录一下参数。<br>
-不带参数就是，GET请求。</p>
-<a id="more"></a>
-<h2 id="A"><a class="header-anchor" href="#A">¶</a>-A</h2>
-<p>指定客户端的代理标头</p>
-<h2 id="B"><a class="header-anchor" href="#B">¶</a>-B</h2>
-<p>发送cookie</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -b <span class="string">'foo1=bar;foo2=bar2'</span> https://google.com</span><br></pre></td></tr></table></figure>
-<h2 id="X"><a class="header-anchor" href="#X">¶</a>-X</h2>
-<p>用指定方式请求</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -X Post https://google.com</span><br></pre></td></tr></table></figure>
-<h2 id="d"><a class="header-anchor" href="#d">¶</a>-d</h2>
-<p>用Post请求</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -d <span class="string">"a=1&amp;b=1"</span> https://google.com</span><br></pre></td></tr></table></figure>
-<h2 id="L"><a class="header-anchor" href="#L">¶</a>-L</h2>
-<p>跟随服务器重定向</p>
-<h2 id="H"><a class="header-anchor" href="#H">¶</a>-H</h2>
-<p>设置http请求头信息</p>
-<h2 id="k"><a class="header-anchor" href="#k">¶</a>-k</h2>
-<p>跳过ssl检测(https)</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -k https://www.example.com</span><br></pre></td></tr></table></figure>
-<h2 id="O"><a class="header-anchor" href="#O">¶</a>-O</h2>
-<p>以远程的文件名下载保存</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -O https://httpbin.org/image/jpeg</span><br></pre></td></tr></table></figure>
-<h2 id="o"><a class="header-anchor" href="#o">¶</a>-o</h2>
-<p>以自定的文件名下载保存</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">curl -o wolf.jpeg https://httpbin.org/image/jpeg</span><br></pre></td></tr></table></figure>
-<h2 id="s"><a class="header-anchor" href="#s">¶</a>-s</h2>
-<p>不显示无关信息</p>
-<h2 id="v"><a class="header-anchor" href="#v">¶</a>-v</h2>
-<p>显示所有信息</p>
-<hr>
-<h1>wget</h1>
-<p>系统自带的下载文件的工具。</p>
-<h2 id="O-v2"><a class="header-anchor" href="#O-v2">¶</a>-O</h2>
-<p>以指定文件名存文件</p>
-<h2 id="–limit-rate"><a class="header-anchor" href="#–limit-rate">¶</a>–limit-rate=</h2>
-<p>限速</p>
-<h2 id="c"><a class="header-anchor" href="#c">¶</a>-c</h2>
-<p>断点续传</p>
-<h2 id="b"><a class="header-anchor" href="#b">¶</a>-b</h2>
-<p>后台下载</p>
-<h2 id="U"><a class="header-anchor" href="#U">¶</a>-U</h2>
-<p>设置user-agent</p>
-<h2 id="mirror"><a class="header-anchor" href="#mirror">¶</a>-mirror</h2>
-<p>镜像某个网站</p>
-<h2 id="p"><a class="header-anchor" href="#p">¶</a>-p</h2>
-<p>下载网页的所有内容</p>
-<h2 id="r"><a class="header-anchor" href="#r">¶</a>-r</h2>
-<p>递归下载所有网页中所有链接</p>
-]]></content>
-      <tags>
-        <tag>爬虫</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>http(超文本传输协议)</title>
-    <url>/2020/02/17/http%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/</url>
-    <content><![CDATA[<pre><code>基于TCP/IP的应用层协议，客户端和服务端数据传输的格式，默认端口：80。 基于请求与响应模式，无状态。
-</code></pre>
-<a id="more"></a>
-<h1>http header</h1>
-<h2 id="请求报文"><a class="header-anchor" href="#请求报文">¶</a>请求报文</h2>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">POST &#x2F;test.php HTTP&#x2F;1.1               &#x2F;&#x2F;请求行</span><br><span class="line">HOST：www.test.com                    &#x2F;&#x2F;请求头</span><br><span class="line">User-Agent：Mozilla&#x2F;5.0 （windows NT 6.1；rv：15.0）Gecko&#x2F;20100101 Firefox&#x2F;15.0        </span><br><span class="line">                                    &#x2F;&#x2F;空白行，代表请求头结束</span><br><span class="line">Username&#x3D;admin&amp;password&#x3D;admin       &#x2F;&#x2F;请求正文</span><br></pre></td></tr></table></figure>
-<p>请求行：请求方式 + 请求资源路径 + 版本<br>
-请求头：发起请求的主机信息<br>
-正文：  optional</p>
-<h3 id="请求头"><a class="header-anchor" href="#请求头">¶</a>请求头</h3>
-<ul>
-<li>Host 请求报头域主要用于指定被请求资源的Internet主机和端口。</li>
-<li>User-Agent 请求报头域允许客户端将它的操作系统、浏览器和其他属性告诉服务器。</li>
-<li>Referer 包含一个URL，代表当前访问URL的上一个URL，也就是说，用户是从什么地方来到本页面。当前请求的原始URL地址。</li>
-<li>Cookie 是非常重要的请求头，常用来表示请求者的身份等。</li>
-<li>Accept 这个消息头用于告诉服务器客户端愿意接受那些内容，比如图像类，办公文档格式等等。</li>
-</ul>
-<h3 id="请求方式"><a class="header-anchor" href="#请求方式">¶</a>请求方式</h3>
-<p><img src="http%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F.png" alt="http请求方式"></p>
-<hr>
-<h2 id="响应报文"><a class="header-anchor" href="#响应报文">¶</a>响应报文</h2>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK   					 &#x2F;&#x2F;响应行</span><br><span class="line">Date: Sun, 15 Nov 2015 11:02:04 GMT    &#x2F;&#x2F;响应头</span><br><span class="line">Server: bfe&#x2F;1.0.8.9</span><br><span class="line">Content-Length: 2605</span><br><span class="line">Content-Type: application&#x2F;javascript</span><br><span class="line">Cache-Control: max-age&#x3D;315360000</span><br><span class="line">Expires: Fri, 13 Jun 2025 09:54:00 GMT</span><br><span class="line">Content-Encoding: gzip</span><br><span class="line">Set-Cookie: H_PS_PSSID&#x3D;2022_1438_1944_1788; path&#x3D;&#x2F;; domain&#x3D;test.com</span><br><span class="line">Connection: keep-alive</span><br><span class="line">					      &#x2F;&#x2F;空白行，代表响应头结束</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;title&gt; Index.html &lt;&#x2F;title&gt;&lt;&#x2F;head&gt;  &#x2F;&#x2F;响应正文消息主题</span><br></pre></td></tr></table></figure>
-<p>响应行：版本+状态码<br>
-响应头：服务端的信息</p>
-<h3 id="响应头"><a class="header-anchor" href="#响应头">¶</a>响应头</h3>
-<p><img src="http%E5%93%8D%E5%BA%94%E5%A4%B4.png" alt="http响应头"></p>
-<h3 id="状态码"><a class="header-anchor" href="#状态码">¶</a>状态码</h3>
-<p>常见的状态码描述如下：</p>
-<ul>
-<li>200：客户端请求成功，是最常见的状态。</li>
-<li>302：重定向。</li>
-<li>404：请求资源不存在，是最常见的状态。</li>
-<li>400：客户端请求有语法错误，不能被服务器所理解。</li>
-<li>401：请求未经授权。</li>
-<li>403：服务器收到请求，但是拒绝提供服务。</li>
-<li>500：服务器内部错误，是最常见的状态。</li>
-<li>503：服务器当前不能处理客户端的请求。</li>
-</ul>
-<hr>
-<h2 id="Q-A"><a class="header-anchor" href="#Q-A">¶</a>Q&amp;A</h2>
-<ul>
-<li>
-<p>get和post的区别<br>
-get请求的参数在url后面添加<br>
-post在请求体中间</p>
-</li>
-<li>
-<p>https加ssl, tsl, 证书</p>
-</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>协议</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我的博客是怎么创建的</title>
-    <url>/2020/02/16/%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<p>简单记录一下，博客的创建过程。</p>
-<a id="more"></a>
-<h2 id="安装环境"><a class="header-anchor" href="#安装环境">¶</a>安装环境</h2>
-<pre><code>在创建博客之前，首先要有Github账号，还有确保系统里有git工具。
-</code></pre>
-<hr>
-<h4 id="下载hexo"><a class="header-anchor" href="#下载hexo">¶</a>下载hexo</h4>
-<ol>
-<li>直接去nodejs.org官网下载node.js</li>
-<li>打开terminal下载hexo需要用到node.js的npm安装包管理器:</li>
-</ol>
-<h2 id="￼0"><a class="header-anchor" href="#￼0">¶</a><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">sudo su                     ##获取最高权限</span><br><span class="line">npm install -g cnpm --registry&#x3D;&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org </span><br><span class="line">                            ##淘宝的镜像源，用cnpm下载比较快</span><br><span class="line">cnpm intall -g hexo-cli     ##开始下载hexo</span><br></pre></td></tr></table></figure></h2>
-<h2 id="创建博客"><a class="header-anchor" href="#创建博客">¶</a>创建博客</h2>
-<h4 id="初始化博客"><a class="header-anchor" href="#初始化博客">¶</a>初始化博客</h4>
-<p>创建博客的代码也很简单：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">mkdir blog</span><br><span class="line">cd blog                     ##创个文件夹好管理</span><br><span class="line">sudo hexo init              ##初始化hexo</span><br><span class="line">hexo s                      ##可以在本地看一下，blog的模版，后续添加了内容也可以用这个指令去预览</span><br></pre></td></tr></table></figure>
-<h3 id="创建新文章"><a class="header-anchor" href="#创建新文章">¶</a>创建新文章</h3>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo new 文章名.md</span><br></pre></td></tr></table></figure>
-<p>一行代码即创建markdown格式的文章，也可以自己直接创建，一般存在 /blog/source/_posts 的路径下。</p>
-<hr>
-<h2 id="配置到远端仓库"><a class="header-anchor" href="#配置到远端仓库">¶</a>配置到远端仓库</h2>
-<h4 id="创建github仓库"><a class="header-anchor" href="#创建github仓库">¶</a>创建github仓库</h4>
-<p>这一步就是在github里面创建一个repository，就是存blog文件的，repository的name一定要是 github name + .github.io, <a href="http://xn--noonett-i22mo3ry3qkvkl5qky6a.github.io" target="_blank" rel="noopener">比如我的就是noonett.github.io</a></p>
-<h4 id="修过配置文件"><a class="header-anchor" href="#修过配置文件">¶</a>修过配置文件</h4>
-<p>在/blog/ 路径下有一个 _config.yml 文件，进入修改，找到deploy下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">type: git</span><br><span class="line">repo: https:&#x2F;&#x2F;github.com&#x2F;noonett&#x2F;noonett.github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure>
-<p>这里的repo就是repository仓库的地址。</p>
-<h4 id="部署至仓库"><a class="header-anchor" href="#部署至仓库">¶</a>部署至仓库</h4>
-<p>将本地现有的blog部署至远端仓库：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
-<p>然后就有自己的博客啦： 就是你的repository名字。</p>
-<h4 id="主题的更换"><a class="header-anchor" href="#主题的更换">¶</a>主题的更换</h4>
-<p>主题的更换也很简单方便，网上找到主题，clone到自己的仓库里，然后修改yml里的theme改成主题的名字即可，百度上，知乎上挺多的。</p>
-<hr>
-<h2 id="结束语"><a class="header-anchor" href="#结束语">¶</a>结束语</h2>
-<p>网上其实有很多教程，这里就是记录一下我的博客是如何创建的</p>
-<hr>
-<h2 id="参考文献"><a class="header-anchor" href="#参考文献">¶</a>参考文献</h2>
-<p><a href="https://www.bilibili.com/video/av44544186?from=search&amp;seid=16653039335337070050" target="_blank" rel="noopener">https://www.bilibili.com/video/av44544186?from=search&amp;seid=16653039335337070050</a>  手把手教你从0开始搭建自己的个人博客 |无坑版视频教程| hexo</p>
-]]></content>
-      <tags>
-        <tag>博客</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我来网上冲浪了</title>
-    <url>/2020/02/16/%E6%88%91%E6%9D%A5%E7%BD%91%E4%B8%8A%E5%86%B2%E6%B5%AA%E4%BA%86/</url>
-    <content><![CDATA[<h1>hello world</h1>
-<p>村通网了。</p>
-<a id="more"></a>
-<h1>Overview</h1>
-<p>近期基于github和hexo创建了这个blog，用next主题美化。</p>
-<h2 id="目的"><a class="header-anchor" href="#目的">¶</a>目的</h2>
-<p>记录一下学习笔记，同时也是记录一下生活，说白了就是一个笔记本吧。</p>
-<h2 id="接下来"><a class="header-anchor" href="#接下来">¶</a>接下来</h2>
-<p>接下来可能会做一篇blog创建的简单教程</p>
-]]></content>
-      <tags>
-        <tag>博客</tag>
-      </tags>
-  </entry>
+<search> 
+  
+  
+    
+    <entry>
+      <title>Git</title>
+      <link href="/2020/02/26/Git_learning/"/>
+      <url>/2020/02/26/Git_learning/</url>
+      
+        <content type="html"><![CDATA[<p>-最近刚开课，得上课和补数学，没时间搞别的东西。刚好cloud computing要用Git，整好系统得学一下Git，先更新一半-</p><h1>Git</h1><pre><code>免费分布式版本管理系统。相比于集中式管理的CVS，SVN：不必联网修改，强大的分支管理。</code></pre><a id="more"></a><h2 id="创建版本库"><a class="header-anchor" href="#创建版本库">¶</a>创建版本库</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># step 0: 初始化仓库</span></span><br><span class="line">git init</span><br><span class="line"><span class="comment"># step 1: 将文件加入仓库</span></span><br><span class="line">git add file1.txt</span><br><span class="line">git add file2.txt file3.txt</span><br><span class="line"><span class="comment"># step 2：提交（可以一次提交多个文件） -m表示添加说明</span></span><br><span class="line">git commit -m <span class="string">"add 3 files."</span></span><br></pre></td></tr></table></figure><h2 id="版本回退"><a class="header-anchor" href="#版本回退">¶</a>版本回退</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看版本日志</span></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line"><span class="comment">#一堆乱乱的字符是十六进制的commit id，防止多人协作版本号冲突</span></span><br><span class="line"><span class="comment">#一行显示</span></span><br><span class="line">git <span class="built_in">log</span> --pretty=oneline</span><br><span class="line"><span class="comment">#返回上一个版本 HEAD^ 上上个版本 HEAD^^</span></span><br><span class="line">git reset --hard HEAD^</span><br><span class="line"><span class="comment">#回到未来的那个被去掉的版本，找到commit id</span></span><br><span class="line">git reset --hard 1094a</span><br><span class="line">git reflog <span class="comment">#可以查看每次每次命令从而找到commit id</span></span><br></pre></td></tr></table></figure><h2 id="工作区和暂存区"><a class="header-anchor" href="#工作区和暂存区">¶</a>工作区和暂存区</h2><pre><code>工作区：每次的working directory, 比如/learngit版本库：工作区中的隐藏目录 /learngit/.git暂存区：版本库中的stage(index)。暂存区自动创建第一个分支 master， 并创建一个指针head指向master。工作流程：git add的时候将文件的修改存入暂存区，git commit将暂存区的所有内容提交到当前分支</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#查看stage</span></span><br><span class="line">git status</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 工程管理 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>矩阵与Numpy</title>
+      <link href="/2020/02/24/Math/"/>
+      <url>/2020/02/24/Math/</url>
+      
+        <content type="html"><![CDATA[<h1>矩阵乘法实现</h1><pre><code>这个函数还是很简单的，就是对应位置相乘就完事了，最后再用numpy来确认一下函数的正确性。</code></pre><a id="more"></a><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Matrix_multiplication</span><span class="params">(A,B, data = [])</span>:</span></span><br><span class="line">    C = []</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">not</span> A) <span class="keyword">or</span> (<span class="keyword">not</span> B):</span><br><span class="line">        <span class="keyword">return</span> C</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(A)):</span><br><span class="line">        row = []</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(B[<span class="number">0</span>])):</span><br><span class="line">            temp = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> a,b <span class="keyword">in</span> zip(range(len(A[<span class="number">0</span>])),range(len(B))):</span><br><span class="line">                temp += A[i][a] * B[b][j]</span><br><span class="line">            row.append(temp)</span><br><span class="line">        C.append(row)</span><br><span class="line">    <span class="keyword">return</span> C</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">A = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">7</span>):</span><br><span class="line">    row = []</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">7</span>):</span><br><span class="line">        row.append(i+j)</span><br><span class="line">    A.append(row)</span><br><span class="line">print(<span class="string">'A:'</span>)</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> A:</span><br><span class="line">    print(row) </span><br><span class="line">    </span><br><span class="line">B = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>,<span class="number">9</span>):</span><br><span class="line">    row = []</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">6</span>):</span><br><span class="line">        row.append(i+j)</span><br><span class="line">    B.append(row)</span><br><span class="line">print(<span class="string">'B:'</span>)</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> B:</span><br><span class="line">    print(row)</span><br></pre></td></tr></table></figure><pre><code>A:[2, 3, 4, 5, 6, 7][3, 4, 5, 6, 7, 8][4, 5, 6, 7, 8, 9][5, 6, 7, 8, 9, 10][6, 7, 8, 9, 10, 11][7, 8, 9, 10, 11, 12]B:[3, 4, 5, 6, 7, 8][4, 5, 6, 7, 8, 9][5, 6, 7, 8, 9, 10][6, 7, 8, 9, 10, 11][7, 8, 9, 10, 11, 12][8, 9, 10, 11, 12, 13]</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#A = []</span></span><br><span class="line">Matrix_multiplication(A,B)</span><br></pre></td></tr></table></figure><pre><code>[[166, 193, 220, 247, 274, 301], [199, 232, 265, 298, 331, 364], [232, 271, 310, 349, 388, 427], [265, 310, 355, 400, 445, 490], [298, 349, 400, 451, 502, 553], [331, 388, 445, 502, 559, 616]]</code></pre><h1>Numpy</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">a = np.array([</span><br><span class="line">(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>),</span><br><span class="line">(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>),</span><br><span class="line">(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>),</span><br><span class="line">(<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>),</span><br><span class="line">(<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>),</span><br><span class="line">(<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>)])</span><br><span class="line">b = np.array([</span><br><span class="line">(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>),</span><br><span class="line">(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>),</span><br><span class="line">(<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>),</span><br><span class="line">(<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>),</span><br><span class="line">(<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>),</span><br><span class="line">(<span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>)])</span><br></pre></td></tr></table></figure><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#矩阵乘法</span></span><br><span class="line">np.dot(a,b)</span><br></pre></td></tr></table></figure><pre><code>array([[166, 193, 220, 247, 274, 301],       [199, 232, 265, 298, 331, 364],       [232, 271, 310, 349, 388, 427],       [265, 310, 355, 400, 445, 490],       [298, 349, 400, 451, 502, 553],       [331, 388, 445, 502, 559, 616]])</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#矩阵加减</span></span><br><span class="line">print(a + b)</span><br><span class="line"><span class="comment">#矩阵平方</span></span><br><span class="line">print(a**<span class="number">2</span>)</span><br><span class="line"><span class="comment">#矩阵转置</span></span><br><span class="line">print(a.T)</span><br></pre></td></tr></table></figure><pre><code>[[ 5  7  9 11 13 15] [ 7  9 11 13 15 17] [ 9 11 13 15 17 19] [11 13 15 17 19 21] [13 15 17 19 21 23] [15 17 19 21 23 25]][[  4   9  16  25  36  49] [  9  16  25  36  49  64] [ 16  25  36  49  64  81] [ 25  36  49  64  81 100] [ 36  49  64  81 100 121] [ 49  64  81 100 121 144]][[ 2  3  4  5  6  7] [ 3  4  5  6  7  8] [ 4  5  6  7  8  9] [ 5  6  7  8  9 10] [ 6  7  8  9 10 11] [ 7  8  9 10 11 12]]</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 返回逆矩阵</span></span><br><span class="line">c = np.array([[<span class="number">1.0</span>, <span class="number">2.0</span>], [<span class="number">3.0</span>, <span class="number">4.0</span>]])</span><br><span class="line">print(np.linalg.inv(c))</span><br><span class="line"><span class="comment"># 矩阵的迹</span></span><br><span class="line">print(np.trace(c))</span><br></pre></td></tr></table></figure><pre><code>[[-2.   1. ] [ 1.5 -0.5]]5.0</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 特征值和特征向量</span></span><br><span class="line">eigenvalues, eigenvector = np.linalg.eig(c)</span><br><span class="line">print(eigenvalues)</span><br><span class="line">print(eigenvector)</span><br></pre></td></tr></table></figure><pre><code>[-0.37228132  5.37228132][[-0.82456484 -0.41597356] [ 0.56576746 -0.90937671]]</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 数学 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>爬取豆瓣电影前250的数据</title>
+      <link href="/2020/02/23/douban_movie-3/"/>
+      <url>/2020/02/23/douban_movie-3/</url>
+      
+        <content type="html"><![CDATA[<pre><code>爬一下豆瓣top250的电影做一下练习，今天效率比较低只做了一点，明天做完再重构一下代码，用多线程实现。2/24 封装了函数，最近得上课，慢慢更新了。</code></pre><a id="more"></a><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#导入库</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> lxml</span><br><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br></pre></td></tr></table></figure><h1>发送请求</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#send request</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_request</span><span class="params">(url, headers)</span>:</span></span><br><span class="line">    r = requests.get(url,headers=headers)</span><br><span class="line">    print(r.status_code)</span><br><span class="line">    <span class="keyword">return</span> r</span><br></pre></td></tr></table></figure><h1>提取数据</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#fetch data</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fetch</span><span class="params">(resp, headers)</span>:</span></span><br><span class="line">    selector = lxml.etree.HTML(resp.text)    <span class="comment">#generate object</span></span><br><span class="line">    titles = selector.xpath(<span class="string">'//div[@class = "hd"]/a/span[1]/text()'</span>)<span class="comment">#fetching titles of movies       </span></span><br><span class="line">    urls = selector.xpath(<span class="string">'//div[@class = "hd"]/a/@href'</span>) <span class="comment">#fetching urls of description</span></span><br><span class="line">    <span class="comment">#visit the url to fetch the descriptions</span></span><br><span class="line">    movie_text = []</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        sub_r = requests.get(url,headers=headers)</span><br><span class="line">        selector = lxml.etree.HTML(sub_r.text)</span><br><span class="line">        url_text = <span class="string">' '</span>.join(selector.xpath(<span class="string">'//span[@property="v:summary"]/text()'</span>)).replace(<span class="string">' '</span>,<span class="string">''</span>).replace(<span class="string">'\n'</span>,<span class="string">''</span>).replace(<span class="string">'\u3000'</span>,<span class="string">''</span>)</span><br><span class="line">        movie_text.append(url_text)        </span><br><span class="line">    <span class="comment">#zip the content together</span></span><br><span class="line">    data = &#123;&#125;</span><br><span class="line">    data.update(zip(titles,movie_text))</span><br><span class="line">    <span class="keyword">return</span> data</span><br></pre></td></tr></table></figure><h1>存入文件中</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">download</span><span class="params">(data)</span>:</span></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        filepath = os.curdir</span><br><span class="line">        filename = <span class="string">'douban_top250.txt'</span>  </span><br><span class="line">        <span class="keyword">with</span> open(filename,<span class="string">'w'</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(<span class="string">'DouBan Movie--Top 250'</span>)</span><br><span class="line">            <span class="keyword">for</span> key,value <span class="keyword">in</span> data.items():</span><br><span class="line">                f.write(<span class="string">'\n\n'</span>)</span><br><span class="line">                f.write(key)</span><br><span class="line">                f.write(<span class="string">'\n'</span>)</span><br><span class="line">                f.write(value)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        print(<span class="string">'Download error!!'</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        print(<span class="string">'Download success!!'</span>)</span><br></pre></td></tr></table></figure><h1>主函数</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#main, 循环实现翻页</span></span><br><span class="line">headers = &#123;</span><br><span class="line">        <span class="string">'user-agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chro'</span></span><br><span class="line">                      <span class="string">'me/53.0.2785.104 Safari/537.36 Core/1.53.2372.400 QQBrowser/9.5.10548.400'</span></span><br><span class="line">&#125;</span><br><span class="line">a = <span class="number">0</span></span><br><span class="line">data = &#123;&#125;</span><br><span class="line"><span class="keyword">while</span>(a != <span class="number">250</span>):</span><br><span class="line">    url =  <span class="string">"https://movie.douban.com/top250?start="</span>+ str(a) +<span class="string">"&amp;filter="</span></span><br><span class="line">    resp = send_request(url, headers)</span><br><span class="line">    data_chunk = fetch(resp, headers)</span><br><span class="line">    data.update(data_chunk)</span><br><span class="line">    a += <span class="number">25</span></span><br><span class="line">download(data)</span><br></pre></td></tr></table></figure><pre><code>200200200200200200200200200200Download success!!</code></pre>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 爬虫 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>beatiful-soup和lxml</title>
+      <link href="/2020/02/20/beatiful-soup/"/>
+      <url>/2020/02/20/beatiful-soup/</url>
+      
+        <content type="html"><![CDATA[<p>beautiful soup是一个从html或xml文件中提取数据的python库，很方便。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> beautifulsoup</span><br></pre></td></tr></table></figure><a id="more"></a><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">html_doc = <span class="string">"""</span></span><br><span class="line"><span class="string">&lt;html&gt;&lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;</span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">&lt;p class="title"&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;p class="story"&gt;Once upon a time there were three little sisters; and their names were</span></span><br><span class="line"><span class="string">&lt;a href="http://example.com/elsie" class="sister" id="link1"&gt;Elsie&lt;/a&gt;,</span></span><br><span class="line"><span class="string">&lt;a href="http://example.com/lacie" class="sister" id="link2"&gt;Lacie&lt;/a&gt; and</span></span><br><span class="line"><span class="string">&lt;a href="http://example.com/tillie" class="sister" id="link3"&gt;Tillie&lt;/a&gt;;</span></span><br><span class="line"><span class="string">and they lived at the bottom of a well.&lt;/p&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;p class="story"&gt;...&lt;/p&gt;</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line">soup = BeautifulSoup(html_doc, <span class="string">'html.parser'</span>) <span class="comment">#创建一个soup对象</span></span><br><span class="line">print(soup.prettify()) <span class="comment">#标准格式输出</span></span><br></pre></td></tr></table></figure><h2 id="浏览结构化数据"><a class="header-anchor" href="#浏览结构化数据">¶</a>浏览结构化数据</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">soup.title <span class="comment">#获取title</span></span><br><span class="line">soup.a.attrs <span class="comment">#取出a标签的树型</span></span><br><span class="line">soup.find(id=<span class="string">'link3'</span>) <span class="comment">#</span></span><br><span class="line"><span class="comment">#找到所有a标签的链接，find_all('')返回的是list</span></span><br><span class="line"><span class="keyword">for</span> link <span class="keyword">in</span> soup.find_all(<span class="string">'a'</span>):</span><br><span class="line">    print(link.get(<span class="string">'href'</span>))</span><br><span class="line">    <span class="comment"># http://example.com/elsie</span></span><br><span class="line">    <span class="comment"># http://example.com/lacie</span></span><br><span class="line">    <span class="comment"># http://example.com/tillie</span></span><br><span class="line">print(soup.get_text()) <span class="comment">#获取所有文字内容</span></span><br></pre></td></tr></table></figure><h2 id="支持css选择器"><a class="header-anchor" href="#支持css选择器">¶</a>支持css选择器</h2><h2 id="￼3"><a class="header-anchor" href="#￼3">¶</a><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">soup.select(<span class="string">'.story'</span>) <span class="comment">#查找类名为story的类标签</span></span><br><span class="line">soup.select(<span class="string">'#link'</span>) <span class="comment">#tag id查找也可以</span></span><br></pre></td></tr></table></figure></h2><h1>lxml</h1><p>用lxml作为解析的引擎。底层是c写的，速度比较快。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup_lxml = BeautifulSoup(html_doc, <span class="string">'lxml'</span>)</span><br></pre></td></tr></table></figure><h2 id="xpath"><a class="header-anchor" href="#xpath">¶</a>xpath</h2><p>xpath的性能挺不错，xml文档中查找信息的语言。</p><h3 id="概念"><a class="header-anchor" href="#概念">¶</a>概念</h3><h4 id="Node-节点"><a class="header-anchor" href="#Node-节点">¶</a>Node: 节点</h4><p>元素，属性，文本，命名空间，文档（根）节点</p><h4 id="节点关系"><a class="header-anchor" href="#节点关系">¶</a>节点关系</h4><p>Parent 父<br>Children 子<br>Sibling：同胞，共用parent<br>Ancestor：先辈<br>Descendant：后代</p><h3 id="xpath语法"><a class="header-anchor" href="#xpath语法">¶</a>xpath语法</h3><table><thead><tr><th>表达式</th><th style="text-align:center">描述</th></tr></thead><tbody><tr><td>nodename</td><td style="text-align:center">选取此节点的所有子节点的文本</td></tr><tr><td>//</td><td style="text-align:center">从任意子节点中选取文本</td></tr><tr><td>/</td><td style="text-align:center">从根节点中选取(已选择的节点的节点中)</td></tr><tr><td>.</td><td style="text-align:center">表示选取当前节点</td></tr><tr><td>…</td><td style="text-align:center">表示选取当前节点的父节点</td></tr><tr><td>@</td><td style="text-align:center">选取属性</td></tr></tbody></table><h2 id="￼5"><a class="header-anchor" href="#￼5">¶</a><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> lxml <span class="keyword">import</span> etree</span><br><span class="line">r = requests.get(<span class="string">'http://iguye.com/books.xml'</span>)</span><br><span class="line">se = etree.HTML(r.text) <span class="comment">#创建一个选择器对象</span></span><br><span class="line">print(se.xpath(<span class="string">'//book'</span>)) <span class="comment">#//表示从任意子节点中选取</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book/author/text()'</span>)) <span class="comment">#选取书店下所有的书本的作者名字</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book/title/@lang'</span>))<span class="comment">#选取书店下所有的书本的语言信息</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[1]/title/text()'</span>)) <span class="comment">#第一本书</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[last()]/title/text()'</span>)) <span class="comment">#最后一本书</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[last()-1]/title/text()'</span>)) <span class="comment">#倒数第二本书</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[position()&lt;3]/title/text()'</span>)) <span class="comment">#前两本书</span></span><br><span class="line">print(se.xpath(<span class="string">'//book[@category="web"]/title/text()'</span>))<span class="comment">#选取所有分类为web的节点</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[price&gt;3]/price/text()'</span>))<span class="comment">#选取所有价格大于30.0元的书本</span></span><br><span class="line">print(se.xpath(<span class="string">'//bookstore/book[contains(@class,"book")]/@class/text()'</span>))<span class="comment">#类名中包含book的书本</span></span><br></pre></td></tr></table></figure></h2><h1>解析器比较</h1><p>re虽然速度最快，但是学习成本高。beautifulsoup则较慢。所有折中的方案选择lxml为佳。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 爬虫 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>requests</title>
+      <link href="/2020/02/19/requests/"/>
+      <url>/2020/02/19/requests/</url>
+      
+        <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br></pre></td></tr></table></figure><p>requests比标准库的urllib方便很多，代码也很简洁明了。</p><a id="more"></a><h1>发送请求</h1><h2 id="request发送get和post请求"><a class="header-anchor" href="#request发送get和post请求">¶</a>request发送get和post请求</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r = requests.get(<span class="string">'https://api.github.com/events'</span>) <span class="comment">#发送get请求</span></span><br><span class="line">r = requests.post(<span class="string">'http://httpbin.org/post'</span>, data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;) <span class="comment">#发送post请求</span></span><br></pre></td></tr></table></figure><h2 id="传递url参数"><a class="header-anchor" href="#传递url参数">¶</a>传递url参数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">payload = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>: [<span class="string">'value2'</span>, <span class="string">'value3'</span>]&#125; <span class="comment">#可以添加一个列表</span></span><br><span class="line">r = requests.get(<span class="string">'https://api.github.com/events'</span>, params = payload) </span><br><span class="line">print(r.url) <span class="comment">#URL会被正确编码</span></span><br><span class="line"><span class="comment">#字典中的None值不会被添加到URL里</span></span><br><span class="line">r = requests.post(<span class="string">'http://httpbin.org/post'</span>, data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;) <span class="comment">#发送post请求</span></span><br><span class="line"><span class="comment">#http://httpbin.org/get?key1=value1&amp;key2=value2&amp;key2=value3</span></span><br></pre></td></tr></table></figure><h2 id="响应内容"><a class="header-anchor" href="#响应内容">¶</a>响应内容</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">r.text    <span class="comment">#响应报文</span></span><br><span class="line">r.encoding <span class="comment">#查看编码方式</span></span><br><span class="line">r.encoding = <span class="string">'ISO-8859-1'</span> <span class="comment">#改变响应报文的编码方式</span></span><br><span class="line">r.content <span class="comment">#原本的报文</span></span><br><span class="line">r.json()  <span class="comment">#json解码</span></span><br></pre></td></tr></table></figure><h2 id="定制请求头"><a class="header-anchor" href="#定制请求头">¶</a>定制请求头</h2><h3 id="自定义user-agent"><a class="header-anchor" href="#自定义user-agent">¶</a>自定义user-agent</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ua = <span class="string">' Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Safari/605.1.15'</span></span><br><span class="line">headers = &#123;<span class="string">'user-agent'</span>:ua&#125;</span><br><span class="line">r = requests.get(<span class="string">'http://httpbin.org/headers'</span>, headers = headers)</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure><h3 id="cookie"><a class="header-anchor" href="#cookie">¶</a>cookie</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cookies = dict(userid = <span class="string">'123456'</span>, token = <span class="string">'#####'</span>)</span><br><span class="line">r = requests.get(<span class="string">'http://httpbin.org/cookies'</span>, cookies = cookies)</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure><h3 id="basic-auth认证"><a class="header-anchor" href="#basic-auth认证">¶</a>basic-auth认证</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r = requests.get(<span class="string">'http://httpbin.org/basic-auth/xxx/1123'</span>, auth = (<span class="string">'xxx'</span>,<span class="string">'1123'</span>))</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure><h3 id="状态码"><a class="header-anchor" href="#状态码">¶</a>状态码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">r = requests.get(<span class="string">'http://httpbin.org/status/404'</span>)</span><br><span class="line">r.status_code</span><br><span class="line">r.raise_for_status() <span class="comment">#抛出异常，4xx和5xx的</span></span><br></pre></td></tr></table></figure><h3 id="session对象"><a class="header-anchor" href="#session对象">¶</a>session对象</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#session对象会保存服务器返回的set-cookie头信息里的内容</span></span><br><span class="line">s = requests.session()</span><br><span class="line">s.get(<span class="string">'http://httpbin.org/cookies/set/userid/123456789'</span>)</span><br><span class="line">s.get(<span class="string">'http://httpbin.org/cookies/set/token/######'</span>)</span><br><span class="line"><span class="comment">#下一次请求会将本地所有的cookies信息自动添加到请求头信息里</span></span><br><span class="line">r = s.get(<span class="string">'http://httpbin.org/cookies'</span>)</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure><h3 id="在requests中使用代理"><a class="header-anchor" href="#在requests中使用代理">¶</a>在requests中使用代理</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(<span class="string">'不使用代理：'</span>, requests.get(<span class="string">'http://httpbin.org/ip'</span>).json())</span><br><span class="line">print(<span class="string">'使用代理：'</span>,requests.get(<span class="string">'http://httpbin.org/ip'</span>, proxies=&#123;<span class="string">'http'</span>:<span class="string">'http://iguye.com:41801'</span>&#125;).json())</span><br></pre></td></tr></table></figure><h3 id="超时报错"><a class="header-anchor" href="#超时报错">¶</a>超时报错</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">r = requests.get(<span class="string">'http://httpbin.org/delay/5'</span>,timeout = <span class="number">5</span>)</span><br><span class="line">print(r.json())</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 爬虫 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>url结构</title>
+      <link href="/2020/02/19/url%E7%BB%93%E6%9E%84/"/>
+      <url>/2020/02/19/url%E7%BB%93%E6%9E%84/</url>
+      
+        <content type="html"><![CDATA[<p><img src="/.io//timg.png" alt="url结构"></p><a id="more"></a><p>从上面的URL可以看出，一个完整的URL包括以下几部分：</p><p>1、协议部分：该URL的协议部分为“http：”，这代表网页使用的是HTTP协议。在Internet中可以使用多种协议，如HTTP，FTP等等本例中使用的是HTTP协议。在&quot;HTTP&quot;后面的“//”为分隔符</p><p>2、域名部分：该URL的域名部分为“<a href="http://www.aspxfans.com" target="_blank" rel="noopener">www.aspxfans.com</a>”。一个URL中，也可以使用IP地址作为域名使用</p><p>3、端口部分：跟在域名后面的是端口，域名和端口之间使用“:”作为分隔符。端口不是一个URL必须的部分，如果省略端口部分，将采用默认端口80</p><p>4、虚拟目录部分：从域名后的第一个“/”开始到最后一个“/”为止，是虚拟目录部分。虚拟目录也不是一个URL必须的部分。本例中的虚拟目录是“/news/”</p><p>5、文件名部分：从域名后的最后一个“/”开始到“？”为止，是文件名部分，如果没有“?”,则是从域名后的最后一个“/”开始到“#”为止，是文件部分，如果没有“？”和“#”，那么从域名后的最后一个“/”开始到结束，都是文件名部分。本例中的文件名是“index.asp”。文件名部分也不是一个URL必须的部分，如果省略该部分，则使用默认的文件名</p><p>6、锚部分：从“#”开始到最后，都是锚部分。本例中的锚部分是“name”。锚部分也不是一个URL必须的部分</p><p>7、参数部分：从“？”开始到“#”为止之间的部分为参数部分，又称搜索部分、查询部分。本例中的参数部分为“boardID=5&amp;ID=24618&amp;page=1”。参数可以允许有多个参数，参数与参数之间用“&amp;”作为分隔符。</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 爬虫 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>curl和wget</title>
+      <link href="/2020/02/18/curl%E5%92%8Cwget%E4%BA%86%E8%A7%A3/"/>
+      <url>/2020/02/18/curl%E5%92%8Cwget%E4%BA%86%E8%A7%A3/</url>
+      
+        <content type="html"><![CDATA[<h1>curl</h1><p>curl是系统自带的c库，简单过一下，记录一下参数。<br>不带参数就是，GET请求。</p><a id="more"></a><h2 id="A"><a class="header-anchor" href="#A">¶</a>-A</h2><p>指定客户端的代理标头</p><h2 id="B"><a class="header-anchor" href="#B">¶</a>-B</h2><p>发送cookie</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -b <span class="string">'foo1=bar;foo2=bar2'</span> https://google.com</span><br></pre></td></tr></table></figure><h2 id="X"><a class="header-anchor" href="#X">¶</a>-X</h2><p>用指定方式请求</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X Post https://google.com</span><br></pre></td></tr></table></figure><h2 id="d"><a class="header-anchor" href="#d">¶</a>-d</h2><p>用Post请求</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -d <span class="string">"a=1&amp;b=1"</span> https://google.com</span><br></pre></td></tr></table></figure><h2 id="L"><a class="header-anchor" href="#L">¶</a>-L</h2><p>跟随服务器重定向</p><h2 id="H"><a class="header-anchor" href="#H">¶</a>-H</h2><p>设置http请求头信息</p><h2 id="k"><a class="header-anchor" href="#k">¶</a>-k</h2><p>跳过ssl检测(https)</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -k https://www.example.com</span><br></pre></td></tr></table></figure><h2 id="O"><a class="header-anchor" href="#O">¶</a>-O</h2><p>以远程的文件名下载保存</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -O https://httpbin.org/image/jpeg</span><br></pre></td></tr></table></figure><h2 id="o"><a class="header-anchor" href="#o">¶</a>-o</h2><p>以自定的文件名下载保存</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o wolf.jpeg https://httpbin.org/image/jpeg</span><br></pre></td></tr></table></figure><h2 id="s"><a class="header-anchor" href="#s">¶</a>-s</h2><p>不显示无关信息</p><h2 id="v"><a class="header-anchor" href="#v">¶</a>-v</h2><p>显示所有信息</p><hr><h1>wget</h1><p>系统自带的下载文件的工具。</p><h2 id="O-v2"><a class="header-anchor" href="#O-v2">¶</a>-O</h2><p>以指定文件名存文件</p><h2 id="–limit-rate"><a class="header-anchor" href="#–limit-rate">¶</a>–limit-rate=</h2><p>限速</p><h2 id="c"><a class="header-anchor" href="#c">¶</a>-c</h2><p>断点续传</p><h2 id="b"><a class="header-anchor" href="#b">¶</a>-b</h2><p>后台下载</p><h2 id="U"><a class="header-anchor" href="#U">¶</a>-U</h2><p>设置user-agent</p><h2 id="mirror"><a class="header-anchor" href="#mirror">¶</a>-mirror</h2><p>镜像某个网站</p><h2 id="p"><a class="header-anchor" href="#p">¶</a>-p</h2><p>下载网页的所有内容</p><h2 id="r"><a class="header-anchor" href="#r">¶</a>-r</h2><p>递归下载所有网页中所有链接</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 爬虫 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>http(超文本传输协议)</title>
+      <link href="/2020/02/17/http%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/"/>
+      <url>/2020/02/17/http%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/</url>
+      
+        <content type="html"><![CDATA[<pre><code>基于TCP/IP的应用层协议，客户端和服务端数据传输的格式，默认端口：80。 基于请求与响应模式，无状态。</code></pre><a id="more"></a><h1>http header</h1><h2 id="请求报文"><a class="header-anchor" href="#请求报文">¶</a>请求报文</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">POST &#x2F;test.php HTTP&#x2F;1.1               &#x2F;&#x2F;请求行</span><br><span class="line">HOST：www.test.com                    &#x2F;&#x2F;请求头</span><br><span class="line">User-Agent：Mozilla&#x2F;5.0 （windows NT 6.1；rv：15.0）Gecko&#x2F;20100101 Firefox&#x2F;15.0        </span><br><span class="line">                                    &#x2F;&#x2F;空白行，代表请求头结束</span><br><span class="line">Username&#x3D;admin&amp;password&#x3D;admin       &#x2F;&#x2F;请求正文</span><br></pre></td></tr></table></figure><p>请求行：请求方式 + 请求资源路径 + 版本<br>请求头：发起请求的主机信息<br>正文：  optional</p><h3 id="请求头"><a class="header-anchor" href="#请求头">¶</a>请求头</h3><ul><li>Host 请求报头域主要用于指定被请求资源的Internet主机和端口。</li><li>User-Agent 请求报头域允许客户端将它的操作系统、浏览器和其他属性告诉服务器。</li><li>Referer 包含一个URL，代表当前访问URL的上一个URL，也就是说，用户是从什么地方来到本页面。当前请求的原始URL地址。</li><li>Cookie 是非常重要的请求头，常用来表示请求者的身份等。</li><li>Accept 这个消息头用于告诉服务器客户端愿意接受那些内容，比如图像类，办公文档格式等等。</li></ul><h3 id="请求方式"><a class="header-anchor" href="#请求方式">¶</a>请求方式</h3><p><img src="http%E8%AF%B7%E6%B1%82%E6%96%B9%E5%BC%8F.png" alt="http请求方式"></p><hr><h2 id="响应报文"><a class="header-anchor" href="#响应报文">¶</a>响应报文</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">HTTP&#x2F;1.1 200 OK    &#x2F;&#x2F;响应行</span><br><span class="line">Date: Sun, 15 Nov 2015 11:02:04 GMT    &#x2F;&#x2F;响应头</span><br><span class="line">Server: bfe&#x2F;1.0.8.9</span><br><span class="line">Content-Length: 2605</span><br><span class="line">Content-Type: application&#x2F;javascript</span><br><span class="line">Cache-Control: max-age&#x3D;315360000</span><br><span class="line">Expires: Fri, 13 Jun 2025 09:54:00 GMT</span><br><span class="line">Content-Encoding: gzip</span><br><span class="line">Set-Cookie: H_PS_PSSID&#x3D;2022_1438_1944_1788; path&#x3D;&#x2F;; domain&#x3D;test.com</span><br><span class="line">Connection: keep-alive</span><br><span class="line">      &#x2F;&#x2F;空白行，代表响应头结束</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;title&gt; Index.html &lt;&#x2F;title&gt;&lt;&#x2F;head&gt;  &#x2F;&#x2F;响应正文消息主题</span><br></pre></td></tr></table></figure><p>响应行：版本+状态码<br>响应头：服务端的信息</p><h3 id="响应头"><a class="header-anchor" href="#响应头">¶</a>响应头</h3><p><img src="http%E5%93%8D%E5%BA%94%E5%A4%B4.png" alt="http响应头"></p><h3 id="状态码"><a class="header-anchor" href="#状态码">¶</a>状态码</h3><p>常见的状态码描述如下：</p><ul><li>200：客户端请求成功，是最常见的状态。</li><li>302：重定向。</li><li>404：请求资源不存在，是最常见的状态。</li><li>400：客户端请求有语法错误，不能被服务器所理解。</li><li>401：请求未经授权。</li><li>403：服务器收到请求，但是拒绝提供服务。</li><li>500：服务器内部错误，是最常见的状态。</li><li>503：服务器当前不能处理客户端的请求。</li></ul><hr><h2 id="Q-A"><a class="header-anchor" href="#Q-A">¶</a>Q&amp;A</h2><ul><li><p>get和post的区别<br>get请求的参数在url后面添加<br>post在请求体中间</p></li><li><p>https加ssl, tsl, 证书</p></li></ul>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 协议 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>我的博客是怎么创建的</title>
+      <link href="/2020/02/16/%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/"/>
+      <url>/2020/02/16/%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/</url>
+      
+        <content type="html"><![CDATA[<p>简单记录一下，博客的创建过程。</p><a id="more"></a><h2 id="安装环境"><a class="header-anchor" href="#安装环境">¶</a>安装环境</h2><pre><code>在创建博客之前，首先要有Github账号，还有确保系统里有git工具。</code></pre><hr><h4 id="下载hexo"><a class="header-anchor" href="#下载hexo">¶</a>下载hexo</h4><ol><li>直接去nodejs.org官网下载node.js</li><li>打开terminal下载hexo需要用到node.js的npm安装包管理器:</li></ol><h2 id="￼0"><a class="header-anchor" href="#￼0">¶</a><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo su                     ##获取最高权限</span><br><span class="line">npm install -g cnpm --registry&#x3D;&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org </span><br><span class="line">                            ##淘宝的镜像源，用cnpm下载比较快</span><br><span class="line">cnpm intall -g hexo-cli     ##开始下载hexo</span><br></pre></td></tr></table></figure></h2><h2 id="创建博客"><a class="header-anchor" href="#创建博客">¶</a>创建博客</h2><h4 id="初始化博客"><a class="header-anchor" href="#初始化博客">¶</a>初始化博客</h4><p>创建博客的代码也很简单：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir blog</span><br><span class="line">cd blog                     ##创个文件夹好管理</span><br><span class="line">sudo hexo init              ##初始化hexo</span><br><span class="line">hexo s                      ##可以在本地看一下，blog的模版，后续添加了内容也可以用这个指令去预览</span><br></pre></td></tr></table></figure><h3 id="创建新文章"><a class="header-anchor" href="#创建新文章">¶</a>创建新文章</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new 文章名.md</span><br></pre></td></tr></table></figure><p>一行代码即创建markdown格式的文章，也可以自己直接创建，一般存在 /blog/source/_posts 的路径下。</p><hr><h2 id="配置到远端仓库"><a class="header-anchor" href="#配置到远端仓库">¶</a>配置到远端仓库</h2><h4 id="创建github仓库"><a class="header-anchor" href="#创建github仓库">¶</a>创建github仓库</h4><p>这一步就是在github里面创建一个repository，就是存blog文件的，repository的name一定要是 github name + .github.io, <a href="http://xn--noonett-i22mo3ry3qkvkl5qky6a.github.io" target="_blank" rel="noopener">比如我的就是noonett.github.io</a></p><h4 id="修过配置文件"><a class="header-anchor" href="#修过配置文件">¶</a>修过配置文件</h4><p>在/blog/ 路径下有一个 _config.yml 文件，进入修改，找到deploy下：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type: git</span><br><span class="line">repo: https:&#x2F;&#x2F;github.com&#x2F;noonett&#x2F;noonett.github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure><p>这里的repo就是repository仓库的地址。</p><h4 id="部署至仓库"><a class="header-anchor" href="#部署至仓库">¶</a>部署至仓库</h4><p>将本地现有的blog部署至远端仓库：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure><p>然后就有自己的博客啦： 就是你的repository名字。</p><h4 id="主题的更换"><a class="header-anchor" href="#主题的更换">¶</a>主题的更换</h4><p>主题的更换也很简单方便，网上找到主题，clone到自己的仓库里，然后修改yml里的theme改成主题的名字即可，百度上，知乎上挺多的。</p><hr><h2 id="结束语"><a class="header-anchor" href="#结束语">¶</a>结束语</h2><p>网上其实有很多教程，这里就是记录一下我的博客是如何创建的</p><hr><h2 id="参考文献"><a class="header-anchor" href="#参考文献">¶</a>参考文献</h2><p><a href="https://www.bilibili.com/video/av44544186?from=search&amp;seid=16653039335337070050" target="_blank" rel="noopener">https://www.bilibili.com/video/av44544186?from=search&amp;seid=16653039335337070050</a>  手把手教你从0开始搭建自己的个人博客 |无坑版视频教程| hexo</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>我来网上冲浪了</title>
+      <link href="/2020/02/16/%E6%88%91%E6%9D%A5%E7%BD%91%E4%B8%8A%E5%86%B2%E6%B5%AA%E4%BA%86/"/>
+      <url>/2020/02/16/%E6%88%91%E6%9D%A5%E7%BD%91%E4%B8%8A%E5%86%B2%E6%B5%AA%E4%BA%86/</url>
+      
+        <content type="html"><![CDATA[<h1>hello world</h1><p>村通网了。</p><a id="more"></a><h1>Overview</h1><p>近期基于github和hexo创建了这个blog，用next主题美化。</p><h2 id="目的"><a class="header-anchor" href="#目的">¶</a>目的</h2><p>记录一下学习笔记，同时也是记录一下生活，说白了就是一个笔记本吧。</p><h2 id="接下来"><a class="header-anchor" href="#接下来">¶</a>接下来</h2><p>接下来可能会做一篇blog创建的简单教程</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> 博客 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
 </search>
