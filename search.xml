@@ -68,6 +68,11 @@ B:
  [ 1.5 -0.5]]
 5.0
 </code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 特征值和特征向量</span></span><br><span class="line">eigenvalues, eigenvector = np.linalg.eig(c)</span><br><span class="line">print(eigenvalues)</span><br><span class="line">print(eigenvector)</span><br></pre></td></tr></table></figure>
+<pre><code>[-0.37228132  5.37228132]
+[[-0.82456484 -0.41597356]
+ [ 0.56576746 -0.90937671]]
+</code></pre>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
