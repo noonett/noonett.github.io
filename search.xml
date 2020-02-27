@@ -1,25 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Git</title>
+    <title>Git一文通</title>
     <url>/2020/02/26/Git_learning/</url>
     <content><![CDATA[<h1>Git</h1>
-<pre><code>免费分布式版本管理系统。相比于集中式管理的CVS，SVN：不必联网修改，强大的分支管理。
+<pre><code>免费分布式版本管理系统。相比于集中式管理的CVS，SVN：不必联网修改，强大的分支管理。更关键的是：Git跟踪并管理的是文件的修改，减少了上传量
 </code></pre>
 <a id="more"></a>
 <h2 id="创建版本库"><a class="header-anchor" href="#创建版本库">¶</a>创建版本库</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># step 0: 初始化仓库</span></span><br><span class="line">git init</span><br><span class="line"><span class="comment"># step 1: 将文件加入仓库</span></span><br><span class="line">git add file1.txt</span><br><span class="line">git add file2.txt file3.txt</span><br><span class="line"><span class="comment"># step 2：提交（可以一次提交多个文件） -m表示添加说明</span></span><br><span class="line">git commit -m <span class="string">"add 3 files."</span></span><br></pre></td></tr></table></figure>
 <h2 id="版本回退"><a class="header-anchor" href="#版本回退">¶</a>版本回退</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看版本日志</span></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line"><span class="comment">#一堆乱乱的字符是十六进制的commit id，防止多人协作版本号冲突</span></span><br><span class="line"><span class="comment">#一行显示</span></span><br><span class="line">git <span class="built_in">log</span> --pretty=oneline</span><br><span class="line"><span class="comment">#返回上一个版本 HEAD^ 上上个版本 HEAD^^</span></span><br><span class="line">git reset --hard HEAD^</span><br><span class="line"><span class="comment">#回到未来的那个被去掉的版本，找到commit id</span></span><br><span class="line">git reset --hard 1094a</span><br><span class="line">git reflog <span class="comment">#可以查看每次每次命令从而找到commit id</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看版本日志</span></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line"><span class="comment">#一堆乱乱的字符是十六进制的commit id，防止多人协作版本号冲突</span></span><br><span class="line"><span class="comment">#一行显示</span></span><br><span class="line">git <span class="built_in">log</span> --pretty=oneline</span><br><span class="line">git <span class="built_in">log</span> --graph --pretty=oneline --abbrev-commit</span><br><span class="line"><span class="comment">#返回上一个版本 HEAD^ 上上个版本 HEAD^^</span></span><br><span class="line">git reset --hard HEAD^</span><br><span class="line"><span class="comment">#回到未来的那个被去掉的版本，找到commit id</span></span><br><span class="line">git reset --hard 1094a</span><br><span class="line">git reflog <span class="comment">#可以查看每次每次命令从而找到commit id</span></span><br></pre></td></tr></table></figure>
 <h2 id="工作区和暂存区"><a class="header-anchor" href="#工作区和暂存区">¶</a>工作区和暂存区</h2>
 <pre><code>工作区：每次的working directory, 比如/learngit
 版本库：工作区中的隐藏目录 /learngit/.git
 暂存区：版本库中的stage(index)。暂存区自动创建第一个分支 master， 并创建一个指针head指向master。
 工作流程：git add的时候将文件的修改存入暂存区，git commit将暂存区的所有内容提交到当前分支
 </code></pre>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看stage</span></span><br><span class="line">git status</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看stage</span></span><br><span class="line">git status</span><br><span class="line"><span class="comment">#查看工作区和版本库里文件的不同</span></span><br><span class="line">git diff HEAD -- readme.txt</span><br></pre></td></tr></table></figure>
+<h2 id="撤销修改"><a class="header-anchor" href="#撤销修改">¶</a>撤销修改</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Level 1: 返回到修改的上一个状态</span></span><br><span class="line">git checkout -- readme.txt</span><br></pre></td></tr></table></figure>
+<p>有两种情况：<br>
+一种是readme.txt自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；<br>
+一种是readme.txt已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。<br>
+（后续的分支管理，也会有check out， <em>–</em> 这个很关键）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#Level 2: 可以从暂存区回退至工作区，HEAD表示最新版本</span></span><br><span class="line">git reset HEAD readme.txt</span><br><span class="line"><span class="comment">#再接上 git checkout --readme.txt 彻底消失</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Level 3: 版本回退</span></span><br></pre></td></tr></table></figure>
+<h2 id="删除文件"><a class="header-anchor" href="#删除文件">¶</a>删除文件</h2>
+<ol>
+<li>确实删除文件</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#在工作区删除了文件</span></span><br><span class="line">rm test.txt</span><br><span class="line"><span class="comment">#git status会提</span></span><br><span class="line">git status</span><br><span class="line"><span class="comment">#在版本库里删除文件</span></span><br><span class="line">it rm test.txt</span><br><span class="line"><span class="comment">#确认提交</span></span><br><span class="line">git commit -m <span class="string">"remove test.txt"</span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>误删了</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#用返回上一个状态来还原，其实是从版本库中替换回来</span></span><br><span class="line">git checkout -- test.txt</span><br></pre></td></tr></table></figure>
+<h2 id="远程仓库"><a class="header-anchor" href="#远程仓库">¶</a>远程仓库</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#在git库里添加sshkey</span></span><br><span class="line">ssh-add <span class="string">"你的 id-rsa 文件地址"</span></span><br><span class="line"><span class="comment">#将本地内容推送到远程 远程库名字：origin</span></span><br><span class="line">git remote add origin git@github.com:noonett/learngit.git</span><br><span class="line"><span class="comment">#将github仓库的内容git pull下来</span></span><br><span class="line">git pull origin master --allow-unrelated-histories</span><br><span class="line"><span class="comment">#将本地库master分支推送到远端， </span></span><br><span class="line">git push -u origin mastergo</span><br><span class="line"><span class="comment">#-u是关联起来，之后就可以不带-u了</span></span><br></pre></td></tr></table></figure>
+<h2 id="￼8"><a class="header-anchor" href="#￼8">¶</a><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#克隆仓库下来, 支持https和ssh，ssh是原生的速度更快</span></span><br><span class="line">git <span class="built_in">clone</span> &lt;url&gt;</span><br></pre></td></tr></table></figure></h2>
+<h2 id="分支管理"><a class="header-anchor" href="#分支管理">¶</a>分支管理</h2>
+<pre><code>HEAD指向的是当前分支，master是主分支。创建新分支实际上就是创建一个新指针，每次修改，让指针往前一步，工作区的文件没有改变。合并分支实际就是把新分支跟master合并
+</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#创建新分支，-b表示切换到这个分支</span></span><br><span class="line">git checkout -b dev</span><br><span class="line"><span class="comment">#查看当前分支</span></span><br><span class="line">git branch</span><br><span class="line"><span class="comment">#切换分支</span></span><br><span class="line">git checkout master</span><br><span class="line"><span class="comment">#合并分支</span></span><br><span class="line">git merge dev</span><br><span class="line"><span class="comment">#删除分支 delete （强行删除 -D）</span></span><br><span class="line">git branch -d dev</span><br></pre></td></tr></table></figure>
+<pre><code>如果合并有冲突，则需要修改文件，再重新提交。
+</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看合并分支图</span></span><br><span class="line">git <span class="built_in">log</span> --graph</span><br></pre></td></tr></table></figure>
+<h3 id="bug管理"><a class="header-anchor" href="#bug管理">¶</a>bug管理</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#保存工作现场</span></span><br><span class="line">git stash</span><br><span class="line"><span class="comment">#查看工作现场</span></span><br><span class="line">git stash list</span><br><span class="line"><span class="comment">#恢复工作现场</span></span><br><span class="line">git stash apply</span><br><span class="line">git stash drop</span><br><span class="line"><span class="comment">#或者</span></span><br><span class="line">git stash pop</span><br><span class="line"><span class="comment">#可以恢复指定现场</span></span><br><span class="line">git stash pop stash@&#123;&#125;</span><br><span class="line"><span class="comment">#复制一个修改到当前分支</span></span><br><span class="line">git cherry-pick &lt;commit&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="多人合作"><a class="header-anchor" href="#多人合作">¶</a>多人合作</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#查看远程库 -v详情</span></span><br><span class="line">git remote -vg</span><br><span class="line"><span class="comment">#创建远程的dev分支到本地</span></span><br><span class="line">git checkout -b dev origin/dev</span><br><span class="line"><span class="comment">#远程仓库有新的提交起了冲突则需要pull下来，本地合并，解决冲突</span></span><br><span class="line">git pull</span><br><span class="line"><span class="comment">#如果提示no tracking information则：</span></span><br><span class="line"><span class="comment">#指定本地dev分支与远程origin/dev分支的链接，再pull</span></span><br><span class="line">git branch --<span class="built_in">set</span>-upstream-to=origin/dev dev</span><br></pre></td></tr></table></figure>
+<h3 id="rebase"><a class="header-anchor" href="#rebase">¶</a>rebase</h3>
+<ul>
+<li>rebase操作可以把本地未push的分叉提交历史整理成直线；</li>
+<li>rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。试得维护commit记录变得简单清晰。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git rebase</span><br></pre></td></tr></table></figure>
+<ul>
+<li>远程push master，遇到了冲突，可以rebase来避免三方合并，即变基：</li>
+</ul>
+<h2 id="￼14"><a class="header-anchor" href="#￼14">¶</a><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git checkout feature</span><br><span class="line">git rebase master</span><br><span class="line"><span class="comment">#rebase之后就修改冲突，然后continue（不用commit）</span></span><br><span class="line">git add readme.txt</span><br><span class="line">git rebase --<span class="built_in">continue</span></span><br><span class="line"><span class="comment">#切换回master快速合并</span></span><br><span class="line">git checkout master</span><br><span class="line">git merge feature</span><br></pre></td></tr></table></figure></h2>
+<h2 id="标签管理"><a class="header-anchor" href="#标签管理">¶</a>标签管理</h2>
+<pre><code>给commit打上标签，便于版本管理。
+</code></pre>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#添加标签 -a指代标签名 -m留下备注</span></span><br><span class="line">git tag -a v0.1 -m <span class="string">"version 0.1 released"</span> 1094adb</span><br><span class="line"><span class="comment">#查看标签</span></span><br><span class="line">git tag</span><br><span class="line"><span class="comment">#查看标签信息</span></span><br><span class="line">git show &lt;tagname&gt;</span><br><span class="line"><span class="comment">#删除标签</span></span><br><span class="line">git tag -d v0.1</span><br><span class="line"><span class="comment">#推送标签到远端</span></span><br><span class="line">git push origin v1.0</span><br><span class="line">git push origin --tags  <span class="comment">#推送所有的标签</span></span><br><span class="line"><span class="comment">#删除远程的标签</span></span><br><span class="line">git push origin :refs/tags/v0.9</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
-        <tag>工程管理</tag>
+        <tag>版本管理</tag>
       </tags>
   </entry>
   <entry>
@@ -238,9 +282,31 @@ Descendant：后代</p>
   <entry>
     <title>url结构</title>
     <url>/2020/02/19/url%E7%BB%93%E6%9E%84/</url>
-    <content><![CDATA[<p><img src="/.io//timg.png" alt="url结构"></p>
+    <content><![CDATA[<table>
+<thead>
+<tr>
+<th style="text-align:right">scheme</th>
+<th style="text-align:center">Domain</th>
+<th style="text-align:center">port</th>
+<th style="text-align:center">path</th>
+<th style="text-align:center">pathinfo</th>
+<th style="text-align:left">Query string</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">http:</td>
+<td style="text-align:center"><a href="//localhost" target="_blank" rel="noopener">//localhost</a>:</td>
+<td style="text-align:center">4000/</td>
+<td style="text-align:center">2020/02/19/</td>
+<td style="text-align:center">requests/</td>
+<td style="text-align:left">#more</td>
+</tr>
+</tbody>
+</table>
+<center>url结构</center>
 <a id="more"></a>
-<p>从上面的URL可以看出，一个完整的URL包括以下几部分：</p>
+从上面的URL可以看出，一个完整的URL包括以下几部分：
 <p>1、协议部分：该URL的协议部分为“http：”，这代表网页使用的是HTTP协议。在Internet中可以使用多种协议，如HTTP，FTP等等本例中使用的是HTTP协议。在&quot;HTTP&quot;后面的“//”为分隔符</p>
 <p>2、域名部分：该URL的域名部分为“<a href="http://www.aspxfans.com" target="_blank" rel="noopener">www.aspxfans.com</a>”。一个URL中，也可以使用IP地址作为域名使用</p>
 <p>3、端口部分：跟在域名后面的是端口，域名和端口之间使用“:”作为分隔符。端口不是一个URL必须的部分，如果省略端口部分，将采用默认端口80</p>
