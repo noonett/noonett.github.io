@@ -1,8 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>今朝酒</title>
+    <url>/2020/02/28/top/</url>
+    <content><![CDATA[<pre><code>学了波Java入门，从搭环境到这门语言基础。
+准备开始这门语言的第一个特性，面向对象。
+然后把课内的任务给清了。
+</code></pre>
+<a id="more"></a>
+<pre><code>2020-02-26 21:27:14
+最近刚开课，得准备上课和补数学，没时间搞爬虫。刚好cloud computing要用Git和Jave，整好系统得学一下Git。
+更新完了Git，打算开始学Java，同时也补后端的知识。
+</code></pre>
+<h2 id="廖老师Java基础课待干："><a class="header-anchor" href="#廖老师Java基础课待干：">¶</a>廖老师Java基础课待干：</h2>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th style="text-align:left">OK？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java入门</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>面向对象编程</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>异常处理</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>反射</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>注解</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>泛型</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>集合</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>IO</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>日期与时间</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>单元测试</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>正则表达式</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>加密与安全</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>多线程</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>Maven基础</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>网络编程</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>XML与JSON</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>JDBC编程</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>函数式编程</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>设计模式</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Java核心技术卷I"><a class="header-anchor" href="#Java核心技术卷I">¶</a>Java核心技术卷I</h2>
+]]></content>
+      <tags>
+        <tag>置顶</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java入门</title>
-    <url>/2020/02/27/java%E5%85%A5%E9%97%A8/</url>
+    <url>/2020/02/28/java%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<p>Cloud computing要用到Java，正好打算学习后端开发，就从Java开始入门，慢慢学，慢慢更新,先开个坑。</p>
 <a id="more"></a>
 <h1>基本知识</h1>
@@ -166,17 +271,6 @@ continue： 提前结束本次循环，进入下一次循环。
 ]]></content>
       <tags>
         <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>今朝酒</title>
-    <url>/2020/02/26/top/</url>
-    <content><![CDATA[<pre><code>最近刚开课，得准备上课和补数学，没时间搞爬虫。刚好cloud computing要用Git和Jave，整好系统得学一下Git。
-更新完了Git，打算开始学Java，同时也补后端的知识。
-</code></pre>
-]]></content>
-      <tags>
-        <tag>置顶</tag>
       </tags>
   </entry>
   <entry>
