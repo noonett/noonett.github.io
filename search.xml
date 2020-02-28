@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Java入门</title>
+    <url>/2020/02/27/java%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[<p>Cloud computing要用到Java，正好打算学习后端开发，就从Java开始入门，慢慢学，慢慢更新,先开个坑。</p>
+<a id="more"></a>
+]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>今朝酒</title>
+    <url>/2020/02/26/top/</url>
+    <content><![CDATA[<pre><code>最近刚开课，得准备上课和补数学，没时间搞爬虫。刚好cloud computing要用Git和Jave，整好系统得学一下Git。
+更新完了Git，打算开始学Java，同时也补后端的知识。
+</code></pre>
+]]></content>
+      <tags>
+        <tag>置顶</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Git一文通</title>
     <url>/2020/02/26/Git_learning/</url>
     <content><![CDATA[<h1>Git</h1>
