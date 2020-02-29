@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="21号避难所">
 <meta property="og:description" content="Git 免费分布式版本管理系统。相比于集中式管理的CVS，SVN：不必联网修改，强大的分支管理。更关键的是：Git跟踪并管理的是文件的修改，减少了上传量">
 <meta property="article:published_time" content="2020-02-26T13:27:14.000Z">
-<meta property="article:modified_time" content="2020-02-27T13:43:36.310Z">
+<meta property="article:modified_time" content="2020-02-29T14:00:33.129Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="版本管理">
 <meta name="twitter:card" content="summary">
@@ -358,7 +358,7 @@
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#用返回上一个状态来还原，其实是从版本库中替换回来</span></span><br><span class="line">git checkout -- test.txt</span><br></pre></td></tr></table></figure>
 <h2 id="远程仓库"><a class="header-anchor" href="#远程仓库">¶</a>远程仓库</h2>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在git库里添加sshkey</span></span><br><span class="line">ssh-add <span class="string">"你的 id-rsa 文件地址"</span></span><br><span class="line"><span class="comment">#将本地内容推送到远程 远程库名字：origin</span></span><br><span class="line">git remote add origin git@github.com:noonett/learngit.git</span><br><span class="line"><span class="comment">#将github仓库的内容git pull下来</span></span><br><span class="line">git pull origin master --allow-unrelated-histories</span><br><span class="line"><span class="comment">#将本地库master分支推送到远端， </span></span><br><span class="line">git push -u origin mastergo</span><br><span class="line"><span class="comment">#-u是关联起来，之后就可以不带-u了</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在git库里添加sshkey</span></span><br><span class="line">ssh-add <span class="string">"你的 id-rsa 文件地址"</span></span><br><span class="line"><span class="comment">#将本地内容推送到远程 远程库名字：origin</span></span><br><span class="line">git remote add origin git@github.com:noonett/learngit.git</span><br><span class="line"><span class="comment">#将github仓库的内容git pull下来</span></span><br><span class="line">git pull origin master --allow-unrelated-histories</span><br><span class="line"><span class="comment">#将本地库master分支推送到远端， </span></span><br><span class="line">git push -u origin master</span><br><span class="line"><span class="comment">#-u是关联起来，之后就可以不带-u了</span></span><br></pre></td></tr></table></figure>
 <h2 id="￼8"><a class="header-anchor" href="#￼8">¶</a><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#克隆仓库下来, 支持https和ssh，ssh是原生的速度更快</span></span><br><span class="line">git <span class="built_in">clone</span> &lt;url&gt;</span><br></pre></td></tr></table></figure></h2>
 <h2 id="分支管理"><a class="header-anchor" href="#分支管理">¶</a>分支管理</h2>
 <pre><code>HEAD指向的是当前分支，master是主分支。创建新分支实际上就是创建一个新指针，每次修改，让指针往前一步，工作区的文件没有改变。合并分支实际就是把新分支跟master合并
@@ -507,7 +507,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
