@@ -117,9 +117,12 @@
       </tags>
   </entry>
   <entry>
-    <title>Java面向对象</title>
+    <title>Java面向对象基础</title>
     <url>/2020/02/29/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
-    <content><![CDATA[<h1>面向对象基础</h1>
+    <content><![CDATA[<pre><code>面向对象编程，没有对象，怎么编程？？🤔
+顺手把面向抽象，面向接口给学了。
+</code></pre>
+<a id="more"></a>
 <h2 id="方法"><a class="header-anchor" href="#方法">¶</a>方法</h2>
 <h3 id="private"><a class="header-anchor" href="#private">¶</a>private</h3>
 <ul>
@@ -213,7 +216,8 @@ protected可以字段和方法的访问权限控制在继承树内部，一个pr
 <ul>
 <li>final用于初始化值，则这个变量不再可以修改。可以通过构造方法或者代码块来进行初始化。</li>
 </ul>
-<h2 id="￼12"><a class="header-anchor" href="#￼12">¶</a><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> String name;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> String name;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="￼13"><a class="header-anchor" href="#￼13">¶</a><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">package</span> abc;</span><br><span class="line"><span class="comment">//初始化局部变量，则不可修改。</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">hi</span><span class="params">(<span class="keyword">final</span> <span class="keyword">int</span> t)</span> </span>&#123;</span><br><span class="line">        t = <span class="number">1</span>; <span class="comment">// error!</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></h2>
 <h2 id="抽象类"><a class="header-anchor" href="#抽象类">¶</a>抽象类</h2>
 <p>如果父类的方法本身不需要实现任何功能，仅仅是为了定义方法签名，目的是让子类去覆写它，则可以用abstract。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -269,8 +273,24 @@ Math.random()</li>
 </ol>
 <h2 id="接口的静态字段"><a class="header-anchor" href="#接口的静态字段">¶</a>接口的静态字段</h2>
 <p>interface是可以有静态字段的，并且静态字段必须为final类型：</p>
-<h2 id="￼20"><a class="header-anchor" href="#￼20">¶</a><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//static + final</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MALE = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEMALE = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//都去掉也可以，编译器会自动补上</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 编译器会自动加上public statc final:</span></span><br><span class="line">    <span class="keyword">int</span> MALE = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> FEMALE = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></h2>
-<h1>包</h1>
+<h2 id="￼21"><a class="header-anchor" href="#￼21">¶</a><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//static + final</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MALE = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> FEMALE = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//都去掉也可以，编译器会自动补上</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 编译器会自动加上public statc final:</span></span><br><span class="line">    <span class="keyword">int</span> MALE = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> FEMALE = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></h2>
+<h1>包packages</h1>
+<p>使用package来解决名字冲突。JVM只看完整类名，因此，只要包名不同，类就不同。</p>
+<ul>
+<li>包没有父子关系。java.util和java.util.zip是不同的包，两者没有任何继承关系。</li>
+</ul>
+<h2 id="包作用域"><a class="header-anchor" href="#包作用域">¶</a>包作用域</h2>
+<h2 id="同一个包中，不用public、protected、private修饰的字段和方法就是包作用域。一般使用倒置的域名来确保唯一性。"><a class="header-anchor" href="#同一个包中，不用public、protected、private修饰的字段和方法就是包作用域。一般使用倒置的域名来确保唯一性。">¶</a>同一个包中，不用public、protected、private修饰的字段和方法就是包作用域。<br>
+一般使用倒置的域名来确保唯一性。</h2>
+<h1>作用域</h1>
+<ul>
+<li>public: field、method可以被其他类访问，前提是首先有访问class的权限。</li>
+<li>private: 访问权限被限定在class的内部，而且与方法声明顺序无关。推荐把private方法放到后面。Java支持嵌套类，如果一个类内部还定义了嵌套类，那么，嵌套类拥有访问private的权限。</li>
+<li>protected：作用于继承关系。定义为protected的字段和方法可以被子类访问，以及子类的子类</li>
+</ul>
+<ul>
+<li>一个.java文件只能包含一个public类，但可以包含多个非public类。如果有public类，文件名必须和public类的名字相同。</li>
+</ul>
 ]]></content>
       <tags>
         <tag>Java</tag>
