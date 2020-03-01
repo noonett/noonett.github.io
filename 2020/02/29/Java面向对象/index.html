@@ -87,7 +87,7 @@
 <meta property="og:description" content="面向对象编程，没有对象，怎么编程？？🤔 顺手把面向抽象，面向接口给学了。">
 <meta property="og:image" content="https://noonett.github.io/.io//%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png">
 <meta property="article:published_time" content="2020-02-29T03:44:45.000Z">
-<meta property="article:modified_time" content="2020-02-29T16:09:48.334Z">
+<meta property="article:modified_time" content="2020-03-01T06:21:25.205Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -500,6 +500,24 @@ Math.random()</li>
 <ul>
 <li>一个.java文件只能包含一个public类，但可以包含多个非public类。如果有public类，文件名必须和public类的名字相同。</li>
 </ul>
+<hr>
+<h1>classpath和jar</h1>
+<h2 id="classpath"><a class="header-anchor" href="#classpath">¶</a>classpath</h2>
+<pre><code>JVM用到的环境变量，用于搜索class文件的目录。
+要在JVM启动时设置环境变量，没有设置则默认为当前目录。
+</code></pre>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp .;C:\work\project1\bin;C:\shared abc.xyz.Hello</span><br></pre></td></tr></table></figure>
+<ul>
+<li>不要把任何Java核心库添加到classpath中！JVM根本不依赖classpath加载核心库！</li>
+</ul>
+<h2 id="jar"><a class="header-anchor" href="#jar">¶</a>jar</h2>
+<pre><code>把package组织的目录层级，以及各个目录下的所有文件（包括.class文件和其他文件）都打成一个jar文件.
+</code></pre>
+<p>MANIFEST.MF文件可以提供jar包的信息，如Main-Class，这样可以直接运行jar包。</p>
+<h2 id="￼23-MANIFEST-MF文件里配置classpath"><a class="header-anchor" href="#￼23-MANIFEST-MF文件里配置classpath">¶</a><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar hello.jar</span><br></pre></td></tr></table></figure><br>
+MANIFEST.MF文件里配置classpath.</h2>
+<h1>模块</h1>
+<p>JVM自带的Java标准库，实际上也是以jar文件形式存放的，这个文件叫rt.jar。</p>
 
       
     </div>
@@ -623,7 +641,7 @@ Math.random()</li>
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -636,7 +654,7 @@ Math.random()</li>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -775,7 +793,11 @@ public interface Person &amp;#123;
 &amp;#125;
 </span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text">包packages</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#包作用域"><span class="nav-number">1.</span> <span class="nav-text">¶包作用域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#同一个包中，不用public、protected、private修饰的字段和方法就是包作用域。一般使用倒置的域名来确保唯一性。"><span class="nav-number">2.</span> <span class="nav-text">¶同一个包中，不用public、protected、private修饰的字段和方法就是包作用域。
 
-一般使用倒置的域名来确保唯一性。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text">作用域</span></a></div>
+一般使用倒置的域名来确保唯一性。</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text">作用域</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text">classpath和jar</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#classpath"><span class="nav-number">1.</span> <span class="nav-text">¶classpath</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jar"><span class="nav-number">2.</span> <span class="nav-text">¶jar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#￼23-MANIFEST-MF文件里配置classpath"><span class="nav-number">3.</span> <span class="nav-text">¶1
+java -jar hello.jar
+
+
+MANIFEST.MF文件里配置classpath.</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text">模块</span></a></div>
             
 
           </div>
