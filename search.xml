@@ -3,7 +3,73 @@
   <entry>
     <title>Java异常处理</title>
     <url>/2020/03/03/Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<pre><code>便于调试，运行检测。
+</code></pre>
+<a id="more"></a>
+<h1>异常</h1>
+<h2 id="Java异常种类"><a class="header-anchor" href="#Java异常种类">¶</a>Java异常种类</h2>
+<ul>
+<li>Error:<br>
+OutOfMemoryError：内存耗尽<br>
+NoClassDefFoundError：无法加载某个Class<br>
+StackOverflowError：栈溢出</li>
+<li>Exception:<br>
+NumberFormatException：数值类型的格式错误<br>
+FileNotFoundException：未找到文件<br>
+SocketException：读取网络失败<br>
+NullPointerException：对某个null的对象调用方法或字段<br>
+IndexOutOfBoundsException：数组索引越界</li>
+<li>必须捕获的异常，除RuntimeException以外的Exception，又称为Checked Exception。</li>
+</ul>
+<h2 id="捕获异常，try…catch"><a class="header-anchor" href="#捕获异常，try…catch">¶</a>捕获异常，try…catch</h2>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">byte</span>[] bs = toGBK(<span class="string">"中文"</span>);</span><br><span class="line">            System.out.println(Arrays.toString(bs));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            System.out.println(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">byte</span>[] toGBK(String s) <span class="keyword">throws</span> UnsupportedEncodingException &#123;</span><br><span class="line">        <span class="comment">// 用指定编码转换String为byte[]:</span></span><br><span class="line">        <span class="keyword">return</span> s.getBytes(<span class="string">"GBK"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code>在main()方法中，调用toGBK()，没有捕获它声明的可能抛出的UnsupportedEncodingException,则会报错。
+</code></pre>
+<p>如果不想写try,则定义为throws Exception：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">byte</span>[] bs = toGBK(<span class="string">"中文"</span>);</span><br><span class="line">            System.out.println(Arrays.toString(bs));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            System.out.println(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">byte</span>[] toGBK(String s) <span class="keyword">throws</span> UnsupportedEncodingException &#123;</span><br><span class="line">        <span class="comment">// 用指定编码转换String为byte[]:</span></span><br><span class="line">        <span class="keyword">return</span> s.getBytes(<span class="string">"GBK"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果方法抛出了可能出现的异常，可以不写catch。</p>
+<h3 id="多捕获异常"><a class="header-anchor" href="#多捕获异常">¶</a>多捕获异常</h3>
+<p><img src="/.io//Exception.png" alt></p>
+<p>子类一定要写在前面，否则子类永远捕获不到。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(string[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        process1();</span><br><span class="line">        process2();</span><br><span class="line">        process3();</span><br><span class="line">    &#125;<span class="keyword">catch</span> (IOException e)(</span><br><span class="line">        System.out.println(<span class="string">"IO error"</span>);</span><br><span class="line">    ) <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123; <span class="comment">// 永远捕获不到</span></span><br><span class="line">        System.out.println(<span class="string">"Bad encoding"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//合并异常处理，可以用｜：</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        process1();</span><br><span class="line">        process2();</span><br><span class="line">        process3();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException | NumberFormatException e) &#123; <span class="comment">// IOException或NumberFormatException</span></span><br><span class="line">        System.out.println(<span class="string">"Bad input"</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        System.out.println(<span class="string">"Unknown error"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="finally语句"><a class="header-anchor" href="#finally语句">¶</a>finally语句</h3>
+<p>finally可以保证有无错误都执行。<br>
+在try或者catch语句块中抛出异常，finally仍会执行，先执行finally再抛出。</p>
+<h2 id="抛出异常"><a class="header-anchor" href="#抛出异常">¶</a>抛出异常</h2>
+<h3 id="异常的传播"><a class="header-anchor" href="#异常的传播">¶</a>异常的传播</h3>
+<p>当某个方法抛出了异常时，如果当前方法没有捕获异常，异常就会被抛到上层调用方法，直到遇到某个try … catch被捕获为止</p>
+<h3 id="e-printStackTrace-方法打印异常栈。"><a class="header-anchor" href="#e-printStackTrace-方法打印异常栈。">¶</a>e,printStackTrace()方法打印异常栈。</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            process1();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">process1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        process2();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">process2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Integer.parseInt(<span class="keyword">null</span>); <span class="comment">// 会抛出NumberFormatException</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>java.lang.NumberFormatException: null<br>
+at java.base/java.lang.Integer.parseInt(Integer.java:614)<br>
+at java.base/java.lang.Integer.parseInt(Integer.java:770)<br>
+at Main.process2(Main.java:16)<br>
+at Main.process1(Main.java:12)<br>
+at Main.main(Main.java:5)<br>
+返回类似如此，每层调用都给出了源代码的行号。</p>
+<h3 id="异常屏蔽-Suppressed-Exception"><a class="header-anchor" href="#异常屏蔽-Suppressed-Exception">¶</a>异常屏蔽 Suppressed Exception</h3>
+<p>如果finally抛出异常，catch中准备抛出的异常就会消失，因为只能抛出一个异常。</p>
+<h2 id="自定义异常"><a class="header-anchor" href="#自定义异常">¶</a>自定义异常</h2>
+<p>建立一个“根异常”BaseException，建议从RuntimeException中派生，其他业务类型的异常则从BaseException中派生：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//要支持多个构造方法</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseException</span> <span class="keyword">extends</span> <span class="title">RuntimeException</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BaseException</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BaseException</span><span class="params">(String message, Throwable cause)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message, cause);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BaseException</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BaseException</span><span class="params">(Throwable cause)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(cause);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只有RuntimeException，编译时不能检测出该类异常。<br>
+而未检测异常存在两种清形：<br>
+① 如果该异常被捕获或抛出，则程序继续运行。<br>
+② 如果异常没有被捕获该线程将会停止执行。<br>
+Thread.UncaughtExceptionHandler是用于处理未捕获异常造成线程突然中断情况的一个内嵌接口。当一个未捕获异常将造成线程中断的时候JVM会使用Thread.getUncaughtExceptionHandler()来查询线程的UncaughtExceptionHandler，并将线程和异常作为参数传递给handler的uncaughtException()方法进行处理。</p>
+<h2 id="断言Assertion"><a class="header-anchor" href="#断言Assertion">¶</a>断言Assertion</h2>
+<p>调试工具，一般在开发测试时使用。断言失败会抛出AssertionError，并可带上可选的断言消息。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">assert</span> x &gt;= <span class="number">0</span> : <span class="string">"x must &gt;= 0"</span>;</span><br></pre></td></tr></table></figure>
+<p>断言失败会直接导致程序退出，对于可恢复程序，不应该使用断言，应该抛出异常并在上层捕获。</p>
+<ul>
+<li>JVM默认关闭断言指令，遇到时会自动忽略。要执行assert语句，必须传递 -enableassertions参数。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">java -ea Main.java</span><br></pre></td></tr></table></figure>
+<p>最好还是使用单元测试。</p>
+]]></content>
+      <tags>
+        <tag>java</tag>
+      </tags>
   </entry>
   <entry>
     <title>今朝酒</title>
