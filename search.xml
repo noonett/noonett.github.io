@@ -1,6 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Java反射</title>
+    <url>/2020/03/04/Java%E5%8F%8D%E5%B0%84/</url>
+    <content><![CDATA[<p>反射reflection是指程序在运行期可以拿到一个对象的所有信息。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">String <span class="title">getFullName</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    Person p = (Person) obj;</span><br><span class="line">    <span class="keyword">return</span> p.getFirstName() + <span class="string">" "</span> + p.getLastName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>强制转型仍然需要引用person类，否则无法通过编译。</p>
+<h1>Class类</h1>
+<p>class(包括interface)的本质是type，是由JVM在执行过程中动态加载的。第一次读取到class类，则加载进内存。每加载一种class，JVM则为其创建一个Class类型的实例并关联起来。eg：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//class类</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Class</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Class</span><span class="params">()</span> </span>&#123;&#125; <span class="comment">//构造方法是private，只有JVM能创建</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//加载String类时关联</span></span><br><span class="line">Class cls = <span class="keyword">new</span> Class(String)</span><br></pre></td></tr></table></figure>
+<p>一个Class实例包含了该class的所有完整信息：name, package…<br>
+所以获取了某个Class实例，就可以通过这个实例获取到该实例对应的class的所有信息。这种方法称为反射(Reflection)。<br>
+方法由三个：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//方法一：通过class的静态变量获取</span></span><br><span class="line">Class cls = String<span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line"><span class="comment">//方法二：通过实例变量的getClass()</span></span><br><span class="line">String s = <span class="string">"Hello"</span>;</span><br><span class="line">Class cls = s.getClass();</span><br><span class="line"><span class="comment">//方法三：知道class的完整类名，通过静态方法Class.forName()</span></span><br><span class="line">Class cls = Class.forName(<span class="string">"java.lang.String"</span>);</span><br></pre></td></tr></table></figure>
+<h5 id="判断类型"><a class="header-anchor" href="#判断类型">¶</a>判断类型</h5>
+<p>instanceof可以匹配指定类型的子类，==是精确判断是不是某一个类。<br>
+JVM为基本数据类型也创建了Class，int.class来访问。</p>
+<h2 id="动态加载"><a class="header-anchor" href="#动态加载">¶</a>动态加载</h2>
+<p>new创建对象的方式称作为静态加载，而使用Class.forName(“XXX”)称作为动态加载，它们俩本质的区别在于静态加载的类的源程序在编译时期加载（必须存在），而动态加载的类在编译时期可以缺席（源程序不必存在）。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Main.java</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (args.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            create(args[<span class="number">0</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">create</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        Person p = <span class="keyword">new</span> Person(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当执行Main.java时，由于用到了Main，因此，JVM首先会把Main.class加载到内存。然而，并不会加载Person.class，除非程序执行到create()方法，JVM发现需要加载Person类时，才会首次加载Person.class。如果没有执行create()方法，那么Person.class根本就不会被加载。<br>
+利用JVM动态加载class的特性，我们才能在运行期根据条件加载不同的实现类。</p>
+]]></content>
+      <tags>
+        <tag>反射</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>今朝酒</title>
     <url>/2020/03/04/top/</url>
     <content><![CDATA[<pre><code>赶紧把作业写了，把论文读了。看Java反射，继续刷《剑指offer》😌。
@@ -169,6 +195,7 @@
     <url>/2020/03/03/JavaLog/</url>
     <content><![CDATA[<h1>Java内置logging包</h1>
 <p>日志会自动打印了时间、调用类、调用方法等很多有用的信息。</p>
+<a id="more"></a>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// logging</span></span><br><span class="line"><span class="keyword">import</span> java.util.logging.Level;</span><br><span class="line"><span class="keyword">import</span> java.util.logging.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Logger logger = Logger.getGlobal();</span><br><span class="line">        logger.info(<span class="string">"start process..."</span>);</span><br><span class="line">        logger.warning(<span class="string">"memory is running out..."</span>);</span><br><span class="line">        logger.fine(<span class="string">"ignored."</span>);</span><br><span class="line">        logger.severe(<span class="string">"process will be terminated..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>JDK的Logging定义了7个日志级别，从严重到普通：<br>
 SEVERE，WARNING，INFO，CONFIG，FINE，FINER，FINEST<br>
@@ -202,7 +229,7 @@ Commons Logging会自动发现并使用Log4j，所以，把上一节下载的com
 </ul>
 ]]></content>
       <tags>
-        <tag>java</tag>
+        <tag>Java</tag>
       </tags>
   </entry>
   <entry>
@@ -296,7 +323,7 @@ Thread.UncaughtExceptionHandler是用于处理未捕获异常造成线程突然�
 ]]></content>
       <tags>
         <tag>爬虫</tag>
-        <tag>python</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1021,6 +1048,7 @@ Download success!!
 ]]></content>
       <tags>
         <tag>爬虫</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
