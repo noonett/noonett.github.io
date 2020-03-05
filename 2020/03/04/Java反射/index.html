@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="反射reflection是指程序在运行期可以拿到一个对象的所有信息。 1234String getFullName(Object obj) &amp;#123;    Person p &#x3D; (Person) obj;    return p.getFirstName() + &quot; &quot; + p.getLastName();&amp;#125; 强制转型仍然需要引用person类，否则无法通过编译。 Class类 cl">
+<meta name="description" content="反射reflection是指程序在运行期可以拿到一个对象的所有信息。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java反射">
 <meta property="og:url" content="https://noonett.github.io/2020/03/04/Java%E5%8F%8D%E5%B0%84/index.html">
 <meta property="og:site_name" content="21号避难所">
-<meta property="og:description" content="反射reflection是指程序在运行期可以拿到一个对象的所有信息。 1234String getFullName(Object obj) &amp;#123;    Person p &#x3D; (Person) obj;    return p.getFirstName() + &quot; &quot; + p.getLastName();&amp;#125; 强制转型仍然需要引用person类，否则无法通过编译。 Class类 cl">
+<meta property="og:description" content="反射reflection是指程序在运行期可以拿到一个对象的所有信息。">
 <meta property="article:published_time" content="2020-03-04T13:21:14.000Z">
-<meta property="article:modified_time" content="2020-03-04T14:13:40.924Z">
+<meta property="article:modified_time" content="2020-03-05T14:42:36.990Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="反射">
 <meta name="twitter:card" content="summary">
@@ -327,6 +327,7 @@
 
       
         <p>反射reflection是指程序在运行期可以拿到一个对象的所有信息。</p>
+<a id="more"></a>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">getFullName</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    Person p = (Person) obj;</span><br><span class="line">    <span class="keyword">return</span> p.getFirstName() + <span class="string">" "</span> + p.getLastName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>强制转型仍然需要引用person类，否则无法通过编译。</p>
 <h1>Class类</h1>

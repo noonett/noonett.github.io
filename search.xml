@@ -4,6 +4,7 @@
     <title>Java反射</title>
     <url>/2020/03/04/Java%E5%8F%8D%E5%B0%84/</url>
     <content><![CDATA[<p>反射reflection是指程序在运行期可以拿到一个对象的所有信息。</p>
+<a id="more"></a>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">String <span class="title">getFullName</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    Person p = (Person) obj;</span><br><span class="line">    <span class="keyword">return</span> p.getFirstName() + <span class="string">" "</span> + p.getLastName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>强制转型仍然需要引用person类，否则无法通过编译。</p>
 <h1>Class类</h1>
