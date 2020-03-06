@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="21号避难所">
 <meta property="og:description" content="Cloud computing要用到Java，正好打算学习后端开发，就从Java开始入门，慢慢学，慢慢更新,先开个坑。">
 <meta property="article:published_time" content="2020-02-28T14:10:13.000Z">
-<meta property="article:modified_time" content="2020-02-28T14:21:20.642Z">
+<meta property="article:modified_time" content="2020-03-06T07:08:17.637Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -464,6 +464,9 @@ var关键字：类名太长，编译器自动判断变量类型
 <ul>
 <li>for each能遍历所有可迭代的对象，包括list，map…</li>
 </ul>
+<h3 id="i-i"><a class="header-anchor" href="#i-i">¶</a>i++,++i</h3>
+<p>在循环体中，i<ins>和</ins>i的作用是一样的。<br>
+运行时间的差别。在Java中i<ins>语句是需要一个临时变量取存储返回自增前的值，而</ins>i不需要。这样就导致使用i++时系统需要先申请一段内存空间，然后将值塞如进去，最后不用了才去释放。多了这么一系列操作时间。</p>
 <h2 id="break和continue"><a class="header-anchor" href="#break和continue">¶</a>break和continue</h2>
 <pre><code>break：跳出一层循环。
 continue： 提前结束本次循环，进入下一次循环。
@@ -609,7 +612,7 @@ continue： 提前结束本次循环，进入下一次循环。
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -622,7 +625,7 @@ continue： 提前结束本次循环，进入下一次循环。
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -673,7 +676,7 @@ continue： 提前结束本次循环，进入下一次循环。
             
               <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">基本知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#代码块规范："><span class="nav-number">1.1.</span> <span class="nav-text">¶代码块规范：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#运行原理："><span class="nav-number">1.2.</span> <span class="nav-text">¶运行原理：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本数据类型"><span class="nav-number">1.3.</span> <span class="nav-text">¶基本数据类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#整数运算"><span class="nav-number">1.4.</span> <span class="nav-text">¶整数运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#浮点型"><span class="nav-number">1.5.</span> <span class="nav-text">¶浮点型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#布尔类型"><span class="nav-number">1.6.</span> <span class="nav-text">¶布尔类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#三元运算符"><span class="nav-number">1.6.1.</span> <span class="nav-text">¶三元运算符</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#字符字符串"><span class="nav-number">1.7.</span> <span class="nav-text">¶字符字符串</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组类型"><span class="nav-number">1.8.</span> <span class="nav-text">¶数组类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#字符串数组"><span class="nav-number">1.8.1.</span> <span class="nav-text">¶字符串数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#￼6"><span class="nav-number">1.9.</span> <span class="nav-text">¶1
 String[] StrArray &#x3D; &amp;#123;&quot;as&quot;,&quot;asv&quot;&amp;#125;;
-</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">流程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-number">2.1.</span> <span class="nav-text">¶输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#格式化输出-System-out-printf"><span class="nav-number">2.1.1.</span> <span class="nav-text">¶格式化输出: System.out.printf()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入"><span class="nav-number">2.1.2.</span> <span class="nav-text">¶输入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#if语句"><span class="nav-number">2.2.</span> <span class="nav-text">¶if语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#switch"><span class="nav-number">2.3.</span> <span class="nav-text">¶switch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#while"><span class="nav-number">2.4.</span> <span class="nav-text">¶while</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for"><span class="nav-number">2.5.</span> <span class="nav-text">¶for</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for-each"><span class="nav-number">2.5.1.</span> <span class="nav-text">¶for each</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#break和continue"><span class="nav-number">2.6.</span> <span class="nav-text">¶break和continue</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">数组操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#打印数组内容"><span class="nav-number">3.1.</span> <span class="nav-text">¶打印数组内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组排序"><span class="nav-number">3.2.</span> <span class="nav-text">¶数组排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多维数组"><span class="nav-number">3.3.</span> <span class="nav-text">¶多维数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令行参数"><span class="nav-number">3.4.</span> <span class="nav-text">¶命令行参数</span></a></li></ol></li></ol></div>
+</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">流程控制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#输入输出"><span class="nav-number">2.1.</span> <span class="nav-text">¶输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#格式化输出-System-out-printf"><span class="nav-number">2.1.1.</span> <span class="nav-text">¶格式化输出: System.out.printf()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入"><span class="nav-number">2.1.2.</span> <span class="nav-text">¶输入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#if语句"><span class="nav-number">2.2.</span> <span class="nav-text">¶if语句</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#switch"><span class="nav-number">2.3.</span> <span class="nav-text">¶switch</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#while"><span class="nav-number">2.4.</span> <span class="nav-text">¶while</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#for"><span class="nav-number">2.5.</span> <span class="nav-text">¶for</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#for-each"><span class="nav-number">2.5.1.</span> <span class="nav-text">¶for each</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#i-i"><span class="nav-number">2.5.2.</span> <span class="nav-text">¶i++,++i</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#break和continue"><span class="nav-number">2.6.</span> <span class="nav-text">¶break和continue</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">数组操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#打印数组内容"><span class="nav-number">3.1.</span> <span class="nav-text">¶打印数组内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数组排序"><span class="nav-number">3.2.</span> <span class="nav-text">¶数组排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多维数组"><span class="nav-number">3.3.</span> <span class="nav-text">¶多维数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#命令行参数"><span class="nav-number">3.4.</span> <span class="nav-text">¶命令行参数</span></a></li></ol></li></ol></div>
             
 
           </div>
