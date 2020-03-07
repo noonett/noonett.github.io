@@ -3,7 +3,8 @@
   <entry>
     <title>Java注解</title>
     <url>/2020/03/07/Java%E6%B3%A8%E8%A7%A3/</url>
-    <content><![CDATA[<h1>Annotation的种类</h1>
+    <content><![CDATA[<a id="more"></a>
+<h1>Annotation的种类</h1>
 <p>第一类是由编译器使用的注解，例如：</p>
 <ul>
 <li>@Override：让编译器检查该方法是否正确地实现了覆写；</li>
