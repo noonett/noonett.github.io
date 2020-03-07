@@ -457,68 +457,15 @@
 
       
         
-          
-            <a id="more"></a>
-<h1>Annotation的种类</h1>
-<p>第一类是由编译器使用的注解，例如：</p>
-<ul>
-<li>@Override：让编译器检查该方法是否正确地实现了覆写；</li>
-<li>@SuppressWarnings：告诉编译器忽略此处代码产生的警告。<br>
-这类注解不会被编译进入.class文件，它们在编译后就被编译器扔掉了。</li>
-</ul>
-<p>第二类是由工具处理.class文件使用的注解，比如有些工具会在加载class的时候，对class做动态修改，实现一些特殊的功能。这类注解会被编译进入.class文件，但加载结束后并不会存在于内存中。这类注解只被一些底层库使用，一般我们不必自己处理。</p>
-<p>第三类是在程序运行期能够读取的注解，它们在加载后一直存在于JVM中，这也是最常用的注解。例如，一个配置了@PostConstruct的方法会在调用构造方法后自动被调用（这是Java代码读取该注解实现的功能，JVM并不会识别该注解）。</p>
-<h5 id="注解的参数"><a class="header-anchor" href="#注解的参数">¶</a>注解的参数</h5>
-<p>注解的配置参数可以有默认值，缺少某个配置参数时将使用默认值。</p>
-<h1>定义注解</h1>
-<p>使用@interface语法来定义annotation。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Report &#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">type</span><span class="params">()</span> <span class="keyword">default</span> 0</span>;</span><br><span class="line">    <span class="function">String <span class="title">level</span><span class="params">()</span> <span class="keyword">default</span> "info"</span>;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注解的参数类似无参数方法，可以用default设定一个默认值（强烈推荐）。最常用的参数应当命名为value。</p>
-<h3 id="元注解"><a class="header-anchor" href="#元注解">¶</a>元注解</h3>
-<p>可以修饰注解，添加规则。</p>
-<h5 id="Target"><a class="header-anchor" href="#Target">¶</a>@Target</h5>
-<p>使用@Target可以定义Annotation能够被应用于源码的哪些位置：<br>
-类或接口：ElementType.TYPE；<br>
-字段：ElementType.FIELD；<br>
-方法：ElementType.METHOD；<br>
-构造方法：ElementType.CONSTRUCTOR；<br>
-方法参数：ElementType.PARAMETER。</p>
-<h5 id="Retention"><a class="header-anchor" href="#Retention">¶</a>@Retention</h5>
-<p>另一个重要的元注解@Retention定义了Annotation的生命周期：<br>
-仅编译期：RetentionPolicy.SOURCE；<br>
-仅class文件：RetentionPolicy.CLASS；<br>
-运行期：RetentionPolicy.RUNTIME。<br>
-如果@Retention不存在，则该Annotation默认为CLASS。因为通常我们自定义的Annotation都是RUNTIME，所以，务必要加上@Retention(RetentionPolicy.RUNTIME)这个元注解</p>
-<h1>处理注解</h1>
-<p>讨论一下runtime的注解，注解定义后其实是一个class，所有的注解都继承自java.lang.annotation.Annotation，因此读取注解要用到反射API。</p>
-<h3 id="反射读取annotation"><a class="header-anchor" href="#反射读取annotation">¶</a>反射读取annotation</h3>
-<ol>
-<li>
-<p>判断某个注解是否存在于Class、Field、Method或Constructor：</p>
-<p>Class.isAnnotationPresent(Class)<br>
-Field.isAnnotationPresent(Class)<br>
-Method.isAnnotationPresent(Class)<br>
-Constructor.isAnnotationPresent(Class)</p>
-</li>
-<li>
-<p>使用反射API读取Annotation：<br>
-Class.getAnnotation(Class)<br>
-Field.getAnnotation(Class)<br>
-Method.getAnnotation(Class)<br>
-Constructor.getAnnotation(Class)</p>
-</li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Class cls = Person<span class="class">.<span class="keyword">class</span></span>;</span><br><span class="line"><span class="keyword">if</span> (cls.isAnnotationPresent(Report<span class="class">.<span class="keyword">class</span>)) </span>&#123;</span><br><span class="line">    Report report = cls.getAnnotation(Report<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="使用注解"><a class="header-anchor" href="#使用注解">¶</a>使用注解</h3>
-<h5 id="1-定义注解"><a class="header-anchor" href="#1-定义注解">¶</a>1 定义注解</h5>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.FIELD)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> Range &#123;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">min</span><span class="params">()</span> <span class="keyword">default</span> 0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">max</span><span class="params">()</span> <span class="keyword">default</span> 255</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="2-使用注解"><a class="header-anchor" href="#2-使用注解">¶</a>2 使用注解</h5>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Range</span>(min=<span class="number">1</span>, max=<span class="number">20</span>)</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Range</span>(max=<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">public</span> String city;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="3-检查方法"><a class="header-anchor" href="#3-检查方法">¶</a>3 检查方法</h5>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">check</span><span class="params">(Person person)</span> <span class="keyword">throws</span> IllegalArgumentException, ReflectiveOperationException </span>&#123;</span><br><span class="line">    <span class="comment">// 遍历所有Field:</span></span><br><span class="line">    <span class="keyword">for</span> (Field field : person.getClass().getFields()) &#123;</span><br><span class="line">        <span class="comment">// 获取Field定义的@Range:</span></span><br><span class="line">        Range range = field.getAnnotation(Range<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        <span class="comment">// 如果@Range存在:</span></span><br><span class="line">        <span class="keyword">if</span> (range != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 获取Field的值:</span></span><br><span class="line">            Object value = field.get(person);</span><br><span class="line">            <span class="comment">// 如果值是String:</span></span><br><span class="line">            <span class="keyword">if</span> (value <span class="keyword">instanceof</span> String) &#123;</span><br><span class="line">                String s = (String) value;</span><br><span class="line">                <span class="comment">// 判断值是否满足@Range的min/max:</span></span><br><span class="line">                <span class="keyword">if</span> (s.length() &lt; range.min() || s.length() &gt; range.max()) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid field: "</span> + field.getName());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样一来，我们通过@Range注解，配合check()方法，就可以完成Person实例的检查。注意检查逻辑完全是我们自己编写的，JVM不会自动给注解添加任何额外的逻辑。</p>
-
-          
+          <pre><code>注释会被编译器直接忽略，注解则可以被编译器打包进入class文件，因此，注解是一种用作标注的“元数据”。
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/07/Java%E6%B3%A8%E8%A7%A3/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
