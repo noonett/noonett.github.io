@@ -386,6 +386,128 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/13/%E3%80%8AJava%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%80%E3%80%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/13/%E3%80%8AJava%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%80%E3%80%8B/" itemprop="url">《Java核心技术卷一》读书笔记一</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-13T21:42:35+08:00">
+                2020-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/13/Java%E6%97%B6%E9%97%B4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -459,62 +581,18 @@
 
       
         
-          
-            <h2 id="基本概念"><a class="header-anchor" href="#基本概念">¶</a>基本概念</h2>
-<p>因为涉及到夏令时，相同的时区，如果表示的方式不同，转换出的时间是不同的。我们举个栗子：<br>
-对于2019-11-20和2019-6-20两个日期来说，假设北京人在纽约：<br>
-如果以GMT或者UTC作为时区，无论日期是多少，时间都是19:00；<br>
-如果以国家／城市表示，例如America／NewYork，虽然纽约也在西五区，但是，因为夏令时的存在，在不同的日期，GMT时间和纽约时间可能是不一样的。</p>
-<p>在计算机中，通常使用Locale表示一个国家或地区的日期、时间、数字、货币等格式。Locale由语言_国家的字母缩写构成，例如，zh_CN表示中文+中国，en_US表示英文+美国。语言使用小写，国家使用大写。</p>
-<h1>Date和Calendar</h1>
-<p>Epoch Time是计算从1970年1月1日零点（格林威治时区／GMT+00:00）到现在所经历的秒数.<br>
-Epoch Time又称为时间戳，在不同的编程语言中，会有几种存储方式：</p>
-<ul>
-<li>以秒为单位的整数：1574208900，缺点是精度只能到秒；</li>
-<li>以毫秒为单位的整数：1574208900123，最后3位表示毫秒数；</li>
-<li>以秒为单位的浮点数：1574208900.123，小数点后面表示零点几秒。<br>
-在Java程序中，时间戳通常是用long表示的毫秒数:</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> t = <span class="number">1574208900123L</span>;</span><br></pre></td></tr></table></figure>
-<p>要获取当前时间戳，可以使用System.currentTimeMillis()，这是Java程序获取时间戳最常用的方法。</p>
-<h3 id="标准库API"><a class="header-anchor" href="#标准库API">¶</a>标准库API</h3>
-<p>Java标准库有两套处理日期和时间的API：</p>
-<ul>
-<li>一套定义在java.util这个包里面，主要包括Date、Calendar和TimeZone这几个类；</li>
-<li>一套新的API是在Java 8引入的，定义在java.time这个包里面，主要包括LocalDateTime、ZonedDateTime、ZoneId等。</li>
-</ul>
-<h3 id="Date"><a class="header-anchor" href="#Date">¶</a>Date</h3>
-<p>观察Date的源码，可以发现它实际上存储了一个long类型的以毫秒表示的时间戳：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Date</span> <span class="keyword">implements</span> <span class="title">Serializable</span>, <span class="title">Cloneable</span>, <span class="title">Comparable</span>&lt;<span class="title">Date</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">transient</span> <span class="keyword">long</span> fastTime;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>用法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取当前时间:</span></span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line">        System.out.println(date.getYear() + <span class="number">1900</span>); <span class="comment">// 必须加上1900</span></span><br><span class="line">        System.out.println(date.getMonth() + <span class="number">1</span>); <span class="comment">// 0~11，必须加上1</span></span><br><span class="line">        System.out.println(date.getDate()); <span class="comment">// 1~31，不能加1</span></span><br><span class="line">        <span class="comment">// 转换为String:</span></span><br><span class="line">        System.out.println(date.toString());</span><br><span class="line">        <span class="comment">// 转换为GMT时区:</span></span><br><span class="line">        System.out.println(date.toGMTString());</span><br><span class="line">        <span class="comment">// 转换为本地时区:</span></span><br><span class="line">        System.out.println(date.toLocaleString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>getYear()要加上1900，getMonth()要加1.<br>
-可以使用SimpleDateFormat对一个Date进行转换。它用预定义的字符串表示格式化：</p>
-<ul>
-<li>yyyy：年</li>
-<li>MM：月</li>
-<li>dd: 日</li>
-<li>HH: 小时</li>
-<li>mm: 分钟</li>
-<li>ss: 秒</li>
-<li>E: 周<br>
-字母越长，输出越长。</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.text.*;</span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取当前时间:</span></span><br><span class="line">        Date date = <span class="keyword">new</span> Date();</span><br><span class="line">        <span class="keyword">var</span> sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br><span class="line">        System.out.println(sdf.format(date));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Date对象有几个严重的问题：它不能转换时区，除了toGMTString()可以按GMT+0:00输出外，Date总是以当前计算机系统的默认时区为基础进行输出。此外，我们也很难对日期和时间进行加减，计算两个日期相差多少天，计算某个月第一个星期一的日期等。</p>
-<h1>Calendar</h1>
-<p>它和Date比，主要多了一个可以做简单的日期和时间运算的功能。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 获取当前时间:</span></span><br><span class="line">        Calendar c = Calendar.getInstance();</span><br><span class="line">        <span class="keyword">int</span> y = c.get(Calendar.YEAR);</span><br><span class="line">        <span class="keyword">int</span> m = <span class="number">1</span> + c.get(Calendar.MONTH);</span><br><span class="line">        <span class="keyword">int</span> d = c.get(Calendar.DAY_OF_MONTH);</span><br><span class="line">        <span class="keyword">int</span> w = c.get(Calendar.DAY_OF_WEEK);</span><br><span class="line">        <span class="keyword">int</span> hh = c.get(Calendar.HOUR_OF_DAY);</span><br><span class="line">        <span class="keyword">int</span> mm = c.get(Calendar.MINUTE);</span><br><span class="line">        <span class="keyword">int</span> ss = c.get(Calendar.SECOND);</span><br><span class="line">        <span class="keyword">int</span> ms = c.get(Calendar.MILLISECOND);</span><br><span class="line">        System.out.println(y + <span class="string">"-"</span> + m + <span class="string">"-"</span> + d + <span class="string">" "</span> + w + <span class="string">" "</span> + hh + <span class="string">":"</span> + mm + <span class="string">":"</span> + ss + <span class="string">"."</span> + ms);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意到Calendar获取年月日这些信息变成了get(int field)，返回的年份不必转换，返回的月份仍然要加1，返回的星期要特别注意，1~7分别表示周日，周一，……，周六。<br>
-Calendar只有一种方式获取，即Calendar.getInstance()，而且一获取到就是当前时间。<br>
-如果我们想给它设置成特定的一个日期和时间，就必须先清除所有字段：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 当前时间:</span></span><br><span class="line">        Calendar c = Calendar.getInstance();</span><br><span class="line">        <span class="comment">// 清除所有:</span></span><br><span class="line">        c.clear();</span><br><span class="line">        <span class="comment">// 设置2019年:</span></span><br><span class="line">        c.set(Calendar.YEAR, <span class="number">2019</span>);</span><br><span class="line">        <span class="comment">// 设置9月:注意8表示9月:</span></span><br><span class="line">        c.set(Calendar.MONTH, <span class="number">8</span>);</span><br><span class="line">        <span class="comment">// 设置2日:</span></span><br><span class="line">        c.set(Calendar.DATE, <span class="number">2</span>);</span><br><span class="line">        <span class="comment">// 设置时间:</span></span><br><span class="line">        c.set(Calendar.HOUR_OF_DAY, <span class="number">21</span>);</span><br><span class="line">        c.set(Calendar.MINUTE, <span class="number">22</span>);</span><br><span class="line">        c.set(Calendar.SECOND, <span class="number">23</span>);</span><br><span class="line">        System.out.println(<span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>).format(c.getTime()));</span><br><span class="line">        <span class="comment">// 2019-09-02 21:22:23</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>利用Calendar.getTime()可以将一个Calendar对象转换成Date对象，然后就可以用SimpleDateFormat进行格式化了。</p>
-<h4 id="Timezone"><a class="header-anchor" href="#Timezone">¶</a>Timezone</h4>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 当前时间:</span></span><br><span class="line">        Calendar c = Calendar.getInstance();</span><br><span class="line">        <span class="comment">// 清除所有:</span></span><br><span class="line">        c.clear();</span><br><span class="line">        <span class="comment">// 设置为北京时区:</span></span><br><span class="line">        c.setTimeZone(TimeZone.getTimeZone(<span class="string">"Asia/Shanghai"</span>));</span><br><span class="line">        <span class="comment">// 设置年月日时分秒:</span></span><br><span class="line">        c.set(<span class="number">2019</span>, <span class="number">10</span> <span class="comment">/* 11月 */</span>, <span class="number">20</span>, <span class="number">8</span>, <span class="number">15</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="comment">// 显示时间:</span></span><br><span class="line">        <span class="keyword">var</span> sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br><span class="line">        sdf.setTimeZone(TimeZone.getTimeZone(<span class="string">"America/New_York"</span>));</span><br><span class="line">        System.out.println(sdf.format(c.getTime()));</span><br><span class="line">        <span class="comment">// 2019-11-19 19:15:00</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="日期运算"><a class="header-anchor" href="#日期运算">¶</a>日期运算</h4>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 当前时间:</span></span><br><span class="line">        Calendar c = Calendar.getInstance();</span><br><span class="line">        <span class="comment">// 清除所有:</span></span><br><span class="line">        c.clear();</span><br><span class="line">        <span class="comment">// 设置年月日时分秒:</span></span><br><span class="line">        c.set(<span class="number">2019</span>, <span class="number">10</span> <span class="comment">/* 11月 */</span>, <span class="number">20</span>, <span class="number">8</span>, <span class="number">15</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="comment">// 加5天并减去2小时:</span></span><br><span class="line">        c.add(Calendar.DAY_OF_MONTH, <span class="number">5</span>);</span><br><span class="line">        c.add(Calendar.HOUR_OF_DAY, -<span class="number">2</span>);</span><br><span class="line">        <span class="comment">// 显示时间:</span></span><br><span class="line">        <span class="keyword">var</span> sdf = <span class="keyword">new</span> SimpleDateFormat(<span class="string">"yyyy-MM-dd HH:mm:ss"</span>);</span><br><span class="line">        Date d = c.getTime();</span><br><span class="line">        System.out.println(sdf.format(d));</span><br><span class="line">        <span class="comment">// 2019-11-25 6:15:00</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+          <pre><code>如果以GMT或者UTC作为时区，这不两算夏令时，无论日期是多少，时间都是标准的。
+如果以国家／城市表示，例如America／NewYork，虽然纽约也在西五区，但是，因为夏令时的存在，在不同的日期，GMT时间和纽约时间可能是不一样的。
+
+在计算机中，通常使用Locale表示一个国家或地区的日期、时间、数字、货币等格式。Locale由语言_国家的字母缩写构成，例如，zh_CN表示中文+中国，en_US表示英文+美国。语言使用小写，国家使用大写。
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/13/Java%E6%97%B6%E9%97%B4/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1449,134 +1527,6 @@ O：output把数据从内存输出到外部
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/09/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/09/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">重建二叉树｜《剑指offer》</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-09T11:55:48+08:00">
-                2020-03-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <pre><code>题目：输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
-</code></pre>
-<h1>题解一</h1>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">reConstructBinaryTree</span><span class="params">(<span class="keyword">int</span> [] pre,<span class="keyword">int</span> [] in)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(pre.length == <span class="number">0</span>||pre.length!=in.length)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">int</span> rootVal = pre[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span>(pre.length == <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> TreeNode(rootVal);</span><br><span class="line">        <span class="comment">//找到root在中序中的位置</span></span><br><span class="line">        <span class="keyword">int</span> rootIndex = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=in.length -<span class="number">1</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(in[i] == rootVal)&#123;</span><br><span class="line">                rootIndex = i;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//中序中root的左边即为左子树，右边为右子树</span></span><br><span class="line">        TreeNode root = <span class="keyword">new</span> TreeNode(rootVal);</span><br><span class="line">        root.left = reConstructBinaryTree(Arrays.copyOfRange(pre,<span class="number">1</span>,rootIndex+<span class="number">1</span>),Arrays.copyOfRange(in,<span class="number">0</span>,rootIndex));</span><br><span class="line">        root.right = reConstructBinaryTree(Arrays.copyOfRange(pre,rootIndex+<span class="number">1</span>,pre.length),Arrays.copyOfRange(in,rootIndex+<span class="number">1</span>,in.length));</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h1>题解二</h1>
-<p>省内存</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">reConstructBinaryTree</span><span class="params">(<span class="keyword">int</span> [] pre,<span class="keyword">int</span> [] in)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> reConBTree(pre,<span class="number">0</span>,pre.length-<span class="number">1</span>,in,<span class="number">0</span>,in.length-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">reConBTree</span><span class="params">(<span class="keyword">int</span> [] pre,<span class="keyword">int</span> preleft,<span class="keyword">int</span> preright,<span class="keyword">int</span> [] in,<span class="keyword">int</span> inleft,<span class="keyword">int</span> inright)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(preleft &gt; preright || inleft&gt; inright)<span class="comment">//当到达边界条件时候返回null</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">//新建一个TreeNode</span></span><br><span class="line">        TreeNode root = <span class="keyword">new</span> TreeNode(pre[preleft]);</span><br><span class="line">        <span class="comment">//对中序数组进行输入边界的遍历</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = inleft; i&lt;= inright; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(pre[preleft] == in[i])&#123;</span><br><span class="line">                <span class="comment">//重构左子树，注意边界条件</span></span><br><span class="line">                root.left = reConBTree(pre,preleft+<span class="number">1</span>,preleft+i-inleft,in,inleft,i-<span class="number">1</span>);</span><br><span class="line">                <span class="comment">//重构右子树，注意边界条件</span></span><br><span class="line">                root.right = reConBTree(pre,preleft+i+<span class="number">1</span>-inleft,preright,in,i+<span class="number">1</span>,inright);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;     </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1631,7 +1581,7 @@ O：output把数据从内存输出到外部
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1644,7 +1594,7 @@ O：output把数据从内存输出到外部
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
