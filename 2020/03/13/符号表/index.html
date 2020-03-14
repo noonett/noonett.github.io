@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="21号避难所">
 <meta property="og:description" content="符号表（Symbol Table）是一种存储键值对的数据结构，可以支持快速查找操作。  符号表分为有序和无序两种，有序符号表主要指支持 min()、max() 等根据键的大小关系来实现的操作。  有序符号表的键需要实现 Comparable 接口。">
 <meta property="article:published_time" content="2020-03-13T08:34:47.000Z">
-<meta property="article:modified_time" content="2020-03-13T12:27:37.926Z">
+<meta property="article:modified_time" content="2020-03-14T11:24:26.255Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -403,6 +403,35 @@ BST 有一个重要性质，就是它的中序遍历结果递增排序。</p>
 <p>2-3 查找树插入操作的变换都是局部的，除了相关的节点和链接之外不必修改或者检查树的其它部分，而这些局部变换不会影响树的全局有序性和平衡性。</p>
 <p>2-3 查找树的查找和插入操作复杂度和插入顺序无关，在最坏的情况下查找和插入操作访问的节点必然不超过 logN 个，含有 10 亿个节点的 2-3 查找树最多只需要访问 30 个节点就能进行任意的查找和插入操作。</p>
 <h1>红黑树</h1>
+<p>AVL 树是高度平衡的，频繁的插入和删除，会引起频繁的rebalance，导致效率下降；红黑树不是高度平衡的，算是一种折中，插入最多两次旋转，删除最多三次旋转。<br>
+所以红黑树在查找，插入删除的性能都是O(logn)，且性能稳定，所以很多结构包括map底层实现都是使用的红黑树。</p>
+<h3 id="性质"><a class="header-anchor" href="#性质">¶</a>性质</h3>
+<ol>
+<li>根结点必为黑色</li>
+<li>相连的不能同为红色</li>
+<li>每个红色节点的子节点必为黑色，叶子节点必为黑色（Null）。</li>
+<li>任何一个节点向下遍历到其子孙的叶子节点，所经过的黑节点个数必须相等</li>
+</ol>
+<h3 id="变换操作"><a class="header-anchor" href="#变换操作">¶</a>变换操作</h3>
+<ol>
+<li>变换颜色</li>
+<li>左旋：右子变父，右子节点的左子树变父的右子树。</li>
+<li>右旋：左子变父，左子节点的右子树变父的左子树。</li>
+</ol>
+<h3 id="变换规则"><a class="header-anchor" href="#变换规则">¶</a>变换规则</h3>
+<p>所有插入的点默认红色。</p>
+<ol>
+<li>插入节点的父节点和叔叔节点为红色：<br>
+将父叔变为黑色，将爷爷节点设为红色。</li>
+<li>插入节点的父节点为红色，叔叔节点为黑色：
+<ol>
+<li>当前节点为右子树：<br>
+则左旋：以父节点</li>
+<li>当前节点为左子树：<br>
+则右旋：父变黑，爷爷变红，以爷爷节点右旋。</li>
+</ol>
+</li>
+</ol>
 
       
     </div>
@@ -526,7 +555,7 @@ BST 有一个重要性质，就是它的中序遍历结果递增排序。</p>
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -588,7 +617,7 @@ BST 有一个重要性质，就是它的中序遍历结果递增排序。</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-链表实现无序符号表"><span class="nav-number">1.</span> <span class="nav-text">¶1 链表实现无序符号表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找实现有序符号表"><span class="nav-number">2.</span> <span class="nav-text">¶二分查找实现有序符号表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树"><span class="nav-number">3.</span> <span class="nav-text">¶二叉查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据结构"><span class="nav-number">3.1.</span> <span class="nav-text">¶数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-get"><span class="nav-number">3.2.</span> <span class="nav-text">¶1 get()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-put"><span class="nav-number">3.3.</span> <span class="nav-text">¶2 put()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-分析"><span class="nav-number">3.4.</span> <span class="nav-text">¶3 分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-floor"><span class="nav-number">3.5.</span> <span class="nav-text">¶4 floor()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-rank"><span class="nav-number">3.6.</span> <span class="nav-text">¶5 rank()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-min"><span class="nav-number">3.7.</span> <span class="nav-text">¶6 min()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-deleteMin"><span class="nav-number">3.8.</span> <span class="nav-text">¶7 deleteMin()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-delete"><span class="nav-number">3.9.</span> <span class="nav-text">¶8 delete()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-keys"><span class="nav-number">3.10.</span> <span class="nav-text">¶9 keys()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-分析"><span class="nav-number">3.11.</span> <span class="nav-text">¶10 分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3查找树"><span class="nav-number">4.</span> <span class="nav-text">¶2-3查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-插入操作"><span class="nav-number">4.1.</span> <span class="nav-text">¶1 插入操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-性质"><span class="nav-number">4.2.</span> <span class="nav-text">¶2 性质</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text">红黑树</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-链表实现无序符号表"><span class="nav-number">1.</span> <span class="nav-text">¶1 链表实现无序符号表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二分查找实现有序符号表"><span class="nav-number">2.</span> <span class="nav-text">¶二分查找实现有序符号表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉查找树"><span class="nav-number">3.</span> <span class="nav-text">¶二叉查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数据结构"><span class="nav-number">3.1.</span> <span class="nav-text">¶数据结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-get"><span class="nav-number">3.2.</span> <span class="nav-text">¶1 get()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-put"><span class="nav-number">3.3.</span> <span class="nav-text">¶2 put()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-分析"><span class="nav-number">3.4.</span> <span class="nav-text">¶3 分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-floor"><span class="nav-number">3.5.</span> <span class="nav-text">¶4 floor()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-rank"><span class="nav-number">3.6.</span> <span class="nav-text">¶5 rank()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-min"><span class="nav-number">3.7.</span> <span class="nav-text">¶6 min()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-deleteMin"><span class="nav-number">3.8.</span> <span class="nav-text">¶7 deleteMin()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-delete"><span class="nav-number">3.9.</span> <span class="nav-text">¶8 delete()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-keys"><span class="nav-number">3.10.</span> <span class="nav-text">¶9 keys()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-分析"><span class="nav-number">3.11.</span> <span class="nav-text">¶10 分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3查找树"><span class="nav-number">4.</span> <span class="nav-text">¶2-3查找树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-插入操作"><span class="nav-number">4.1.</span> <span class="nav-text">¶1 插入操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-性质"><span class="nav-number">4.2.</span> <span class="nav-text">¶2 性质</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text">红黑树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#性质"><span class="nav-number">0.1.</span> <span class="nav-text">¶性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变换操作"><span class="nav-number">0.2.</span> <span class="nav-text">¶变换操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#变换规则"><span class="nav-number">0.3.</span> <span class="nav-text">¶变换规则</span></a></li></ol></li></ol></div>
             
 
           </div>
