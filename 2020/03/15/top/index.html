@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Java," />
+  <meta name="keywords" content="置顶," />
 
 
 
@@ -79,16 +79,16 @@
 
 
 
-<meta name="description" content="¶Java内置logging包 日志会自动打印了时间、调用类、调用方法等很多有用的信息。">
+<meta name="description" content="周末更堕落…廖老师基础打算先过一遍设计模式和函数式编程，再看多线程。《Java核心技术》才读了100页… 数据结构是复习完了…再复习一遍上学期的算法课吧，复习完就开始刷题。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JavaLog">
-<meta property="og:url" content="https://noonett.github.io/2020/03/03/JavaLog/index.html">
+<meta property="og:title" content="今朝酒">
+<meta property="og:url" content="https://noonett.github.io/2020/03/15/top/index.html">
 <meta property="og:site_name" content="21号避难所">
-<meta property="og:description" content="¶Java内置logging包 日志会自动打印了时间、调用类、调用方法等很多有用的信息。">
-<meta property="article:published_time" content="2020-03-03T15:24:55.000Z">
-<meta property="article:modified_time" content="2020-03-05T17:13:06.576Z">
+<meta property="og:description" content="周末更堕落…廖老师基础打算先过一遍设计模式和函数式编程，再看多线程。《Java核心技术》才读了100页… 数据结构是复习完了…再复习一遍上学期的算法课吧，复习完就开始刷题。">
+<meta property="article:published_time" content="2020-03-15T07:13:14.000Z">
+<meta property="article:modified_time" content="2020-03-15T13:44:39.863Z">
 <meta property="article:author" content="TYH">
-<meta property="article:tag" content="Java">
+<meta property="article:tag" content="置顶">
 <meta name="twitter:card" content="summary">
 
 
@@ -119,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="https://noonett.github.io/2020/03/03/JavaLog/"/>
+  <link rel="canonical" href="https://noonett.github.io/2020/03/15/top/"/>
 
 
 
 
 
-  <title>JavaLog | 21号避难所</title>
+  <title>今朝酒 | 21号避难所</title>
   
 
 
@@ -256,7 +256,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/03/JavaLog/">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/15/top/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TYH">
@@ -273,12 +273,16 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JavaLog</h1>
+          <h1 class="post-title" itemprop="name headline">今朝酒</h1>
         
 
         <div class="post-meta">
           <span class="post-time">
 
+            
+              <i class="fa fa-thumb-tack"></i>
+              <font color=7D26CD>置顶</font>
+              <span class="post-meta-divider">|</span>
             
             
             
@@ -288,8 +292,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-03T23:24:55+08:00">
-                2020-03-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-15T15:13:14+08:00">
+                2020-03-15
               </time>
             
 
@@ -326,40 +330,138 @@
       
 
       
-        <h5 id="Java内置logging包"><a class="header-anchor" href="#Java内置logging包">¶</a>Java内置logging包</h5>
-<p>日志会自动打印了时间、调用类、调用方法等很多有用的信息。</p>
+        <p>周末更堕落…廖老师基础打算先过一遍设计模式和函数式编程，再看多线程。《Java核心技术》才读了100页…<br>
+数据结构是复习完了…再复习一遍上学期的算法课吧，复习完就开始刷题。</p>
 <a id="more"></a>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// logging</span></span><br><span class="line"><span class="keyword">import</span> java.util.logging.Level;</span><br><span class="line"><span class="keyword">import</span> java.util.logging.Logger;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Logger logger = Logger.getGlobal();</span><br><span class="line">        logger.info(<span class="string">"start process..."</span>);</span><br><span class="line">        logger.warning(<span class="string">"memory is running out..."</span>);</span><br><span class="line">        logger.fine(<span class="string">"ignored."</span>);</span><br><span class="line">        logger.severe(<span class="string">"process will be terminated..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>JDK的Logging定义了7个日志级别，从严重到普通：<br>
-SEVERE，WARNING，INFO，CONFIG，FINE，FINER，FINEST<br>
-因为默认级别是INFO，因此，INFO级别以下的日志，不会被打印出来。<br>
-其局限在于Logging系统在JVM启动时读取配置文件并完成初始化，一旦开始运行main()方法，就无法修改配置；<br>
-配置不太方便，需要在JVM启动时传递参数 -Djava.util.logging.config.file=<config-file-name>。</config-file-name></p>
 <ul>
-<li>总结：不好用！</li>
+<li>
+<p>2020-03-13 15:13:14<br>
+近日较为堕落…廖老师基础课过了一半，基础入门算是完成了，读《Java核心技术》巩固一下。还需要上手编程实现书里的代码。<br>
+算法改为复习排序，并查集，栈队列，symbol table这些基础概念，再开始刷题。<br>
+操作系统每天瞎学一点，等算法过完再开始认真刷。<br>
+课内的东西压根没碰…自从打算suspended就懈怠了。。</p>
+</li>
+<li>
+<p>2020-03-07 15:13:14<br>
+每日《剑指offer》，学完了反射和泛型依旧云里雾里。学了也有一周了，得回头复习一下，读一波《Java核心技术》。<br>
+还有操作系统基础…cc这门课涵盖是真的广…</p>
+</li>
+<li>
+<p>2020-03-04 15:13:14<br>
+赶紧把作业写了，把论文读了。看Java反射，继续刷《剑指offer》😌。</p>
+</li>
+<li>
+<p>2020-03-03 19:13:14<br>
+这几天忙于学业。才刚把核心类看完，看异常处理，刷《剑指offer》。</p>
+</li>
+<li>
+<p>2020-02-29 22:13:14<br>
+面向对象是搞定了，还真的猛这门语言。课内任务还没做，due要到了。</p>
+</li>
+<li>
+<p>2020-02-28 22:17:14<br>
+学了波Java入门，从搭环境到这门语言基础。<br>
+准备开始这门语言的第一个特性，面向对象。<br>
+然后把课内的任务给清了。</p>
+</li>
+<li>
+<p>2020-02-26 21:27:14<br>
+最近刚开课，得准备上课和补数学，没时间搞爬虫。刚好cloud computing要用Git和Jave，整好系统得学一下Git。<br>
+更新完了Git，打算开始学Java，同时也补后端的知识。</p>
+</li>
 </ul>
-<h1>Commons logging</h1>
-<p>一个Apache开发的日志接口，自动搜素Log4j，没找到则使用JDKLogging。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.apache.commons.logging.Log;</span><br><span class="line"><span class="keyword">import</span> org.apache.commons.logging.LogFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Log log = LogFactory.getLog(Main<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line">        log.info(<span class="string">"start..."</span>);</span><br><span class="line">        log.warn(<span class="string">"end."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第三方库来的，需要编译：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#放入work path</span></span><br><span class="line"><span class="comment">#javac编译</span></span><br><span class="line">javac -cp commons-logging-1.2.jar Main.java</span><br><span class="line"><span class="comment">#执行这个Main.class，使用java命令，也必须指定classpath</span></span><br><span class="line">java -cp .:commons-logging-1.2.jar Main</span><br></pre></td></tr></table></figure>
-<p>Commons Logging定义了6个日志级别：FATAL,ERROR,WARNING,INFO,DEBUG,TRACE。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在静态方法中引用Log:</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">final</span> Log log = LogFactory.getLog(Main<span class="class">.<span class="keyword">class</span>)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        log.info(<span class="string">"foo"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在实例方法中引用Log:</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> Log log = LogFactory.getLog(getClass());</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">foo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        log.info(<span class="string">"foo"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 在子类中使用父类实例化的log:</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">extends</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">bar</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        log.info(<span class="string">"bar"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>还重载了Info(“string”,Throwable)提供打印异常：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    log.error(<span class="string">"got exception!"</span>, e);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1>Log4j</h1>
-<p>通过配置文件来配置它。<br>
-以XML配置为例，使用Log4j的时候，我们把一个log4j2.xml的文件放到classpath下就可以让Log4j读取配置文件并按照我们的配置来输出日志。下面是一个配置文件的例子：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">Configuration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">Properties</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 定义日志格式 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">Property</span> <span class="attr">name</span>=<span class="string">"log.pattern"</span>&gt;</span>%d&#123;MM-dd HH:mm:ss.SSS&#125; [%t] %-5level %logger&#123;36&#125;%n%msg%n%n<span class="tag">&lt;/<span class="name">Property</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 定义文件名变量 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">Property</span> <span class="attr">name</span>=<span class="string">"file.err.filename"</span>&gt;</span>log/err.log<span class="tag">&lt;/<span class="name">Property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">Property</span> <span class="attr">name</span>=<span class="string">"file.err.pattern"</span>&gt;</span>log/err.%i.log.gz<span class="tag">&lt;/<span class="name">Property</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">Properties</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 定义Appender，即目的地 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">Appenders</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 定义输出到屏幕 --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">Console</span> <span class="attr">name</span>=<span class="string">"console"</span> <span class="attr">target</span>=<span class="string">"SYSTEM_OUT"</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 日志格式引用上面定义的log.pattern --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">PatternLayout</span> <span class="attr">pattern</span>=<span class="string">"$&#123;log.pattern&#125;"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">Console</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 定义输出到文件,文件名引用上面定义的file.err.filename --&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">RollingFile</span> <span class="attr">name</span>=<span class="string">"err"</span> <span class="attr">bufferedIO</span>=<span class="string">"true"</span> <span class="attr">fileName</span>=<span class="string">"$&#123;file.err.filename&#125;"</span> <span class="attr">filePattern</span>=<span class="string">"$&#123;file.err.pattern&#125;"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">PatternLayout</span> <span class="attr">pattern</span>=<span class="string">"$&#123;log.pattern&#125;"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">Policies</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 根据文件大小自动切割日志 --&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">SizeBasedTriggeringPolicy</span> <span class="attr">size</span>=<span class="string">"1 MB"</span> /&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">Policies</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 保留最近10份 --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">DefaultRolloverStrategy</span> <span class="attr">max</span>=<span class="string">"10"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">RollingFile</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">Appenders</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">Loggers</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">Root</span> <span class="attr">level</span>=<span class="string">"info"</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 对info级别的日志，输出到console --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">AppenderRef</span> <span class="attr">ref</span>=<span class="string">"console"</span> <span class="attr">level</span>=<span class="string">"info"</span> /&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 对error级别的日志，输出到err，即上面定义的RollingFile --&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">AppenderRef</span> <span class="attr">ref</span>=<span class="string">"err"</span> <span class="attr">level</span>=<span class="string">"error"</span> /&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">Root</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">Loggers</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>要把以下3个jar包放到classpath中：<br>
-log4j-api-2.x.jar<br>
-log4j-core-2.x.jar<br>
-log4j-jcl-2.x.jar<br>
-Commons Logging会自动发现并使用Log4j，所以，把上一节下载的commons-logging-1.2.jar也放到classpath中。<br>
-要打印日志，只需要按Commons Logging的写法写，不需要改动任何代码，就可以得到Log4j的日志输出。</p>
-<ul>
-<li>总结： Commons Logging接口来写入日志，并且开发阶段无需引入Log4j。把日志写入文件， 只需要把正确的配置文件和Log4j相关的jar包放入classpath，就可以自动把日志切换成使用Log4j写入，无需修改任何代码。</li>
-</ul>
+<h2 id="廖老师Java基础课待干："><a class="header-anchor" href="#廖老师Java基础课待干：">¶</a>廖老师Java基础课待干：</h2>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th style="text-align:left">OK？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java入门</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>面向对象编程</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>Java核心类</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>异常处理</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>反射</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>注解</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>泛型</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>集合</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>IO</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>日期与时间</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>单元测试</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>正则表达式</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>加密与安全</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>多线程</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>Maven基础</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>网络编程</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>XML与JSON</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>JDBC编程</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>函数式编程</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>设计模式</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<h2 id="Java核心技术卷I"><a class="header-anchor" href="#Java核心技术卷I">¶</a>Java核心技术卷I</h2>
 
       
     </div>
@@ -377,7 +479,7 @@ Commons Logging会自动发现并使用Log4j，所以，把上一节下载的com
       
         <div class="post-tags">
           
-            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+            <a href="/tags/%E7%BD%AE%E9%A1%B6/" rel="tag"><i class="fa fa-tag"></i> 置顶</a>
           
         </div>
       
@@ -390,8 +492,8 @@ Commons Logging会自动发现并使用Log4j，所以，把上一节下载的com
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/03/03/Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/" rel="next" title="Java异常处理">
-                <i class="fa fa-chevron-left"></i> Java异常处理
+              <a href="/2020/03/14/Java%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" rel="next" title="Java单元测试">
+                <i class="fa fa-chevron-left"></i> Java单元测试
               </a>
             
           </div>
@@ -400,8 +502,8 @@ Commons Logging会自动发现并使用Log4j，所以，把上一节下载的com
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/03/04/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" rel="prev" title="数组中找到重复的数｜《剑指offer》">
-                数组中找到重复的数｜《剑指offer》 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/03/15/%E6%B1%89%E8%AF%BA%E5%A1%94%E5%92%8C%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/" rel="prev" title="汉诺塔和哈夫曼编码">
+                汉诺塔和哈夫曼编码 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -545,7 +647,7 @@ Commons Logging会自动发现并使用Log4j，所以，把上一节下载的com
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#Java内置logging包"><span class="nav-number">1.</span> <span class="nav-text">¶Java内置logging包</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text">Commons logging</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number"></span> <span class="nav-text">Log4j</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#廖老师Java基础课待干："><span class="nav-number">1.</span> <span class="nav-text">¶廖老师Java基础课待干：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java核心技术卷I"><span class="nav-number">2.</span> <span class="nav-text">¶Java核心技术卷I</span></a></li></ol></div>
             
 
           </div>
