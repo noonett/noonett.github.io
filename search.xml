@@ -1,6 +1,600 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>机器人的运动范围｜《剑指offer》</title>
+    <url>/2020/03/25/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF%E5%BE%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于k的格子。 例如，当k为18时，机器人能够进入方格（35,37），因为3+5+3+7 = 18。但是，它不能进入方格（35,38），因为3+5+3+8 = 19。请问该机器人能够达到多少个格子？
+</code></pre>
+<a id="more"></a>
+<h1>题解一 DFS</h1>
+<p>从左往右，从上到下递归遍历。</p>
+<h1>Code</h1>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> threshold, rows, cols;</span><br><span class="line">    <span class="keyword">boolean</span>[][] visited;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">movingCount</span><span class="params">(<span class="keyword">int</span> threshold, <span class="keyword">int</span> rows, <span class="keyword">int</span> cols)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.threshold = threshold;<span class="keyword">this</span>.rows = rows;<span class="keyword">this</span>.cols = cols;</span><br><span class="line">        <span class="keyword">this</span>.visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[rows][cols];</span><br><span class="line">        <span class="keyword">return</span> DFS(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//递归计算次数</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">DFS</span><span class="params">(<span class="keyword">int</span> i,<span class="keyword">int</span> j,<span class="keyword">int</span> rowSum,<span class="keyword">int</span> colSum)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(i&lt;<span class="number">0</span>||i&gt;=rows||j&lt;<span class="number">0</span>||j&gt;=cols||rowSum + colSum&gt;threshold||visited[i][j]) <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">        visited[i][j] = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>+DFS(i+<span class="number">1</span>,j,digitSum(i+<span class="number">1</span>),colSum)+DFS(i,j+<span class="number">1</span>,rowSum,digitSum(j+<span class="number">1</span>));</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//计算位数和</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">digitSum</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(num!=<span class="number">0</span>)&#123;</span><br><span class="line">            sum += num%<span class="number">10</span>;</span><br><span class="line">            num /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="题解二-BFS"><a class="header-anchor" href="#题解二-BFS">¶</a>题解二 BFS</h2>
+<p>使用队列，记录参数，依层次扩展。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">movingCount</span><span class="params">(<span class="keyword">int</span> m, <span class="keyword">int</span> n, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span>[][] visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[m][n];</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        Queue&lt;<span class="keyword">int</span>[]&gt; queue= <span class="keyword">new</span> LinkedList&lt;<span class="keyword">int</span>[]&gt;();</span><br><span class="line">        queue.add(<span class="keyword">new</span> <span class="keyword">int</span>[] &#123; <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span> &#125;);</span><br><span class="line">        <span class="keyword">while</span>(queue.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span>[] x = queue.poll();</span><br><span class="line">            <span class="keyword">int</span> i = x[<span class="number">0</span>], j = x[<span class="number">1</span>], si = x[<span class="number">2</span>], sj = x[<span class="number">3</span>];</span><br><span class="line">            <span class="keyword">if</span>(i &lt; <span class="number">0</span> || i &gt;= m || j &lt; <span class="number">0</span> || j &gt;= n || k &lt; si + sj || visited[i][j]) <span class="keyword">continue</span>;</span><br><span class="line">            visited[i][j] = <span class="keyword">true</span>;</span><br><span class="line">            res ++;</span><br><span class="line">            queue.add(<span class="keyword">new</span> <span class="keyword">int</span>[] &#123; i + <span class="number">1</span>, j, digitSum(i+<span class="number">1</span>), sj &#125;);</span><br><span class="line">            queue.add(<span class="keyword">new</span> <span class="keyword">int</span>[] &#123; i, j + <span class="number">1</span>, si, digitSum(j+<span class="number">1</span>) &#125;);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//计算位数和</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">digitSum</span><span class="params">(<span class="keyword">int</span> num)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(num!=<span class="number">0</span>)&#123;</span><br><span class="line">            sum += num%<span class="number">10</span>;</span><br><span class="line">            num /= <span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二叉树中和为某一值的路径｜《剑指offer》</title>
+    <url>/2020/03/25/%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%92%8C%E4%B8%BA%E6%9F%90%E4%B8%80%E5%80%BC%E7%9A%84%E8%B7%AF%E5%BE%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：输入一颗二叉树的根节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。(注意: 在返回值的list中，数组长度大的数组靠前)
+</code></pre>
+<a id="more"></a>
+<h1>题解：</h1>
+<p>创建两个ArrayList，一个用来存所有路径result，一个用来存结点cur。<br>
+利用二叉树的前序遍历，因为前序遍历是从根节点开始的。<br>
+每经过一个结点，就将结点放入cur，然后递归的调用左子树和右子树，同时目标值应该减去当前加入结点的值。<br>
+终止条件是目标值和当前结点的值相等，且该结点为叶子结点。若True，说明当前路径符合条件，加入result中。<br>
+最后需要排序，因为要求返回的list中，数组长度大的数组靠前。</p>
+<h1>Code</h1>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Collections;</span><br><span class="line"><span class="keyword">import</span> java.util.Comparator;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">public class TreeNode &#123;</span></span><br><span class="line"><span class="comment">    int val = 0;</span></span><br><span class="line"><span class="comment">    TreeNode left = null;</span></span><br><span class="line"><span class="comment">    TreeNode right = null;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    public TreeNode(int val) &#123;</span></span><br><span class="line"><span class="comment">        this.val = val;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line"><span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt;&gt; FindPath(TreeNode root,<span class="keyword">int</span> target) &#123;</span><br><span class="line">        ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        ArrayList&lt;Integer&gt; cur=<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"> </span><br><span class="line">        helper(root,target,cur,res);</span><br><span class="line">        Collections.sort(res, <span class="keyword">new</span> Comparator&lt;ArrayList&lt;Integer&gt;&gt;() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">compare</span><span class="params">(ArrayList&lt;Integer&gt; o1, ArrayList&lt;Integer&gt; o2)</span> </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (o1.size()&lt;o2.size())&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span> <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(TreeNode root,<span class="keyword">int</span> target,ArrayList&lt;Integer&gt; cur,ArrayList&lt;ArrayList&lt;Integer&gt;&gt; res)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root==<span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">int</span> value=root.val;</span><br><span class="line">        cur.add(value);</span><br><span class="line">        <span class="keyword">if</span> (target==value&amp;&amp;root.left==<span class="keyword">null</span>&amp;&amp;root.right==<span class="keyword">null</span>)&#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> ArrayList&lt;&gt;(cur));</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            helper(root.left,target-value,cur,res);</span><br><span class="line">            helper(root.right,target-value,cur,res);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        cur.remove(cur.size()-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sql习题总结</title>
+    <url>/2020/03/25/sql%E4%B9%A0%E9%A2%98%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h3 id="1-找所有部门内salary最大的员工（存在多值）"><a class="header-anchor" href="#1-找所有部门内salary最大的员工（存在多值）">¶</a>1. 找所有部门内salary最大的员工（存在多值）</h3>
+<p>注意使用group by子句时，select子句中只能有聚合键、聚合函数、常数。否则groupby默认取第一条数据。</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> de.dept_no, de.emp_no, s.salary</span><br><span class="line"><span class="keyword">from</span> dept_emp de <span class="keyword">inner</span> <span class="keyword">join</span> salaries s</span><br><span class="line"><span class="keyword">on</span> de.emp_no = s.emp_no</span><br><span class="line"><span class="keyword">and</span> de.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">and</span> s.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">where</span> s.salary = (<span class="keyword">select</span> <span class="keyword">max</span>(s2.salary)</span><br><span class="line">                <span class="keyword">from</span> dept_emp de2 <span class="keyword">inner</span> <span class="keyword">join</span> salaries s2</span><br><span class="line">                <span class="keyword">on</span> de2.emp_no = s2.emp_no</span><br><span class="line">                <span class="keyword">and</span> de2.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line">                <span class="keyword">and</span> s2.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line">                <span class="keyword">where</span> de2.dept_no = de.dept_no</span><br><span class="line">                <span class="keyword">group</span> <span class="keyword">by</span> de2.dept_no)</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> de.dept_no</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>sql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>树的数据结构补充</title>
+    <url>/2020/03/25/%E6%A0%91%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%A1%A5%E5%85%85/</url>
+    <content><![CDATA[<h1>前缀树</h1>
+<p>Trie树的基本性质：<br>
+①根节点不包含字符，除根节点外的每一个子节点都包含一个字符。<br>
+②从根节点到某一个节点，路径上经过的字符连接起来，为该节点对应的字符串。<br>
+③每个节点的所有子节点包含的字符互不相同。<br>
+④从第一字符开始有连续重复的字符只占用一个节点，比如上面的to，和ten，中重复的单词t只占用了一个节点。</p>
+<h3 id="前缀树的应用"><a class="header-anchor" href="#前缀树的应用">¶</a>前缀树的应用</h3>
+<p>1、前缀匹配<br>
+2、字符串检索<br>
+3、词频统计<br>
+4、字符串排序</p>
+<p>可以利用前缀树的性质来解决现实中的问题。比如说查找一个字符串数组中是否含有前缀单词，什么是前缀单词：上面的 in，就是 inn 的前缀单词。如果有十几万条单词，并且每个单词的长度都是5-10以内，这样必定存在大量重复的字符，因此利用前缀树来求解不仅速度快而且空间复杂度也比较好。</p>
+<p>每个结点维持两个变量的记录：path表示字符路过这个结点的次数（即表示存在以当前结点为前缀的字符有多少个）；end记录以当前结点为结束的字符有多少个。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Trie trie = <span class="keyword">new</span> Trie();</span><br><span class="line">        trie.add(<span class="string">"a"</span>);</span><br><span class="line">        trie.add(<span class="string">"ab"</span>);</span><br><span class="line">        trie.add(<span class="string">"ac"</span>);</span><br><span class="line">        trie.add(<span class="string">"abc"</span>);</span><br><span class="line">        trie.add(<span class="string">"acb"</span>);</span><br><span class="line">        trie.add(<span class="string">"abcc"</span>);</span><br><span class="line">        trie.add(<span class="string">"aab"</span>);</span><br><span class="line">        trie.add(<span class="string">"abx"</span>);</span><br><span class="line">        trie.add(<span class="string">"abc"</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(trie.get(<span class="string">"abc"</span>));</span><br><span class="line">        System.out.println(trie.getPre(<span class="string">"ab"</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * path表示字符路过这个结点的次数（即表示存在以当前结点为前缀的字符有多少个）；</span></span><br><span class="line"><span class="comment"> * end记录以当前结点为结束的字符有多少个。</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> path;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> end;</span><br><span class="line">    <span class="keyword">public</span> TrieNode[] nexts;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">TrieNode</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        path = <span class="number">0</span>;</span><br><span class="line">        end = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//只能存英文小写字母，如果是ASCII码可以生成256大小的数组</span></span><br><span class="line">        <span class="comment">//如果想存更多种类的字符可以改为map结构</span></span><br><span class="line">        nexts = <span class="keyword">new</span> TrieNode[<span class="number">26</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> TrieNode root;</span><br><span class="line"></span><br><span class="line">    Trie() &#123;</span><br><span class="line">        root = <span class="keyword">new</span> TrieNode();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 字典树的加入过程</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (word == <span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">char</span>[] chars = word.toCharArray();</span><br><span class="line">        TrieNode node = root;</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : chars) &#123;</span><br><span class="line">            index = c - <span class="string">'a'</span>;</span><br><span class="line">            <span class="keyword">if</span> (node.nexts[index] == <span class="keyword">null</span>) &#123;</span><br><span class="line">                node.nexts[index] = <span class="keyword">new</span> TrieNode();</span><br><span class="line">            &#125;</span><br><span class="line">            node = node.nexts[index];</span><br><span class="line">            node.path++;</span><br><span class="line">        &#125;</span><br><span class="line">        node.end++;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 字典树查询目标单词出现的次数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">get</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (word == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">char</span>[] chars = word.toCharArray();</span><br><span class="line">        TrieNode node = root;</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : chars) &#123;</span><br><span class="line">            index = c - <span class="string">'a'</span>;</span><br><span class="line">            <span class="keyword">if</span> (node.nexts[index] == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            node = node.nexts[index];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node.end;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 字典树查询以目标前缀的单词有多少个</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getPre</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(word ==<span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">char</span>[] chars = word.toCharArray();</span><br><span class="line">        TrieNode node = root;</span><br><span class="line">        <span class="keyword">int</span> index = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">char</span> c : chars) &#123;</span><br><span class="line">            index = c - <span class="string">'a'</span>;</span><br><span class="line">            <span class="keyword">if</span>(node.nexts[index]==<span class="keyword">null</span>)</span><br><span class="line">                <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">            node = node.nexts[index];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> node.path;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>优先级队列</h1>
+<p>最大优先队列，最大的优先出列，最大堆实现降序。<br>
+最小堆实现升序</p>
+<p>最小堆是一种经过排序的完全二叉树，其中任一非终端节点的数据值均不大于其左子节点和右子节的值。</p>
+<p>入队和出队的时间复杂度都是O(logn)，下沉和上浮操作</p>
+<h3 id="Java中"><a class="header-anchor" href="#Java中">¶</a>Java中</h3>
+<p>PriorityQueue 是基于优先堆的一个无界队列，不允许插入不可比较的对象，否则会抛出 ClassCastException 异常(如果队列只有一个元素则不会报错，因为此时没有比较)；也不允许插入 null，否则会抛出NullPointerException。<br>
+PriorityQueue使用时要实现比较器，定义排序方法。<br>
+注：PriorityQueue 是非线程安全的，如果想要在多线程的环境下使用，可以使用 PriorityBlockingQueue。</p>
+<h3 id="实现"><a class="header-anchor" href="#实现">¶</a>实现</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MinHeap</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Object[] queue;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MinHeap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        queue = <span class="keyword">new</span> Object[<span class="number">11</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">offer</span><span class="params">(T t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> k = size;</span><br><span class="line">        <span class="keyword">if</span> (size == <span class="number">0</span>)</span><br><span class="line">            queue[<span class="number">0</span>] = t;</span><br><span class="line">        size++;</span><br><span class="line">        moveUp(k, t);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//从堆底一层层上浮</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveUp</span><span class="params">(<span class="keyword">int</span> k, T t)</span> </span>&#123;</span><br><span class="line">        Comparable&lt;? <span class="keyword">super</span> T&gt; key = (Comparable&lt;? <span class="keyword">super</span> T&gt;) t;</span><br><span class="line">        <span class="keyword">while</span> (k &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> parent = (k - <span class="number">1</span>) &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">            Object e = queue[parent];</span><br><span class="line">            <span class="keyword">if</span> (key.compareTo((T) e) &gt; <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            queue[k] = e;</span><br><span class="line">            k = parent;</span><br><span class="line">        &#125;</span><br><span class="line">        queue[k] = key;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//从堆顶一层层下沉</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">poll</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (size == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">int</span> s = --size;</span><br><span class="line">        T result = (T) queue[<span class="number">0</span>];</span><br><span class="line">        T end = (T) queue[s];</span><br><span class="line">        queue[s] = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (s != <span class="number">0</span>)</span><br><span class="line">            moveDown(<span class="number">0</span>, end);</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">moveDown</span><span class="params">(<span class="keyword">int</span> k, T end)</span> </span>&#123;</span><br><span class="line">        Comparable&lt;? <span class="keyword">super</span> T&gt; key = (Comparable&lt;? <span class="keyword">super</span> T&gt;) end;</span><br><span class="line">        <span class="keyword">int</span> half = size &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (k &lt; half) &#123;</span><br><span class="line">            <span class="keyword">int</span> left = (k &lt;&lt; <span class="number">1</span>) + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">int</span> right = left + <span class="number">1</span>;</span><br><span class="line">            Object c = queue[left];</span><br><span class="line">            <span class="keyword">if</span> (right &lt; size &amp;&amp; ((Comparable&lt;? <span class="keyword">super</span> T&gt;) c).compareTo((T) queue[right]) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                c = queue[left = right];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (key.compareTo((T) c) &lt;= <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            queue[k] = c;</span><br><span class="line">            k = left;</span><br><span class="line">        &#125;</span><br><span class="line">        queue[k] = key;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        MinHeap minHeap = <span class="keyword">new</span> MinHeap();</span><br><span class="line">        minHeap.offer(<span class="number">1</span>);</span><br><span class="line">        minHeap.offer(<span class="number">5</span>);</span><br><span class="line">        minHeap.offer(<span class="number">3</span>);</span><br><span class="line">        minHeap.offer(<span class="number">2</span>);</span><br><span class="line">        minHeap.offer(<span class="number">4</span>);</span><br><span class="line">        minHeap.offer(<span class="number">4</span>);</span><br><span class="line">        <span class="keyword">int</span> length = minHeap.size;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++)</span><br><span class="line">            System.out.println(minHeap.poll());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二叉搜索树的后序遍历序列｜《剑指offer》</title>
+    <url>/2020/03/24/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<h1>题解</h1>
+<p>二叉搜索树的后序遍历序列，最后一个结点为root，则往前找第一个小于root即为左子树的最右结点，即可将序列分为左子树和右子树。</p>
+<h1>code</h1>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">VerifySquenceOfBST</span><span class="params">(<span class="keyword">int</span> [] sequence)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(sequence == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">if</span>(sequence.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">if</span>(sequence.length == <span class="number">1</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">return</span> Bst(sequence,<span class="number">0</span>,sequence.length -<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">Bst</span><span class="params">(<span class="keyword">int</span>[] sequence,<span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(start&gt;=end) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">int</span> mid = end-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>((sequence[mid]&gt;sequence[end])&amp;&amp;(mid&gt;start)) mid--;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = start;i&lt;mid;i++ )&#123;</span><br><span class="line">            <span class="keyword">if</span>(sequence[i]&gt;sequence[end])</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Bst(sequence,start, mid)&amp;&amp; Bst(sequence,mid+<span class="number">1</span>, end-<span class="number">1</span>);</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>栈的压入、弹出序列｜《剑指offer》</title>
+    <url>/2020/03/23/%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
+</code></pre>
+<a id="more"></a>
+<p>创建一个辅助栈，模拟压入、弹出的行为：<br>
+关键在于栈不能出现两个逆序，所以for循环执行到最后一次，while循环将pop完stack中的所有结点，否则弹出序列不成立。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">IsPopOrder</span><span class="params">(<span class="keyword">int</span> [] pushA,<span class="keyword">int</span> [] popA)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(pushA.length == <span class="number">0</span> || popA.length == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        LinkedList&lt;Integer&gt; s = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">        <span class="comment">//用于标识弹出序列的位置</span></span><br><span class="line">        <span class="keyword">int</span> popIndex = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt; pushA.length;i++)&#123;</span><br><span class="line">            s.addFirst(pushA[i]);</span><br><span class="line">            <span class="comment">//如果栈不为空，且栈顶元素等于弹出序列</span></span><br><span class="line">            <span class="keyword">while</span>(!s.isEmpty() &amp;&amp;s.getFirst() == popA[popIndex])&#123;</span><br><span class="line">                <span class="comment">//出栈</span></span><br><span class="line">                s.pollFirst();</span><br><span class="line">                <span class="comment">//弹出序列向后一位</span></span><br><span class="line">                popIndex++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> s.isEmpty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python复习</title>
+    <url>/2020/03/22/python%E5%A4%8D%E4%B9%A0/</url>
+    <content><![CDATA[<pre><code>再过一遍python语法，记点有趣的。
+</code></pre>
+<a id="more"></a>
+<h1>基本类型和变量</h1>
+<h3 id="1-除法"><a class="header-anchor" href="#1-除法">¶</a>1. 除法</h3>
+<p>/（无论怎么除结果都是浮点型）；//（地板除，无论怎么除结果都是整数）</p>
+<h3 id="2-字符串"><a class="header-anchor" href="#2-字符串">¶</a>2. 字符串</h3>
+<p>unicode编码，encode()编成指定bytes，decode()编成unicode。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">x = <span class="string">b'ABC'</span> <span class="comment">#以bytes形式存，占内存大小不一样。</span></span><br></pre></td></tr></table></figure>
+<p>纯英文的str可以用ASCII编码为bytes，内容是一样的，含有中文的str可以用UTF-8编码为bytes。含有中文的str无法用ASCII编码，因为中文编码的范围超过了ASCII编码的范围，Python会报错。（含参数errors='ignore’可以无视一部分报错）</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3  #提示操作系统是python可执行文件</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*- #提示编码方式</span></span><br><span class="line"></span><br><span class="line">str1.replace(<span class="string">'a'</span>,<span class="string">'A'</span>) <span class="comment">#换字符</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-格式化"><a class="header-anchor" href="#3-格式化">¶</a>3. 格式化</h3>
+<p>%s可以把其他数强制转换成字符串。<br>
+%%：表示%</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="string">'Hi, %s, you have $%d.'</span> % (<span class="string">'Michael'</span>, <span class="number">1000000</span>)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">占位符</th>
+<th style="text-align:left">替换内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">%d</td>
+<td style="text-align:left">整数</td>
+</tr>
+<tr>
+<td style="text-align:right">%f</td>
+<td style="text-align:left">浮点数</td>
+</tr>
+<tr>
+<td style="text-align:right">%s</td>
+<td style="text-align:left">字符串</td>
+</tr>
+<tr>
+<td style="text-align:right">%x</td>
+<td style="text-align:left">十六进制整数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="4-python里的四大集合"><a class="header-anchor" href="#4-python里的四大集合">¶</a>4. python里的四大集合</h3>
+<h5 id="1-List"><a class="header-anchor" href="#1-List">¶</a>1. [] -List</h5>
+<pre><code>如果一个list中一个元素也没有，就是一个空的list，它的长度为0。
+</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#添加元素</span></span><br><span class="line">classmates.append(<span class="string">'Adam'</span>)</span><br><span class="line"><span class="comment">#插入特定位置</span></span><br><span class="line">classmates.insert(<span class="number">1</span>, <span class="string">'Jack'</span>)</span><br><span class="line"><span class="comment">#删除末尾元素</span></span><br><span class="line">classmates.pop()</span><br><span class="line"><span class="comment">#删除特定位置</span></span><br><span class="line">classmates.pop(<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="2-tuple"><a class="header-anchor" href="#2-tuple">¶</a>2. () -tuple</h5>
+<ul>
+<li>tuple一旦初始化就不能修改, 这里是指指向不变，所以如果元素中有List，是可以改变List中的内容的。</li>
+<li>只有1个元素的tuple定义时必须加一个逗号‘,’，来消除歧义, 否则表示数字1</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">t = (<span class="number">1</span>,)</span><br></pre></td></tr></table></figure>
+<h5 id="4-dict"><a class="header-anchor" href="#4-dict">¶</a>4. {} -dict</h5>
+<ul>
+<li>key无重复。</li>
+<li>dict内部是无序的，key必须是不可变对象，list就是可变的</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#dict创建</span></span><br><span class="line">d = &#123;&#125;</span><br><span class="line"><span class="comment">#dict添加元素</span></span><br><span class="line">d[<span class="string">'Adam'</span>] = <span class="number">10</span></span><br><span class="line"><span class="comment">#dict查找元素, 第二个参数表示没找到，默认返回值None，可以自定义</span></span><br><span class="line">d.get(<span class="string">'Tomas'</span>, <span class="number">-1</span>)</span><br><span class="line"><span class="comment">#删除元素</span></span><br><span class="line">d.pop(<span class="string">'bob'</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="5-set"><a class="header-anchor" href="#5-set">¶</a>5. ([]) - set</h5>
+<p>数学意义上无重复，无序的集合。</p>
+<ul>
+<li>无value版的dict，内部无序，key不可变</li>
+<li>同样key无重复</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#创建</span></span><br><span class="line">s = set([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>])</span><br><span class="line"><span class="comment">#添加元素</span></span><br><span class="line">s.add(<span class="number">4</span>)</span><br><span class="line"><span class="comment">#删除元素</span></span><br><span class="line">s.remove(<span class="number">4</span>)</span><br><span class="line"><span class="comment">#集合操作</span></span><br><span class="line">s1 &amp; s2</span><br><span class="line">s1 | s2</span><br></pre></td></tr></table></figure>
+<h1>函数</h1>
+<h2 id="返回值"><a class="header-anchor" href="#返回值">¶</a>返回值</h2>
+<p>可以返回多个值，其原理其实是返回一个tuple，按位置传给特定的参数。</p>
+<h2 id="五大参数"><a class="header-anchor" href="#五大参数">¶</a>五大参数</h2>
+<h3 id="必选参数"><a class="header-anchor" href="#必选参数">¶</a>必选参数</h3>
+<p>按位置匹配，不可不填。</p>
+<h3 id="默认参数"><a class="header-anchor" href="#默认参数">¶</a>默认参数</h3>
+<p>如果默认参数是类似list可变的，多次调用可能达不到想要的效果，因为每一次调用都会修改同一个list。所以一般默认参数指向不可变对象。</p>
+<ul>
+<li>一般来说不可变对象可以规避修改数据倒置的错误，由于对象不变，多任务的环境下，同时读取对象不需要加锁。</li>
+</ul>
+<h3 id="可变参数-arg"><a class="header-anchor" href="#可变参数-arg">¶</a>可变参数 *arg</h3>
+<p>如果想直接传入不定数的参数，一种方式是定义list[],或者tuple()。<br>
+还可以定义可变参数：可以不传</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc</span><span class="params">(*nums)</span>:</span></span><br><span class="line">   sum = <span class="number">0</span></span><br><span class="line">   <span class="keyword">for</span> n <span class="keyword">in</span> nums:</span><br><span class="line">      sum += n;</span><br><span class="line">   <span class="keyword">return</span> sum</span><br><span class="line"></span><br><span class="line">calc(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#当传入list或者tuple时，在其前面加个*</span></span><br><span class="line">calc(*nums1)</span><br></pre></td></tr></table></figure>
+<p>可变参数在函数调用时，自动封装成tuple。</p>
+<h3 id="关键字参数-args"><a class="header-anchor" href="#关键字参数-args">¶</a>关键字参数 **args</h3>
+<p>可以传入不定数的含参数名的参数，这些关键字参数会被自动封装成dict。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">person</span><span class="params">(name,city,**kw)</span>:</span></span><br><span class="line">   print(<span class="string">'name:'</span>, name, <span class="string">'age:'</span>, age, <span class="string">'other:'</span>, kw)</span><br><span class="line"><span class="comment">#可以做判断：</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">person</span><span class="params">(name, age, **kw)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">'city'</span> <span class="keyword">in</span> kw:</span><br><span class="line">        <span class="comment"># 有city参数</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    <span class="keyword">if</span> <span class="string">'job'</span> <span class="keyword">in</span> kw:</span><br><span class="line">        <span class="comment"># 有job参数</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line">    print(<span class="string">'name:'</span>, name, <span class="string">'age:'</span>, age, <span class="string">'other:'</span>, kw)</span><br><span class="line"></span><br><span class="line">person(<span class="string">'Bob'</span>, <span class="number">35</span>, city=<span class="string">'Beijing'</span>)</span><br><span class="line">name: Bob age: <span class="number">35</span> other: &#123;<span class="string">'city'</span>: <span class="string">'Beijing'</span>&#125;</span><br></pre></td></tr></table></figure>
+<p>调用该函数可以只传必选参数。<br>
+可以直接传入dict：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">extra = &#123;<span class="string">'city'</span>: <span class="string">'Beijing'</span>, <span class="string">'job'</span>: <span class="string">'Engineer'</span>&#125;</span><br><span class="line">person(<span class="string">'Jack'</span>, <span class="number">24</span>, **extra)</span><br><span class="line"><span class="comment"># name: Jack age: 24 other: &#123;'city': 'Beijing', 'job': 'Engineer'&#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="命名关键字参数"><a class="header-anchor" href="#命名关键字参数">¶</a>命名关键字参数</h3>
+<p>顾名思义，规定传入关键字参数的名字，用<em>隔开必选参数.<br>
+如果前面紧跟可变参数，可以省略</em>。<br>
+可以有缺省值：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">person</span><span class="params">(name, age, *, city=<span class="string">'Beijing'</span>, job)</span>:</span></span><br><span class="line">    print(name, age, city, job)</span><br><span class="line"></span><br><span class="line"><span class="comment">#调用必须使用关键字，否则会默认为位置参数。</span></span><br><span class="line">person(<span class="string">'Jack'</span>, <span class="number">24</span>, job=<span class="string">'Engineer'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="参数组合"><a class="header-anchor" href="#参数组合">¶</a>参数组合</h3>
+<p>五大参数组合一起用时，要按照既定顺序：必选参数，默认参数，可变参数，关键字参数，命名关键字参数。</p>
+<h1>特性</h1>
+<h3 id="1-切片"><a class="header-anchor" href="#1-切片">¶</a>1. 切片</h3>
+<p>抽取部分值<br>
+切片操作基本表达式：object[start_index:end_index:step]<br>
+负数为反向</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">100</span>)[<span class="number">2</span>::<span class="number">3</span>][<span class="number">-5</span>:]: </span><br><span class="line">       print(i)</span><br><span class="line">n[::<span class="number">-1</span>] <span class="comment">#逆序切片</span></span><br></pre></td></tr></table></figure>
+<p>[:]和.copy()都属于“浅拷贝”，只拷贝最外层元素，内层嵌套元素则通过引用方式共享，而非独立分配内存，如果需要彻底拷贝则需采用“深拷贝”方式，deepcopy().</p>
+<h3 id="2-迭代"><a class="header-anchor" href="#2-迭代">¶</a>2. 迭代</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">isinstance(<span class="string">'abc'</span>, Iterable) <span class="comment"># str是否可迭代</span></span><br><span class="line"><span class="keyword">for</span> x, y <span class="keyword">in</span> [(<span class="number">1</span>, <span class="number">1</span>), (<span class="number">2</span>, <span class="number">4</span>), (<span class="number">3</span>, <span class="number">9</span>)]:</span><br><span class="line">   print(x, y)</span><br><span class="line"><span class="comment">#enumerate函数可以把一个list变成索引-元素对</span></span><br><span class="line"><span class="keyword">for</span> i, value <span class="keyword">in</span> enumerate([<span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>]):</span><br><span class="line">   print(i, value)</span><br></pre></td></tr></table></figure>
+<h3 id="3-列表生成器"><a class="header-anchor" href="#3-列表生成器">¶</a>3. 列表生成器</h3>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">[x * x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>)]</span><br><span class="line"><span class="comment">#还可以做判断</span></span><br><span class="line">[x * x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]</span><br><span class="line"><span class="comment">#两层循环</span></span><br><span class="line">[m + n <span class="keyword">for</span> m <span class="keyword">in</span> <span class="string">'ABC'</span> <span class="keyword">for</span> n <span class="keyword">in</span> <span class="string">'XYZ'</span>]</span><br><span class="line"><span class="comment">#循环dict的key-value pair</span></span><br><span class="line"><span class="keyword">for</span> k, v <span class="keyword">in</span> d.items():</span><br><span class="line">   print(k, <span class="string">'='</span>, v)</span><br><span class="line">[k + <span class="string">'='</span> + v <span class="keyword">for</span> k, v <span class="keyword">in</span> d.items()]</span><br><span class="line"><span class="comment">#把list所有的str转成小写</span></span><br><span class="line">[s.lower() <span class="keyword">for</span> s <span class="keyword">in</span> L]</span><br><span class="line"><span class="comment">#后面if是筛选条件</span></span><br><span class="line">[x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>) <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span>]</span><br><span class="line"><span class="comment">#if..else是表达式</span></span><br><span class="line">[x <span class="keyword">if</span> x % <span class="number">2</span> == <span class="number">0</span> <span class="keyword">else</span> -x <span class="keyword">for</span> x <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">11</span>)]</span><br></pre></td></tr></table></figure>
+<h3 id="4-生成器"><a class="header-anchor" href="#4-生成器">¶</a>4. 生成器</h3>
+<p>记录的是算法，只有在调用的时候才开始计算结果。<br>
+next(g)返回一次计算值。for i in g</p>
+<p>如果一个函数定义中包含yield关键字，那么这个函数就不再是一个普通函数，而是一个generator，每次调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行。</p>
+<h3 id="5-迭代器"><a class="header-anchor" href="#5-迭代器">¶</a>5. 迭代器</h3>
+<p>Iterator甚至可以表示一个无限大的数据流，可以被next()函数调用并不断返回下一个值的对象称为迭代器：Iterator。生成器都是Iterator对象，但list、dict、str虽然是Iterable，却不是Iterator。</p>
+<p>把list、dict、str等Iterable变成Iterator可以使用iter()函数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">isinstance(iter([]), Iterator)</span><br><span class="line"><span class="comment">#True</span></span><br></pre></td></tr></table></figure>
+<h1>函数式编程</h1>
+<h3 id="高阶函数"><a class="header-anchor" href="#高阶函数">¶</a>高阶函数</h3>
+<p>函数是一个变量，函数名可以看作变量能被当作参数传入函数：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">f = abs</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x,y,f)</span>:</span></span><br><span class="line">   <span class="keyword">return</span> f(x) + f(y)</span><br></pre></td></tr></table></figure>
+<h3 id="匿名函数-Lambda"><a class="header-anchor" href="#匿名函数-Lambda">¶</a>匿名函数 Lambda</h3>
+<p>关键字lambda表示匿名函数，冒号前面的n表示函数参数，可以有多个参数。<br>
+匿名函数有个限制，就是只能有一个表达式，不用写return，返回值就是该表达式的结果。</p>
+<h5 id="好处："><a class="header-anchor" href="#好处：">¶</a>好处：</h5>
+<ol>
+<li>不必担心函数名冲突。匿名函数也是一个函数对象，也可以把匿名函数赋值给一个变量，再利用变量来调用该函数：</li>
+<li>有些函数在代码中只用一次，使用匿名函数可以减少代码量</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc</span><span class="params">(x,y)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> x**y</span><br><span class="line"><span class="comment">#换成匿名函数</span></span><br><span class="line">calc = <span class="keyword">lambda</span> x,y:x**y</span><br><span class="line">print(calc(<span class="number">2</span>,<span class="number">5</span>))</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">calc</span><span class="params">(x,y)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> x &gt; y:</span><br><span class="line">        <span class="keyword">return</span> x*y</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> x / y    </span><br><span class="line"><span class="comment">#三元运算换成匿名函数</span></span><br><span class="line">calc = <span class="keyword">lambda</span> x,y:x * y <span class="keyword">if</span> x &gt; y <span class="keyword">else</span> x / y</span><br><span class="line">print(calc(<span class="number">2</span>,<span class="number">5</span>))</span><br></pre></td></tr></table></figure>
+<h3 id="常用函数"><a class="header-anchor" href="#常用函数">¶</a>常用函数</h3>
+<ol>
+<li>map(f,Iterable)<br>
+映射，将结果作为新的Iterator返回。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">list[map(str,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>])]</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>reduce(f,Iterable)<br>
+叠加调用，重复的对上一次调用函数的结果与下一个序列调用函数计算结果。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> reduce</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span><span class="params">(x,y)</span>:</span></span><br><span class="line">   <span class="keyword">return</span> x + y</span><br><span class="line">reduce(add,[<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>])</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>filter(f,Iterable)<br>
+筛选，f的返回值应该会true或false，最后生成一个全为true的Iterator。</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 在一个list中，删掉偶数，只保留奇数</span></span><br><span class="line">li = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">15</span>]</span><br><span class="line">print(list(filter(<span class="keyword">lambda</span> x:x % <span class="number">2</span>==<span class="number">1</span>,li)))  <span class="comment"># [1, 5, 9, 15]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 回数是指从左向右读和从右向左读都是一样的数，例如12321，909。请利用filter()筛选出回数</span></span><br><span class="line">li = list(range(<span class="number">1</span>, <span class="number">200</span>))</span><br><span class="line">print(list(filter(<span class="keyword">lambda</span> x:int(str(x))==int(str(x)[::<span class="number">-1</span>]),li)))</span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>, <span class="number">44</span>, <span class="number">55</span>, <span class="number">66</span>, <span class="number">77</span>, <span class="number">88</span>, <span class="number">99</span>, <span class="number">101</span>, <span class="number">111</span>, <span class="number">121</span>, <span class="number">131</span>, <span class="number">141</span>, <span class="number">151</span>, <span class="number">161</span>, <span class="number">171</span>, <span class="number">181</span>, <span class="number">191</span>]</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>sorted(Iterable, key = None, reverse = false)<br>
+对一个Iterable自定义排序：</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 对列表按照绝对值进行排序</span></span><br><span class="line">li= [<span class="number">-21</span>, <span class="number">-12</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">36</span>]</span><br><span class="line">print(sorted(li, key = <span class="keyword">lambda</span> x:abs(x)))</span><br><span class="line"><span class="comment"># [5, 9, -12, -21, 36]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把下面单词以首字母排序</span></span><br><span class="line">li = [<span class="string">'bad'</span>, <span class="string">'about'</span>, <span class="string">'Zoo'</span>, <span class="string">'Credit'</span>]</span><br><span class="line">print(sorted(li, key = <span class="keyword">lambda</span> x : x[<span class="number">0</span>]))</span><br><span class="line"><span class="comment"># 输出['Credit', 'Zoo', 'about', 'bad']</span></span><br></pre></td></tr></table></figure>
+<h3 id="返回函数"><a class="header-anchor" href="#返回函数">¶</a>返回函数</h3>
+<p>函数可以返回一个闭包，只有在调用这个函数的时候，闭包才会执行。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count</span><span class="params">()</span>:</span></span><br><span class="line">    fs = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">4</span>):</span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">()</span>:</span></span><br><span class="line">             <span class="keyword">return</span> i*i</span><br><span class="line">        fs.append(f)</span><br><span class="line">    <span class="keyword">return</span> fs</span><br><span class="line"></span><br><span class="line">f1, f2, f3 = count()</span><br><span class="line"></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f1()</span><br><span class="line"><span class="number">9</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f2()</span><br><span class="line"><span class="number">9</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>f3()</span><br><span class="line"><span class="number">9</span></span><br></pre></td></tr></table></figure>
+<p>返回函数不要引用任何循环变量，或者后续会发生变化的变量。</p>
+]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>包含min函数的栈｜《剑指offer》</title>
+    <url>/2020/03/22/%E5%8C%85%E5%90%ABmin%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
+注意：保证测试中不会当栈为空的时候，对栈调用pop()或者min()或者top()方法。
+</code></pre>
+<a id="more"></a>
+<h1>题解</h1>
+<p>用一个辅助栈存取主栈的非严格递增序列。用min（）时，peek（）辅助栈。</p>
+<h1>Code</h1>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    Stack&lt;Integer&gt; mainStack,subStack;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Solution</span><span class="params">()</span></span>&#123;</span><br><span class="line">        mainStack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        subStack = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> node)</span> </span>&#123;</span><br><span class="line">        mainStack.add(node);</span><br><span class="line">        <span class="keyword">if</span>(subStack.empty()||node&lt;=subStack.peek())&#123;</span><br><span class="line">            subStack.add(node);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> bepop = mainStack.pop();</span><br><span class="line">        <span class="keyword">if</span>(bepop == subStack.peek())&#123;</span><br><span class="line">            subStack.pop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> mainStack.peek();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">min</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> subStack.peek();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>今朝酒</title>
+    <url>/2020/03/22/top/</url>
+    <content><![CDATA[<p>这几天补了一下数据库基础。<br>
+快看完Java了，也就还剩150页…。得补一下课业的内容，先把python过一遍总结一下。<br>
+添加一个新的日常任务，刷sql…</p>
+<a id="more"></a>
+<ul>
+<li>
+<p>2020-03-15 15:13:14<br>
+作息有点差，先把书给读完吧。设计模式太多了，以后再统一看吧。23种有点太夸张…<br>
+在刷剑指offer了，前面的题目略简单，不过很多小细节很不错。<br>
+漏一个前缀树没看，明天补，今天状态不行。</p>
+</li>
+<li>
+<p>2020-03-15 15:13:14<br>
+周末更堕落…廖老师基础打算先过一遍设计模式和函数式编程，再看多线程。《Java核心技术》才读了100页…<br>
+数据结构是复习完了…再复习一遍上学期的算法课吧，复习完就开始刷题。</p>
+</li>
+<li>
+<p>2020-03-13 15:13:14<br>
+近日较为堕落…廖老师基础课过了一半，基础入门算是完成了，读《Java核心技术》巩固一下。还需要上手编程实现书里的代码。<br>
+算法改为复习排序，并查集，栈队列，symbol table这些基础概念，再开始刷题。<br>
+操作系统每天瞎学一点，等算法过完再开始认真刷。<br>
+课内的东西压根没碰…自从打算suspended就懈怠了。。</p>
+</li>
+<li>
+<p>2020-03-07 15:13:14<br>
+每日《剑指offer》，学完了反射和泛型依旧云里雾里。学了也有一周了，得回头复习一下，读一波《Java核心技术》。<br>
+还有操作系统基础…cc这门课涵盖是真的广…</p>
+</li>
+<li>
+<p>2020-03-04 15:13:14<br>
+赶紧把作业写了，把论文读了。看Java反射，继续刷《剑指offer》😌。</p>
+</li>
+<li>
+<p>2020-03-03 19:13:14<br>
+这几天忙于学业。才刚把核心类看完，看异常处理，刷《剑指offer》。</p>
+</li>
+<li>
+<p>2020-02-29 22:13:14<br>
+面向对象是搞定了，还真的猛这门语言。课内任务还没做，due要到了。</p>
+</li>
+<li>
+<p>2020-02-28 22:17:14<br>
+学了波Java入门，从搭环境到这门语言基础。<br>
+准备开始这门语言的第一个特性，面向对象。<br>
+然后把课内的任务给清了。</p>
+</li>
+<li>
+<p>2020-02-26 21:27:14<br>
+最近刚开课，得准备上课和补数学，没时间搞爬虫。刚好cloud computing要用Git和Jave，整好系统得学一下Git。<br>
+更新完了Git，打算开始学Java，同时也补后端的知识。</p>
+</li>
+</ul>
+<h2 id="廖老师Java基础课待干："><a class="header-anchor" href="#廖老师Java基础课待干：">¶</a>廖老师Java基础课待干：</h2>
+<table>
+<thead>
+<tr>
+<th>章节</th>
+<th style="text-align:left">OK？</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Java入门</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>面向对象编程</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>Java核心类</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>异常处理</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>反射</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>注解</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>泛型</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>集合</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>IO</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>日期与时间</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>单元测试</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>正则表达式</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>加密与安全</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>多线程</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>Maven基础</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>网络编程</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>XML与JSON</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>JDBC编程</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td>函数式编程</td>
+<td style="text-align:left">👌</td>
+</tr>
+<tr>
+<td>设计模式</td>
+<td style="text-align:left">👌</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Java核心技术卷I"><a class="header-anchor" href="#Java核心技术卷I">¶</a>Java核心技术卷I</h2>
+]]></content>
+  </entry>
+  <entry>
+    <title>顺时针打印矩阵｜《剑指offer》</title>
+    <url>/2020/03/22/%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.
+</code></pre>
+<a id="more"></a>
+<p>画圆取数，缩小范围，注意边界条件，取过的数不必再取。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">printMatrix</span><span class="params">(<span class="keyword">int</span> [][] matrix)</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; result =<span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(matrix == <span class="keyword">null</span>||matrix.length == <span class="number">0</span>) </span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        <span class="keyword">int</span> row = matrix.length;</span><br><span class="line">        <span class="keyword">int</span> column = matrix[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span> top = <span class="number">0</span>;<span class="keyword">int</span> bottom = row-<span class="number">1</span>;<span class="keyword">int</span> left = <span class="number">0</span>;<span class="keyword">int</span> right = column-<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(top&lt;=bottom&amp;&amp;left&lt;=right)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = left;i&lt;=right;++i)</span><br><span class="line">                result.add(matrix[top][i]);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = top+<span class="number">1</span>;i&lt;=bottom;++i)</span><br><span class="line">                result.add(matrix[i][right]);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = right-<span class="number">1</span>;top&lt;bottom&amp;&amp;i&gt;=left;--i)</span><br><span class="line">                result.add(matrix[bottom][i]);</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i = bottom-<span class="number">1</span>;left&lt;right&amp;&amp;i&gt;top;--i)</span><br><span class="line">                result.add(matrix[i][left]);</span><br><span class="line">            ++left;++top;--right;--bottom;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>二叉树的镜像｜《剑指offer》</title>
+    <url>/2020/03/21/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%95%9C%E5%83%8F%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：操作给定的二叉树，将其变换为源二叉树的镜像。
+</code></pre>
+<a id="more"></a>
+<h1>题解1 递归</h1>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/* 先前序遍历这棵树的每个结点，如果遍历到的结点有子结点，就交换它的两个子节点，</span></span><br><span class="line"><span class="comment">当交换完所有的非叶子结点的左右子结点之后，就得到了树的镜像 */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">public class TreeNode &#123;</span></span><br><span class="line"><span class="comment">    int val = 0;</span></span><br><span class="line"><span class="comment">    TreeNode left = null;</span></span><br><span class="line"><span class="comment">    TreeNode right = null;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">    public TreeNode(int val) &#123;</span></span><br><span class="line"><span class="comment">        this.val = val;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"> </span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Mirror</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        <span class="keyword">if</span>(root.left == <span class="keyword">null</span> &amp;&amp; root.right == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">         </span><br><span class="line">        TreeNode pTemp = root.left;</span><br><span class="line">        root.left = root.right;</span><br><span class="line">        root.right = pTemp;</span><br><span class="line">         </span><br><span class="line">        <span class="keyword">if</span>(root.left != <span class="keyword">null</span>)</span><br><span class="line">            Mirror(root.left);</span><br><span class="line">        <span class="keyword">if</span>(root.right != <span class="keyword">null</span>)</span><br><span class="line">            Mirror(root.right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>题解 2 迭代</h1>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">public class TreeNode &#123;</span></span><br><span class="line"><span class="comment">    int val = 0;</span></span><br><span class="line"><span class="comment">    TreeNode left = null;</span></span><br><span class="line"><span class="comment">    TreeNode right = null;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    public TreeNode(int val) &#123;</span></span><br><span class="line"><span class="comment">        this.val = val;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Mirror</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(root==<span class="keyword">null</span>) <span class="keyword">return</span>;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//将二叉树中的节点逐层放入栈中，再迭代处理栈中的元素</span></span><br><span class="line">		LinkedList&lt;TreeNode&gt; stack = <span class="keyword">new</span> LinkedList&lt;TreeNode&gt;();</span><br><span class="line">        TreeNode tmp = root;</span><br><span class="line">		stack.addFirst(tmp);</span><br><span class="line">		<span class="keyword">while</span>(!stack.isEmpty()) &#123;</span><br><span class="line">			<span class="comment">//每次都从栈中拿一个节点，并交换这个节点的左右子树</span></span><br><span class="line">			tmp = stack.removeFirst();</span><br><span class="line">			swapLR(tmp);</span><br><span class="line">			<span class="comment">//如果当前节点的左子树不为空，则放入栈等待后续处理</span></span><br><span class="line">			<span class="keyword">if</span>(tmp.left!=<span class="keyword">null</span>) &#123;</span><br><span class="line">				stack.addFirst(tmp.left);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//如果当前节点的右子树不为空，则放入栈等待后续处理</span></span><br><span class="line">			<span class="keyword">if</span>(tmp.right!=<span class="keyword">null</span>) &#123;</span><br><span class="line">				stack.addFirst(tmp.right);</span><br><span class="line">			&#125;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">swapLR</span><span class="params">(TreeNode node)</span></span>&#123;</span><br><span class="line">        TreeNode temp = node.left;</span><br><span class="line">        node.left = node.right;</span><br><span class="line">        node.right = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>面向对象思想</title>
+    <url>/2020/03/20/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%80%9D%E6%83%B3/</url>
+    <content><![CDATA[<a id="more"></a>
+<h1>三大特性</h1>
+<h3 id="1-封装"><a class="header-anchor" href="#1-封装">¶</a>1 封装</h3>
+<p>利用抽象数据类型将数据和使用数据的方法封装，对外开放接口而不暴露对象内部实现的细节。使得用户无须关心对象内部的细节，而可以通过接口访问对象的数据和方法。</p>
+<h3 id="优点"><a class="header-anchor" href="#优点">¶</a>优点</h3>
+<ol>
+<li>减少耦合：可以独立地开发、测试、优化、使用、理解和修改</li>
+<li>减轻维护的负担：可以更容易被理解，并且在调试的时候可以不影响其他模块</li>
+<li>有效地调节性能：可以通过剖析来确定哪些模块影响了系统的性能</li>
+<li>提高软件的可重用性</li>
+<li>降低了构建大型系统的风险：即使整个系统不可用，但是这些独立的模块却有可能是可用的</li>
+</ol>
+<h3 id="2-继承"><a class="header-anchor" href="#2-继承">¶</a>2 继承</h3>
+<p>实现is-A关系，子类可以继承自超类，获得超类非private的字段和方法。<br>
+要遵循里氏替换原则：子类对象必须能够替换掉所有父类对象。只要有父类出现的地方，都可以用子类来替代，而且不会出现任何错误和异常。<br>
+即可以实现向上转型。</p>
+<h3 id="3-多态"><a class="header-anchor" href="#3-多态">¶</a>3 多态</h3>
+<p>包括编译时多态和运行时多态：</p>
+<ul>
+<li>编译时多态是指方法的重载，overload。</li>
+<li>运行时多态是指动态绑定，程序运行时能自动选择合适的方法。即程序中定义的对象引用所指向的实际类型在运行期间才确定。</li>
+</ul>
+<h5 id="运行时多态的三个条件："><a class="header-anchor" href="#运行时多态的三个条件：">¶</a>运行时多态的三个条件：</h5>
+<ul>
+<li>继承</li>
+<li>覆写override</li>
+<li>向上转型<br>
+乐器类（Instrument）有两个子类：Wind 和 Percussion，它们都覆盖了父类的 play() 方法，并且在 main() 方法中使用父类 Instrument 来引用 Wind 和 Percussion 对象。在 Instrument 引用调用 play() 方法时，会执行实际引用对象所在类的 play() 方法，而不是 Instrument 类的方法。</li>
+</ul>
+<hr>
+<h1>类图</h1>
+<ol>
+<li>泛化关系 (Generalization)<br>
+用来描述继承关系，在 Java 中使用 extends 关键字。</li>
+<li>实现关系 (Realization)<br>
+用来实现一个接口，在 Java 中使用 implements 关键字。</li>
+<li>聚合关系<br>
+表示整体由部分组成，但是整体和部分不是强依赖的，整体不存在了部分还是会存在。</li>
+<li>组合关系<br>
+和聚合不同，组合中整体和部分是强依赖的，整体不存在了部分也不存在了。比如公司和部门，公司没了部门就不存在了。但是公司和员工就属于聚合关系了，因为公司没了员工还在。</li>
+<li>关联关系<br>
+表示不同类对象之间有关联，这是一种静态关系，与运行过程的状态无关，在最开始就可以确定。因此也可以用 1 对 1、多对 1、多对多这种关联关系来表示。比如学生和学校就是一种关联关系，一个学校可以有很多学生，但是一个学生只属于一个学校，因此这是一种多对一的关系，在运行开始之前就可以确定。</li>
+<li>依赖关系<br>
+和关联关系不同的是，依赖关系是在运行过程中起作用的。A 类和 B 类是依赖关系主要有三种形式：</li>
+</ol>
+<ul>
+<li>A 类是 B 类方法的局部变量；</li>
+<li>A 类是 B 类方法的参数；</li>
+<li>A 类向 B 类发送消息，从而影响 B 类发生变化。<br>
+.</li>
+</ul>
+<hr>
+<h1>六大设计原则</h1>
+<h3 id="S-O-L-I-D"><a class="header-anchor" href="#S-O-L-I-D">¶</a>S.O.L.I.D</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">简写</th>
+<th style="text-align:center">全拼</th>
+<th style="text-align:center">中文翻译</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">SRP</td>
+<td style="text-align:center">The Single Responsibility Principle</td>
+<td style="text-align:center">单一责任原则</td>
+</tr>
+<tr>
+<td style="text-align:right">OCP</td>
+<td style="text-align:center">The Open Closed Principle</td>
+<td style="text-align:center">开放封闭原则</td>
+</tr>
+<tr>
+<td style="text-align:right">LSP</td>
+<td style="text-align:center">The Liskov Substitution Principle</td>
+<td style="text-align:center">里氏替换原则</td>
+</tr>
+<tr>
+<td style="text-align:right">ISP</td>
+<td style="text-align:center">The Interface Segregation Principle</td>
+<td style="text-align:center">接口分离原则</td>
+</tr>
+<tr>
+<td style="text-align:right">DIP</td>
+<td style="text-align:center">The Dependency Inversion Principle</td>
+<td style="text-align:center">依赖倒置原则</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-单一责任原则：修改一个类的原因只有一个"><a class="header-anchor" href="#1-单一责任原则：修改一个类的原因只有一个">¶</a>1 单一责任原则：修改一个类的原因只有一个</h3>
+<p>换句话说就是让一个类只负责一件事，当这个类需要做过多事情的时候，就需要分解这个类。<br>
+降低耦合</p>
+<h3 id="2-开放封闭原则：类应该对拓展开放，对修改关闭"><a class="header-anchor" href="#2-开放封闭原则：类应该对拓展开放，对修改关闭">¶</a>2 开放封闭原则：类应该对拓展开放，对修改关闭</h3>
+<p>扩展就是添加新功能的意思，因此该原则要求在添加新功能时不需要修改代码。<br>
+符合开闭原则最典型的设计模式是装饰者模式，它可以动态地将责任附加到对象上，而不用去修改类的代码。</p>
+<h3 id="3-里氏替换原则：子类对象可以完全替换超类对象"><a class="header-anchor" href="#3-里氏替换原则：子类对象可以完全替换超类对象">¶</a>3 里氏替换原则：子类对象可以完全替换超类对象</h3>
+<p>继承是一种 IS-A 关系，子类需要能够当成父类来使用，并且需要比父类更特殊。<br>
+如果不满足这个原则，那么各个子类的行为上就会有很大差异，增加继承体系的复杂度。</p>
+<h3 id="4-接口分离原则：不应该强迫客户依赖于它们不用的方法。"><a class="header-anchor" href="#4-接口分离原则：不应该强迫客户依赖于它们不用的方法。">¶</a>4 接口分离原则：不应该强迫客户依赖于它们不用的方法。</h3>
+<p>因此使用多个专门的接口比使用单一的总接口要好。</p>
+<h3 id="5-依赖倒置原则：高层模块不应该依赖于低层模块，二者都应该依赖于抽象；抽象不应该依赖于细节，细节应该依赖于抽象。"><a class="header-anchor" href="#5-依赖倒置原则：高层模块不应该依赖于低层模块，二者都应该依赖于抽象；抽象不应该依赖于细节，细节应该依赖于抽象。">¶</a>5 依赖倒置原则：高层模块不应该依赖于低层模块，二者都应该依赖于抽象；抽象不应该依赖于细节，细节应该依赖于抽象。</h3>
+<p>高层模块包含一个应用程序中重要的策略选择和业务模块，如果高层模块依赖于低层模块，那么低层模块的改动就会直接影响到高层模块，从而迫使高层模块也需要改动。<br>
+面向抽象<br>
+依赖于抽象意味着：</p>
+<ul>
+<li>任何变量都不应该持有一个指向具体类的指针或者引用；</li>
+<li>任何类都不应该从具体类派生；</li>
+<li>任何方法都不应该覆写它的任何基类中的已经实现的方法。<br>
+.</li>
+</ul>
+<hr>
+<h1>其他原则</h1>
+<ol>
+<li>迪米特法则<br>
+迪米特法则又叫作最少知识原则（Least Knowledge Principle，简写 LKP），就是说一个对象应当对其他对象有尽可能少的了解，不和陌生人说话。</li>
+<li>合成复用原则<br>
+尽量使用对象组合，而不是通过继承来达到复用的目的。</li>
+<li>共同封闭原则<br>
+一起修改的类，应该组合在一起（同一个包里）。如果必须修改应用程序里的代码，我们希望所有的修改都发生在一个包里（修改关闭），而不是遍布在很多包里。</li>
+<li>稳定抽象原则<br>
+最稳定的包应该是最抽象的包，不稳定的包应该是具体的包，即包的抽象程度跟它的稳定性成正比。</li>
+<li>稳定依赖原则<br>
+包之间的依赖关系都应该是稳定方向依赖的，包要依赖的包要比自己更具有稳定性。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>程序设计</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>树的子结构｜《剑指offer》</title>
     <url>/2020/03/20/%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
@@ -93,6 +687,11 @@
 字典类对象可以用静态方法Array.equals()和Array.hashcode()，无须override.</li>
 <li>包装类对象类似Integer, Long, Float是不可变的，在该使用对象类型的方法中使用基本类型，编译器会自动装箱，同时也有自动拆箱。但是比较时不能使用 == ，要用equals方法。除了boolean,byte,char&lt;=127的，或者short，int在-128和127之间的可用 ==，因为他们被包装在相同的对象中，比较内存地址是可以实现的。</li>
 <li>判断两对象是否是同一类：用反射，if(e.getclass() == Emloyee.class)，instanceof是包括子类的。</li>
+</ol>
+<h1>第六章 接口</h1>
+<ol>
+<li>x.compareTo(y) 方法一定要实现comparable接口否则Jvm会报错。当子类继承超类也要实现compareTo方法时，类型要相同，if(getclass()!= other.getclass) throw new ClassCastException 否则违反反对称原则。超类的方法是通用方法，则记得要生命 final。</li>
+<li>需要使用深拷贝：类的字段中引用了其他类对象。则要实现clonable接口，并覆写clone()方法。</li>
 </ol>
 ]]></content>
       <tags>
@@ -451,149 +1050,6 @@ tab:\t</p>
       </tags>
   </entry>
   <entry>
-    <title>今朝酒</title>
-    <url>/2020/03/15/top/</url>
-    <content><![CDATA[<p>作息有点差，先把书给读完吧。设计模式太多了，以后再统一看吧。23种有点太夸张…<br>
-在刷剑指offer了，前面的题目略简单，不过很多小细节很不错。<br>
-漏一个前缀树没看，明天补，今天状态不行。</p>
-<a id="more"></a>
-<ul>
-<li>
-<p>2020-03-15 15:13:14<br>
-周末更堕落…廖老师基础打算先过一遍设计模式和函数式编程，再看多线程。《Java核心技术》才读了100页…<br>
-数据结构是复习完了…再复习一遍上学期的算法课吧，复习完就开始刷题。</p>
-</li>
-<li>
-<p>2020-03-13 15:13:14<br>
-近日较为堕落…廖老师基础课过了一半，基础入门算是完成了，读《Java核心技术》巩固一下。还需要上手编程实现书里的代码。<br>
-算法改为复习排序，并查集，栈队列，symbol table这些基础概念，再开始刷题。<br>
-操作系统每天瞎学一点，等算法过完再开始认真刷。<br>
-课内的东西压根没碰…自从打算suspended就懈怠了。。</p>
-</li>
-<li>
-<p>2020-03-07 15:13:14<br>
-每日《剑指offer》，学完了反射和泛型依旧云里雾里。学了也有一周了，得回头复习一下，读一波《Java核心技术》。<br>
-还有操作系统基础…cc这门课涵盖是真的广…</p>
-</li>
-<li>
-<p>2020-03-04 15:13:14<br>
-赶紧把作业写了，把论文读了。看Java反射，继续刷《剑指offer》😌。</p>
-</li>
-<li>
-<p>2020-03-03 19:13:14<br>
-这几天忙于学业。才刚把核心类看完，看异常处理，刷《剑指offer》。</p>
-</li>
-<li>
-<p>2020-02-29 22:13:14<br>
-面向对象是搞定了，还真的猛这门语言。课内任务还没做，due要到了。</p>
-</li>
-<li>
-<p>2020-02-28 22:17:14<br>
-学了波Java入门，从搭环境到这门语言基础。<br>
-准备开始这门语言的第一个特性，面向对象。<br>
-然后把课内的任务给清了。</p>
-</li>
-<li>
-<p>2020-02-26 21:27:14<br>
-最近刚开课，得准备上课和补数学，没时间搞爬虫。刚好cloud computing要用Git和Jave，整好系统得学一下Git。<br>
-更新完了Git，打算开始学Java，同时也补后端的知识。</p>
-</li>
-</ul>
-<h2 id="廖老师Java基础课待干："><a class="header-anchor" href="#廖老师Java基础课待干：">¶</a>廖老师Java基础课待干：</h2>
-<table>
-<thead>
-<tr>
-<th>章节</th>
-<th style="text-align:left">OK？</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Java入门</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>面向对象编程</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>Java核心类</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>异常处理</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>反射</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>注解</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>泛型</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>集合</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>IO</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>日期与时间</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>单元测试</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>正则表达式</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>加密与安全</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td>多线程</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td>Maven基础</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td>网络编程</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td>XML与JSON</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td>JDBC编程</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td>函数式编程</td>
-<td style="text-align:left">👌</td>
-</tr>
-<tr>
-<td>设计模式</td>
-<td style="text-align:left"></td>
-</tr>
-</tbody>
-</table>
-<h2 id="Java核心技术卷I"><a class="header-anchor" href="#Java核心技术卷I">¶</a>Java核心技术卷I</h2>
-]]></content>
-  </entry>
-  <entry>
     <title>Java单元测试</title>
     <url>/2020/03/14/Java%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</url>
     <content><![CDATA[<h1>JUnit</h1>
@@ -906,7 +1362,8 @@ java.util.TreeMap：红黑树<br>
 java.util.HashMap：拉链法的散列表<br>
 3. 稀疏向量的乘法<br>
 当向量为稀疏向量时，可以使用符号表来存储向量中的非 0 索引和值，使得乘法运算只需要对那些非 0 元素进行即可。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SparseVector</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> HashMap&lt;Integer, Double&gt; hashMap;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SparseVector</span><span class="params">(<span class="keyword">double</span>[] vector)</span> </span>&#123;</span><br><span class="line">        hashMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vector.length; i++)</span><br><span class="line">            <span class="keyword">if</span> (vector[i] != <span class="number">0</span>)</span><br><span class="line">                hashMap.put(i, vector[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hashMap.getOrDefault(i, <span class="number">0.0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">dot</span><span class="params">(SparseVector other)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i : hashMap.keySet())</span><br><span class="line">            sum += <span class="keyword">this</span>.get(i) * other.get(i);</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SparseVector</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> HashMap&lt;Integer, Double&gt; hashMap;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SparseVector</span><span class="params">(<span class="keyword">double</span>[] vector)</span> </span>&#123;</span><br><span class="line">        hashMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vector.length; i++)</span><br><span class="line">            <span class="keyword">if</span> (vector[i] != <span class="number">0</span>)</span><br><span class="line">                hashMap.put(i, vector[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">get</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> hashMap.getOrDefault(i, <span class="number">0.0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">dot</span><span class="params">(SparseVector other)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> sum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i : hashMap.keySet())</span><br><span class="line">            sum += <span class="keyword">this</span>.get(i) * other.get(i);</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
       <tags>
         <tag>算法</tag>
       </tags>

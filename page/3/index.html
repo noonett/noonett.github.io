@@ -252,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/12/%E5%B9%B6%E6%9F%A5%E9%9B%86/">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/17/Java-Design-Patterns/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TYH">
@@ -271,7 +271,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/03/12/%E5%B9%B6%E6%9F%A5%E9%9B%86/" itemprop="url">并查集</a></h1>
+                <a class="post-title-link" href="/2020/03/17/Java-Design-Patterns/" itemprop="url">Java_Design_Patterns</a></h1>
         
 
         <div class="post-meta">
@@ -286,8 +286,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-12T19:33:08+08:00">
-                2020-03-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-17T16:39:50+08:00">
+                2020-03-17
               </time>
             
 
@@ -325,11 +325,342 @@
 
       
         
-          <pre><code>用来解决动态连通性的问题，能动态连接两个点，能判断两个点是否连通。
+          
+            <h1>创新型模式</h1>
+<p>关注点是如何创建对象，对象的创建和使用相分离，这样使得两者能相对独立地变换。</p>
+<h3 id="工厂方法-Factory-Method"><a class="header-anchor" href="#工厂方法-Factory-Method">¶</a>工厂方法 Factory Method</h3>
+<p>解决关键字new造成的客户端和实际类型耦合问题。<br>
+接口定义标准，子类通过实现接口，通过利用子类的对象向上转型创建接口的实例化对象。<br>
+产品：返回的对象。<br>
+静态工厂方法：在接口处，通过静态方法直接返回产品。<br>
+如: valueOf()来创建Integer</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">Integer</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">valueOf</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (i &gt;= IntegerCache.low &amp;&amp; i &lt;= IntegerCache.high)</span><br><span class="line">            <span class="keyword">return</span> IntegerCache.cache[i + (-IntegerCache.low)];</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Integer(i);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>好处：工厂方法可以隐藏创建产品的细节，且不一定每次都会真正创建产品，完全可以返回缓存的产品，从而提升速度并减少内存消耗。拓展子类，也只需要修改valueOf即可。</p>
+<p>里氏替换原则：返回实现接口的任意子类都可以满足该方法的要求，且不影响调用方。尽可能的面向抽象编程。<br>
+静态工厂方法也可以接收可变参数，返回接口。如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; list = List.of(<span class="string">"A"</span>, <span class="string">"B"</span>, <span class="string">"C"</span>);</span><br></pre></td></tr></table></figure>
+<p>通过向上转型的实现，调用方总是获取List接口，而不关心它的实际类型。<br>
+再如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MessageDigest md5 = MessageDigest.getInstance(<span class="string">"MD5"</span>);</span><br><span class="line">MessageDigest sha1 = MessageDigest.getInstance(<span class="string">"SHA-1"</span>);</span><br></pre></td></tr></table></figure>
+<p>调用方通过产品名称获得产品实例，不但调用简单，而且获得的引用仍然是MessageDigest这个抽象类。</p>
+<h4 id="抽象工厂-Abstract-Factory"><a class="header-anchor" href="#抽象工厂-Abstract-Factory">¶</a>抽象工厂 Abstract Factory</h4>
+<pre><code>提供一个创建一系列相关或相互依赖对象的接口，而无需指定它们具体的类。
+</code></pre>
+<p>客户端创建工厂，只需要与工厂接口静态方法对接，根据需求传入不同的参数，创建特定的实例化对象工厂。创建产品，也根据不同工厂使用不同的方法创建特定的产品。</p>
+<h4 id="Builder模式"><a class="header-anchor" href="#Builder模式">¶</a>Builder模式</h4>
+<p>创建复杂对象时，将步骤分解成多个方法，据特性把每一行都“委托”给一个XxxBuilder去转换，最后，把所有转换的结果组合起来，返回给客户端。</p>
+<h4 id="原型模式-Prototype"><a class="header-anchor" href="#原型模式-Prototype">¶</a>原型模式 Prototype</h4>
+<p>创建新对象时，根据现有的一个原型来创建。<br>
+实现原型的拷贝，用Object提供的clone()方法，需要实现Cloneable接口来标识一个对象是可复制的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> <span class="keyword">implements</span> <span class="title">Cloneable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> score;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 复制新对象并返回:</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Student std = <span class="keyword">new</span> Student();</span><br><span class="line">        std.id = <span class="keyword">this</span>.id;</span><br><span class="line">        std.name = <span class="keyword">this</span>.name;</span><br><span class="line">        std.score = <span class="keyword">this</span>.score;</span><br><span class="line">        <span class="keyword">return</span> std;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用时，要强制转型，因为Object返回类型也是Object：</span></span><br><span class="line">Student std2 = (Student) std1.clone();</span><br></pre></td></tr></table></figure>
+<p>更好的方法，定义一个copy()方法，明确类型：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> score;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Student <span class="title">copy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Student std = <span class="keyword">new</span> Student();</span><br><span class="line">        std.id = <span class="keyword">this</span>.id;</span><br><span class="line">        std.name = <span class="keyword">this</span>.name;</span><br><span class="line">        std.score = <span class="keyword">this</span>.score;</span><br><span class="line">        <span class="keyword">return</span> std;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>原型模式应用不是很广泛，因为很多实例会持有类似文件、Socket这样的资源，而这些资源是无法复制给另一个对象共享的，只有存储简单类型的“值”对象可以复制。</p>
+<h4 id="单例-Singleton"><a class="header-anchor" href="#单例-Singleton">¶</a>单例 Singleton</h4>
+<pre><code>保证某个类仅有一个实例，并提供一个访问它的全局访问点。
+</code></pre>
+<p>有两种实现方法：</p>
+<ul>
+<li>静态字段引用全局唯一实例。</li>
+</ul>
+<ol>
+<li>只有private构造方法，确保外部无法实例化；</li>
+<li>通过private static变量持有唯一实例，保证全局唯一性；</li>
+<li>通过public static方法返回此唯一实例，使外部调用方能获取到实例。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 静态字段引用唯一实例:</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 通过静态方法返回实例:</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// private构造方法保证外部无法实例化:</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//或者将static变量暴露给外部</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 静态字段引用唯一实例:</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Singleton INSTANCE = <span class="keyword">new</span> Singleton();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// private构造方法保证外部无法实例化:</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Singleton</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>编写只有一个枚举的类</li>
+</ul>
+<p>除非确有必要，否则Singleton模式一般以“约定”为主，让框架来实例话这些类，不会刻意实现它。</p>
+<h1>结构型模式</h1>
+<p>通过接口间的组合完成需求。</p>
+<h3 id="适配器-Adapter"><a class="header-anchor" href="#适配器-Adapter">¶</a>适配器 Adapter</h3>
+<p>顾名思义，接收一个接口，在目标接口的实现内部调用带转换接口的方法。</p>
+<ol>
+<li>实现目标接口，这里是Runnable；</li>
+<li>内部持有一个待转换接口的引用，这里是通过字段持有Callable接口；</li>
+<li>在目标接口的实现方法内部，调用待转换接口的方法。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> BAdapter implements B &#123;</span><br><span class="line">    <span class="keyword">private</span> A a;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">BAdapter</span><span class="params">(A a)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.a = a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">b</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        a.a();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>只有A、B接口均为抽象接口时，才能非常简单地实现Adapter模式。</p>
+<h3 id="代理模式Proxy"><a class="header-anchor" href="#代理模式Proxy">¶</a>代理模式Proxy</h3>
+<pre><code>对其他对象提供一种代理以控制对这个对象的访问。
+</code></pre>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> AProxy implements A &#123;</span><br><span class="line">    <span class="keyword">private</span> A a;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AProxy</span><span class="params">(A a)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.a = a;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">a</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.a.a();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>有点像Adapter,但是它还是转换成A接口。<br>
+程序设计的原则：</p>
+<ul>
+<li>职责清晰：一个类负责一件事</li>
+<li>易于测试<br>
+作用：获得更清晰、简洁的代码</li>
+<li>A接口：只定义接口；</li>
+<li>ABusiness类：只实现A接口的业务逻辑；</li>
+<li>APermissionProxy类：只实现A接口的权限检查代理。</li>
+</ul>
+<h4 id="权限检查"><a class="header-anchor" href="#权限检查">¶</a>权限检查</h4>
+<p>如a方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">a</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (getCurrentUser().isRoot()) &#123;</span><br><span class="line">        <span class="keyword">this</span>.a.a();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> SecurityException(<span class="string">"Forbidden"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="远程代理"><a class="header-anchor" href="#远程代理">¶</a>远程代理</h4>
+<p>远程代理即Remote Proxy，Java内置的RMI机制就是一个完整的远程代理模式。</p>
+<h4 id="虚代理"><a class="header-anchor" href="#虚代理">¶</a>虚代理</h4>
+<p>直到客户端真正调用方法时才创建真正的对象，JDBC的连接池返回的JDBC连接（Connection对象）就可以是一个虚代理，即获取连接时根本没有任何实际的数据库连接，直到第一次执行JDBC查询或更新操作时，才真正创建实际的JDBC连接。</p>
+<h4 id="智能引用"><a class="header-anchor" href="#智能引用">¶</a>智能引用</h4>
+<p>如果有很多客户端对它进行访问，通过内部的计数器可以在外部调用者都不使用后自动释放它。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/17/%E8%B7%9D%E5%BD%A2%E8%A6%86%E7%9B%96%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/17/%E8%B7%9D%E5%BD%A2%E8%A6%86%E7%9B%96%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">距形覆盖｜《剑指offer》</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-17T16:28:33+08:00">
+                2020-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <pre><code>题目：我们可以用2*1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2*1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？
+</code></pre>
+<h1>题解</h1>
+<p>斐波那契数列变相形式，同类型的还有跳阶梯。</p>
+<h1>Code</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">RectCover</span><span class="params">(<span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(target == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(target  == <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(target*<span class="number">2</span> == <span class="number">2</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(target*<span class="number">2</span> == <span class="number">4</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">2</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> RectCover((target-<span class="number">1</span>))+RectCover(target-<span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/16/%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/16/%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">旋转数组最小的数字｜《剑指offer》</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-16T21:34:38+08:00">
+                2020-03-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <pre><code>题目：把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
 </code></pre>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/03/12/%E5%B9%B6%E6%9F%A5%E9%9B%86/#more" rel="contents">
+            <a class="btn" href="/2020/03/16/%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -380,7 +711,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/11/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/15/Java%E7%9A%84%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TYH">
@@ -399,7 +730,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/03/11/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/" itemprop="url">排序算法总结</a></h1>
+                <a class="post-title-link" href="/2020/03/15/Java%E7%9A%84%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" itemprop="url">Java的函数式编程</a></h1>
         
 
         <div class="post-meta">
@@ -414,8 +745,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-11T15:50:22+08:00">
-                2020-03-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-15T21:46:40+08:00">
+                2020-03-15
               </time>
             
 
@@ -453,11 +784,11 @@
 
       
         
-          <pre><code>总结一波基础算法再刷题把
+          <pre><code>又名Lambda计算，函数式编程还是挺好玩的，可以把函数本身作为参数传入另一个函数，还允许返回一个函数，很方便。不过这类编程不稳定，函数内部的变量状态不确定，相同的输入可能得到不同的输出。而且抽象程度高，那么运行效率就会偏低。
 </code></pre>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/03/11/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/#more" rel="contents">
+            <a class="btn" href="/2020/03/15/Java%E7%9A%84%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -508,7 +839,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/10/JavaIO/">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/15/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TYH">
@@ -527,7 +858,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/03/10/JavaIO/" itemprop="url">JavaIO</a></h1>
+                <a class="post-title-link" href="/2020/03/15/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" itemprop="url">Java正则表达式</a></h1>
         
 
         <div class="post-meta">
@@ -542,8 +873,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-10T21:35:16+08:00">
-                2020-03-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-15T20:11:09+08:00">
+                2020-03-15
               </time>
             
 
@@ -581,12 +912,11 @@
 
       
         
-          <pre><code>I：input把数据从外部读入内存
-O：output把数据从内存输出到外部
+          <pre><code>Java标准库的java.util.regex包内置了正则表达式引擎。Java使用正则记得前面加多一个转意字符\。
 </code></pre>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/03/10/JavaIO/#more" rel="contents">
+            <a class="btn" href="/2020/03/15/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -637,7 +967,7 @@ O：output把数据从内存输出到外部
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/10/%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/15/%E6%B1%89%E8%AF%BA%E5%A1%94%E5%92%8C%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TYH">
@@ -656,7 +986,7 @@ O：output把数据从内存输出到外部
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/03/10/%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">两个栈实现队列｜《剑指offer》</a></h1>
+                <a class="post-title-link" href="/2020/03/15/%E6%B1%89%E8%AF%BA%E5%A1%94%E5%92%8C%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/" itemprop="url">汉诺塔和哈夫曼编码</a></h1>
         
 
         <div class="post-meta">
@@ -671,8 +1001,8 @@ O：output把数据从内存输出到外部
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-10T15:59:56+08:00">
-                2020-03-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-15T19:30:50+08:00">
+                2020-03-15
               </time>
             
 
@@ -710,11 +1040,150 @@ O：output把数据从内存输出到外部
 
       
         
-          <pre><code>题解：用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
-</code></pre>
+          
+            <h1>汉诺塔</h1>
+<p>an = 2 * an-1 + 1，an = 2n - 1，n 个圆盘需要移动 2n - 1 次。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hanoi</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">move</span><span class="params">(<span class="keyword">int</span> n, String from, String buffer, String to)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">"from "</span> + from + <span class="string">" to "</span> + to);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        move(n - <span class="number">1</span>, from, to, buffer);</span><br><span class="line">        move(<span class="number">1</span>, from, buffer, to);</span><br><span class="line">        move(n - <span class="number">1</span>, buffer, from, to);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Hanoi.move(<span class="number">3</span>, <span class="string">"H1"</span>, <span class="string">"H2"</span>, <span class="string">"H3"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>汉夫曼编码</h1>
+<p>根据数据出现的频率对数据进行编码，从而压缩原始数据。<br>
+例如对于一个文本文件，其中各种字符出现的次数如下：</p>
+<ul>
+<li>a : 10</li>
+<li>b : 20</li>
+<li>c : 40</li>
+<li>d : 80<br>
+可以将每种字符转换成二进制编码，例如将 a 转换为 00，b 转换为 01，c 转换为 10，d 转换为 11。这是最简单的一种编码方式，没有考虑各个字符的权值（出现频率）。而哈夫曼编码采用了贪心策略，使出现频率最高的字符的编码最短，从而保证整体的编码长度最短。</li>
+</ul>
+<p>首先生成一颗哈夫曼树，每次生成过程中选取频率最少的两个节点，生成一个新节点作为它们的父节点，并且新节点的频率为两个节点的和。选取频率最少的原因是，生成过程使得先选取的节点位于树的更低层，那么需要的编码长度更长，频率更少可以使得总编码长度更少。</p>
+<p>生成编码时，从根节点出发，向左遍历则添加二进制位 0，向右则添加二进制位 1，直到遍历到叶子节点，叶子节点代表的字符的编码就是这个路径编码。</p>
+<h4 id="哈夫曼树"><a class="header-anchor" href="#哈夫曼树">¶</a>哈夫曼树</h4>
+<p>又为最优二叉树，n个带权叶子结点构成的所有二叉树中，带权路径长度最小的二叉树（各个叶子节点的路径长度与对应权值的乘积之和）。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/14/Java%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/03/14/Java%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/" itemprop="url">Java单元测试</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-14T19:24:56+08:00">
+                2020-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1>JUnit</h1>
+<p>TDD: 测试驱动开发，是指先编写接口，紧接着编写测试。编写完测试后，我们才开始真正编写实现代码。</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/03/10/%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
+            <a class="btn" href="/2020/03/14/Java%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -765,7 +1234,7 @@ O：output把数据从内存输出到外部
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/09/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%8B%E4%B8%80%E4%B8%AA%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/13/%E3%80%8AJava%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%80%E3%80%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TYH">
@@ -784,7 +1253,7 @@ O：output把数据从内存输出到外部
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/03/09/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%8B%E4%B8%80%E4%B8%AA%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">二叉树的下一个结点｜《剑指offer》</a></h1>
+                <a class="post-title-link" href="/2020/03/13/%E3%80%8AJava%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%80%E3%80%8B/" itemprop="url">《Java核心技术卷一》读书笔记一</a></h1>
         
 
         <div class="post-meta">
@@ -799,8 +1268,8 @@ O：output把数据从内存输出到外部
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-09T21:33:46+08:00">
-                2020-03-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-13T21:42:35+08:00">
+                2020-03-13
               </time>
             
 
@@ -838,11 +1307,11 @@ O：output把数据从内存输出到外部
 
       
         
-          <pre><code>题目：给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
+          <pre><code>随意记录一下有趣的。
 </code></pre>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/03/09/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%8B%E4%B8%80%E4%B8%AA%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
+            <a class="btn" href="/2020/03/13/%E3%80%8AJava%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%80%E3%80%8B/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -893,7 +1362,7 @@ O：output把数据从内存输出到外部
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/09/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/13/Java%E6%97%B6%E9%97%B4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TYH">
@@ -912,7 +1381,7 @@ O：output把数据从内存输出到外部
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/03/09/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">重建二叉树｜《剑指offer》</a></h1>
+                <a class="post-title-link" href="/2020/03/13/Java%E6%97%B6%E9%97%B4/" itemprop="url">Java时间</a></h1>
         
 
         <div class="post-meta">
@@ -927,8 +1396,8 @@ O：output把数据从内存输出到外部
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-09T11:55:48+08:00">
-                2020-03-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-13T21:02:53+08:00">
+                2020-03-13
               </time>
             
 
@@ -966,139 +1435,14 @@ O：output把数据从内存输出到外部
 
       
         
-          
-            <pre><code>题目：输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
-</code></pre>
-<h1>题解一</h1>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">reConstructBinaryTree</span><span class="params">(<span class="keyword">int</span> [] pre,<span class="keyword">int</span> [] in)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(pre.length == <span class="number">0</span>||pre.length!=in.length)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">int</span> rootVal = pre[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">if</span>(pre.length == <span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> TreeNode(rootVal);</span><br><span class="line">        <span class="comment">//找到root在中序中的位置</span></span><br><span class="line">        <span class="keyword">int</span> rootIndex = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;=in.length -<span class="number">1</span>;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(in[i] == rootVal)&#123;</span><br><span class="line">                rootIndex = i;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//中序中root的左边即为左子树，右边为右子树</span></span><br><span class="line">        TreeNode root = <span class="keyword">new</span> TreeNode(rootVal);</span><br><span class="line">        root.left = reConstructBinaryTree(Arrays.copyOfRange(pre,<span class="number">1</span>,rootIndex+<span class="number">1</span>),Arrays.copyOfRange(in,<span class="number">0</span>,rootIndex));</span><br><span class="line">        root.right = reConstructBinaryTree(Arrays.copyOfRange(pre,rootIndex+<span class="number">1</span>,pre.length),Arrays.copyOfRange(in,rootIndex+<span class="number">1</span>,in.length));</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<h1>题解二</h1>
-<p>省内存</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">reConstructBinaryTree</span><span class="params">(<span class="keyword">int</span> [] pre,<span class="keyword">int</span> [] in)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> reConBTree(pre,<span class="number">0</span>,pre.length-<span class="number">1</span>,in,<span class="number">0</span>,in.length-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">reConBTree</span><span class="params">(<span class="keyword">int</span> [] pre,<span class="keyword">int</span> preleft,<span class="keyword">int</span> preright,<span class="keyword">int</span> [] in,<span class="keyword">int</span> inleft,<span class="keyword">int</span> inright)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(preleft &gt; preright || inleft&gt; inright)<span class="comment">//当到达边界条件时候返回null</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="comment">//新建一个TreeNode</span></span><br><span class="line">        TreeNode root = <span class="keyword">new</span> TreeNode(pre[preleft]);</span><br><span class="line">        <span class="comment">//对中序数组进行输入边界的遍历</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = inleft; i&lt;= inright; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(pre[preleft] == in[i])&#123;</span><br><span class="line">                <span class="comment">//重构左子树，注意边界条件</span></span><br><span class="line">                root.left = reConBTree(pre,preleft+<span class="number">1</span>,preleft+i-inleft,in,inleft,i-<span class="number">1</span>);</span><br><span class="line">                <span class="comment">//重构右子树，注意边界条件</span></span><br><span class="line">                root.right = reConBTree(pre,preleft+i+<span class="number">1</span>-inleft,preright,in,i+<span class="number">1</span>,inright);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> root;     </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
+          <pre><code>如果以GMT或者UTC作为时区，这不两算夏令时，无论日期是多少，时间都是标准的。
+如果以国家／城市表示，例如America／NewYork，虽然纽约也在西五区，但是，因为夏令时的存在，在不同的日期，GMT时间和纽约时间可能是不一样的。
 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/08/%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/08/%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">从尾到头打印链表｜《剑指offer》</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-08T19:32:40+08:00">
-                2020-03-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>题目：输入一个链表，按链表从尾到头的顺序返回一个ArrayList。
+在计算机中，通常使用Locale表示一个国家或地区的日期、时间、数字、货币等格式。Locale由语言_国家的字母缩写构成，例如，zh_CN表示中文+中国，en_US表示英文+美国。语言使用小写，国家使用大写。
 </code></pre>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/03/08/%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
+            <a class="btn" href="/2020/03/13/Java%E6%97%B6%E9%97%B4/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1149,7 +1493,7 @@ O：output把数据从内存输出到外部
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/08/%E8%A1%A8%E7%A4%BA%E6%95%B0%E5%80%BC%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/13/%E7%AC%A6%E5%8F%B7%E8%A1%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TYH">
@@ -1168,7 +1512,7 @@ O：output把数据从内存输出到外部
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/03/08/%E8%A1%A8%E7%A4%BA%E6%95%B0%E5%80%BC%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">表示数值的字符串｜《剑指offer》</a></h1>
+                <a class="post-title-link" href="/2020/03/13/%E7%AC%A6%E5%8F%B7%E8%A1%A8/" itemprop="url">符号表</a></h1>
         
 
         <div class="post-meta">
@@ -1183,8 +1527,8 @@ O：output把数据从内存输出到外部
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-08T15:11:22+08:00">
-                2020-03-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-13T16:34:47+08:00">
+                2020-03-13
               </time>
             
 
@@ -1222,274 +1566,15 @@ O：output把数据从内存输出到外部
 
       
         
-          <pre><code>题目：请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串&quot;+100&quot;,&quot;5e2&quot;,&quot;-123&quot;,&quot;3.1416&quot;和&quot;-1E-16&quot;都表示数值。 但是&quot;12e&quot;,&quot;1a3.14&quot;,&quot;1.2.3&quot;,&quot;+-5&quot;和&quot;12e+4.3&quot;都不是。
+          <pre><code>符号表（Symbol Table）是一种存储键值对的数据结构，可以支持快速查找操作。
+
+符号表分为有序和无序两种，有序符号表主要指支持 min()、max() 等根据键的大小关系来实现的操作。
+
+有序符号表的键需要实现 Comparable 接口。
 </code></pre>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/03/08/%E8%A1%A8%E7%A4%BA%E6%95%B0%E5%80%BC%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/07/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/07/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D/" itemprop="url">正则表达式匹配｜《剑指offer》</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-07T23:03:44+08:00">
-                2020-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <pre><code>题目：请实现一个函数用来匹配包括'.'和'*'的正则表达式。模式中的字符'.'表示任意一个字符，而'*'表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串&quot;aaa&quot;与模式&quot;a.a&quot;和&quot;ab*ac*a&quot;匹配，但是与&quot;aa.a&quot;和&quot;ab*a&quot;均不匹配
-</code></pre>
-<h1>题解：</h1>
-<p>当模式中的第二个字符不是“*”时：<br>
-1、如果字符串第一个字符和模式中的第一个字符相匹配，那么字符串和模式都后移一个字符，然后匹配剩余的。<br>
-2、如果 字符串第一个字符和模式中的第一个字符相不匹配，直接返回false。</p>
-<p>而当模式中的第二个字符是“<em>”时：<br>
-如果字符串第一个字符跟模式第一个字符不匹配，则模式后移2个字符，继续匹配。如果字符串第一个字符跟模式第一个字符匹配，可以有3种匹配方式：<br>
-1、模式后移2字符，相当于x</em>被忽略；<br>
-2、字符串后移1字符，模式后移2字符；<br>
-3、字符串后移1字符，模式不变，即继续匹配字符下一位，因为*可以匹配多位；</p>
-<h5 id="这里需要注意的是：Java里，要时刻检验数组是否越界。"><a class="header-anchor" href="#这里需要注意的是：Java里，要时刻检验数组是否越界。">¶</a>这里需要注意的是：Java里，要时刻检验数组是否越界。</h5>
-<h1>Code：</h1>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">match</span><span class="params">(<span class="keyword">char</span>[] str, <span class="keyword">char</span>[] pattern)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (str == <span class="keyword">null</span> || pattern == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> strIndex = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> patternIndex = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">return</span> matchCore(str, strIndex, pattern, patternIndex);</span><br><span class="line">&#125;</span><br><span class="line">  </span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">matchCore</span><span class="params">(<span class="keyword">char</span>[] str, <span class="keyword">int</span> strIndex, <span class="keyword">char</span>[] pattern, <span class="keyword">int</span> patternIndex)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//有效性检验：str到尾，pattern到尾，匹配成功</span></span><br><span class="line">    <span class="keyword">if</span> (strIndex == str.length &amp;&amp; patternIndex == pattern.length) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//pattern先到尾，匹配失败</span></span><br><span class="line">    <span class="keyword">if</span> (strIndex != str.length &amp;&amp; patternIndex == pattern.length) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//模式第2个是*，且字符串第1个跟模式第1个匹配,分3种匹配模式；如不匹配，模式后移2位</span></span><br><span class="line">    <span class="keyword">if</span> (patternIndex + <span class="number">1</span> &lt; pattern.length &amp;&amp; pattern[patternIndex + <span class="number">1</span>] == <span class="string">'*'</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> ((strIndex != str.length &amp;&amp; pattern[patternIndex] == str[strIndex]) || (pattern[patternIndex] == <span class="string">'.'</span> &amp;&amp; strIndex != str.length)) &#123;</span><br><span class="line">            <span class="keyword">return</span> matchCore(str, strIndex, pattern, patternIndex + <span class="number">2</span>)<span class="comment">//模式后移2，视为x*匹配0个字符</span></span><br><span class="line">                    || matchCore(str, strIndex + <span class="number">1</span>, pattern, patternIndex + <span class="number">2</span>)<span class="comment">//视为模式匹配1个字符</span></span><br><span class="line">                    || matchCore(str, strIndex + <span class="number">1</span>, pattern, patternIndex);<span class="comment">//*匹配1个，再匹配str中的下一个</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> matchCore(str, strIndex, pattern, patternIndex + <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//模式第2个不是*，且字符串第1个跟模式第1个匹配，则都后移1位，否则直接返回false</span></span><br><span class="line">    <span class="keyword">if</span> ((strIndex != str.length &amp;&amp; pattern[patternIndex] == str[strIndex]) || (pattern[patternIndex] == <span class="string">'.'</span> &amp;&amp; strIndex != str.length)) &#123;</span><br><span class="line">        <span class="keyword">return</span> matchCore(str, strIndex + <span class="number">1</span>, pattern, patternIndex + <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/07/Java%E9%9B%86%E5%90%88/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/07/Java%E9%9B%86%E5%90%88/" itemprop="url">Java集合</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-07T20:05:54+08:00">
-                2020-03-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>在Java中，如果一个Java对象可以在内部持有若干其他Java对象，并对外提供访问接口，我们把这种Java对象称为集合。
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/03/07/Java%E9%9B%86%E5%90%88/#more" rel="contents">
+            <a class="btn" href="/2020/03/13/%E7%AC%A6%E5%8F%B7%E8%A1%A8/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1531,7 +1616,7 @@ O：output把数据从内存输出到外部
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -1581,7 +1666,7 @@ O：output把数据从内存输出到外部
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1594,7 +1679,7 @@ O：output把数据从内存输出到外部
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="21号避难所">
 <meta property="og:description" content="第五章 继承  子类没有调用超类的构造方法，默认会调用超类无参构造器，如果不存在则报错。 多态：一个对象变量可以指示多种实际类型，父类既可引用父类类型，也可引用子类类型，但是父类不可调用子类的方法。动态绑定：运行时能自动地选择合适的方法。Java默认动态绑定，否则要标记final。 标记了private，final，static的方法调用则是静态绑定，编译器无须搜寻其子类的方法，只能使用这个方法">
 <meta property="article:published_time" content="2020-03-18T09:35:41.000Z">
-<meta property="article:modified_time" content="2020-03-20T05:04:48.455Z">
+<meta property="article:modified_time" content="2020-03-21T13:44:21.533Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="《Java核心技术》">
@@ -340,6 +340,11 @@
 <li>包装类对象类似Integer, Long, Float是不可变的，在该使用对象类型的方法中使用基本类型，编译器会自动装箱，同时也有自动拆箱。但是比较时不能使用 == ，要用equals方法。除了boolean,byte,char&lt;=127的，或者short，int在-128和127之间的可用 ==，因为他们被包装在相同的对象中，比较内存地址是可以实现的。</li>
 <li>判断两对象是否是同一类：用反射，if(e.getclass() == Emloyee.class)，instanceof是包括子类的。</li>
 </ol>
+<h1>第六章 接口</h1>
+<ol>
+<li>x.compareTo(y) 方法一定要实现comparable接口否则Jvm会报错。当子类继承超类也要实现compareTo方法时，类型要相同，if(getclass()!= other.getclass) throw new ClassCastException 否则违反反对称原则。超类的方法是通用方法，则记得要生命 final。</li>
+<li>需要使用深拷贝：类的字段中引用了其他类对象。则要实现clonable接口，并覆写clone()方法。</li>
+</ol>
 
       
     </div>
@@ -465,7 +470,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">55</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -478,7 +483,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">14</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -527,7 +532,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">第五章 继承</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">第五章 继承</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">第六章 接口</span></a></li></ol></div>
             
 
           </div>
