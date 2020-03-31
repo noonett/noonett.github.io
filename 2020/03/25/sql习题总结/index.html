@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="¶1. 找所有部门内salary最大的员工（存在多值） 注意使用group by子句时，select子句中只能有聚合键、聚合函数、常数。否则groupby默认取第一条数据。 12345678910111213select de.dept_no, de.emp_no, s.salaryfrom dept_emp de inner join salaries son de.emp_no &#x3D; s.emp">
+<meta name="description" content="¶1. 找所有部门内salary最大的员工（存在多值） 注意使用group by子句时，select子句中只能有聚合键、聚合函数、常数。否则groupby默认取第一条数据。 12345678910111213select de.dept_no, de.emp_no, s.salaryfrom dept_emp de inner join salaries son de.emp_no &#x3D; s.em">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sql习题总结">
 <meta property="og:url" content="https://noonett.github.io/2020/03/25/sql%E4%B9%A0%E9%A2%98%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="21号避难所">
-<meta property="og:description" content="¶1. 找所有部门内salary最大的员工（存在多值） 注意使用group by子句时，select子句中只能有聚合键、聚合函数、常数。否则groupby默认取第一条数据。 12345678910111213select de.dept_no, de.emp_no, s.salaryfrom dept_emp de inner join salaries son de.emp_no &#x3D; s.emp">
+<meta property="og:description" content="¶1. 找所有部门内salary最大的员工（存在多值） 注意使用group by子句时，select子句中只能有聚合键、聚合函数、常数。否则groupby默认取第一条数据。 12345678910111213select de.dept_no, de.emp_no, s.salaryfrom dept_emp de inner join salaries son de.emp_no &#x3D; s.em">
 <meta property="article:published_time" content="2020-03-25T03:53:31.000Z">
-<meta property="article:modified_time" content="2020-03-28T08:46:19.644Z">
+<meta property="article:modified_time" content="2020-03-31T09:10:21.017Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="sql">
 <meta name="twitter:card" content="summary">
@@ -326,7 +326,8 @@
       
 
       
-        <h3 id="1-找所有部门内salary最大的员工（存在多值）"><a class="header-anchor" href="#1-找所有部门内salary最大的员工（存在多值）">¶</a>1. 找所有部门内salary最大的员工（存在多值）</h3>
+        <a id="more"></a>
+<h3 id="1-找所有部门内salary最大的员工（存在多值）"><a class="header-anchor" href="#1-找所有部门内salary最大的员工（存在多值）">¶</a>1. 找所有部门内salary最大的员工（存在多值）</h3>
 <p>注意使用group by子句时，select子句中只能有聚合键、聚合函数、常数。否则groupby默认取第一条数据。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> de.dept_no, de.emp_no, s.salary</span><br><span class="line"><span class="keyword">from</span> dept_emp de <span class="keyword">inner</span> <span class="keyword">join</span> salaries s</span><br><span class="line"><span class="keyword">on</span> de.emp_no = s.emp_no</span><br><span class="line"><span class="keyword">and</span> de.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">and</span> s.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">where</span> s.salary = (<span class="keyword">select</span> <span class="keyword">max</span>(s2.salary)</span><br><span class="line">                <span class="keyword">from</span> dept_emp de2 <span class="keyword">inner</span> <span class="keyword">join</span> salaries s2</span><br><span class="line">                <span class="keyword">on</span> de2.emp_no = s2.emp_no</span><br><span class="line">                <span class="keyword">and</span> de2.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line">                <span class="keyword">and</span> s2.to_date = <span class="string">'9999-01-01'</span></span><br><span class="line">                <span class="keyword">where</span> de2.dept_no = de.dept_no</span><br><span class="line">                <span class="keyword">group</span> <span class="keyword">by</span> de2.dept_no)</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> de.dept_no</span><br></pre></td></tr></table></figure>
 <h3 id="2-查找当前薪水-to-date-‘9999-01-01’-排名第二多的员工-不准使用order-by"><a class="header-anchor" href="#2-查找当前薪水-to-date-‘9999-01-01’-排名第二多的员工-不准使用order-by">¶</a>2. 查找当前薪水(to_date=‘9999-01-01’)排名第二多的员工, 不准使用order by</h3>
@@ -458,7 +459,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">75</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
