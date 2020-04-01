@@ -3,7 +3,10 @@
   <entry>
     <title>Java多线程三：线程池</title>
     <url>/2020/04/02/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%89%EF%BC%9A%E7%BA%BF%E7%A8%8B%E6%B1%A0/</url>
-    <content><![CDATA[<h1>线程池</h1>
+    <content><![CDATA[<pre><code>终于到了这一步了吗，海王的第一步。
+</code></pre>
+<a id="more"></a>
+<h1>线程池</h1>
 <h4 id="为什么要有线程池？"><a class="header-anchor" href="#为什么要有线程池？">¶</a>为什么要有线程池？</h4>
 <p>创建线程需要操作系统资源（线程资源，栈空间等），频繁创建和销毁大量线程需要消耗大量时间。<br>
 通过线程池复用一组线程，没有任务时，线程处于等待状态。如果有新任务，就分配一个空闲线程执行。如果所有线程都处于忙碌状态，新任务要么放入队列等待，要么增加一个新线程进行处理。</p>
@@ -118,6 +121,9 @@ ThreadLocal适合在一个线程的处理流程中保持上下文（避免了同
 <p>可以通过AutoCloseable接口配合try (resource) {…}结构，让编译器自动为我们关闭。<br>
 使用的时候，我们借助try (resource) {…}结构，可以这么写：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> (<span class="keyword">var</span> ctx = <span class="keyword">new</span> UserContext(<span class="string">"Bob"</span>)) &#123;</span><br><span class="line">    <span class="comment">// 可任意调用UserContext.currentUser():</span></span><br><span class="line">    String currentUser = UserContext.currentUser();</span><br><span class="line">&#125; <span class="comment">// 在此自动调用UserContext.close()方法释放ThreadLocal关联对象</span></span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
   </entry>
   <entry>
     <title>数组中的逆序对｜《剑指offer》</title>
@@ -153,7 +159,7 @@ ThreadLocal适合在一个线程的处理流程中保持上下文（避免了同
       </tags>
   </entry>
   <entry>
-    <title>Java多线程二</title>
+    <title>Java多线程二：代码级别的锁</title>
     <url>/2020/04/01/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BA%8C/</url>
     <content><![CDATA[<pre><code>JDK1.5之后，欢迎来到java.util.concurrent包。可重入锁，悲观读锁，乐观读锁，线程安全数据结构。
 </code></pre>
@@ -428,7 +434,7 @@ t.notify(), t.notifyAll(): 唤醒其他线程，只能在已获得锁对象内�
   <entry>
     <title>今朝酒</title>
     <url>/2020/03/30/top/</url>
-    <content><![CDATA[<p>最近在看Java容器的源码，多线程没看，遇到线程安全的类还是有点不理解，还是回头把多线程看了吧…</p>
+    <content><![CDATA[<p>大概过了一下多线程，我回来容器君。</p>
 ]]></content>
   </entry>
   <entry>
