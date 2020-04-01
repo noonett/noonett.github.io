@@ -81,12 +81,12 @@
 
 <meta name="description" content="一个线程都搞不好，搞什么多线程。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java多线程一">
+<meta property="og:title" content="Java多线程一：语言级别的锁">
 <meta property="og:url" content="https://noonett.github.io/2020/03/31/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/index.html">
 <meta property="og:site_name" content="21号避难所">
 <meta property="og:description" content="一个线程都搞不好，搞什么多线程。">
 <meta property="article:published_time" content="2020-03-31T09:09:41.000Z">
-<meta property="article:modified_time" content="2020-03-31T13:48:54.003Z">
+<meta property="article:modified_time" content="2020-04-01T17:09:44.848Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -125,7 +125,7 @@
 
 
 
-  <title>Java多线程一 | 21号避难所</title>
+  <title>Java多线程一：语言级别的锁 | 21号避难所</title>
   
 
 
@@ -273,7 +273,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Java多线程一</h1>
+          <h1 class="post-title" itemprop="name headline">Java多线程一：语言级别的锁</h1>
         
 
         <div class="post-meta">
@@ -424,6 +424,11 @@ long和double是64位数据，JVM没有明确规定64位赋值操作是不是一
 比如方法里还调用了方法，当前使用的锁对新调用的方法依然可用。</p>
 <h1>死锁</h1>
 <p>两个线程都想获取对方的资源，导致无限的等待下去。即线程获取锁的顺序要一致。即严格按照先获取lockA，再获取lockB的顺序。</p>
+<h1>wait和notify</h1>
+<p>多线程协调运行的原则就是：当条件不满足时，线程进入等待状态；当条件满足时，线程被唤醒，继续执行任务。<br>
+t.wait(): 使线程进入等待  只有在已获得的锁对象的内部才能调用<br>
+t.notify(), t.notifyAll(): 唤醒其他线程，只能在已获得锁对象内部调用<br>
+唤醒之后的线程也要重新获得锁对象才能继续执行</p>
 
       
     </div>
@@ -463,6 +468,10 @@ long和double是64位数据，JVM没有明确规定64位赋值操作是不是一
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/01/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BA%8C/" rel="prev" title="Java多线程二">
+                Java多线程二 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -543,7 +552,7 @@ long和double是64位数据，JVM没有明确规定64位赋值操作是不是一
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">75</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -605,7 +614,7 @@ long和double是64位数据，JVM没有明确规定64位赋值操作是不是一
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">1 创建线程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#线程休眠"><span class="nav-number">1.0.0.0.0.1.</span> <span class="nav-text">¶线程休眠</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#设置线程优先级"><span class="nav-number">1.0.0.0.0.2.</span> <span class="nav-text">¶设置线程优先级</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">线程的状态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程终止条件"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">¶线程终止条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#t-join-当前线程等待其他线程结束才执行"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">¶t.join() 当前线程等待其他线程结束才执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#t-interrupt-发出中断请求"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">¶t.interrupt() 发出中断请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#另一个中断请求的方法"><span class="nav-number">2.0.0.4.</span> <span class="nav-text">¶另一个中断请求的方法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">守护线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">线程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不需要-synchronized-的操作"><span class="nav-number">4.0.1.</span> <span class="nav-text">¶不需要 synchronized 的操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">Java的线程锁是可重入锁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">6.</span> <span class="nav-text">死锁</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">1 创建线程</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#线程休眠"><span class="nav-number">1.0.0.0.0.1.</span> <span class="nav-text">¶线程休眠</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#设置线程优先级"><span class="nav-number">1.0.0.0.0.2.</span> <span class="nav-text">¶设置线程优先级</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">线程的状态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#线程终止条件"><span class="nav-number">2.0.0.1.</span> <span class="nav-text">¶线程终止条件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#t-join-当前线程等待其他线程结束才执行"><span class="nav-number">2.0.0.2.</span> <span class="nav-text">¶t.join() 当前线程等待其他线程结束才执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#t-interrupt-发出中断请求"><span class="nav-number">2.0.0.3.</span> <span class="nav-text">¶t.interrupt() 发出中断请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#另一个中断请求的方法"><span class="nav-number">2.0.0.4.</span> <span class="nav-text">¶另一个中断请求的方法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">守护线程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">线程同步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不需要-synchronized-的操作"><span class="nav-number">4.0.1.</span> <span class="nav-text">¶不需要 synchronized 的操作</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">Java的线程锁是可重入锁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">6.</span> <span class="nav-text">死锁</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">7.</span> <span class="nav-text">wait和notify</span></a></li></ol></div>
             
 
           </div>
