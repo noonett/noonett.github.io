@@ -87,7 +87,7 @@
 <meta property="og:description" content="便于调试，运行检测。">
 <meta property="og:image" content="https://noonett.github.io/.io//Exception.png">
 <meta property="article:published_time" content="2020-03-03T11:55:08.000Z">
-<meta property="article:modified_time" content="2020-03-08T07:25:44.764Z">
+<meta property="article:modified_time" content="2020-04-02T16:11:12.041Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
@@ -391,6 +391,27 @@ Thread.UncaughtExceptionHandler是用于处理未捕获异常造成线程突然�
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -ea Main.java</span><br></pre></td></tr></table></figure>
 <p>最好还是使用单元测试。</p>
+<h1>Log4j</h1>
+<p>当我们使用Log4j输出一条日志时，Log4j自动通过不同的Appender把同一条日志输出到不同的目的地。例如：</p>
+<ul>
+<li>console：输出到屏幕；</li>
+<li>file：输出到文件；</li>
+<li>socket：通过网络输出到远程计算机；</li>
+<li>jdbc：输出到数据库<br>
+在输出日志的过程中，通过Filter来过滤哪些log需要被输出，哪些log不需要被输出。例如，仅输出ERROR级别的日志。</li>
+</ul>
+<h2 id="调整输出"><a class="header-anchor" href="#调整输出">¶</a>调整输出</h2>
+<p>凡是INFO级别的日志，会自动输出到屏幕，而ERROR级别的日志，不但会输出到屏幕，还会同时输出到文件。并且，一旦日志文件达到指定大小（1MB），Log4j就会自动切割新的日志文件，并最多保留10份。</p>
+<h2 id="日志级别"><a class="header-anchor" href="#日志级别">¶</a>日志级别</h2>
+<p>DEBUG：输出调试信息；指出细粒度信息事件对调试应用程序是非常有帮助的。<br>
+INFO： 输出提示信息；消息在粗粒度级别上突出强调应用程序的运行过程。<br>
+WARN： 输出警告信息；表明会出现潜在错误的情形。<br>
+ERROR：输出错误信息；指出虽然发生错误事件，但仍然不影响系统的继续运行。<br>
+FATAL： 输出致命错误；指出每个严重的错误事件将会导致应用程序的退出。<br>
+ALL level：打开所有日志记录开关；是最低等级的，用于打开所有日志记录。<br>
+OFF level：关闭所有日志记录开关；是最高等级的，用于关闭所有日志记录。</p>
+<p>按照范围从小到大排序：OFF level &gt; FATAL &gt; ERROR &gt; WARN &gt; INFO &gt; DEBUG &gt; ALL level；范围大的会包含范围小的，例如日志设置为INFO级别的话则FATAL、ERROR、WARN、INFO的日志开关都是打开的，而DEBUG的日志开关将是关闭的。</p>
+<p>Log4j建议只使用四个级别，优先级从高到低分别是 ERROR、WARN、INFO、DEBUG。</p>
 
       
     </div>
@@ -514,7 +535,7 @@ Thread.UncaughtExceptionHandler是用于处理未捕获异常造成线程突然�
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-count">84</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -527,7 +548,7 @@ Thread.UncaughtExceptionHandler是用于处理未捕获异常造成线程突然�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -576,7 +597,7 @@ Thread.UncaughtExceptionHandler是用于处理未捕获异常造成线程突然�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java异常种类"><span class="nav-number">1.1.</span> <span class="nav-text">¶Java异常种类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获异常，try…catch"><span class="nav-number">1.2.</span> <span class="nav-text">¶捕获异常，try…catch</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多捕获异常"><span class="nav-number">1.2.1.</span> <span class="nav-text">¶多捕获异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#finally语句"><span class="nav-number">1.2.2.</span> <span class="nav-text">¶finally语句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抛出异常"><span class="nav-number">1.3.</span> <span class="nav-text">¶抛出异常</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#异常的传播"><span class="nav-number">1.3.1.</span> <span class="nav-text">¶异常的传播</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#e-printStackTrace-方法打印异常栈。"><span class="nav-number">1.3.2.</span> <span class="nav-text">¶e,printStackTrace()方法打印异常栈。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常屏蔽-Suppressed-Exception"><span class="nav-number">1.3.3.</span> <span class="nav-text">¶异常屏蔽 Suppressed Exception</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义异常"><span class="nav-number">1.4.</span> <span class="nav-text">¶自定义异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#断言Assertion"><span class="nav-number">1.5.</span> <span class="nav-text">¶断言Assertion</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">异常</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java异常种类"><span class="nav-number">1.1.</span> <span class="nav-text">¶Java异常种类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#捕获异常，try…catch"><span class="nav-number">1.2.</span> <span class="nav-text">¶捕获异常，try…catch</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#多捕获异常"><span class="nav-number">1.2.1.</span> <span class="nav-text">¶多捕获异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#finally语句"><span class="nav-number">1.2.2.</span> <span class="nav-text">¶finally语句</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#抛出异常"><span class="nav-number">1.3.</span> <span class="nav-text">¶抛出异常</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#异常的传播"><span class="nav-number">1.3.1.</span> <span class="nav-text">¶异常的传播</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#e-printStackTrace-方法打印异常栈。"><span class="nav-number">1.3.2.</span> <span class="nav-text">¶e,printStackTrace()方法打印异常栈。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异常屏蔽-Suppressed-Exception"><span class="nav-number">1.3.3.</span> <span class="nav-text">¶异常屏蔽 Suppressed Exception</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义异常"><span class="nav-number">1.4.</span> <span class="nav-text">¶自定义异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#断言Assertion"><span class="nav-number">1.5.</span> <span class="nav-text">¶断言Assertion</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">Log4j</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#调整输出"><span class="nav-number">2.1.</span> <span class="nav-text">¶调整输出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#日志级别"><span class="nav-number">2.2.</span> <span class="nav-text">¶日志级别</span></a></li></ol></li></ol></div>
             
 
           </div>

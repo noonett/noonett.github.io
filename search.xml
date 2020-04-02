@@ -1,6 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Maven基础</title>
+    <url>/2020/04/02/Maven%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<pre><code>迫不及待想开始做项目，语法、框架两手抓，先来了解一下Maven吧。
+Maven声明周期
+Maven deploy命令
+</code></pre>
+<a id="more"></a>
+<h1>Maven的结构</h1>
+<p>a-maven-project<br>
+├── pom.xml     配置<br>
+├── src<br>
+│   ├── main    源码<br>
+│   │   ├── java<br>
+│   │   └── resources<br>
+│   └── test    测试代码<br>
+│       ├── java<br>
+│       └── resources<br>
+└── target<br>
+项目的根目录a-maven-project是项目名，它有一个项目描述文件pom.xml，存放Java源码的目录是src/main/java，存放资源文件的目录是src/main/resources，存放测试源码的目录是src/test/java，存放测试资源的目录是src/test/resources，最后，所有编译、打包生成的文件都放在target目录里。</p>
+<h1>pom.xml 结构</h1>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">...</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.itranswarp.learnjava<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>hello<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        ...</span><br><span class="line">	<span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-logging<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="唯一标识"><a class="header-anchor" href="#唯一标识">¶</a>唯一标识</h4>
+<p>groupId: 公司名<br>
+artifactId: 项目名<br>
+version: 版本名<br>
+引用第三方库也是用这三个变量，Maven会自动下载依赖包并放入classpath中。</p>
+<h1>依赖管理</h1>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.2.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Maven会自动解析并判断其他依赖。</p>
+<h2 id="依赖关系"><a class="header-anchor" href="#依赖关系">¶</a>依赖关系</h2>
+<p>Maven定义了几种依赖关系，分别是compile、test、runtime和provided。<br>
+Maven维护了一个中央仓库（<a href="http://repo1.maven.org" target="_blank" rel="noopener">repo1.maven.org</a>），所有第三方库将自身的jar以及相关信息上传至中央仓库，Maven就可以从中央仓库把所需依赖下载到本地。Maven并不会每次都从中央仓库下载jar包。jar包一旦被下载过，就会被Maven自动缓存在本地目录（用户主目录的.m2目录）。</p>
+<h2 id="搜索第三方组件"><a class="header-anchor" href="#搜索第三方组件">¶</a>搜索第三方组件</h2>
+<p><a href="http://search.maven.org" target="_blank" rel="noopener">search.maven.org</a>。</p>
+<h1>生命周期</h1>
+<p>是指Maven将一个整体任务化分为一个个的阶段（phase），依次执行，可以指定执行到中间的某个阶段结束。<br>
+Maven 的内部有三个构建生命周期，分别是 clean, default, site。其中 default 生命周期的核心阶段如下所示：</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/94765-809bca97c9fcb03a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/115" alt="生命周期的阶段"></p>
+<h3 id="1-使用生命周期完成构建"><a class="header-anchor" href="#1-使用生命周期完成构建">¶</a>1. 使用生命周期完成构建</h3>
+<ul>
+<li>指定某个生命周期的阶段</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mvn install</span><br></pre></td></tr></table></figure>
+<p>执行 mvn install 命令，将完成 validate, compile, test, package, verify, install 阶段，并将 package 生成的包发布到本地仓库中。其中某些带有连字符的阶段不能通过 shell 命令单独指定。例如：(pre-, post-, or process-*)</p>
+<ul>
+<li>指定多个不同构建生命周期的阶段<br>
+执行 mvn clean deploy 命令，首先完成的 clean lifecycle，将以前构建的文件清理，然后再执行 default lifecycle 的 validate, compile, test, package, verify, insstall, deploy 阶段，将 package 阶段创建的包发布到远程仓库中。</li>
+</ul>
+<h3 id="2-阶段与插件"><a class="header-anchor" href="#2-阶段与插件">¶</a>2. 阶段与插件</h3>
+<p>Maven 对工程的所有操作实实在在的都是由 插件 来完成的。一个插件可以支持多种功能，称之为目标（goal），例如：compiler 插件有两个目标：compile 和 testCompile，分别实现编译源代码 和 编译测试代码。<br>
+如何将插件与 Maven 的构建生命周期绑定在一起呢？通过将插件的目标（goal）与 build lifecycle 中 phase 绑定到一起，这样，当要执行某个 phase 时，就调用插件来完成绑定的目标。<br>
+如下图所示：从图中可以看出，每一个阶段可以绑定0 个 或 多个目标，每个插件可以提供 1 个或多个目标。<br>
+<img src="https://upload-images.jianshu.io/upload_images/94765-1fd6ddbcb906ab66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/441" alt="goal"></p>
+<h3 id="3-创建构建生命周期"><a class="header-anchor" href="#3-创建构建生命周期">¶</a>3. 创建构建生命周期</h3>
+<ul>
+<li>设置不同的packaging类型<br>
+在 pom.xml 文件中，packaging 类型支持 jar, war, ear, pom 等多种类型，不同的 packaging 类型会使得不同的 phase 绑定不同的 plugin goal。</li>
+<li>配置plugin<br>
+在 pom.xml 文件中， <build> <plugins> 元素下可以添加 <plugin>，通过指定 goal 和 phase 来进行绑定。</plugin></plugins></build></li>
+</ul>
+<h3 id="4-Maven会默认指定plugin"><a class="header-anchor" href="#4-Maven会默认指定plugin">¶</a>4. Maven会默认指定plugin</h3>
+<ul>
+<li>lifecycle相当于Java的package，它包含一个或多个phase；</li>
+<li>phase相当于Java的class，它包含一个或多个goal；</li>
+<li>goal相当于class的method，它其实才是真正干活的。</li>
+</ul>
+<h1>常用插件</h1>
+<p>maven-shade-plugin：打包所有依赖包并生成可执行jar；<br>
+cobertura-maven-plugin：生成单元测试覆盖率报告；<br>
+findbugs-maven-plugin：对Java源码进行静态分析以找出潜在问题。</p>
+<h1>模块管理</h1>
+<p>注意到parent的<packaging>是pom而不是jar，因为parent本身不含任何Java代码。编写parent的pom.xml只是为了在各个模块中减少重复的配置。现在我们的整个工程结构如下：</packaging></p>
+<p>multiple-project<br>
+├── pom.xml<br>
+├── parent<br>
+│   └── pom.xml<br>
+├── module-a<br>
+│   ├── pom.xml<br>
+│   └── src<br>
+├── module-b<br>
+│   ├── pom.xml<br>
+│   └── src<br>
+└── module-c<br>
+├── pom.xml<br>
+└── src<br>
+如果模块A依赖模块B，则模块A需要模块B的jar包才能正常编译，我们需要在模块A中引入模块B。<br>
+最后，在编译的时候，需要在根目录创建一个pom.xml统一编译。</p>
+<h1>仓库分类</h1>
+<p>中央仓库<br>
+其实我们使用的大多数第三方模块都是这个用法，例如，我们使用commons logging、log4j这些第三方模块， 就是第三方模块的开发者自己把编译好的jar包发布到Maven的中央仓库中。</p>
+<p>私有仓库<br>
+私有仓库是指公司内部如果不希望把源码和jar包放到公网上，那么可以搭建私有仓库。私有仓库总是在公司内部使用，它只需要在本地的~/.m2/settings.xml中配置好，使用方式和中央仓位没有任何区别。</p>
+<p>本地仓库<br>
+本地仓库是指把本地开发的项目“发布”在本地，这样其他项目可以通过本地仓库引用它。但是我们不推荐把自己的模块安装到Maven的本地仓库，因为每次修改某个模块的源码，都需要重新安装，非常容易出现版本不一致的情况。更好的方法是使用模块化编译，在编译的时候，告诉Maven几个模块之间存在依赖关系，需要一块编译，Maven就会自动按依赖顺序编译这些模块。</p>
+<h1>Maven Wrapper</h1>
+<ol>
+<li>给一个项目提供一个独立的，指定版本的Maven给它使用。</li>
+<li>把项目的mvnw、mvnw.cmd和.mvn提交到版本库中，可以使所有开发人员使用统一的Maven版本。</li>
+</ol>
+<h4 id="安装"><a class="header-anchor" href="#安装">¶</a>安装</h4>
+<p>安装Maven Wrapper最简单的方式是在项目的根目录（即pom.xml所在的目录）下运行安装命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.6:wrapper</span><br></pre></td></tr></table></figure>
+<p>它会自动使用最新版本的Maven。注意0.7.6是Maven Wrapper的版本。</p>
+<p>如果要指定使用的Maven版本，使用下面的安装命令指定版本，例如3.3.3：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mvn -N io.takari:maven:0.7.6:wrapper -Dmaven=3.3.3</span><br></pre></td></tr></table></figure>
+<h4 id="使用"><a class="header-anchor" href="#使用">¶</a>使用</h4>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">./mvnw clean package</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Maven</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JDBC入门</title>
+    <url>/2020/04/02/JDBC%E5%85%A5%E9%97%A8/</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>二叉树的深度｜《剑指offer》</title>
+    <url>/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%B7%B1%E5%BA%A6%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：求二叉树的深度。
+</code></pre>
+<a id="more"></a>
+<p>二叉树的遍历，返回值时加一。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">TreeDepth</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> maxDepth = Math.max(TreeDepth(root.left),TreeDepth(root.right));</span><br><span class="line">        <span class="keyword">return</span> maxDepth+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数字在排序数组中出现的位置｜《剑指offer》</title>
+    <url>/2020/04/02/%E6%95%B0%E5%AD%97%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E5%87%BA%E7%8E%B0%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：统计一个数字在排序数组中出现的次数。
+</code></pre>
+<a id="more"></a>
+<p>二分法变种，注意边界条件，start与end相等，还能进行一次判断。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">GetNumberOfK</span><span class="params">(<span class="keyword">int</span> [] array , <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span>(array == <span class="keyword">null</span> || array.length&lt;<span class="number">1</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">int</span> start = <span class="number">0</span>; <span class="keyword">int</span> end = array.length - <span class="number">1</span>;</span><br><span class="line">       <span class="keyword">int</span> l = lowbound(array, start, end, k);</span><br><span class="line">       <span class="keyword">int</span> h = highbound(array, start, end, k);</span><br><span class="line">       <span class="keyword">return</span> h-l+<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">lowbound</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> start, <span class="keyword">int</span> end, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (start+end)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(start&lt;=end)&#123;</span><br><span class="line">            <span class="keyword">if</span>(array[mid]&lt;k)&#123;</span><br><span class="line">                start = mid + <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                end = mid - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mid = (start+end)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> start;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">highbound</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> start, <span class="keyword">int</span> end, <span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (start+end)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(start&lt;=end)&#123;</span><br><span class="line">            <span class="keyword">if</span>(array[mid]&lt;=k)&#123;</span><br><span class="line">                start = mid + <span class="number">1</span>;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                end = mid - <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mid = (start+end)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> end;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>两个链表的第一个公共结点｜《剑指offer》</title>
+    <url>/2020/04/02/%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%AC%E5%85%B1%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：输入两个链表，找出它们的第一个公共结点。（注意因为传入数据是链表，所以错误测试数据的提示是用其他方式显示的，保证传入数据是正确的）
+</code></pre>
+<a id="more"></a>
+<h1>题解一</h1>
+<p>找出两链表长度，长的先走，然后同时走，找到共同的结点</p>
+<h1>题解二</h1>
+<p>HashMap的特性</p>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java多线程三：线程池</title>
     <url>/2020/04/02/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%89%EF%BC%9A%E7%BA%BF%E7%A8%8B%E6%B1%A0/</url>
     <content><![CDATA[<pre><code>终于到了这一步了吗，海王的第一步。
@@ -592,7 +751,17 @@ O(n)，最坏情况下的时间复杂度为 O(n2)。</li>
 <figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> s2.emp_no, s2.salary, <span class="keyword">count</span>(<span class="keyword">distinct</span> s1.salary) <span class="keyword">as</span> <span class="keyword">rank</span></span><br><span class="line"><span class="keyword">from</span> salaries <span class="keyword">as</span> s1, salaries <span class="keyword">as</span> s2</span><br><span class="line"><span class="keyword">where</span> s1.to_date=<span class="string">'9999-01-01'</span> <span class="keyword">and</span> s2.to_date=<span class="string">'9999-01-01'</span></span><br><span class="line"><span class="keyword">and</span> s2.salary &lt;= s1.salary</span><br><span class="line"><span class="keyword">group</span> <span class="keyword">by</span> s2.emp_no,s2.salary</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> s2.salary <span class="keyword">desc</span>, s2.emp_no <span class="keyword">asc</span>;</span><br></pre></td></tr></table></figure>
 <h3 id="5-查找描述信息中包括robot的电影对应的分类名称以及电影数目，而且还需要该分类对应电影数量-5部"><a class="header-anchor" href="#5-查找描述信息中包括robot的电影对应的分类名称以及电影数目，而且还需要该分类对应电影数量-5部">¶</a>5. 查找描述信息中包括robot的电影对应的分类名称以及电影数目，而且还需要该分类对应电影数量&gt;=5部</h3>
 <p>这里要注意，这里的大于等于5部是指分类的电影数量大于5部而不是包含robot的分类的电影数量大于5部。</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> c.name, <span class="keyword">count</span>(f.film_id)</span><br><span class="line"><span class="keyword">from</span> <span class="keyword">category</span> c, (<span class="keyword">select</span> <span class="keyword">count</span>(film_id), category_id </span><br><span class="line">                       <span class="keyword">from</span> film_category</span><br><span class="line">                      <span class="keyword">group</span> <span class="keyword">by</span> category_id</span><br><span class="line">                       <span class="keyword">having</span> <span class="keyword">count</span>(film_id)&gt;=<span class="number">5</span>) <span class="keyword">as</span> fc, film f, </span><br><span class="line">film_category cc</span><br><span class="line"><span class="keyword">where</span> f.description <span class="keyword">like</span> <span class="string">'%robot%'</span></span><br><span class="line"><span class="keyword">and</span> c.category_id = fc.category_id</span><br><span class="line"><span class="keyword">and</span> f.film_id = cc.film_id</span><br><span class="line"><span class="keyword">and</span> cc.category_id = fc.category_id;</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">select</span> c.name, <span class="keyword">count</span>(f.film_id)</span><br><span class="line"><span class="keyword">from</span> <span class="keyword">category</span> c, (<span class="keyword">select</span> <span class="keyword">count</span>(film_id), category_id </span><br><span class="line">                       <span class="keyword">from</span> film_category</span><br><span class="line">                      <span class="keyword">group</span> <span class="keyword">by</span> category_id</span><br><span class="line">                       <span class="keyword">having</span> <span class="keyword">count</span>(film_id)&gt;=<span class="number">5</span>) <span class="keyword">as</span> fc, film f, </span><br><span class="line">film_category cc</span><br><span class="line"><span class="keyword">where</span> f.description <span class="keyword">like</span> <span class="string">'%robot%'</span></span><br><span class="line"><span class="keyword">and</span> c.category_id = fc.category_id</span><br><span class="line"><span class="keyword">and</span> f.film_id = cc.film_id</span><br><span class="line"><span class="keyword">and</span> cc.category_id = fc.category_id;</span><br></pre></td></tr></table></figure>
+<h3 id="6-last-name和first-name拼接起来作为Name"><a class="header-anchor" href="#6-last-name和first-name拼接起来作为Name">¶</a>6. last_name和first_name拼接起来作为Name</h3>
+<p>MySQL、SQL Server、Oracle等数据库支持CONCAT方法，<br>
+如果用的SQLite数据库只支持用连接符号&quot;||&quot;来连接字符串</p>
+<p>CONCAT方法：<br>
+select CONCAT(CONCAT(last_name,&quot; “),first_name) as name  from employees<br>
+或者<br>
+select CONCAT(last_name,” &quot;，first_name) as name  from employees</p>
+<p>SQLite中使用：<br>
+select last_name||&quot; &quot;||first_name as name  from employees</p>
+]]></content>
       <tags>
         <tag>sql</tag>
       </tags>
@@ -3274,6 +3443,27 @@ Thread.UncaughtExceptionHandler是用于处理未捕获异常造成线程突然�
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">java -ea Main.java</span><br></pre></td></tr></table></figure>
 <p>最好还是使用单元测试。</p>
+<h1>Log4j</h1>
+<p>当我们使用Log4j输出一条日志时，Log4j自动通过不同的Appender把同一条日志输出到不同的目的地。例如：</p>
+<ul>
+<li>console：输出到屏幕；</li>
+<li>file：输出到文件；</li>
+<li>socket：通过网络输出到远程计算机；</li>
+<li>jdbc：输出到数据库<br>
+在输出日志的过程中，通过Filter来过滤哪些log需要被输出，哪些log不需要被输出。例如，仅输出ERROR级别的日志。</li>
+</ul>
+<h2 id="调整输出"><a class="header-anchor" href="#调整输出">¶</a>调整输出</h2>
+<p>凡是INFO级别的日志，会自动输出到屏幕，而ERROR级别的日志，不但会输出到屏幕，还会同时输出到文件。并且，一旦日志文件达到指定大小（1MB），Log4j就会自动切割新的日志文件，并最多保留10份。</p>
+<h2 id="日志级别"><a class="header-anchor" href="#日志级别">¶</a>日志级别</h2>
+<p>DEBUG：输出调试信息；指出细粒度信息事件对调试应用程序是非常有帮助的。<br>
+INFO： 输出提示信息；消息在粗粒度级别上突出强调应用程序的运行过程。<br>
+WARN： 输出警告信息；表明会出现潜在错误的情形。<br>
+ERROR：输出错误信息；指出虽然发生错误事件，但仍然不影响系统的继续运行。<br>
+FATAL： 输出致命错误；指出每个严重的错误事件将会导致应用程序的退出。<br>
+ALL level：打开所有日志记录开关；是最低等级的，用于打开所有日志记录。<br>
+OFF level：关闭所有日志记录开关；是最高等级的，用于关闭所有日志记录。</p>
+<p>按照范围从小到大排序：OFF level &gt; FATAL &gt; ERROR &gt; WARN &gt; INFO &gt; DEBUG &gt; ALL level；范围大的会包含范围小的，例如日志设置为INFO级别的话则FATAL、ERROR、WARN、INFO的日志开关都是打开的，而DEBUG的日志开关将是关闭的。</p>
+<p>Log4j建议只使用四个级别，优先级从高到低分别是 ERROR、WARN、INFO、DEBUG。</p>
 ]]></content>
       <tags>
         <tag>Java</tag>
