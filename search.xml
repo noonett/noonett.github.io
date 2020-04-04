@@ -1,6 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>今朝酒</title>
+    <url>/9999/01/01/top/</url>
+    <content><![CDATA[<p>容器君再见，再看Java核心技术。<br>
+开始看项目君。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Java网络编程基础</title>
+    <url>/2020/04/04/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1>TCP</h1>
+<h3 id="什么是socket"><a class="header-anchor" href="#什么是socket">¶</a>什么是socket?</h3>
+<p>由IP地址和端口号（范围是0～65535）组成。端口号总是由操作系统分配;<br>
+小于1024的端口属于特权端口，需要管理员权限，大于1024的端口可以由任意用户的应用程序打开。</p>
+<h3 id="socket通信"><a class="header-anchor" href="#socket通信">¶</a>socket通信</h3>
+<p>两个进程之间的网络通信。<br>
+一个进程充当服务器端，它会主动监听某个指定的端口；<br>
+另一个进程充当客户端，它必须主动连接服务器的IP地址和指定端口；<br>
+如果连接成功，服务器端和客户端就成功地建立了一个TCP连接，双方后续就可以随时发送和接收数据。</p>
+<p>Socket连接成功地在服务器端和客户端之间建立后：</p>
+<ul>
+<li>对服务器端来说，它的Socket是指定的IP地址和指定的端口号；</li>
+<li>对客户端来说，它的Socket是它所在计算机的IP地址和一个由操作系统分配的随机端口号。</li>
+</ul>
+<h3 id="服务器端"><a class="header-anchor" href="#服务器端">¶</a>服务器端</h3>
+<p>ServerSocket类来指定IP和指定端口的监听。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">6666</span>); <span class="comment">//这里没有指定IP，表示监听所有网络接口</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (;;) &#123;</span><br><span class="line">    Socket sock = ss.accept();          <span class="comment">//监听到了，就返回一个socket实例</span></span><br><span class="line">    Thread t = <span class="keyword">new</span> Handler(sock);</span><br><span class="line">    t.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Socket实例就是用来和刚连接的客户端进行通信的。由于客户端很多，要实现并发处理，我们就必须为每个新的Socket创建一个新线程来处理，这样，主线程的作用就是接收新的连接，每当收到新连接后，就创建一个新线程进行处理。</p>
+<h6 id="阻塞和队列"><a class="header-anchor" href="#阻塞和队列">¶</a>阻塞和队列</h6>
+<p>如果没有客户端连接进来，accept()方法会阻塞并一直等待。如果有多个客户端同时连接进来，ServerSocket会把连接扔到队列里，然后一个一个处理。对于Java程序而言，只需要通过循环不断调用accept()就可以获取新的连接。</p>
+<h3 id="客户端"><a class="header-anchor" href="#客户端">¶</a>客户端</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Socket sock = <span class="keyword">new</span> Socket(<span class="string">"localhost"</span>, <span class="number">6666</span>);</span><br></pre></td></tr></table></figure>
+<p>通过Socket构造方法连接客户端，如果连接成功，返回一个socket实例。</p>
+<h3 id="Socket流"><a class="header-anchor" href="#Socket流">¶</a>Socket流</h3>
+<p>使用Socket实例进行网络通信。因为TCP是一种基于流的协议，因此，Java标准库使用InputStream和OutputStream来封装Socket的数据流，这样我们使用Socket的流，和普通IO流类似：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 用于读取网络数据:</span></span><br><span class="line">InputStream in = sock.getInputStream();</span><br><span class="line"><span class="comment">// 用于写入网络数据:</span></span><br><span class="line">OutputStream out = sock.getOutputStream();</span><br></pre></td></tr></table></figure>
+<h6 id="为什么写入网络数据时，要调用flush-方法"><a class="header-anchor" href="#为什么写入网络数据时，要调用flush-方法">¶</a>为什么写入网络数据时，要调用flush()方法?</h6>
+<p>我们以流的形式写入数据的时候，并不是一写入就立刻发送到网络，而是先写入内存缓冲区，直到缓冲区满了以后，才会一次性真正发送到网络，这样设计的目的是为了提高传输效率。如果缓冲区的数据很少，而我们又想强制把这些数据发送到网络，就必须调用flush()强制把缓冲区数据发送出去。</p>
+<h1>UDP</h1>
+<p>UDP没有流的概念，一次收发一个包。<br>
+UDP端口和TCP端口虽然都使用0~65535，但他们是两套独立的端口，即一个应用程序用TCP占用了端口1234，不影响另一个应用程序用UDP占用端口1234。</p>
+<h3 id="服务器端-v2"><a class="header-anchor" href="#服务器端-v2">¶</a>服务器端</h3>
+<p>DatagramSocket类实现监听，接收。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">DatagramSocket ds = <span class="keyword">new</span> DatagramSocket(<span class="number">6666</span>);</span><br></pre></td></tr></table></figure>
+<h6 id="缓冲区接收"><a class="header-anchor" href="#缓冲区接收">¶</a>缓冲区接收</h6>
+<p>准备一个byte[]缓冲区，并通过DatagramPacket实现接收：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">DatagramPacket packet = <span class="keyword">new</span> DatagramPacket(buffer, buffer.length);</span><br><span class="line">ds.receive(packet);</span><br></pre></td></tr></table></figure>
+<h6 id="转码"><a class="header-anchor" href="#转码">¶</a>转码</h6>
+<p>// 收取到的数据存储在buffer中，由packet.getOffset(), packet.getLength()指定起始位置和长度<br>
+// 将其按UTF-8编码转换为String:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">String s = <span class="keyword">new</span> String(packet.getData(), packet.getOffset(), packet.getLength(), StandardCharsets.UTF_8);</span><br></pre></td></tr></table></figure>
+<h6 id="发送包"><a class="header-anchor" href="#发送包">¶</a>发送包</h6>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] data = ...</span><br><span class="line">packet.setData(data);</span><br><span class="line">ds.send(packet);</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>和为S的两个数字｜《剑指offer》</title>
+    <url>/2020/04/04/%E5%92%8C%E4%B8%BAS%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：输入一个递增排序的数组和一个数字S，在数组中查找两个数，使得他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的。
+滑动窗口又来了，kimochi
+</code></pre>
+<a id="more"></a>
+<h1>直男解法</h1>
+<p>看到条件就是怼，也不想想，外层的乘积是一定小于内层的:)。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">FindNumbersWithSum</span><span class="params">(<span class="keyword">int</span> [] array,<span class="keyword">int</span> sum)</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; twoboy = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">if</span>(array == <span class="keyword">null</span> || array.length&lt;<span class="number">2</span>) <span class="keyword">return</span> twoboy;</span><br><span class="line">        <span class="keyword">int</span> len = array.length;</span><br><span class="line">        <span class="keyword">int</span> left = <span class="number">0</span>; <span class="keyword">int</span> right = len-<span class="number">1</span>; <span class="keyword">boolean</span> first = <span class="keyword">true</span>; <span class="keyword">int</span> curMul = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(right&gt;left)&#123;</span><br><span class="line">            <span class="keyword">int</span> mysum = array[left] + array[right];</span><br><span class="line">            <span class="keyword">if</span>(mysum == sum)&#123;</span><br><span class="line">                <span class="keyword">if</span>(first)&#123;</span><br><span class="line">                    twoboy.add(array[left]);</span><br><span class="line">                    twoboy.add(array[right]);</span><br><span class="line">                    first = <span class="keyword">false</span>;</span><br><span class="line">                    curMul = array[left] * array[right];</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(array[left]*array[right]&lt;curMul)&#123;</span><br><span class="line">                    twoboy.set(<span class="number">0</span>,array[left]);</span><br><span class="line">                    twoboy.set(<span class="number">1</span>,array[right]);</span><br><span class="line">                    curMul = array[left] * array[right];</span><br><span class="line">                &#125;</span><br><span class="line">                left++;</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(mysum &lt; sum)&#123;</span><br><span class="line">                    left++;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                 right--;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> twoboy;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>找到就return</h1>
+<p>输出两个数的乘积最小的。这句话的理解？<br>
+假设：若b&gt;a,且存在，<br>
+a + b = s;<br>
+(a - m ) + (b + m) = s<br>
+则：(a - m )(b + m)=ab - (b-a)m - m*m &lt; ab；说明外层的乘积更小<br>
+也就是说依然是左右夹逼法！！！只需要2个指针</p>
+<ol>
+<li>left开头，right指向结尾</li>
+<li>如果和小于sum，说明太小了，left右移寻找更大的数</li>
+<li>如果和大于sum，说明太大了，right左移寻找更小的数</li>
+<li>和相等，把left和right的数返回</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">FindNumbersWithSum</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> sum)</span> </span>&#123;</span><br><span class="line">       ArrayList&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">       <span class="keyword">if</span> (array == <span class="keyword">null</span> || array.length == <span class="number">0</span>)</span><br><span class="line">           <span class="keyword">return</span> list;</span><br><span class="line">       <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">int</span> right = array.length - <span class="number">1</span>;</span><br><span class="line">       <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">           <span class="keyword">int</span> total = array[left] + array[right];</span><br><span class="line">           <span class="keyword">if</span> (total == sum) &#123;</span><br><span class="line">               list.add(array[left]);</span><br><span class="line">               list.add(array[right]);</span><br><span class="line">               <span class="keyword">return</span> list;</span><br><span class="line">           &#125; <span class="keyword">else</span> <span class="keyword">if</span> (total &gt; sum) &#123;</span><br><span class="line">             <span class="comment">//大于sum，说明太大了，right左移寻找更小的数</span></span><br><span class="line">               --right;</span><br><span class="line">                 </span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">             <span class="comment">//2.如果和小于sum，说明太小了，left右移寻找更大的数</span></span><br><span class="line">               ++left;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> list;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>和为S的连续正数序列｜《剑指offer》</title>
+    <url>/2020/04/04/%E5%92%8C%E4%B8%BAS%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%AD%A3%E6%95%B0%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：找出所有和为S的连续正数序列?
+</code></pre>
+<a id="more"></a>
+<h1>穷举</h1>
+<p>穷举一时爽，超时就爆炸</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt; &gt; FindContinuousSequence(<span class="keyword">int</span> sum) &#123;</span><br><span class="line">       ArrayList&lt;ArrayList&lt;Integer&gt; &gt; aList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">       <span class="keyword">if</span>(sum&lt;<span class="number">3</span>) <span class="keyword">return</span> aList;</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;i&lt;=sum/<span class="number">2</span>;++i)&#123;</span><br><span class="line">           <span class="keyword">int</span> tempSum = <span class="number">0</span>;</span><br><span class="line">           ArrayList&lt;Integer&gt; tempList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> j = i;j&lt;=sum;++j)&#123;</span><br><span class="line">               tempSum += j;</span><br><span class="line">               <span class="keyword">if</span>(tempSum&lt;sum)&#123;</span><br><span class="line">                   tempList.add(j);</span><br><span class="line">               &#125;<span class="keyword">else</span> <span class="keyword">if</span>(tempSum == sum)&#123;</span><br><span class="line">                   tempList.add(j);</span><br><span class="line">                   aList.add(tempList);</span><br><span class="line">               &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                   <span class="keyword">break</span>;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> aList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>双指针，动态窗口</h1>
+<p>真尼玛香</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> ArrayList&lt;ArrayList&lt;Integer&gt; &gt; FindContinuousSequence(<span class="keyword">int</span> sum) &#123;</span><br><span class="line">        <span class="comment">//存放结果</span></span><br><span class="line">        ArrayList&lt;ArrayList&lt;Integer&gt; &gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="comment">//两个起点，相当于动态窗口的两边，根据其窗口内的值的和来确定窗口的位置和大小</span></span><br><span class="line">        <span class="keyword">int</span> plow = <span class="number">1</span>,phigh = <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">while</span>(phigh &gt; plow)&#123;</span><br><span class="line">            <span class="comment">//由于是连续的，差为1的一个序列，那么求和公式是(a0+an)*n/2</span></span><br><span class="line">            <span class="keyword">int</span> cur = (phigh + plow) * (phigh - plow + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">            <span class="comment">//相等，那么就将窗口范围的所有数添加进结果集</span></span><br><span class="line">            <span class="keyword">if</span>(cur == sum)&#123;</span><br><span class="line">                ArrayList&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> i=plow;i&lt;=phigh;i++)&#123;</span><br><span class="line">                    list.add(i);</span><br><span class="line">                &#125;</span><br><span class="line">                result.add(list);</span><br><span class="line">                plow++;</span><br><span class="line">            <span class="comment">//如果当前窗口内的值之和小于sum，那么右边窗口右移一下</span></span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(cur &lt; sum)&#123;</span><br><span class="line">                phigh++;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="comment">//如果当前窗口内的值之和大于sum，那么左边窗口右移一下</span></span><br><span class="line">                plow++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数组中只出现一次的数字｜《剑指offer》</title>
+    <url>/2020/04/03/%E6%95%B0%E7%BB%84%E4%B8%AD%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。
+</code></pre>
+<a id="more"></a>
+<h1>哈希</h1>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//num1,num2分别为长度为1的数组。传出参数</span></span><br><span class="line"><span class="comment">//将num1[0],num2[0]设置为返回结果</span></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">FindNumsAppearOnce</span><span class="params">(<span class="keyword">int</span> [] array,<span class="keyword">int</span> num1[] , <span class="keyword">int</span> num2[])</span> </span>&#123;</span><br><span class="line">        HashMap&lt;Integer,Boolean&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i:array)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!map.containsKey(i))&#123;</span><br><span class="line">                map.put(i,<span class="keyword">true</span>);</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(map.get(i))&#123;</span><br><span class="line">                map.put(i,<span class="keyword">false</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">boolean</span> first = <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i:array)&#123;</span><br><span class="line">            <span class="keyword">if</span>(map.get(i)&amp;&amp;first)&#123;</span><br><span class="line">                num1[<span class="number">0</span>] = i;</span><br><span class="line">                first = <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(map.get(i)&amp;&amp;!first)&#123;</span><br><span class="line">                num2[<span class="number">0</span>] = i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>位运算</h1>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//num1,num2分别为长度为1的数组。传出参数</span></span><br><span class="line"><span class="comment">//将num1[0],num2[0]设置为返回结果</span></span><br><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">FindNumsAppearOnce</span><span class="params">(<span class="keyword">int</span> [] array,<span class="keyword">int</span> num1[] , <span class="keyword">int</span> num2[])</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> xor = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i : array)<span class="comment">// 一样的抵消,不一样的两个数字异或运算结果必定有一位是1</span></span><br><span class="line">            xor ^= i;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> mask = xor &amp; (-xor); <span class="comment">//x &amp; (-x) 是保留位中最右边 1 ，且将其余的 1 设位 0 的方法。</span></span><br><span class="line">        <span class="comment">// -xor = ~xor + 1;</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i : array) &#123;</span><br><span class="line">            <span class="keyword">if</span> ((i &amp; mask) == <span class="number">0</span>)<span class="comment">//== 0、 == mask 两种结果</span></span><br><span class="line">                num1[<span class="number">0</span>] ^= i;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                num2[<span class="number">0</span>] ^= i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>平衡二叉树｜《剑指offer》</title>
+    <url>/2020/04/03/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <content><![CDATA[<pre><code>题目：输入一棵二叉树，判断该二叉树是否是平衡二叉树。
+</code></pre>
+<a id="more"></a>
+<h1>思路</h1>
+<p>自顶向下，求出左右子树的最大树高进行比较。但是问题在于子节点会被重复调用：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">IsBalanced_Solution</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Math.abs(maxDepth(root.left) - maxDepth(root.right)) &lt;= <span class="number">1</span> &amp;&amp;</span><br><span class="line">            IsBalanced_Solution(root.left) &amp;&amp; IsBalanced_Solution(root.right);</span><br><span class="line">    &#125;</span><br><span class="line">      </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">maxDepth</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> + Math.max(maxDepth(root.left), maxDepth(root.right));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>改进</h1>
+<p>增加标志位，记录高度，不平衡就剪枝。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">IsBalanced_Solution</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> getDepth(root) != -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">getDepth</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> left = getDepth(root.left);</span><br><span class="line">        <span class="keyword">if</span> (left == -<span class="number">1</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> right = getDepth(root.right);</span><br><span class="line">        <span class="keyword">if</span> (right == -<span class="number">1</span>) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> Math.abs(left - right) &gt; <span class="number">1</span> ? -<span class="number">1</span> : <span class="number">1</span> + Math.max(left, right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>《剑指offer》</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Maven基础</title>
     <url>/2020/04/02/Maven%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<pre><code>迫不及待想开始做项目，语法、框架两手抓，先来了解一下Maven吧。
@@ -589,12 +724,6 @@ t.notify(), t.notifyAll(): 唤醒其他线程，只能在已获得锁对象内�
         <tag>算法</tag>
         <tag>《剑指offer》</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>今朝酒</title>
-    <url>/2020/03/30/top/</url>
-    <content><![CDATA[<p>大概过了一下多线程，我回来容器君。</p>
-]]></content>
   </entry>
   <entry>
     <title>连续子数组的最大和｜《剑指offer》</title>
