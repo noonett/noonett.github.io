@@ -252,7 +252,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/02/%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%AC%E5%85%B1%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/05/Json%E5%85%A5%E9%97%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="TYH">
@@ -271,7 +271,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2020/04/02/%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%AC%E5%85%B1%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">两个链表的第一个公共结点｜《剑指offer》</a></h1>
+                <a class="post-title-link" href="/2020/04/05/Json%E5%85%A5%E9%97%A8/" itemprop="url">Json入门</a></h1>
         
 
         <div class="post-meta">
@@ -286,7 +286,1255 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-02T16:47:17+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-05T22:25:55+08:00">
+                2020-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1>Json</h1>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"Java核心技术"</span>,</span><br><span class="line">    <span class="attr">"author"</span>: &#123;</span><br><span class="line">        <span class="attr">"firstName"</span>: <span class="string">"Abc"</span>,</span><br><span class="line">        <span class="attr">"lastName"</span>: <span class="string">"Xyz"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"isbn"</span>: <span class="string">"1234567"</span>,</span><br><span class="line">    <span class="attr">"tags"</span>: [<span class="string">"Java"</span>, <span class="string">"Network"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="优点"><a class="header-anchor" href="#优点">¶</a>优点</h3>
+<ol>
+<li>JSON只允许使用UTF-8编码，不存在编码问题；</li>
+<li>JSON只允许使用双引号作为key，特殊字符用\转义，格式简单；</li>
+<li>浏览器内置JSON支持，如果把数据用JSON发送给浏览器，可以用JavaScript直接处理。</li>
+<li>格式简单，仅支持以下几种数据类型：</li>
+</ol>
+<ul>
+<li>键值对：{“key”: value}</li>
+<li>数组：[1, 2, 3]</li>
+<li>字符串：“abc”</li>
+<li>数值（整数和浮点数）：12.34</li>
+<li>布尔值：true或false</li>
+<li>空值：null</li>
+</ul>
+<h3 id="Jason解析成JavaBean"><a class="header-anchor" href="#Jason解析成JavaBean">¶</a>Jason解析成JavaBean</h3>
+<h5 id="引入Maven依赖"><a class="header-anchor" href="#引入Maven依赖">¶</a>引入Maven依赖</h5>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.10.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="创建ObjectMapper对象解析"><a class="header-anchor" href="#创建ObjectMapper对象解析">¶</a>创建ObjectMapper对象解析</h5>
+<h6 id="反序列化"><a class="header-anchor" href="#反序列化">¶</a>反序列化</h6>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">InputStream input = Main.class.getResourceAsStream("/book.json");</span><br><span class="line">ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper();</span><br><span class="line"><span class="comment">// 反序列化时忽略不存在的JavaBean属性:</span></span><br><span class="line">mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, <span class="keyword">false</span>);</span><br><span class="line">Book book = mapper.readValue(input, Book<span class="class">.<span class="keyword">class</span>)</span>;</span><br></pre></td></tr></table></figure>
+<p>核心代码是创建一个ObjectMapper对象。关闭DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES功能使得解析时如果JavaBean不存在该属性时解析不会报错。</p>
+<h6 id="序列化"><a class="header-anchor" href="#序列化">¶</a>序列化</h6>
+<p>把JSON解析为JavaBean的过程称为反序列化。如果把JavaBean变为JSON，那就是序列化。要实现JavaBean到JSON的序列化，只需要一行代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String json = mapper.writeValueAsString(book);</span><br></pre></td></tr></table></figure>
+<h6 id="解析成特定对象"><a class="header-anchor" href="#解析成特定对象">¶</a>解析成特定对象</h6>
+<p>如LocalDate: 可以引入特定datatype maven依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.fasterxml.jackson.datatype<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jackson-datatype-jsr310<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.10.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后注册一个新module：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ObjectMapper mapper = <span class="keyword">new</span> ObjectMapper().registerModule(<span class="keyword">new</span> JavaTimeModule());</span><br></pre></td></tr></table></figure>
+<h6 id="自定义解析规则"><a class="header-anchor" href="#自定义解析规则">¶</a>自定义解析规则</h6>
+<p>isbn不规则：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"Java核心技术"</span>,</span><br><span class="line">    <span class="attr">"isbn"</span>: <span class="string">"978-7-111-54742-6"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以自定义一个类，继承JsonDeserializer<BigInteger></BigInteger></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IsbnDeserializer</span> <span class="keyword">extends</span> <span class="title">JsonDeserializer</span>&lt;<span class="title">BigInteger</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> BigInteger <span class="title">deserialize</span><span class="params">(JsonParser p, DeserializationContext ctxt)</span> <span class="keyword">throws</span> IOException, JsonProcessingException </span>&#123;</span><br><span class="line">        <span class="comment">// 读取原始的JSON字符串内容:</span></span><br><span class="line">        String s = p.getValueAsString();</span><br><span class="line">        <span class="keyword">if</span> (s != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> BigInteger(s.replace(<span class="string">"-"</span>, <span class="string">""</span>));</span><br><span class="line">            &#125; <span class="keyword">catch</span> (NumberFormatException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> JsonParseException(p, s, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后Book类中使用注解标注：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Book</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> String name;</span><br><span class="line">    <span class="comment">// 表示反序列化isbn时使用自定义的IsbnDeserializer:</span></span><br><span class="line">    <span class="meta">@JsonDeserialize</span>(using = IsbnDeserializer<span class="class">.<span class="keyword">class</span>)</span></span><br><span class="line"><span class="class">    <span class="title">public</span> <span class="title">BigInteger</span> <span class="title">isbn</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/05/%E6%89%91%E5%85%8B%E7%89%8C%E9%A1%BA%E5%AD%90%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/05/%E6%89%91%E5%85%8B%E7%89%8C%E9%A1%BA%E5%AD%90%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">扑克牌顺子｜《剑指offer》</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-05T19:09:33+08:00">
+                2020-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <pre><code>题目：LL今天心情特别好,因为他去买了一副扑克牌,发现里面居然有2个大王,2个小王(一副牌原本是54张^_^)...他随机从中抽出了5张牌,想测测自己的手气,看看能不能抽到顺子,如果抽到的话,他决定去买体育彩票,嘿嘿！！“红心A,黑桃3,小王,大王,方片5”,“Oh My God!”不是顺子.....LL不高兴了,他想了想,决定大\小 王可以看成任何数字,并且A看作1,J为11,Q为12,K为13。上面的5张牌就可以变成“1,2,3,4,5”(大小王分别看作2和4),“So Lucky!”。LL决定去买体育彩票啦。 现在,要求你使用这幅牌模拟上面的过程,然后告诉我们LL的运气如何， 如果牌能组成顺子就输出true，否则就输出false。为了方便起见,你可以认为大小王是0。
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/05/%E6%89%91%E5%85%8B%E7%89%8C%E9%A1%BA%E5%AD%90%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/05/%E7%BF%BB%E8%BD%AC%E5%8D%95%E8%AF%8D%E9%A1%BA%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/05/%E7%BF%BB%E8%BD%AC%E5%8D%95%E8%AF%8D%E9%A1%BA%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">翻转单词顺序列｜《剑指offer》</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-05T13:14:10+08:00">
+                2020-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <pre><code>题目：牛客最近来了一个新员工Fish，每天早晨总是会拿着一本英文杂志，写些句子在本子上。同事Cat对Fish写的内容颇感兴趣，有一天他向Fish借来翻看，但却读不懂它的意思。例如，“student. a am I”。后来才意识到，这家伙原来把句子单词的顺序翻转了，正确的句子应该是“I am a student.”。Cat对一一的翻转这些单词顺序可不在行，你能帮助他么？
+
+灵活使用String方法，split和trim。
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/05/%E7%BF%BB%E8%BD%AC%E5%8D%95%E8%AF%8D%E9%A1%BA%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/05/%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/05/%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">左旋转字符串｜《剑指offer》</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-05T11:56:17+08:00">
+                2020-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <pre><code>题目：汇编语言中有一种移位指令叫做循环左移（ROL），现在有个简单的任务，就是用字符串模拟这个指令的运算结果。对于一个给定的字符序列S，请你把其循环左移K位后的序列输出。例如，字符序列S=”abcXYZdef”,要求输出循环左移3位后的结果，即“XYZdefabc”。是不是很简单？OK，搞定它！
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/05/%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/04/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/04/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" itemprop="url">Java网络编程基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-04T22:29:00+08:00">
+                2020-04-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1>TCP</h1>
+<h3 id="什么是socket"><a class="header-anchor" href="#什么是socket">¶</a>什么是socket?</h3>
+<p>由IP地址和端口号（范围是0～65535）组成。端口号总是由操作系统分配;<br>
+小于1024的端口属于特权端口，需要管理员权限，大于1024的端口可以由任意用户的应用程序打开。</p>
+<h3 id="socket通信"><a class="header-anchor" href="#socket通信">¶</a>socket通信</h3>
+<p>两个进程之间的网络通信。<br>
+一个进程充当服务器端，它会主动监听某个指定的端口；<br>
+另一个进程充当客户端，它必须主动连接服务器的IP地址和指定端口；<br>
+如果连接成功，服务器端和客户端就成功地建立了一个TCP连接，双方后续就可以随时发送和接收数据。</p>
+<p>Socket连接成功地在服务器端和客户端之间建立后：</p>
+<ul>
+<li>对服务器端来说，它的Socket是指定的IP地址和指定的端口号；</li>
+<li>对客户端来说，它的Socket是它所在计算机的IP地址和一个由操作系统分配的随机端口号。</li>
+</ul>
+<h3 id="服务器端"><a class="header-anchor" href="#服务器端">¶</a>服务器端</h3>
+<p>ServerSocket类来指定IP和指定端口的监听。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">6666</span>); <span class="comment">//这里没有指定IP，表示监听所有网络接口</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (;;) &#123;</span><br><span class="line">    Socket sock = ss.accept();          <span class="comment">//监听到了，就返回一个socket实例</span></span><br><span class="line">    Thread t = <span class="keyword">new</span> Handler(sock);</span><br><span class="line">    t.start();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Socket实例就是用来和刚连接的客户端进行通信的。由于客户端很多，要实现并发处理，我们就必须为每个新的Socket创建一个新线程来处理，这样，主线程的作用就是接收新的连接，每当收到新连接后，就创建一个新线程进行处理。</p>
+<h6 id="阻塞和队列"><a class="header-anchor" href="#阻塞和队列">¶</a>阻塞和队列</h6>
+<p>如果没有客户端连接进来，accept()方法会阻塞并一直等待。如果有多个客户端同时连接进来，ServerSocket会把连接扔到队列里，然后一个一个处理。对于Java程序而言，只需要通过循环不断调用accept()就可以获取新的连接。</p>
+<h3 id="客户端"><a class="header-anchor" href="#客户端">¶</a>客户端</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Socket sock = <span class="keyword">new</span> Socket(<span class="string">"localhost"</span>, <span class="number">6666</span>); <span class="comment">// // 连接指定服务器和端口</span></span><br></pre></td></tr></table></figure>
+<p>通过Socket构造方法连接客户端，如果连接成功，返回一个socket实例。</p>
+<h3 id="Socket流"><a class="header-anchor" href="#Socket流">¶</a>Socket流</h3>
+<p>使用Socket实例进行网络通信。因为TCP是一种基于流的协议，因此，Java标准库使用InputStream和OutputStream来封装Socket的数据流，这样我们使用Socket的流，和普通IO流类似：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用于读取网络数据:</span></span><br><span class="line">InputStream in = sock.getInputStream();</span><br><span class="line"><span class="comment">// 用于写入网络数据:</span></span><br><span class="line">OutputStream out = sock.getOutputStream();</span><br></pre></td></tr></table></figure>
+<h6 id="为什么写入网络数据时，要调用flush-方法"><a class="header-anchor" href="#为什么写入网络数据时，要调用flush-方法">¶</a>为什么写入网络数据时，要调用flush()方法?</h6>
+<p>我们以流的形式写入数据的时候，并不是一写入就立刻发送到网络，而是先写入内存缓冲区，直到缓冲区满了以后，才会一次性真正发送到网络，这样设计的目的是为了提高传输效率。如果缓冲区的数据很少，而我们又想强制把这些数据发送到网络，就必须调用flush()强制把缓冲区数据发送出去。</p>
+<h1>UDP</h1>
+<p>UDP没有流的概念，一次收发一个包。<br>
+UDP端口和TCP端口虽然都使用0~65535，但他们是两套独立的端口，即一个应用程序用TCP占用了端口1234，不影响另一个应用程序用UDP占用端口1234。</p>
+<h3 id="服务器端-v2"><a class="header-anchor" href="#服务器端-v2">¶</a>服务器端</h3>
+<p>DatagramSocket类实现监听，接收。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DatagramSocket ds = <span class="keyword">new</span> DatagramSocket(<span class="number">6666</span>);</span><br></pre></td></tr></table></figure>
+<h6 id="缓冲区接收"><a class="header-anchor" href="#缓冲区接收">¶</a>缓冲区接收</h6>
+<p>准备一个byte[]缓冲区，并通过DatagramPacket实现接收：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] buffer = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">DatagramPacket packet = <span class="keyword">new</span> DatagramPacket(buffer, buffer.length);</span><br><span class="line">ds.receive(packet);</span><br></pre></td></tr></table></figure>
+<h6 id="转码"><a class="header-anchor" href="#转码">¶</a>转码</h6>
+<p>// 收取到的数据存储在buffer中，由packet.getOffset(), packet.getLength()指定起始位置和长度<br>
+// 将其按UTF-8编码转换为String:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = <span class="keyword">new</span> String(packet.getData(), packet.getOffset(), packet.getLength(), StandardCharsets.UTF_8);</span><br></pre></td></tr></table></figure>
+<h6 id="发送包"><a class="header-anchor" href="#发送包">¶</a>发送包</h6>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] data = ...</span><br><span class="line">packet.setData(data);</span><br><span class="line">ds.send(packet);</span><br></pre></td></tr></table></figure>
+<h3 id="客户端-v2"><a class="header-anchor" href="#客户端-v2">¶</a>客户端</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DatagramSocket ds = <span class="keyword">new</span> DatagramSocket();</span><br><span class="line">ds.setSoTimeout(<span class="number">1000</span>);</span><br><span class="line">ds.connect(InetAddress.getByName(<span class="string">"localhost"</span>), <span class="number">6666</span>); <span class="comment">//  // 连接指定服务器和端口</span></span><br></pre></td></tr></table></figure>
+<p>这个connect()方法不是真连接，它是为了在客户端的DatagramSocket实例中保存服务器端的IP和端口号，确保这个DatagramSocket实例只能往指定的地址和端口发送UDP包，不能往其他地址和端口发送。这么做不是UDP的限制，而是Java内置了安全检查。</p>
+<p>客户端必须先发UDP包，因为客户端不发UDP包，服务器端就根本不知道客户端的地址和端口号。</p>
+<p>如果客户端认为通信结束，就可以调用disconnect()断开连接：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ds.disconnect();</span><br></pre></td></tr></table></figure>
+<p>注意到disconnect()也不是真正地断开连接，它只是清除了客户端DatagramSocket实例记录的远程服务器地址和端口号，这样，DatagramSocket实例就可以连接另一个服务器端。</p>
+<h1>HTTP编程 一个请求-响应协议</h1>
+<p>HTTP有固定的响应代码：</p>
+<p>1xx：表示一个提示性响应，例如101表示将切换协议，常见于WebSocket连接；<br>
+2xx：表示一个成功的响应，例如200表示成功，206表示只发送了部分内容；<br>
+3xx：表示一个重定向的响应，例如301表示永久重定向，303表示客户端应该按指定路径重新发送请求；<br>
+4xx：表示一个因为客户端问题导致的错误响应，例如400表示因为Content-Type等各种原因导致的无效请求，404表示指定的路径不存在；<br>
+5xx：表示一个因为服务器问题导致的错误响应，例如500表示服务器内部故障，503表示服务器暂时无法响应。</p>
+<p>允许客户端在没有收到响应的时候，发送多个HTTP请求，服务器返回响应的时候，不一定按顺序返回，只要双方能识别出哪个响应对应哪个请求，就可以做到并行发送和接收。</p>
+<h3 id="HttpURLConnection包"><a class="header-anchor" href="#HttpURLConnection包">¶</a>HttpURLConnection包</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">URL url = <span class="keyword">new</span> URL(<span class="string">"http://www.example.com/path/to/target?a=1&amp;b=2"</span>);</span><br><span class="line">HttpURLConnection conn = (HttpURLConnection) url.openConnection();</span><br><span class="line">conn.setRequestMethod(<span class="string">"GET"</span>);</span><br><span class="line">conn.setUseCaches(<span class="keyword">false</span>);</span><br><span class="line">conn.setConnectTimeout(<span class="number">5000</span>); <span class="comment">// 请求超时5秒</span></span><br><span class="line"><span class="comment">// 设置HTTP头:</span></span><br><span class="line">conn.setRequestProperty(<span class="string">"Accept"</span>, <span class="string">"*/*"</span>);</span><br><span class="line">conn.setRequestProperty(<span class="string">"User-Agent"</span>, <span class="string">"Mozilla/5.0 (compatible; MSIE 11; Windows NT 5.1)"</span>);</span><br><span class="line"><span class="comment">// 连接并发送HTTP请求:</span></span><br><span class="line">conn.connect();</span><br><span class="line"><span class="comment">// 判断HTTP响应是否200:</span></span><br><span class="line"><span class="keyword">if</span> (conn.getResponseCode() != <span class="number">200</span>) &#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"bad response"</span>);</span><br><span class="line">&#125;		</span><br><span class="line"><span class="comment">// 获取所有响应Header:</span></span><br><span class="line">Map&lt;String, List&lt;String&gt;&gt; map = conn.getHeaderFields();</span><br><span class="line"><span class="keyword">for</span> (String key : map.keySet()) &#123;</span><br><span class="line">    System.out.println(key + <span class="string">": "</span> + map.get(key));</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 获取响应内容:</span></span><br><span class="line">InputStream input = conn.getInputStream();</span><br></pre></td></tr></table></figure>
+<h3 id="httpClient"><a class="header-anchor" href="#httpClient">¶</a>httpClient</h3>
+<p>Java 11后：<br>
+需要创建一个全局HttpClient实例，因为HttpClient内部使用线程池优化多个HTTP连接，可以复用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> HttpClient httpClient = HttpClient.newBuilder().build();</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 全局HttpClient:</span></span><br><span class="line">    <span class="keyword">static</span> HttpClient httpClient = HttpClient.newBuilder().build();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        String url = <span class="string">"https://www.sina.com.cn/"</span>;</span><br><span class="line">        HttpRequest request = HttpRequest.newBuilder(<span class="keyword">new</span> URI(url))</span><br><span class="line">            <span class="comment">// 设置Header:</span></span><br><span class="line">            .header(<span class="string">"User-Agent"</span>, <span class="string">"Java HttpClient"</span>).header(<span class="string">"Accept"</span>, <span class="string">"*/*"</span>)</span><br><span class="line">            <span class="comment">// 设置超时:</span></span><br><span class="line">            .timeout(Duration.ofSeconds(<span class="number">5</span>))</span><br><span class="line">            <span class="comment">// 设置版本:</span></span><br><span class="line">            .version(Version.HTTP_2).build();</span><br><span class="line">        HttpResponse&lt;String&gt; response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());</span><br><span class="line">        <span class="comment">// HTTP允许重复的Header，因此一个Header可对应多个Value:</span></span><br><span class="line">        Map&lt;String, List&lt;String&gt;&gt; headers = response.headers().map();</span><br><span class="line">        <span class="keyword">for</span> (String header : headers.keySet()) &#123;</span><br><span class="line">            System.out.println(header + <span class="string">": "</span> + headers.get(header).get(<span class="number">0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(response.body().substring(<span class="number">0</span>, <span class="number">1024</span>) + <span class="string">"..."</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;y</span><br></pre></td></tr></table></figure>
+<p>如果我们要获取图片这样的二进制内容，只需要把HttpResponse.BodyHandlers.ofString()换成HttpResponse.BodyHandlers.ofByteArray()，就可以获得一个HttpResponse&lt;byte[]&gt;对象。如果响应的内容很大，不希望一次性全部加载到内存，可以使用HttpResponse.BodyHandlers.ofInputStream()获取一个InputStream流。</p>
+<p>要使用POST请求，我们要准备好发送的Body数据并正确设置Content-Type：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">String url = <span class="string">"http://www.example.com/login"</span>;</span><br><span class="line">String body = <span class="string">"username=bob&amp;password=123456"</span>;</span><br><span class="line">HttpRequest request = HttpRequest.newBuilder(<span class="keyword">new</span> URI(url))</span><br><span class="line">    <span class="comment">// 设置Header:</span></span><br><span class="line">    .header(<span class="string">"Accept"</span>, <span class="string">"*/*"</span>)</span><br><span class="line">    .header(<span class="string">"Content-Type"</span>, <span class="string">"application/x-www-form-urlencoded"</span>)</span><br><span class="line">    <span class="comment">// 设置超时:</span></span><br><span class="line">    .timeout(Duration.ofSeconds(<span class="number">5</span>))</span><br><span class="line">    <span class="comment">// 设置版本:</span></span><br><span class="line">    .version(Version.HTTP_2)</span><br><span class="line">    <span class="comment">// 使用POST并设置Body:</span></span><br><span class="line">    .POST(BodyPublishers.ofString(body, StandardCharsets.UTF_8)).build();</span><br><span class="line">HttpResponse&lt;String&gt; response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());</span><br><span class="line">String s = response.body();</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/04/%E5%92%8C%E4%B8%BAS%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/04/%E5%92%8C%E4%B8%BAS%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">和为S的两个数字｜《剑指offer》</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-04T17:43:50+08:00">
+                2020-04-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <pre><code>题目：输入一个递增排序的数组和一个数字S，在数组中查找两个数，使得他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的。
+滑动窗口又来了，kimochi
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/04/%E5%92%8C%E4%B8%BAS%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/04/%E5%92%8C%E4%B8%BAS%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%AD%A3%E6%95%B0%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/04/%E5%92%8C%E4%B8%BAS%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%AD%A3%E6%95%B0%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">和为S的连续正数序列｜《剑指offer》</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-04T16:50:19+08:00">
+                2020-04-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <pre><code>题目：找出所有和为S的连续正数序列?
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/04/%E5%92%8C%E4%B8%BAS%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%AD%A3%E6%95%B0%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/03/%E6%95%B0%E7%BB%84%E4%B8%AD%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/03/%E6%95%B0%E7%BB%84%E4%B8%AD%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">数组中只出现一次的数字｜《剑指offer》</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-03T17:00:00+08:00">
+                2020-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <pre><code>题目：一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/03/%E6%95%B0%E7%BB%84%E4%B8%AD%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/03/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/03/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">平衡二叉树｜《剑指offer》</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-03T16:10:12+08:00">
+                2020-04-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <pre><code>题目：输入一棵二叉树，判断该二叉树是否是平衡二叉树。
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/03/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/02/Maven%E5%9F%BA%E7%A1%80/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/02/Maven%E5%9F%BA%E7%A1%80/" itemprop="url">Maven基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-02T23:50:10+08:00">
                 2020-04-02
               </time>
             
@@ -325,1164 +1573,13 @@
 
       
         
-          <pre><code>题目：输入两个链表，找出它们的第一个公共结点。（注意因为传入数据是链表，所以错误测试数据的提示是用其他方式显示的，保证传入数据是正确的）
+          <pre><code>迫不及待想开始做项目，语法、框架两手抓，先来了解一下Maven吧。
+Maven声明周期
+Maven deploy命令
 </code></pre>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2020/04/02/%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%AC%E5%85%B1%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/02/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%89%EF%BC%9A%E7%BA%BF%E7%A8%8B%E6%B1%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/02/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%89%EF%BC%9A%E7%BA%BF%E7%A8%8B%E6%B1%A0/" itemprop="url">Java多线程三：线程池</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-02T01:08:41+08:00">
-                2020-04-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>终于到了这一步了吗，海王的第一步。
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/02/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%89%EF%BC%9A%E7%BA%BF%E7%A8%8B%E6%B1%A0/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/01/%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/01/%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">数组中的逆序对｜《剑指offer》</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-01T19:00:50+08:00">
-                2020-04-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>题目：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 即输出P%1000000007
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/01/%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/01/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/01/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">字符串中第一个只出现一次的字符｜《剑指offer》</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-01T15:46:16+08:00">
-                2020-04-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>题目：在一个字符串(0&lt;=字符串长度&lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返回它的位置, 如果没有则返回 -1（需要区分大小写）.
-这题大佬的解很妙，把存Integer改为存Boolean，太妙了！
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/01/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/01/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BA%8C/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/01/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BA%8C/" itemprop="url">Java多线程二：代码级别的锁</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-01T00:07:51+08:00">
-                2020-04-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>JDK1.5之后，欢迎来到java.util.concurrent包。可重入锁，悲观读锁，乐观读锁，线程安全数据结构。
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/01/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BA%8C/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/31/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/31/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/" itemprop="url">Java多线程一：语言级别的锁</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-31T17:09:41+08:00">
-                2020-03-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>一个线程都搞不好，搞什么多线程。
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/03/31/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/31/%E4%B8%91%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/31/%E4%B8%91%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">丑数｜《剑指offer》</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-31T16:11:46+08:00">
-                2020-03-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>题目：把只包含质因子2、3和5的数称作丑数（Ugly Number）。例如6、8都是丑数，但14不是，因为它包含质因子7。 习惯上我们把1当做是第一个丑数。求按从小到大的顺序的第N个丑数。
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/03/31/%E4%B8%91%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/31/%E6%8A%8A%E6%95%B0%E7%BB%84%E6%8E%92%E6%88%90%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/31/%E6%8A%8A%E6%95%B0%E7%BB%84%E6%8E%92%E6%88%90%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">把数组排成最小的数｜《剑指offer》</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-31T15:37:57+08:00">
-                2020-03-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>题目：输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/03/31/%E6%8A%8A%E6%95%B0%E7%BB%84%E6%8E%92%E6%88%90%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/30/%E6%95%B4%E6%95%B0%E4%B8%AD1%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/30/%E6%95%B4%E6%95%B0%E4%B8%AD1%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">整数中1出现的次数｜《剑指offer》</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-30T22:30:30+08:00">
-                2020-03-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>题目：求出任意非负整数区间中1出现的次数（从1 到 n 中1出现的次数）。
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/03/30/%E6%95%B4%E6%95%B0%E4%B8%AD1%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/03/29/%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/03/29/%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/" itemprop="url">连续子数组的最大和｜《剑指offer》</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-29T21:47:11+08:00">
-                2020-03-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>题目：给一个数组，返回它的最大连续子序列的和(子向量的长度至少是1)
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/03/29/%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/#more" rel="contents">
+            <a class="btn" href="/2020/04/02/Maven%E5%9F%BA%E7%A1%80/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1524,7 +1621,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -1574,7 +1671,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1587,7 +1684,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

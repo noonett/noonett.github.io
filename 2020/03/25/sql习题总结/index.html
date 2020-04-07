@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="21号避难所">
 <meta property="og:description" content="合格的SQL BOY练成之路。">
 <meta property="article:published_time" content="2020-03-25T03:53:31.000Z">
-<meta property="article:modified_time" content="2020-04-02T10:08:16.208Z">
+<meta property="article:modified_time" content="2020-04-07T13:16:45.459Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="sql">
 <meta name="twitter:card" content="summary">
@@ -345,13 +345,20 @@
 <h3 id="6-last-name和first-name拼接起来作为Name"><a class="header-anchor" href="#6-last-name和first-name拼接起来作为Name">¶</a>6. last_name和first_name拼接起来作为Name</h3>
 <p>MySQL、SQL Server、Oracle等数据库支持CONCAT方法，<br>
 如果用的SQLite数据库只支持用连接符号&quot;||&quot;来连接字符串</p>
-<p>CONCAT方法：<br>
-select CONCAT(CONCAT(last_name,&quot; “),first_name) as name  from employees<br>
-或者<br>
-select CONCAT(last_name,” &quot;，first_name) as name  from employees</p>
-<p>SQLite中使用：<br>
-select last_name||&quot; &quot;||first_name as name  from employees</p>
-
+<p>CONCAT方法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">CONCAT</span>(<span class="keyword">CONCAT</span>(last_name,<span class="string">" "</span>),first_name) <span class="keyword">as</span> <span class="keyword">name</span>  <span class="keyword">from</span> employees</span><br><span class="line">或者</span><br><span class="line"><span class="keyword">select</span> <span class="keyword">CONCAT</span>(last_name,<span class="string">" "</span>，first_name) <span class="keyword">as</span> <span class="keyword">name</span>  <span class="keyword">from</span> employees</span><br><span class="line"> </span><br><span class="line">SQLite中使用：</span><br><span class="line"><span class="keyword">select</span> last_name||<span class="string">" "</span>||first_name <span class="keyword">as</span> <span class="keyword">name</span>  <span class="keyword">from</span> employees</span><br></pre></td></tr></table></figure>
+<h3 id="7-插入或者忽略-关键字IGNORE"><a class="header-anchor" href="#7-插入或者忽略-关键字IGNORE">¶</a>7. 插入或者忽略 关键字IGNORE</h3>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Insert</span> <span class="keyword">ignore</span> <span class="keyword">into</span> actor(actor_id,first_name,last_name,last_update) </span><br><span class="line"><span class="keyword">values</span>(<span class="string">'3'</span>,<span class="string">'ED'</span>,<span class="string">'CHASE'</span>,<span class="string">'2006-02-15 12:34:33'</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="8-对于employees表中，给出奇数行的first-name"><a class="header-anchor" href="#8-对于employees表中，给出奇数行的first-name">¶</a>8. 对于employees表中，给出奇数行的first_name</h3>
+<p>说明：</p>
+<ol>
+<li>首先题目要求对first_name排序，所以子查询里有first_name的比较。</li>
+<li>通过比较，如果 e1.first_name 是第一位，那 e2.first_name 只有1个，就是 e1.first_name 本身，1%2=1；如果 e1.first_name 排在第二位，就有它和比它小的2个 e2.first_name，2%2=0，所以不选，以此类推。</li>
+</ol>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> e1.first_name</span><br><span class="line">  <span class="keyword">from</span> employees e1</span><br><span class="line"><span class="keyword">where</span> (<span class="keyword">select</span> <span class="keyword">count</span>(*) <span class="keyword">from</span> employees e2 <span class="keyword">where</span> e1.first_name &gt;= e2.first_name)%<span class="number">2</span>=<span class="number">1</span></span><br><span class="line">;</span><br></pre></td></tr></table></figure>
+<h3 id="9-删除emp-no重复的记录，只保留最小的id对应的记录。"><a class="header-anchor" href="#9-删除emp-no重复的记录，只保留最小的id对应的记录。">¶</a>9. 删除emp_no重复的记录，只保留最小的id对应的记录。</h3>
+<p>本题思路如下：先用 GROUP BY 和 MIN() 选出每个 emp_no 分组中最小的 id，然后用 DELETE FROM … WHERE … NOT IN … 语句删除 “非每个分组最小id对应的所有记录”</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DELETE</span> <span class="keyword">FROM</span> titles_test <span class="keyword">WHERE</span> <span class="keyword">id</span> <span class="keyword">NOT</span> <span class="keyword">IN</span> </span><br><span class="line">(<span class="keyword">SELECT</span> <span class="keyword">MIN</span>(<span class="keyword">id</span>) <span class="keyword">FROM</span> titles_test <span class="keyword">GROUP</span> <span class="keyword">BY</span> emp_no);</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -474,7 +481,7 @@ select last_name||&quot; &quot;||first_name as name  from employees</p>
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">89</span>
+                  <span class="site-state-item-count">102</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -487,7 +494,7 @@ select last_name||&quot; &quot;||first_name as name  from employees</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -536,7 +543,7 @@ select last_name||&quot; &quot;||first_name as name  from employees</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-找所有部门内salary最大的员工（存在多值）"><span class="nav-number">1.</span> <span class="nav-text">¶1. 找所有部门内salary最大的员工（存在多值）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-查找当前薪水-to-date-‘9999-01-01’-排名第二多的员工-不准使用order-by"><span class="nav-number">2.</span> <span class="nav-text">¶2. 查找当前薪水(to_date&#x3D;‘9999-01-01’)排名第二多的员工, 不准使用order by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-查找所有员工入职以来的薪水涨幅"><span class="nav-number">3.</span> <span class="nav-text">¶3. 查找所有员工入职以来的薪水涨幅</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-对所有员工的当前-to-date-‘9999-01-01’-薪水按照salary进行按照1-N的排名"><span class="nav-number">4.</span> <span class="nav-text">¶4. 对所有员工的当前(to_date&#x3D;‘9999-01-01’)薪水按照salary进行按照1-N的排名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-查找描述信息中包括robot的电影对应的分类名称以及电影数目，而且还需要该分类对应电影数量-5部"><span class="nav-number">5.</span> <span class="nav-text">¶5. 查找描述信息中包括robot的电影对应的分类名称以及电影数目，而且还需要该分类对应电影数量&gt;&#x3D;5部</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-last-name和first-name拼接起来作为Name"><span class="nav-number">6.</span> <span class="nav-text">¶6. last_name和first_name拼接起来作为Name</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-找所有部门内salary最大的员工（存在多值）"><span class="nav-number">1.</span> <span class="nav-text">¶1. 找所有部门内salary最大的员工（存在多值）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-查找当前薪水-to-date-‘9999-01-01’-排名第二多的员工-不准使用order-by"><span class="nav-number">2.</span> <span class="nav-text">¶2. 查找当前薪水(to_date&#x3D;‘9999-01-01’)排名第二多的员工, 不准使用order by</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-查找所有员工入职以来的薪水涨幅"><span class="nav-number">3.</span> <span class="nav-text">¶3. 查找所有员工入职以来的薪水涨幅</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-对所有员工的当前-to-date-‘9999-01-01’-薪水按照salary进行按照1-N的排名"><span class="nav-number">4.</span> <span class="nav-text">¶4. 对所有员工的当前(to_date&#x3D;‘9999-01-01’)薪水按照salary进行按照1-N的排名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-查找描述信息中包括robot的电影对应的分类名称以及电影数目，而且还需要该分类对应电影数量-5部"><span class="nav-number">5.</span> <span class="nav-text">¶5. 查找描述信息中包括robot的电影对应的分类名称以及电影数目，而且还需要该分类对应电影数量&gt;&#x3D;5部</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-last-name和first-name拼接起来作为Name"><span class="nav-number">6.</span> <span class="nav-text">¶6. last_name和first_name拼接起来作为Name</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-插入或者忽略-关键字IGNORE"><span class="nav-number">7.</span> <span class="nav-text">¶7. 插入或者忽略 关键字IGNORE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-对于employees表中，给出奇数行的first-name"><span class="nav-number">8.</span> <span class="nav-text">¶8. 对于employees表中，给出奇数行的first_name</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-删除emp-no重复的记录，只保留最小的id对应的记录。"><span class="nav-number">9.</span> <span class="nav-text">¶9. 删除emp_no重复的记录，只保留最小的id对应的记录。</span></a></li></ol></div>
             
 
           </div>
