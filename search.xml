@@ -7,6 +7,23 @@
 ]]></content>
   </entry>
   <entry>
+    <title>前端语言基础总结</title>
+    <url>/2020/04/14/%E5%89%8D%E7%AB%AF%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E6%80%BB%E7%BB%93/</url>
+    <content><![CDATA[<h1>HTML</h1>
+<h3 id="图像"><a class="header-anchor" href="#图像">¶</a>图像</h3>
+<p><img> 即图像标签；<br>
+需要设置其属性 src指定图像的路径；<br>
+width=“200” height=&quot;200&quot;设置大小；</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>img不能够自己居中，需要放在其他能够居中的标签中实现这个效果，比如h1标签,p标签.<br>
+经常采用的手段是放在div中居中</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">"left"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">"right"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Leetcode排序合集</title>
     <url>/2020/04/13/Leetcode%E6%8E%92%E5%BA%8F%E5%90%88%E9%9B%86/</url>
     <content><![CDATA[<pre><code>堆和快排能解决百分之八十的问题。
@@ -717,7 +734,38 @@ findbugs-maven-plugin：对Java源码进行静态分析以找出潜在问题。<
   <entry>
     <title>JDBC入门</title>
     <url>/2020/04/02/JDBC%E5%85%A5%E9%97%A8/</url>
-    <content><![CDATA[]]></content>
+    <content><![CDATA[<h1>ORM 对象关系数据库映射</h1>
+<p>一个对象对应数据库的一条记录</p>
+<h1>DAO 数据访问对象</h1>
+<p>把数据库相关的操作都封装在这个类里面，其他地方看不到JDBC的代码</p>
+<h1>数据库连接池 ConnectionPool</h1>
+<h4 id="传统方式"><a class="header-anchor" href="#传统方式">¶</a>传统方式</h4>
+<p>一个线程对应一个连接，连接的创建和关闭消耗很大，而且数据库的连接总数也有限。<br>
+<img src="https://stepimagewm.how2j.cn/2654.png" alt></p>
+<h4 id="连接池"><a class="header-anchor" href="#连接池">¶</a>连接池</h4>
+<p>连接池使用之前就已经创建好连接，线程只是借用连接，使用完后返还连接池，如果连接池用完，则其他线程等待。<br>
+<img src="https://stepimagewm.how2j.cn/2655.png" alt><br>
+</p>
+<ol>
+<li>
+<p>ConnectionPool() 构造方法约定了这个连接池一共有多少连接</p>
+</li>
+<li>
+<p>在init() 初始化方法中，创建了size条连接。 注意，这里不能使用try-with-resource这种自动关闭连接的方式，因为连接恰恰需要保持不关闭状态，供后续循环使用</p>
+</li>
+<li>
+<p>getConnection， 判断是否为空，如果是空的就wait等待，否则就借用一条连接出去</p>
+</li>
+<li>
+<p>returnConnection， 在使用完毕后，归还这个连接到连接池，并且在归还完毕后，调用notifyAll，通知那些等待的线程，有新的连接可以借用了。</p>
+</li>
+</ol>
+<p>注：连接池设计用到了多线程的wait和notifyAll</p>
+]]></content>
+      <tags>
+        <tag>Java</tag>
+        <tag>数据库</tag>
+      </tags>
   </entry>
   <entry>
     <title>二叉树的深度｜《剑指offer》</title>
