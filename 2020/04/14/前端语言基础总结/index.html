@@ -79,14 +79,14 @@
 
 
 
-<meta name="description" content="HTML ¶图像 1&lt;img&gt; 即图像标签； 需要设置其属性 src指定图像的路径； width&#x3D;“200” height&#x3D;&quot;200&quot;设置大小； 1&lt;img src&#x3D;&quot;https:&#x2F;&#x2F;how2j.cn&#x2F;example.gif&quot;&#x2F;&gt; img不能够自己居中，需要放在其他能够居中的标签中实现这个效果，比如h1标签,p标签. 经常采用的手段是放在div中居中 1">
+<meta name="description" content="HTML ¶基本元素 ¶图像 img标签 1&lt;img&gt; 即图像标签； 需要设置其属性 src指定图像的路径； width&#x3D;“200” height&#x3D;&quot;200&quot;设置大小； 1&lt;img src&#x3D;&quot;https:&#x2F;&#x2F;how2j.cn&#x2F;example.gif&quot;&#x2F;&gt; img不能够自己居中，需要放在其他能够居中的标签中实现这个效果，比如h1标签,p标签. 经常采用的手">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端语言基础总结">
 <meta property="og:url" content="https://noonett.github.io/2020/04/14/%E5%89%8D%E7%AB%AF%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E6%80%BB%E7%BB%93/index.html">
 <meta property="og:site_name" content="21号避难所">
-<meta property="og:description" content="HTML ¶图像 1&lt;img&gt; 即图像标签； 需要设置其属性 src指定图像的路径； width&#x3D;“200” height&#x3D;&quot;200&quot;设置大小； 1&lt;img src&#x3D;&quot;https:&#x2F;&#x2F;how2j.cn&#x2F;example.gif&quot;&#x2F;&gt; img不能够自己居中，需要放在其他能够居中的标签中实现这个效果，比如h1标签,p标签. 经常采用的手段是放在div中居中 1">
+<meta property="og:description" content="HTML ¶基本元素 ¶图像 img标签 1&lt;img&gt; 即图像标签； 需要设置其属性 src指定图像的路径； width&#x3D;“200” height&#x3D;&quot;200&quot;设置大小； 1&lt;img src&#x3D;&quot;https:&#x2F;&#x2F;how2j.cn&#x2F;example.gif&quot;&#x2F;&gt; img不能够自己居中，需要放在其他能够居中的标签中实现这个效果，比如h1标签,p标签. 经常采用的手">
 <meta property="article:published_time" content="2020-04-13T16:22:53.000Z">
-<meta property="article:modified_time" content="2020-04-13T16:36:51.679Z">
+<meta property="article:modified_time" content="2020-04-14T16:43:35.213Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="前端">
 <meta name="twitter:card" content="summary">
@@ -327,7 +327,8 @@
 
       
         <h1>HTML</h1>
-<h3 id="图像"><a class="header-anchor" href="#图像">¶</a>图像</h3>
+<h2 id="基本元素"><a class="header-anchor" href="#基本元素">¶</a>基本元素</h2>
+<h3 id="图像-img标签"><a class="header-anchor" href="#图像-img标签">¶</a>图像 img标签</h3>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span>&gt;</span> 即图像标签；</span><br></pre></td></tr></table></figure>
 <p>需要设置其属性 src指定图像的路径；<br>
 width=“200” height=&quot;200&quot;设置大小；</p>
@@ -335,6 +336,43 @@ width=“200” height=&quot;200&quot;设置大小；</p>
 <p>img不能够自己居中，需要放在其他能够居中的标签中实现这个效果，比如h1标签,p标签.<br>
 经常采用的手段是放在div中居中</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">"left"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">"right"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="超链接-a标签"><a class="header-anchor" href="#超链接-a标签">¶</a>超链接 a标签</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"跳转到的页面地址"</span>&gt;</span>超链显示文本<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.12306.com"</span>&gt;</span>12306<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//title: 当鼠标放在超链上的时候，就会弹出提示文字</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.12306.com"</span> <span class="attr">title</span>=<span class="string">"跳转到http://www.12306.com"</span>&gt;</span>www.12306.com<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//图片作为超链</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.12306.com"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="表格-table标签"><a class="header-anchor" href="#表格-table标签">¶</a>表格 table标签</h3>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;table&gt;标签用于显示一个表格 </span><br><span class="line">&lt;tr&gt; 表示行 </span><br><span class="line">&lt;td&gt; 表示列又叫单元格</span><br></pre></td></tr></table></figure>
+<h4 id="属性"><a class="header-anchor" href="#属性">¶</a>属性</h4>
+<p>属性border： 表形式<br>
+属性 width<br>
+属性align： 元素位置<br>
+设置tr或者td的属性bgcolor： 背景色</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">"1"</span> <span class="attr">width</span>=<span class="string">"200px"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span> <span class="attr">bgcolor</span>=<span class="string">"gray"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span> <span class="attr">width</span>=<span class="string">"50%"</span>&gt;</span>1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>2<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>3<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>4<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>a<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>  <span class="attr">bgcolor</span>=<span class="string">"pink"</span>&gt;</span>b<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="列表-ul标签和ol标签"><a class="header-anchor" href="#列表-ul标签和ol标签">¶</a>列表 ul标签和ol标签</h3>
+<p>列表分无序列表和有序列表<br>
+分别用<ul>标签和<ol>标签表示</ol></ul></p>
+<h5 id="1-无序列表"><a class="header-anchor" href="#1-无序列表">¶</a>1. 无序列表</h5>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>DOTA<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>LOL<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="2-有序列表"><a class="header-anchor" href="#2-有序列表">¶</a>2. 有序列表</h5>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>地卜师<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>卡尔<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="块标签-div和span"><a class="header-anchor" href="#块标签-div和span">¶</a>块标签 div和span</h3>
+<p>这两种标签都是布局用的<br>
+这种标签本身没有任何显示效果<br>
+通常是用来结合css进行页面布局</p>
+<h5 id="两者区别"><a class="header-anchor" href="#两者区别">¶</a>两者区别</h5>
+<p>div是块元素，即自动换行<br>
+常见的块元素还有h1,table,p<br>
+span是内联元素，即不会换行<br>
+常见的内联元素还有img,a,b,strong</p>
+<h4 id="fron字体标签"><a class="header-anchor" href="#fron字体标签">¶</a>fron字体标签</h4>
+<p>可以调整颜色color<br>
+大小size</p>
+<h3 id="内联框架-iframe"><a class="header-anchor" href="#内联框架-iframe">¶</a>内联框架 iframe</h3>
+<h2 id="通过内联框架-可以实现在网页中“插入”网页"><a class="header-anchor" href="#通过内联框架-可以实现在网页中“插入”网页">¶</a>通过内联框架 可以实现在网页中“插入”网页</h2>
+<h2 id="表单元素"><a class="header-anchor" href="#表单元素">¶</a>表单元素</h2>
+<p>input类</p>
+<h3 id="文本框"><a class="header-anchor" href="#文本框">¶</a>文本框</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> 即表示文本框 </span><br><span class="line">要输入多行使用 文本域<span class="tag">&lt;<span class="name">textarea</span>&gt;</span></span><br><span class="line"></span><br><span class="line">属性：</span><br><span class="line">size    改变大小</span><br><span class="line">value   初始值</span><br><span class="line">placeholder 背景文字</span><br></pre></td></tr></table></figure>
+<h3 id="密码框"><a class="header-anchor" href="#密码框">¶</a>密码框</h3>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span> = <span class="string">"password"</span>&gt;</span>6</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -374,8 +412,8 @@ width=“200” height=&quot;200&quot;设置大小；</p>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/9999/01/01/top/" rel="prev" title="今朝酒">
-                今朝酒 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/04/14/Leetcode%E8%B4%AA%E5%BF%83%E7%AD%96%E7%95%A5%E5%90%88%E9%9B%86/" rel="prev" title="Leetcode贪心策略合集">
+                Leetcode贪心策略合集 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -457,7 +495,7 @@ width=“200” height=&quot;200&quot;设置大小；</p>
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">116</span>
+                  <span class="site-state-item-count">118</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -470,7 +508,7 @@ width=“200” height=&quot;200&quot;设置大小；</p>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -519,7 +557,7 @@ width=“200” height=&quot;200&quot;设置大小；</p>
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图像"><span class="nav-number">1.0.1.</span> <span class="nav-text">¶图像</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本元素"><span class="nav-number">1.1.</span> <span class="nav-text">¶基本元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#图像-img标签"><span class="nav-number">1.1.1.</span> <span class="nav-text">¶图像 img标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#超链接-a标签"><span class="nav-number">1.1.2.</span> <span class="nav-text">¶超链接 a标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表格-table标签"><span class="nav-number">1.1.3.</span> <span class="nav-text">¶表格 table标签</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#属性"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">¶属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#列表-ul标签和ol标签"><span class="nav-number">1.1.4.</span> <span class="nav-text">¶列表 ul标签和ol标签</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-无序列表"><span class="nav-number">1.1.4.0.1.</span> <span class="nav-text">¶1. 无序列表</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-有序列表"><span class="nav-number">1.1.4.0.2.</span> <span class="nav-text">¶2. 有序列表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#块标签-div和span"><span class="nav-number">1.1.5.</span> <span class="nav-text">¶块标签 div和span</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#两者区别"><span class="nav-number">1.1.5.0.1.</span> <span class="nav-text">¶两者区别</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fron字体标签"><span class="nav-number">1.1.5.1.</span> <span class="nav-text">¶fron字体标签</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内联框架-iframe"><span class="nav-number">1.1.6.</span> <span class="nav-text">¶内联框架 iframe</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#通过内联框架-可以实现在网页中“插入”网页"><span class="nav-number">1.2.</span> <span class="nav-text">¶通过内联框架 可以实现在网页中“插入”网页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表单元素"><span class="nav-number">1.3.</span> <span class="nav-text">¶表单元素</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#文本框"><span class="nav-number">1.3.1.</span> <span class="nav-text">¶文本框</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#密码框"><span class="nav-number">1.3.2.</span> <span class="nav-text">¶密码框</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
