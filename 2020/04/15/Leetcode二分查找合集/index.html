@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Leetcode,算法,二分查找," />
+  <meta name="keywords" content="算法,Leetcode,二分查找," />
 
 
 
@@ -79,17 +79,17 @@
 
 
 
-<meta name="description" content="69. 求开方 744. 大于给定元素的最小元素">
+<meta name="description" content="如果是right &#x3D; mid， 那么循环条件应为left &lt; right, 否则会陷入死循环。 69. 求开方 744. 大于给定元素的最小元素 540. 有序数组的单一元素 令 index 为 Single Element 在数组中的位置。在 index 之后，数组中原来存在的成对状态被改变。如果 m 为偶数，并且 m + 1 &lt; index，那么 nums[m] &#x3D;&#x3D; nums[m">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Leetcode二分查找合集">
 <meta property="og:url" content="https://noonett.github.io/2020/04/15/Leetcode%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%90%88%E9%9B%86/index.html">
 <meta property="og:site_name" content="21号避难所">
-<meta property="og:description" content="69. 求开方 744. 大于给定元素的最小元素">
+<meta property="og:description" content="如果是right &#x3D; mid， 那么循环条件应为left &lt; right, 否则会陷入死循环。 69. 求开方 744. 大于给定元素的最小元素 540. 有序数组的单一元素 令 index 为 Single Element 在数组中的位置。在 index 之后，数组中原来存在的成对状态被改变。如果 m 为偶数，并且 m + 1 &lt; index，那么 nums[m] &#x3D;&#x3D; nums[m">
 <meta property="article:published_time" content="2020-04-15T08:41:27.000Z">
-<meta property="article:modified_time" content="2020-04-15T10:05:32.326Z">
+<meta property="article:modified_time" content="2020-04-18T09:21:27.274Z">
 <meta property="article:author" content="TYH">
-<meta property="article:tag" content="Leetcode">
 <meta property="article:tag" content="算法">
+<meta property="article:tag" content="Leetcode">
 <meta property="article:tag" content="二分查找">
 <meta name="twitter:card" content="summary">
 
@@ -328,8 +328,15 @@
       
 
       
-        <h1>69. 求开方</h1>
+        <p>如果是right = mid， 那么循环条件应为left &lt; right, 否则会陷入死循环。</p>
+<h1>69. 求开方</h1>
 <h1>744. 大于给定元素的最小元素</h1>
+<h1>540. 有序数组的单一元素</h1>
+<p>令 index 为 Single Element 在数组中的位置。在 index 之后，数组中原来存在的成对状态被改变。如果 m 为偶数，并且 m + 1 &lt; index，那么 nums[m] == nums[m + 1]；m + 1 &gt;= index，那么 nums[m] != nums[m + 1]。</p>
+<p>从上面的规律可以知道，如果 nums[m] == nums[m + 1]，那么 index 所在的数组位置为 [m + 2, h]，此时令 l = m + 2；如果 nums[m] != nums[m + 1]，那么 index 所在的数组位置为 [l, m]，此时令 h = m。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">singleNonDuplicate</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> l = <span class="number">0</span>, h = nums.length - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">while</span> (l &lt; h) &#123;     <span class="comment">//h=m</span></span><br><span class="line">        <span class="keyword">int</span> m = l + (h - l) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (m % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">            m--;   <span class="comment">// 保证 l/h/m 都在偶数位，使得查找区间大小一直都是奇数</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (nums[m] == nums[m + <span class="number">1</span>]) &#123;</span><br><span class="line">            l = m + <span class="number">2</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            h = m;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> nums[l];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>278.第一个错误的版本</h1>
+<p>left &lt; right, right = mid， return left</p>
 
       
     </div>
@@ -347,9 +354,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Leetcode/" rel="tag"><i class="fa fa-tag"></i> Leetcode</a>
-          
             <a href="/tags/%E7%AE%97%E6%B3%95/" rel="tag"><i class="fa fa-tag"></i> 算法</a>
+          
+            <a href="/tags/Leetcode/" rel="tag"><i class="fa fa-tag"></i> Leetcode</a>
           
             <a href="/tags/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" rel="tag"><i class="fa fa-tag"></i> 二分查找</a>
           
@@ -374,8 +381,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/9999/01/01/top/" rel="prev" title="今朝酒">
-                今朝酒 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/04/16/Leetcode%E5%88%86%E6%B2%BB%E5%90%88%E9%9B%86/" rel="prev" title="Leetcode分治合集">
+                Leetcode分治合集 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -457,7 +464,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">118</span>
+                  <span class="site-state-item-count">121</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -470,7 +477,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -519,7 +526,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">69. 求开方</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">744. 大于给定元素的最小元素</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">69. 求开方</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">744. 大于给定元素的最小元素</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">540. 有序数组的单一元素</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">278.第一个错误的版本</span></a></li></ol></div>
             
 
           </div>
