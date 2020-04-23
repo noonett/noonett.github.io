@@ -1347,7 +1347,25 @@
       
         
           
-            
+            <h1>Servlet</h1>
+<p>一款API提供部署在web server上处理HTTP请求的对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(urlPatterns = <span class="string">"/"</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="Tomcat"><a class="header-anchor" href="#Tomcat">¶</a>Tomcat</h3>
+<p>Web服务器，又称为servlet容器，<br>
+在Servlet容器中运行的Servlet具有如下特点：</p>
+<ul>
+<li>无法在代码中直接通过new创建Servlet实例，必须由Servlet容器自动创建Servlet实例；</li>
+<li>Servlet容器只会给每个Servlet类创建唯一实例；</li>
+<li>Servlet容器会使用多线程执行doGet()或doPost()方法。</li>
+</ul>
+<h3 id="多线程注意"><a class="header-anchor" href="#多线程注意">¶</a>多线程注意</h3>
+<p>复习一下Java多线程的内容，我们可以得出结论：</p>
+<ul>
+<li>在Servlet中定义的实例变量会被多个线程同时访问，要注意线程安全；</li>
+<li>HttpServletRequest和HttpServletResponse实例是由Servlet容器传入的局部变量，它们只能被当前线程访问，不存在多个线程访问的问题；</li>
+<li>在doGet()或doPost()方法中，如果使用了ThreadLocal，但没有清理，那么它的状态很可能会影响到下次的某个请求，因为Servlet容器很可能用线程池实现线程复用。</li>
+</ul>
+
           
         
       
