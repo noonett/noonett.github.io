@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="21号避难所">
 <meta property="og:description" content="Servlet 一款API提供部署在web server上处理HTTP请求的对象。 123456789101112131415&#x2F;&#x2F; WebServlet注解表示这是一个Servlet，并映射到地址&#x2F;:@WebServlet(urlPatterns &#x3D; &quot;&#x2F;&quot;)public class HelloServlet extends HttpServlet &amp;#123;    protected void">
 <meta property="article:published_time" content="2020-04-05T14:40:15.000Z">
-<meta property="article:modified_time" content="2020-05-07T17:25:12.714Z">
+<meta property="article:modified_time" content="2020-05-12T14:35:58.391Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="web">
@@ -370,6 +370,116 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">resp.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY); <span class="comment">// 301永久重定向</span></span><br><span class="line">resp.setHeader(<span class="string">"Location"</span>, <span class="string">"/hello"</span>);</span><br></pre></td></tr></table></figure>
 <h1>Forward 内部转发</h1>
 <p>servlet自己不继续处理，转发给另一个servlet处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//关于 /morning的都转发给/hello</span></span><br><span class="line"><span class="meta">@WebServlet</span>(urlPatterns = <span class="string">"/morning"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ForwardServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        req.getRequestDispatcher(<span class="string">"/hello"</span>).forward(req, resp);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>转发是在Web服务器内部完成的，对浏览器来说，它只发出了一个HTTP请求。<br>
+而重定向需要客户端发送两个HTTP请求。</p>
+<h1>SessionID</h1>
+<p>各个servlet各司其职。<br>
+┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐</p>
+<pre><code>       │      ┌───────────────┐                │
+         ┌───&gt;│ IndexServlet  │&lt;──────────┐
+       │ │    └───────────────┘           ▼    │
+</code></pre>
+<p>┌───────┐    │    ┌───────────────┐      ┌────────┐<br>
+│Browser│──┼─┼───&gt;│ SignInServlet │&lt;────&gt;│Sessions││<br>
+└───────┘    │    └───────────────┘      └────────┘<br>
+│ │    ┌───────────────┐           ▲    │<br>
+└───&gt;│SignOutServlet │&lt;──────────┘<br>
+│      └───────────────┘                │</p>
+<pre><code>       └ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘
+</code></pre>
+<p>通过HttpSession这个高级接口访问当前Session。Web服务器在内存中自动维护了一个ID到HttpSession的映射表。<br>
+而服务器识别Session的关键就是依靠一个名为JSESSIONID的Cookie。在Servlet中第一次调用req.getSession()时，Servlet容器自动创建一个Session ID，然后通过一个名为JSESSIONID的Cookie发送给浏览器。</p>
+<ul>
+<li>多台服务器的集群使用反向代理作为入口， 使用粘滞会话（Sticky Session）机制，根据JSESSIONID的值转发固定的Web Server。</li>
+<li>维护session让webserver的集群难以扩展。</li>
+</ul>
+<h1>Cookie</h1>
+<p>浏览器在请求某个URL时，是否携带指定的Cookie，取决于Cookie是否满足以下所有要求：</p>
+<ul>
+<li>URL前缀是设置Cookie时的Path；</li>
+<li>Cookie在有效期内；</li>
+<li>Cookie设置了secure时必须以https访问。</li>
+</ul>
+<h1>JSP</h1>
+<p>JSP是Java Server Pages的缩写，它的文件必须放到/src/main/webapp下，文件名必须以.jsp结尾，整个文件与HTML并无太大区别，但需要插入变量，或者动态输出的地方，使用特殊指令&lt;% … %&gt;</p>
+<h4 id="整个JSP的内容实际上是一个HTML："><a class="header-anchor" href="#整个JSP的内容实际上是一个HTML：">¶</a>整个JSP的内容实际上是一个HTML：</h4>
+<ul>
+<li>包含在&lt;%–和--%&gt;之间的是JSP的注释，它们会被完全忽略；</li>
+<li>包含在&lt;%和%&gt;之间的是Java代码，可以编写任意Java代码；</li>
+<li>如果使用&lt;%= xxx %&gt;则可以快捷输出一个变量的值。</li>
+</ul>
+<h4 id="JSP页面内置了几个变量："><a class="header-anchor" href="#JSP页面内置了几个变量：">¶</a>JSP页面内置了几个变量：</h4>
+<ul>
+<li>out：表示HttpServletResponse的PrintWriter；</li>
+<li>session：表示当前HttpSession对象；</li>
+<li>request：表示HttpServletRequest对象。<br>
+JSP本质上就是一个Servlet，只不过无需配置映射路径，Web Server会根据路径查找对应的.jsp文件，如果找到了，就自动编译成Servlet再执行。在服务器运行过程中，如果修改了JSP的内容，那么服务器会自动重新编译。</li>
+</ul>
+<h4 id="访问-JavaBean-对象的属性"><a class="header-anchor" href="#访问-JavaBean-对象的属性">¶</a>访问 JavaBean 对象的属性</h4>
+<p>在 <a href="jsp:useBean">jsp:useBean</a> 标签主体中使用 <a href="jsp:getProperty/">jsp:getProperty/</a> 标签来调用 getter 方法，使用 <a href="jsp:setProperty/">jsp:setProperty/</a> 标签来调用 setter 方法，语法格式如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">jsp:useBean</span> <span class="attr">id</span>=<span class="string">"id"</span> <span class="attr">class</span>=<span class="string">"bean 编译的类"</span> <span class="attr">scope</span>=<span class="string">"bean 作用域"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">jsp:setProperty</span> <span class="attr">name</span>=<span class="string">"bean 的 id"</span> <span class="attr">property</span>=<span class="string">"属性名"</span>  </span></span><br><span class="line"><span class="tag">                    <span class="attr">value</span>=<span class="string">"value"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">jsp:getProperty</span> <span class="attr">name</span>=<span class="string">"bean 的 id"</span> <span class="attr">property</span>=<span class="string">"属性名"</span>/&gt;</span></span><br><span class="line">   ...........</span><br><span class="line"><span class="tag">&lt;/<span class="name">jsp:useBean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="对比"><a class="header-anchor" href="#对比">¶</a>对比</h4>
+<p>Servlet适合编写Java代码，实现各种复杂的业务逻辑，但不适合输出复杂的HTML；<br>
+JSP适合编写HTML，并在其中插入动态内容，但不适合编写复杂的Java代码。</p>
+<h1>MVC</h1>
+<p>把UserServlet看作业务逻辑处理，把User看作模型，把user.jsp看作渲染，这种设计模式通常被称为MVC：Model-View-Controller，即UserServlet作为控制器（Controller），User作为模型（Model），user.jsp作为视图（View），整个MVC架构如下：</p>
+<pre><code>               ┌───────────────────────┐
+         ┌────&gt;│Controller: UserServlet│
+         │     └───────────────────────┘
+         │                 │
+</code></pre>
+<p>┌───────┐    │           ┌─────┴─────┐<br>
+│Browser│────┘           │Model: User│<br>
+│       │&lt;───┐           └─────┬─────┘<br>
+└───────┘    │                 │<br>
+│                 ▼<br>
+│     ┌───────────────────────┐<br>
+└─────│    View: user.jsp     │<br>
+└───────────────────────┘</p>
+<p>MVC模式的好处是，Controller专注于业务处理，它的处理结果就是Model。Model可以是一个JavaBean，也可以是一个包含多个对象的Map，Controller只负责把Model传递给View，View只负责把Model给“渲染”出来，这样，三者职责明确，且开发更简单，因为开发Controller时无需关注页面，开发View时无需关心如何创建Model。</p>
+<p>一个MVC框架是基于Servlet基础抽象出更高级的接口，使得上层基于MVC框架的开发可以不涉及Servlet相关的HttpServletRequest等接口，处理多个请求更加灵活，并且可以使用任意模板引擎，不必使用JSP。</p>
+<h1>Filter</h1>
+<pre><code>Filter是一种对HTTP请求进行预处理的组件，它可以构成一个处理链，使得公共处理代码能集中到一起；
+Filter适用于日志、登录检查、全局设置等；
+设计合理的URL映射可以让Filter链更清晰
+</code></pre>
+<p>把一些公用逻辑从各个Servlet中抽离出来，JavaEE的Servlet规范还提供了一种Filter组件，即过滤器，它的作用是，在HTTP请求到达Servlet之前，可以被一个或多个Filter预处理，类似打印日志、登录检查等逻辑，完全可以放到Filter中。</p>
+<p>多个Filter会组成一个链，每个请求都被链上的Filter依次处理：<br>
+┌────────┐<br>
+┌─&gt;│ServletA│<br>
+│  └────────┘<br>
+┌──────────────┐    ┌─────────┐  │  ┌────────┐<br>
+───&gt;│EncodingFilter│───&gt;│LogFilter│──┼─&gt;│ServletB│<br>
+└──────────────┘    └─────────┘  │  └────────┘<br>
+│  ┌────────┐<br>
+└─&gt;│ServletC│<br>
+└────────┘<br>
+filter的顺序需要在web.xml中配置。</p>
+<p>在AuthFilter内部，直接调用resp.sendRedirect()发送重定向，且没有调用chain.doFilter()，因此，当用户没有登录时，请求到达AuthFilter后，不再继续处理，即后续的Filter和任何Servlet都没有机会处理该请求了。<br>
+可见，Filter可以有针对性地拦截或者放行HTTP请求。</p>
+<ul>
+<li>如果Filter要使请求继续被处理，就一定要调用chain.doFilter()！</li>
+</ul>
+<h3 id="修改请求"><a class="header-anchor" href="#修改请求">¶</a>修改请求</h3>
+<p>why？：在我们实现验证登录时，原本的getInputstream只能使用一次request，可以用代理接口来赋写这个方法。</p>
+<p>借助HttpServletRequestWrapper，我们可以在Filter中实现对原始HttpServletRequest的修改。<br>
+利用代理设计模式。</p>
+<p>对HttpServletRequest接口进行代理的步骤：</p>
+<ol>
+<li>从HttpServletRequestWrapper继承一个XxxHttpServletRequest，需要传入原始的HttpServletRequest实例；</li>
+<li>覆写某些方法，使得新的XxxHttpServletRequest实例看上去“改变”了原始的HttpServletRequest实例；</li>
+<li>在doFilter()中传入新的XxxHttpServletRequest实例。<br>
+一个“可插拔”组件，它是否启用不影响Web应用程序的其他组件（Filter、Servlet）。</li>
+</ol>
+<h3 id="修改响应"><a class="header-anchor" href="#修改响应">¶</a>修改响应</h3>
+<p>主要应用场景在做缓存，用自己伪造的响应来获得后面组建产生的值。<br>
+想要修改响应，就可以通过HttpServletResponseWrapper构造一个“伪造”的HttpServletResponse，这样就能拦截到写入的数据。<br>
+修改响应时，最后不要忘记把数据写入原始的HttpServletResponse实例。<br>
+一个“可插拔”组件，它是否启用不影响Web应用程序的其他组件（Filter、Servlet）。</p>
+<h1>Listener</h1>
+<p>通过Listener我们可以监听Web应用程序的生命周期，获取HttpSession等创建和销毁的事件；<br>
+ServletContext是一个WebApp运行期的全局唯一实例，可用于设置和共享配置信息。如数据库连接池打开和关闭。</p>
 
       
     </div>
@@ -557,7 +667,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">Servlet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat"><span class="nav-number">1.0.1.</span> <span class="nav-text">¶Tomcat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程注意"><span class="nav-number">1.0.2.</span> <span class="nav-text">¶多线程注意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Servlet的流程"><span class="nav-number">1.0.3.</span> <span class="nav-text">¶Servlet的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat的流程"><span class="nav-number">1.0.4.</span> <span class="nav-text">¶Tomcat的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更好的方法"><span class="nav-number">1.0.5.</span> <span class="nav-text">¶更好的方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">重定向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">Forward 内部转发</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">Servlet</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat"><span class="nav-number">1.0.1.</span> <span class="nav-text">¶Tomcat</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程注意"><span class="nav-number">1.0.2.</span> <span class="nav-text">¶多线程注意</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Servlet的流程"><span class="nav-number">1.0.3.</span> <span class="nav-text">¶Servlet的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tomcat的流程"><span class="nav-number">1.0.4.</span> <span class="nav-text">¶Tomcat的流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#更好的方法"><span class="nav-number">1.0.5.</span> <span class="nav-text">¶更好的方法</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">重定向</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">Forward 内部转发</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">SessionID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">Cookie</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">6.</span> <span class="nav-text">JSP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#整个JSP的内容实际上是一个HTML："><span class="nav-number">6.0.0.1.</span> <span class="nav-text">¶整个JSP的内容实际上是一个HTML：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSP页面内置了几个变量："><span class="nav-number">6.0.0.2.</span> <span class="nav-text">¶JSP页面内置了几个变量：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#访问-JavaBean-对象的属性"><span class="nav-number">6.0.0.3.</span> <span class="nav-text">¶访问 JavaBean 对象的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#对比"><span class="nav-number">6.0.0.4.</span> <span class="nav-text">¶对比</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">7.</span> <span class="nav-text">MVC</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">8.</span> <span class="nav-text">Filter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改请求"><span class="nav-number">8.0.1.</span> <span class="nav-text">¶修改请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改响应"><span class="nav-number">8.0.2.</span> <span class="nav-text">¶修改响应</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">9.</span> <span class="nav-text">Listener</span></a></li></ol></div>
             
 
           </div>
