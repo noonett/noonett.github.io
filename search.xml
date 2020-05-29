@@ -7,6 +7,84 @@
 ]]></content>
   </entry>
   <entry>
+    <title>SpringBoot上手记录</title>
+    <url>/2020/05/26/SpringBoot%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<pre><code>记录一下基础概念和demo啥的。
+</code></pre>
+<a id="more"></a>
+<h1>SpringBoot是啥</h1>
+<p>第三方库开箱即用，提供了一系列大型项目常用的非功能性特征，零配置（约定大于配置）。</p>
+<h2 id="hello-world"><a class="header-anchor" href="#hello-world">¶</a>hello-world</h2>
+<ol>
+<li>initial-starter可以整个模版下来复制。</li>
+<li>修改依赖在 build.gradle 文件里，可以替换maven仓库，默认是中央仓库，替换到maven.aliyun.com的镜像库。</li>
+<li>项目根目录下运行 gradle build编译项目。1</li>
+<li>运行jar包来启动项目。</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">java -jar build/libs/initializr-start-1.0.0.jar</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>SpringBoot</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Spring开发基础</title>
+    <url>/2020/05/26/Spring%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<pre><code>Web开发框架。
+</code></pre>
+<a id="more"></a>
+<h1>IOC容器</h1>
+<p>容器是一种为某种特定组件的运行提供必要支持的一个软件环境。<br>
+IoC容器，它可以管理所有轻量级的JavaBean组件，提供的底层服务包括组件的生命周期管理、配置和组装服务、AOP支持，以及建立在AOP基础上的声明式事务服务等。</p>
+<h3 id="IoC原理-Inversion-of-Control-控制反转"><a class="header-anchor" href="#IoC原理-Inversion-of-Control-控制反转">¶</a>IoC原理 Inversion of Control 控制反转</h3>
+<p>如果一个系统有大量的组件，其生命周期和相互之间的依赖关系如果由组件自身来维护，不但大大增加了系统的复杂度，而且会导致组件之间极为紧密的耦合，继而给测试和维护带来了极大的困难。<br>
+传统的应用程序中，控制权在程序本身，程序的控制流程完全由开发者控制。<br>
+在IoC模式下，控制权发生了反转，即从应用程序转移到了IoC容器，所有组件不再由应用程序自己创建和配置，而是由IoC容器负责，这样，应用程序只需要直接使用已经创建好并且配置好的组件。为了能让组件在IoC容器中被“装配”出来，需要某种“注入”机制，例如，BookService自己并不会创建DataSource，而是等待外部通过setDataSource()方法来注入一个DataSource。以往对对象的创建是new。</p>
+<h6 id="IoC将组件的创建和配置-与-使用项分离"><a class="header-anchor" href="#IoC将组件的创建和配置-与-使用项分离">¶</a>IoC将组件的创建和配置 与 使用项分离</h6>
+<p>IoC又称为依赖注入（DI：Dependency Injection），它解决了一个最主要的问题：将组件的创建+配置与组件的使用相分离，并且，由IoC容器负责管理组件的生命周期。<br>
+因为IoC容器要负责实例化所有的组件，因此，有必要告诉容器如何创建组件，以及各组件的依赖关系。一种最简单的配置是通过XML文件来实现。</p>
+<h6 id="xml属性注入实现各组件依赖关系"><a class="header-anchor" href="#xml属性注入实现各组件依赖关系">¶</a>xml属性注入实现各组件依赖关系</h6>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"dataSource"</span> <span class="attr">class</span>=<span class="string">"HikariDataSource"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"bookService"</span> <span class="attr">class</span>=<span class="string">"BookService"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"userService"</span> <span class="attr">class</span>=<span class="string">"UserService"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"dataSource"</span> <span class="attr">ref</span>=<span class="string">"dataSource"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在Spring的IoC容器中，我们把所有组件统称为JavaBean，即配置一个组件就是配置一个Bean。</p>
+<h3 id="依赖注入"><a class="header-anchor" href="#依赖注入">¶</a>依赖注入</h3>
+<ol>
+<li>xml属性注入</li>
+<li>构造方法注入</li>
+</ol>
+<h3 id="无侵入容器"><a class="header-anchor" href="#无侵入容器">¶</a>无侵入容器</h3>
+<p>无侵入，是指应用程序的组件无需实现Spring的特定接口，或者说，组件根本不知道自己在Spring的容器中运行。</p>
+<ol>
+<li>应用程序组件既可以在Spring的IoC容器中运行，也可以自己编写代码自行组装配置；</li>
+<li>测试的时候并不依赖Spring容器，可单独进行测试，大大提高了开发效率。</li>
+</ol>
+<h1>AOP Aspect Oriented Programming</h1>
+<p>面向切面编程。OOP把系统看作多个对象的交互，AOP把系统分解为不同的关注点，或者称之为切面（Aspect）。</p>
+<h3 id="为什么会出现？"><a class="header-anchor" href="#为什么会出现？">¶</a>为什么会出现？</h3>
+<p>考察业务模型可以发现，BookService关系的是自身的核心逻辑，但整个系统还要求关注安全检查、日志、事务等功能，这些功能实际上“横跨”多个业务方法，为了实现这些功能，不得不在每个业务方法上重复编写代码。<br>
+可以通过代理设计模式实现添加额外的功能。</p>
+<p>而如果我们以AOP的视角来编写上述业务，可以依次实现：</p>
+<ol>
+<li>核心逻辑，即BookService；</li>
+<li>切面逻辑，即：<br>
+权限检查的Aspect；<br>
+日志的Aspect；<br>
+事务的Aspect。<br>
+然后，以某种方式，让框架来把上述3个Aspect以Proxy的方式“织入”到BookService中，这样一来，就不必编写复杂而冗长的Proxy模式。</li>
+</ol>
+<h3 id="AOP原理"><a class="header-anchor" href="#AOP原理">¶</a>AOP原理</h3>
+<p>Java上AOP的织入有三种</p>
+<ol>
+<li>编译期：在编译时，由编译器把切面调用编译进字节码，这种方式需要定义新的关键字并扩展编译器，AspectJ就扩展了Java编译器，使用关键字aspect来实现织入；</li>
+<li>类加载器：在目标类被装载到JVM时，通过一个特殊的类加载器，对目标类的字节码重新“增强”；</li>
+<li>运行期：目标对象和切面都是普通Java类，通过JVM的动态代理功能或者第三方库实现运行期动态织入。</li>
+</ol>
+<p>Spring使用的就是基于JVM的动态代理，由于JVM的动态代理要求必须实现接口，如果一个普通类没有业务接口，就需要通过CGLIB或者Javassist这些第三方库实现。<br>
+AOP对于解决特定问题，例如事务管理非常有用，这是因为分散在各处的事务代码几乎是完全相同的，并且它们需要的参数（JDBC的Connection）也是固定的。另一些特定问题，如日志，就不那么容易实现，因为日志虽然简单，但打印日志的时候，经常需要捕获局部变量，如果使用AOP实现日志，我们只能输出固定格式的日志，因此，使用AOP时，必须适合特定的场景。</p>
+]]></content>
+      <tags>
+        <tag>Spring</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LRUCache实现</title>
     <url>/2020/05/25/LRUCache%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<pre><code>实现LRU缓存。
@@ -1164,6 +1242,8 @@ filter的顺序需要在web.xml中配置。</p>
 <h1>Listener</h1>
 <p>通过Listener我们可以监听Web应用程序的生命周期，获取HttpSession等创建和销毁的事件；<br>
 ServletContext是一个WebApp运行期的全局唯一实例，可用于设置和共享配置信息。如数据库连接池打开和关闭。</p>
+<h3 id="部署"><a class="header-anchor" href="#部署">¶</a>部署</h3>
+<p>Tomcat作为应用服务器，Nginx作为反向代理和静态服务器充当网关，可以把https、防火墙、限速、反爬虫等功能放到Nginx中。</p>
 ]]></content>
       <tags>
         <tag>Java</tag>
@@ -5219,10 +5299,12 @@ protected可以字段和方法的访问权限控制在继承树内部，一个pr
 调用的为实际类型Student的方法。
 </code></pre>
 <h3 id="多态-v2"><a class="header-anchor" href="#多态-v2">¶</a>多态</h3>
-<pre><code>定义：针对某个类型的方法调用，其真正执行的方法取决于运行时期实际类型的方法。
-多态的特性就是，运行期才能动态决定调用的子类方法。对某个类型调用某个方法，执行的实际方法可能是某个子类的覆写方法。
-通过override，允许添加更多类型的子类实现功能扩展，却不需要修改基于父类的代码。
+<pre><code>对于多态，可以总结它为：
 </code></pre>
+<p>一、使用父类类型的引用指向子类的对象；<br>
+　　二、该引用只能调用父类中定义的方法和变量；<br>
+　　三、如果子类中重写了父类中的一个方法，那么在调用这个方法的时候，将会调用子类中的这个方法；（动态连接、动态调用）<br>
+　　四、变量不能被重写（覆盖），”重写“的概念只针对方法，如果在子类中”重写“了父类中的变量，那么在编译时会报错。</p>
 <p>实例：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 给一个有普通收入、工资收入和享受国务院特殊津贴的小伙伴算税:</span></span><br><span class="line">        Income[] incomes = <span class="keyword">new</span> Income[] &#123;</span><br><span class="line">            <span class="keyword">new</span> Income(<span class="number">3000</span>),</span><br><span class="line">            <span class="keyword">new</span> Salary(<span class="number">7500</span>),</span><br><span class="line">            <span class="keyword">new</span> StateCouncilSpecialAllowance(<span class="number">15000</span>)</span><br><span class="line">        &#125;;</span><br><span class="line">        System.out.println(totalTax(incomes));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">double</span> <span class="title">totalTax</span><span class="params">(Income... incomes)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> total = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (Income income: incomes) &#123;</span><br><span class="line">            total = total + income.getTax();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> total;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Income</span> </span>&#123;</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">double</span> income;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Income</span><span class="params">(<span class="keyword">double</span> income)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.income = income;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getTax</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> income * <span class="number">0.1</span>; <span class="comment">// 税率10%</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Salary</span> <span class="keyword">extends</span> <span class="title">Income</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Salary</span><span class="params">(<span class="keyword">double</span> income)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(income);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getTax</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (income &lt;= <span class="number">5000</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> (income - <span class="number">5000</span>) * <span class="number">0.2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">StateCouncilSpecialAllowance</span> <span class="keyword">extends</span> <span class="title">Income</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">StateCouncilSpecialAllowance</span><span class="params">(<span class="keyword">double</span> income)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(income);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">getTax</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="覆写Object方法"><a class="header-anchor" href="#覆写Object方法">¶</a>覆写Object方法</h3>
