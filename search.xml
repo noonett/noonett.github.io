@@ -7,6 +7,25 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Leetcode数据结构合辑</title>
+    <url>/2020/05/30/Leetcode%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%90%88%E8%BE%91/</url>
+    <content><![CDATA[<pre><code>一些数据结构在算法上的妙用。
+</code></pre>
+<a id="more"></a>
+<h1>单调栈</h1>
+<h3 id="84-柱状图的最大面积"><a class="header-anchor" href="#84-柱状图的最大面积">¶</a>84.柱状图的最大面积</h3>
+<pre><code>题目：给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
+求在该柱状图中，能够勾勒出来的矩形的最大面积。
+</code></pre>
+<p>保存各个位置左边和右边小于它的第一个数从而栈中剩下的栈顶的数就是左边最后一个大于它的数，从而计算出宽度。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">largestRectangleArea</span><span class="params">(<span class="keyword">int</span>[] heights)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = heights.length;</span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span>[] left = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">int</span>[] right = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; ++i)&#123;</span><br><span class="line">            <span class="keyword">while</span>((!stack.isEmpty())&amp;&amp; (heights[stack.peek()]&gt;=heights[i]))&#123;</span><br><span class="line">                stack.pollFirst();</span><br><span class="line">            &#125;</span><br><span class="line">            left[i] = stack.isEmpty()? -<span class="number">1</span>: stack.peek();</span><br><span class="line">            stack.offerFirst(i);</span><br><span class="line">        &#125;</span><br><span class="line">        stack.clear();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i)&#123;</span><br><span class="line">            <span class="keyword">while</span>((!stack.isEmpty())&amp;&amp; (heights[stack.peek()]&gt;=heights[i]))&#123;</span><br><span class="line">                stack.pollFirst();</span><br><span class="line">            &#125;</span><br><span class="line">            right[i] =stack.isEmpty()? len: stack.peek();</span><br><span class="line">            stack.offerFirst(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; ++i)&#123;</span><br><span class="line">            max = Math.max((right[i] - left[i]-<span class="number">1</span>)* heights[i], max);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>Leetcode</tag>
+        <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SpringBoot上手记录</title>
     <url>/2020/05/26/SpringBoot%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<pre><code>记录一下基础概念和demo啥的。
@@ -5033,8 +5052,8 @@ OFF level：关闭所有日志记录开关；是最高等级的，用于关闭�
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#main</span></span><br><span class="line">headers = &#123;</span><br><span class="line">        <span class="string">'user-agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chro'</span></span><br><span class="line">                      <span class="string">'me/53.0.2785.104 Safari/537.36 Core/1.53.2372.400 QQBrowser/9.5.10548.400'</span></span><br><span class="line">&#125;</span><br><span class="line">domain = <span class="string">'http://www.liaoxuefeng.com'</span>           <span class="comment">#廖雪峰网站的域名</span></span><br><span class="line">url =  <span class="string">"https://www.liaoxuefeng.com/wiki/1252599548343744"</span> <span class="comment">#Java教程的url</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#获取Java教程的页面</span></span><br><span class="line">resp = send_request(url, headers)</span><br><span class="line"><span class="comment">#提取所有的数据回来，包括标题和urls</span></span><br><span class="line">titles, urls = fetch(domain, resp, headers)</span><br><span class="line"><span class="comment">#开始下载</span></span><br><span class="line">download(titles,urls)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>Python</tag>
         <tag>爬虫</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -5767,8 +5786,8 @@ Download success!!
 </code></pre>
 ]]></content>
       <tags>
-        <tag>Python</tag>
         <tag>爬虫</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
