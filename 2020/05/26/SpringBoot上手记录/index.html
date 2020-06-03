@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="21号避难所">
 <meta property="og:description" content="记录一下基础概念和demo啥的。">
 <meta property="article:published_time" content="2020-05-26T11:40:40.000Z">
-<meta property="article:modified_time" content="2020-05-29T14:08:11.059Z">
+<meta property="article:modified_time" content="2020-06-03T07:42:25.246Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="SpringBoot">
 <meta name="twitter:card" content="summary">
@@ -330,7 +330,9 @@
 </code></pre>
 <a id="more"></a>
 <h1>SpringBoot是啥</h1>
-<p>第三方库开箱即用，提供了一系列大型项目常用的非功能性特征，零配置（约定大于配置）。</p>
+<p>第三方库开箱即用，提供了一系列大型项目常用的非功能性特征，零配置（约定大于配置）。<br>
+好处：1. 起步依赖，自动配置：启动快速，少量的依赖就可以配置好大型项目的依赖关系。<br>
+2. 端点监控</p>
 <h2 id="hello-world"><a class="header-anchor" href="#hello-world">¶</a>hello-world</h2>
 <ol>
 <li>initial-starter可以整个模版下来复制。</li>
@@ -339,6 +341,18 @@
 <li>运行jar包来启动项目。</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar build/libs/initializr-start-1.0.0.jar</span><br></pre></td></tr></table></figure>
+<h2 id="Spring-MVC"><a class="header-anchor" href="#Spring-MVC">¶</a>Spring MVC</h2>
+<p>dispatcher servlet负责请求分发，响应管理。</p>
+<h2 id="MyBatis"><a class="header-anchor" href="#MyBatis">¶</a>MyBatis</h2>
+<p>核心组件<br>
+SqlSessionFactory<br>
+SqlSession<br>
+主配置文件<br>
+上面SpringBoot都会自动管理<br>
+Mapper接口；DAO接口（可以自动实现接口）<br>
+Mapper映射器：编写依赖的SQL，将SQL与实体类映射</p>
+<p>加盐：在用户密码后面加随机5位字符串再加密。</p>
+
       
     </div>
     
@@ -523,7 +537,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">SpringBoot是啥</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hello-world"><span class="nav-number">1.1.</span> <span class="nav-text">¶hello-world</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text">SpringBoot是啥</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#hello-world"><span class="nav-number">1.1.</span> <span class="nav-text">¶hello-world</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-MVC"><span class="nav-number">1.2.</span> <span class="nav-text">¶Spring MVC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyBatis"><span class="nav-number">1.3.</span> <span class="nav-text">¶MyBatis</span></a></li></ol></li></ol></div>
             
 
           </div>
