@@ -100,6 +100,29 @@ initialization 和 destroy：在Bean构造函数之后，Bean销毁之前，想�
 <p>标准表达式、判断与循环、模版的布局。</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">1. 在开头的<span class="tag">&lt;<span class="name">html</span>&gt;</span>块中xmlns:th="http://www.thymeleaf.org"表示为thymleaf的动态模版。</span><br><span class="line">2. 使用了thymleaf表达式的attribute上都要用 th: 标识。</span><br><span class="line">3. %&#123;&#125;: 用于获取model中的变量</span><br><span class="line">4. #: 用于thymeleaf内部的对象</span><br><span class="line">5. 判断：th:if="$&#123;map.post.type==1&#125;</span><br><span class="line">6. 循环：th:each="i:$&#123;#numbers.sequence(page.from,page.to)&#125;"</span><br><span class="line">7. 拼接｜｜：th:class="|page-item $&#123;i==page.current?'active':''&#125;|"</span><br></pre></td></tr></table></figure>
 <h1>MyBatis</h1>
+<ol>
+<li>
+<p>什么是MyBatis：</p>
+<ol>
+<li>半ORM框架，封装了JDBC，开发时只需要关注SQL语句本身，不用管加载驱动、连接、Statement的过程，可以严格控制SQL的执行性能，灵活度高</li>
+<li>使用XML或者注解配置和映射原生信息，避免了手动设置参数以及获取结果集</li>
+<li>通过xml 文件或注解的方式将要执行的各种 statement 配置起来，并通过java对象和 statement中sql的动态参数进行映射生成最终执行的sql语句，最后由mybatis框架执行sql并将结果映射为java对象并返回。（从执行sql到返回result的过程）。</li>
+</ol>
+</li>
+<li>
+<p>使用：<br>
+通过@Mapper @Repository这两个注释定义想要实现方法的接口，编写mapper.xml编写具体的SQL语句。</p>
+</li>
+</ol>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">3. #&#123;&#125;与$&#123;&#125;的区别</span><br><span class="line">#&#123;&#125;是预编译处理，$&#123;&#125;是字符串替换。</span><br><span class="line">Mybatis在处理#&#123;&#125;时，会将sql中的#&#123;&#125;替换为?号，调用PreparedStatement的set方法来赋值；</span><br><span class="line">Mybatis在处理$&#123;&#125;时，就是把$&#123;&#125;替换成变量的值。属于静态文本替换</span><br><span class="line">使用#&#123;&#125;可以有效的防止SQL注入，提高系统安全性。</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>[sql]块用来定义常用的fields，通过[include refid=“selectFields”]来调用。</li>
+<li>[if test=“userId!=0”]用来做判断，决定是否加入特定语句。</li>
+<li>@Param（）给参数取别名，在if块中只有一个属性，则一定要取别名</li>
+<li>批量操作可以在服务层中来实现。</li>
+<li>MyBatis实现一对多有几种方式,怎么操作的？<br>
+        有联合查询和嵌套查询。联合查询是几个表联合查询,只查询一次,通过在resultMap里面的collection节点配置一对多的类就可以完成；嵌套查询是先查一个表,根据这个表里面的 结果的外键id,去再另外一个表里面查询数据,也是通过配置collection,但另外一个表的查询通过select节点配置。</li>
+</ol>
 ]]></content>
       <tags>
         <tag>SpringBoot</tag>
