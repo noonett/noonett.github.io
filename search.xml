@@ -5569,8 +5569,8 @@ OFF level：关闭所有日志记录开关；是最高等级的，用于关闭�
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#main</span></span><br><span class="line">headers = &#123;</span><br><span class="line">        <span class="string">'user-agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chro'</span></span><br><span class="line">                      <span class="string">'me/53.0.2785.104 Safari/537.36 Core/1.53.2372.400 QQBrowser/9.5.10548.400'</span></span><br><span class="line">&#125;</span><br><span class="line">domain = <span class="string">'http://www.liaoxuefeng.com'</span>           <span class="comment">#廖雪峰网站的域名</span></span><br><span class="line">url =  <span class="string">"https://www.liaoxuefeng.com/wiki/1252599548343744"</span> <span class="comment">#Java教程的url</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#获取Java教程的页面</span></span><br><span class="line">resp = send_request(url, headers)</span><br><span class="line"><span class="comment">#提取所有的数据回来，包括标题和urls</span></span><br><span class="line">titles, urls = fetch(domain, resp, headers)</span><br><span class="line"><span class="comment">#开始下载</span></span><br><span class="line">download(titles,urls)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>Python</tag>
         <tag>爬虫</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -6303,8 +6303,8 @@ Download success!!
 </code></pre>
 ]]></content>
       <tags>
-        <tag>Python</tag>
         <tag>爬虫</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
