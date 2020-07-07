@@ -3,8 +3,310 @@
   <entry>
     <title>今朝酒</title>
     <url>/9999/01/01/top/</url>
-    <content><![CDATA[<p>沉淀，总结一下JVM、Mysql。做项目，保存demo。</p>
+    <content><![CDATA[<p>最近懈怠了，有点忘了更新日志，每天还是在刷题，现在是按着顺序刷，零零碎碎刷了200多道题得整理一下了。<br>
+学着做了点小项目，学了些系统设计的知识。<br>
+先把Kafka的笔记放上来，Redis缓存、selenium爬虫还没有整理笔记，下次复习再一起整理8。</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>Hello-Kafka!</title>
+    <url>/2020/07/07/Kafka/</url>
+    <content><![CDATA[<pre><code>Kafka算是现今企业用的应用最多的消息队列，数据处理的平台。它的消息是存储在硬盘上的，大量的使用了批量处理和异步的思想，所以它的吞吐量很大。消费者对消息的获取是顺序IO，所以消费者的访问速度也不差。
+</code></pre>
+<a id="more"></a>
+<h1>Kafka</h1>
+<p><img src="/.io//Kafka.png" alt="Kafka"></p>
+<h2 id="一、重要概念"><a class="header-anchor" href="#一、重要概念">¶</a>一、重要概念</h2>
+<h3 id="Producer"><a class="header-anchor" href="#Producer">¶</a>Producer</h3>
+<h3 id="Consumer"><a class="header-anchor" href="#Consumer">¶</a>Consumer</h3>
+<h3 id="Broker服务器"><a class="header-anchor" href="#Broker服务器">¶</a>Broker服务器</h3>
+<p>可以看作是一个独立的 Kafka 实例。多个 Kafka Broker 组成一个 Kafka Cluster。</p>
+<ul>
+<li>
+<p>Topic</p>
+<ul>
+<li>Producer 将消息发送到特定的主题，Consumer 通过订阅特定的 Topic(主题) 来消费消息。</li>
+<li>同一个Topic的Partition可以分布在不同Broker上，即Topic可以横跨多个Broker</li>
+<li>Topic对于多个Partition的消息分配是雨露均沾，这样也带来了消费顺序的问题</li>
+</ul>
+</li>
+<li>
+<p>Partition</p>
+<ul>
+<li>
+<p>Partition 属于 Topic 的一部分。一个 Topic 可以有多个 Partition</p>
+</li>
+<li>
+<p>Partition可以有多个副本Replica</p>
+<ul>
+<li>其中一个为Leader其他的为follower</li>
+<li>follower通过拉消息备份</li>
+<li>只有leader副本发生故障才会用到followers，他们将通过选举，产生新的leader，同步程度不够的不能参加竞选</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>好处</p>
+<ul>
+<li>多Partition分布在不同的Broker可以实现较好的并发能力（负载均衡），但是雨露均沾的分配机制同时也带来了消费顺序的问题</li>
+<li>多副本可以提高kafka消息存储容灾能力，但是也提高了需要的存储空间</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、zookeeper在Kafka中的作用"><a class="header-anchor" href="#二、zookeeper在Kafka中的作用">¶</a>二、zookeeper在Kafka中的作用</h2>
+<h3 id="1-Broker注册"><a class="header-anchor" href="#1-Broker注册">¶</a>1. Broker注册</h3>
+<ul>
+<li>
+<p>有一个专门用来进行 Broker 服务器列表记录的节点</p>
+<p>每个 Broker 在启动时，都会到 Zookeeper 上进行注册，即到/brokers/ids 下创建属于自己的节点。每个 Broker 就会将自己的 IP 地址和端口等信息记录到该节点中去</p>
+</li>
+</ul>
+<h3 id="2-Topic注册"><a class="header-anchor" href="#2-Topic注册">¶</a>2. Topic注册</h3>
+<ul>
+<li>
+<p>partition信息及与 Broker 的对应关系也都是由 Zookeeper 在维护。</p>
+<p>比如我创建了一个名字为 my-topic 的主题并且它有两个分区，对应到 zookeeper 中会创建这些文件夹：/brokers/topics/my-topic/Partitions/0、/brokers/topics/my-topic/Partitions/1</p>
+</li>
+</ul>
+<h3 id="3-负载均衡"><a class="header-anchor" href="#3-负载均衡">¶</a>3. 负载均衡</h3>
+<ul>
+<li>Zookeeper 可以根据当前的 Partition 数量以及 Consumer 数量来实现生产和消费动态负载均衡。</li>
+</ul>
+<h2 id="三、Kafka如何保证消费顺序"><a class="header-anchor" href="#三、Kafka如何保证消费顺序">¶</a>三、Kafka如何保证消费顺序</h2>
+<h3 id="1-消息是如何被分配和消费的"><a class="header-anchor" href="#1-消息是如何被分配和消费的">¶</a>1. 消息是如何被分配和消费的</h3>
+<ul>
+<li>
+<p>每次添加消息到 Partition(分区) 的时候都会采用尾加法，并分配一个特定的偏移量offset。</p>
+<p>Kafka 只能为我们保证 Partition(分区) 中的消息有序，而不能保证 Topic(主题) 中的 Partition(分区) 的有序。</p>
+</li>
+<li>
+<p>Kafka 通过偏移量（offset）来保证消息在分区内的顺序性，但是分区之间的消费顺序无法保证。</p>
+</li>
+</ul>
+<h3 id="2-解决方案"><a class="header-anchor" href="#2-解决方案">¶</a>2. 解决方案</h3>
+<ul>
+<li>
+<p>源头上：一个Topic对应一个Partition，但是这样就丧失了并发能力</p>
+</li>
+<li>
+<p>key: 发送消息的时候指定 key/Partition，让指定key的消息发送到同一个Partition</p>
+<p>Kafka 中发送 1 条消息的时候，可以指定 topic, partition, key,data（数据） 4 个参数。如果你发送消息的时候指定了 Partition 的话，所有消息都会被发送到指定的 Partition。并且，同一个 key 的消息可以保证只发送到同一个 partition，这个我们可以采用表/对象的 id 来作为 key 。</p>
+</li>
+</ul>
+<h2 id="四、Kafka如何保证消息不丢失"><a class="header-anchor" href="#四、Kafka如何保证消息不丢失">¶</a>四、Kafka如何保证消息不丢失</h2>
+<p><em>XMind: ZEN - Trial Version</em></p>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>消息队列的基础</title>
+    <url>/2020/07/07/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<pre><code>消息队列是个好东西，将系统调用彻底解藕，并异步处理，还能在高并发场景下，将大量请求的压力转移到消息队列，从而降低系统的响应时间。完美的第三者。
+</code></pre>
+<a id="more"></a>
+<h1>消息队列</h1>
+<p><img src="/.io//%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.png" alt="消息队列"></p>
+<h2 id="一、消息模型"><a class="header-anchor" href="#一、消息模型">¶</a>一、消息模型</h2>
+<h3 id="点对点"><a class="header-anchor" href="#点对点">¶</a>点对点</h3>
+<ul>
+<li>一个消息只能被一个消费者消费一次</li>
+</ul>
+<h3 id="发布-订阅"><a class="header-anchor" href="#发布-订阅">¶</a>发布/订阅</h3>
+<ul>
+<li>
+<p>多个消费者可以从频道订阅这个消息</p>
+</li>
+<li>
+<p>与观察者模式的不同</p>
+<ul>
+<li>
+<ol>
+<li>可见性：观察者模式观察者和主题都知道对方的存在，双方是松耦合；发布/订阅模式中，生产者和消费者通过频道通信，双方不可见，彻底解藕。</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>异步性：观察者模式是同步的，当事件触发时，主题会调用观察者方法，等待方法返回。发布/订阅模式是异步的，生产者发布消息之后不关心消费者何时订阅这个消息，可以立即返回。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、使用场景"><a class="header-anchor" href="#二、使用场景">¶</a>二、使用场景</h2>
+<h3 id="异步处理"><a class="header-anchor" href="#异步处理">¶</a>异步处理</h3>
+<p>发送者将消息发送给消息队列之后，不需要同步等待消息接收者处理完毕，而是立即返回进行其它操作。消息接收者从消息队列中订阅消息之后异步处理。<br>
+例如在注册流程中通常需要发送验证邮件来确保注册用户身份的合法性，可以使用消息队列使发送验证邮件的操作异步处理，用户在填写完注册信息之后就可以完成注册，而将发送验证邮件这一消息发送到消息队列中。<br>
+只有在业务流程允许异步处理的情况下才能这么做，例如上面的注册流程中，如果要求用户对验证邮件进行点击之后才能完成注册的话，就不能再使用消息队列</p>
+<h3 id="流量削峰"><a class="header-anchor" href="#流量削峰">¶</a>流量削峰</h3>
+<p>在高并发的场景下，如果短时间有大量的请求到达会压垮服务器。<br>
+可以将请求发送到消息队列中，服务器按照其处理能力从消息队列中订阅消息进行处理。</p>
+<h3 id="应用解藕"><a class="header-anchor" href="#应用解藕">¶</a>应用解藕</h3>
+<p>如果模块之间不直接进行调用，模块之间耦合度就会很低，那么修改一个模块或者新增一个模块对其它模块的影响会很小，从而实现可扩展性。<br>
+通过使用消息队列，一个模块只需要向消息队列中发送消息，其它模块可以选择性地从消息队列中订阅消息从而完成调用。</p>
+<h2 id="三、可靠性"><a class="header-anchor" href="#三、可靠性">¶</a>三、可靠性</h2>
+<h3 id="发送端的可靠性"><a class="header-anchor" href="#发送端的可靠性">¶</a>发送端的可靠性</h3>
+<ul>
+<li>
+<p>发送端完成操作后一定能将消息成功发送到消费队列中</p>
+<p>实现方法：在本地数据库建一张消息表，将消息数据与业务数据保存在同一数据库实例里，这样就可以利用本地数据库的事务机制。事务提交成功后，将消息表中的消息转移到消息队列中，若转移消息成功则删除消息表中的数据，否则继续重传。</p>
+</li>
+</ul>
+<h3 id="接收端的可靠性"><a class="header-anchor" href="#接收端的可靠性">¶</a>接收端的可靠性</h3>
+<ul>
+<li>
+<p>接收端能够从消息队列成功消费一次消息</p>
+<p>两种实现方法：<br>
+保证接收端处理消息的业务逻辑具有幂等性：只要具有幂等性，那么消费多少次消息，最后处理的结果都是一样的。<br>
+保证消息具有唯一编号，并使用一张日志表来记录已经消费的消息编号。</p>
+</li>
+</ul>
+<h2 id="四、消息队列带来的问题"><a class="header-anchor" href="#四、消息队列带来的问题">¶</a>四、消息队列带来的问题</h2>
+<h3 id="1-系统可用性降低"><a class="header-anchor" href="#1-系统可用性降低">¶</a>1. 系统可用性降低</h3>
+<p>系统可用性在某种程度上降低，为什么这样说呢？在加入MQ之前，你不用考虑消息丢失或者说MQ挂掉等等的情况，但是，引入MQ之后你就需要去考虑了！</p>
+<h3 id="2-系统复杂度提高了"><a class="header-anchor" href="#2-系统复杂度提高了">¶</a>2. 系统复杂度提高了</h3>
+<p>加入MQ之后，你需要保证消息没有被重复消费、处理消息丢失的情况、保证消息传递的顺序性等等问题！</p>
+<h3 id="3-一致性问题"><a class="header-anchor" href="#3-一致性问题">¶</a>3. 一致性问题</h3>
+<p>我上面讲了消息队列可以实现异步，消息队列带来的异步确实可以提高系统响应速度。但是，万一消息的真正消费者并没有正确消费消息怎么办？这样就会导致数据不一致的情况了!</p>
+<h2 id="五、常见消息队列对比"><a class="header-anchor" href="#五、常见消息队列对比">¶</a>五、常见消息队列对比</h2>
+<h3 id="Kafka"><a class="header-anchor" href="#Kafka">¶</a>Kafka</h3>
+<p>kafka 的特点其实很明显，就是仅仅提供较少的核心功能，但是提供超高的吞吐量，ms 级的延迟，极高的可用性以及可靠性，而且分布式可以任意扩展。同时 kafka 最好是支撑较少的 topic 数量即可，保证其超高吞吐量。kafka 唯一的一点劣势是有可能消息重复消费，那么对数据准确性会造成极其轻微的影响，在大数据领域中以及日志采集中，这点轻微影响可以忽略这个特性天然适合大数据实时计算以及日志收集。</p>
+<p><em>XMind: ZEN - Trial Version</em></p>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>系统的一些基础概念</title>
+    <url>/2020/07/07/%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</url>
+    <content><![CDATA[<pre><code>最近在做项目，学了点系统设计的知识，简单记录一下。
+</code></pre>
+<a id="more"></a>
+<h1>系统设计基础</h1>
+<p><img src="/.io//%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80.png" alt="系统设计基础"></p>
+<h2 id="性能"><a class="header-anchor" href="#性能">¶</a>性能</h2>
+<h3 id="性能指标"><a class="header-anchor" href="#性能指标">¶</a>性能指标</h3>
+<ul>
+<li>
+<ol>
+<li>响应时间</li>
+</ol>
+<ul>
+<li>请求从发出到接收到响应消耗的时间，通过重复请求的方式计算均值</li>
+</ul>
+</li>
+<li>
+<ol start="2">
+<li>吞吐量 req/s</li>
+</ol>
+<ul>
+<li>系统单位时间处理的请求数量</li>
+</ul>
+</li>
+<li>
+<ol start="3">
+<li>并发用户数</li>
+</ol>
+<ul>
+<li>
+<p>同时处理的并发用户请求数量</p>
+</li>
+<li>
+<p>多线程处理并发请求以提高吞吐量和缩短响应时间</p>
+<ul>
+<li>
+<p>多CPU</p>
+</li>
+<li>
+<p>IO等待时间，IO多路复用等方式可以让系统在等待一个IO完成时不需要被阻塞</p>
+<p>但是并发用户数高了，系统处理不来请求，响应时间反而会提高。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="性能优化"><a class="header-anchor" href="#性能优化">¶</a>性能优化</h3>
+<ul>
+<li>
+<ol>
+<li>集群</li>
+</ol>
+<p>将多台服务器组成集群，使用负载均衡将请求转发到集群中，避免单一服务器的负载压力过大导致性能降低。</p>
+<ul>
+<li>负载均衡</li>
+</ul>
+</li>
+<li>
+<ol start="2">
+<li>缓存</li>
+</ol>
+<ul>
+<li>
+<p>提高性能的原因：</p>
+<ul>
+<li>通常位于内存中，对于读操作特别快</li>
+<li>缓存数据可以位于靠近用户的地理位置上</li>
+<li>可以将计算结果缓存，避免重复计算</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<ol start="3">
+<li>异步</li>
+</ol>
+<ul>
+<li>某些流程可以将操作转换为消息，将消息发送到消息队列之后立即返回，之后这个操作会被异步处理。</li>
+</ul>
+</li>
+</ul>
+<h2 id="伸缩性"><a class="header-anchor" href="#伸缩性">¶</a>伸缩性</h2>
+<p>指不断向集群中添加服务器来缓解不断上升的用户并发访问压力和不断增长的数据存储需求。</p>
+<h3 id="伸缩性与性能"><a class="header-anchor" href="#伸缩性与性能">¶</a>伸缩性与性能</h3>
+<ul>
+<li>性能问题：单个用户请求很慢</li>
+<li>伸缩性：单个用户的请求可能很快，但是高并发下系统会很慢</li>
+</ul>
+<h3 id="实现伸缩性"><a class="header-anchor" href="#实现伸缩性">¶</a>实现伸缩性</h3>
+<ul>
+<li>
+<p>应用服务器只要不具有状态，就可以轻易的通过负载均衡向集群中添加新的服务器。</p>
+</li>
+<li>
+<p>关系型数据库的伸缩性通过sharding</p>
+<p>将数据按一定的规则分布到不同的节点上，从而解决单台存储服务器的存储空间限制。</p>
+</li>
+<li>
+<p>非关系型数据库本身对伸缩性的支持就特别好</p>
+</li>
+</ul>
+<h2 id="扩展性"><a class="header-anchor" href="#扩展性">¶</a>扩展性</h2>
+<p>指的是添加新功能时对现有系统的其它应用无影响，这就要求不同应用具备低耦合的特点。</p>
+<h3 id="实现方式："><a class="header-anchor" href="#实现方式：">¶</a>实现方式：</h3>
+<ul>
+<li>消息队列进行解藕，应用之间通过消息传递进行通信</li>
+<li>使用分布式服务将业务和可复用的服务分离，业务使用分布式服务框架调用可复用的服务。新增的产品可以通过调用可复用的服务来实现业务逻辑，对其它产品没有影响。</li>
+</ul>
+<h2 id="可用性"><a class="header-anchor" href="#可用性">¶</a>可用性</h2>
+<h3 id="冗余"><a class="header-anchor" href="#冗余">¶</a>冗余</h3>
+<p>保证高可用的主要手段是使用冗余，当某个服务器故障时就请求其它服务器。<br>
+应用服务器的冗余比较容易实现，只要保证应用服务器不具有状态，那么某个应用服务器故障时，负载均衡器将该应用服务器原先的用户请求转发到另一个应用服务器上，不会对用户有任何影响。<br>
+存储服务器的冗余需要使用主从复制来实现，当主服务器故障时，需要提升从服务器为主服务器，这个过程称为切换。</p>
+<h3 id="监控"><a class="header-anchor" href="#监控">¶</a>监控</h3>
+<p>对 CPU、内存、磁盘、网络等系统负载信息进行监控，当某个信息达到一定阈值时通知运维人员，从而在系统发生故障之前及时发现问题。</p>
+<h3 id="服务降级"><a class="header-anchor" href="#服务降级">¶</a>服务降级</h3>
+<p>服务降级是系统为了应对大量的请求，主动关闭部分功能，从而保证核心功能可用。</p>
+<h2 id="安全性"><a class="header-anchor" href="#安全性">¶</a>安全性</h2>
+<p>要求系统在应对各种攻击手段时能够有可靠的应对措施。</p>
+<p><em>XMind: ZEN - Trial Version</em></p>
+]]></content>
+      <tags>
+        <tag>系统设计</tag>
+      </tags>
   </entry>
   <entry>
     <title>一些框架的使用和原理</title>
@@ -206,7 +508,10 @@ Create a homecontroller using two service to deal with request from homepage. Cr
 求在该柱状图中，能够勾勒出来的矩形的最大面积。
 </code></pre>
 <p>保存各个位置左边和右边小于它的第一个数从而栈中剩下的栈顶的数就是左边最后一个大于它的数，从而计算出宽度。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">largestRectangleArea</span><span class="params">(<span class="keyword">int</span>[] heights)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = heights.length;</span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span>[] left = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">int</span>[] right = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; ++i)&#123;</span><br><span class="line">            <span class="keyword">while</span>((!stack.isEmpty())&amp;&amp; (heights[stack.peek()]&gt;=heights[i]))&#123;</span><br><span class="line">                stack.pollFirst();</span><br><span class="line">            &#125;</span><br><span class="line">            left[i] = stack.isEmpty()? -<span class="number">1</span>: stack.peek();</span><br><span class="line">            stack.offerFirst(i);</span><br><span class="line">        &#125;</span><br><span class="line">        stack.clear();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i)&#123;</span><br><span class="line">            <span class="keyword">while</span>((!stack.isEmpty())&amp;&amp; (heights[stack.peek()]&gt;=heights[i]))&#123;</span><br><span class="line">                stack.pollFirst();</span><br><span class="line">            &#125;</span><br><span class="line">            right[i] =stack.isEmpty()? len: stack.peek();</span><br><span class="line">            stack.offerFirst(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; ++i)&#123;</span><br><span class="line">            max = Math.max((right[i] - left[i]-<span class="number">1</span>)* heights[i], max);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">largestRectangleArea</span><span class="params">(<span class="keyword">int</span>[] heights)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = heights.length;</span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span>[] left = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">int</span>[] right = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; ++i)&#123;</span><br><span class="line">            <span class="keyword">while</span>((!stack.isEmpty())&amp;&amp; (heights[stack.peek()]&gt;=heights[i]))&#123;</span><br><span class="line">                stack.pollFirst();</span><br><span class="line">            &#125;</span><br><span class="line">            left[i] = stack.isEmpty()? -<span class="number">1</span>: stack.peek();</span><br><span class="line">            stack.offerFirst(i);</span><br><span class="line">        &#125;</span><br><span class="line">        stack.clear();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = len - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i)&#123;</span><br><span class="line">            <span class="keyword">while</span>((!stack.isEmpty())&amp;&amp; (heights[stack.peek()]&gt;=heights[i]))&#123;</span><br><span class="line">                stack.pollFirst();</span><br><span class="line">            &#125;</span><br><span class="line">            right[i] =stack.isEmpty()? len: stack.peek();</span><br><span class="line">            stack.offerFirst(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; ++i)&#123;</span><br><span class="line">            max = Math.max((right[i] - left[i]-<span class="number">1</span>)* heights[i], max);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="739-每日温度"><a class="header-anchor" href="#739-每日温度">¶</a>739.每日温度</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] dailyTemperatures(<span class="keyword">int</span>[] T) &#123;</span><br><span class="line">        <span class="keyword">int</span> length = T.length;</span><br><span class="line">        <span class="keyword">int</span>[] ans = <span class="keyword">new</span> <span class="keyword">int</span>[length];</span><br><span class="line">        Deque&lt;Integer&gt; stack = <span class="keyword">new</span> LinkedList&lt;Integer&gt;();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> temperature = T[i];</span><br><span class="line">            <span class="keyword">while</span> (!stack.isEmpty() &amp;&amp; temperature &gt; T[stack.peek()]) &#123;</span><br><span class="line">                <span class="keyword">int</span> prevIndex = stack.pop();</span><br><span class="line">                ans[prevIndex] = i - prevIndex;</span><br><span class="line">            &#125;</span><br><span class="line">            stack.push(i);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span>[] dailyTemperatures(<span class="keyword">int</span>[] T) &#123;</span><br><span class="line">        <span class="keyword">int</span> len = T.length;</span><br><span class="line">        <span class="keyword">int</span>[] res= <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        <span class="keyword">int</span>[] bigger = <span class="keyword">new</span> <span class="keyword">int</span>[len];  <span class="comment">//bigger[i]为在i右边比第一个比i大的数的下标</span></span><br><span class="line">        res[len - <span class="number">1</span>] = <span class="number">0</span>;</span><br><span class="line">        bigger[len - <span class="number">1</span>] = len - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = T.length - <span class="number">2</span>; i &gt;= <span class="number">0</span>; --i)&#123;</span><br><span class="line">            <span class="keyword">int</span> cur = T[i];</span><br><span class="line">            <span class="keyword">int</span> j = i + <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>(j != bigger[j] &amp;&amp; cur &gt;= T[j])&#123;</span><br><span class="line">                j = bigger[j];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(T[j] &gt; cur)&#123;</span><br><span class="line">                bigger[i] = j;</span><br><span class="line">                res[i] = j - i;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                bigger[i] = i;</span><br><span class="line">                res[i] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
         <tag>算法</tag>
         <tag>Leetcode</tag>

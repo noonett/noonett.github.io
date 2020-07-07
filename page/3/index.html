@@ -252,6 +252,415 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/30/Leetcode%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%90%88%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/30/Leetcode%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%90%88%E9%9B%86/" itemprop="url">Leetcode动态规划合集</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-30T16:03:11+08:00">
+                2020-04-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <pre><code>状态的传递。
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/30/Leetcode%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%90%88%E9%9B%86/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/28/Leetcode%E5%9B%9E%E6%BA%AF%E6%B3%95%E5%90%88%E9%9B%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/28/Leetcode%E5%9B%9E%E6%BA%AF%E6%B3%95%E5%90%88%E9%9B%86/" itemprop="url">Leetcode回溯法合集</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-28T12:40:32+08:00">
+                2020-04-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h1>17.电话号码的数字组合</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    String[] map = <span class="keyword">new</span> String[]&#123;<span class="string">""</span>,<span class="string">""</span>,<span class="string">"abc"</span>,<span class="string">"def"</span>,<span class="string">"ghi"</span>,<span class="string">"jkl"</span>,<span class="string">"mno"</span>,<span class="string">"pqrs"</span>,<span class="string">"tuv"</span>,<span class="string">"wxyz"</span>&#125;;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">letterCombinations</span><span class="params">(String digits)</span> </span>&#123;   </span><br><span class="line">        List&lt;String&gt; combinations = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (digits == <span class="keyword">null</span> || digits.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> combinations;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">char</span>[] chars = digits.toCharArray();</span><br><span class="line">        dfs(chars, <span class="keyword">new</span> StringBuilder(), combinations, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> combinations;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">char</span>[] chars, StringBuilder resi,List&lt;String&gt; combinations, <span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(i == chars.length)&#123;</span><br><span class="line">            combinations.add(resi.toString());</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">char</span> cur:map[chars[i]-<span class="string">'0'</span>].toCharArray())&#123;</span><br><span class="line">            resi.append(cur);</span><br><span class="line">            dfs(chars, resi, combinations, i + <span class="number">1</span>);</span><br><span class="line">            resi.deleteCharAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>93. IP地址</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">restoreIpAddresses</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(s.length()&lt;<span class="number">4</span>||s.length()&gt;<span class="number">12</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        backTracing(res, s, <span class="keyword">new</span> StringBuilder(), <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">backTracing</span><span class="params">(List&lt;String&gt; res, String s, StringBuilder str,  <span class="keyword">int</span> count)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(count == <span class="number">4</span>||s.length()==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(count==<span class="number">4</span>&amp;&amp;s.length()==<span class="number">0</span>)&#123;</span><br><span class="line">                res.add(str.toString());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; ++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i&gt;s.length() - <span class="number">1</span> )&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(i!=<span class="number">0</span>&amp;&amp;s.charAt(<span class="number">0</span>)==<span class="string">'0'</span>)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            String part = s.substring(<span class="number">0</span>,i + <span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span>(Integer.valueOf(part)&gt;<span class="number">255</span>)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(str.length()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">                part = <span class="string">'.'</span> + part;</span><br><span class="line">            &#125;</span><br><span class="line">            str.append(part);</span><br><span class="line">            backTracing(res, s.substring(i+<span class="number">1</span>),str,count + <span class="number">1</span>);</span><br><span class="line">            str.delete(str.length() - part.length(),str.length());</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>79. 在矩阵中寻找字符串</h1>
+<p>用一个矩阵来标记单元格是否被使用过。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span>[][] direction = &#123;&#123;<span class="number">0</span>,<span class="number">1</span>&#125;,&#123;<span class="number">1</span>,<span class="number">0</span>&#125;,&#123;<span class="number">0</span>,-<span class="number">1</span>&#125;,&#123;-<span class="number">1</span>,<span class="number">0</span>&#125;&#125;;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">exist</span><span class="params">(<span class="keyword">char</span>[][] board, String word)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(word.length() == <span class="number">0</span>||board.length == <span class="number">0</span>||board[<span class="number">0</span>].length == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">boolean</span>[][] visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[board.length][board[<span class="number">0</span>].length]; </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt;board.length;++i)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j&lt;board[<span class="number">0</span>].length;++j)&#123;</span><br><span class="line">                <span class="keyword">if</span>(board[i][j] == word.charAt(<span class="number">0</span>))&#123;  </span><br><span class="line">                    </span><br><span class="line">                    <span class="keyword">if</span>(backTracing(board, word, <span class="number">0</span>, i, j, visited))&#123;</span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">backTracing</span><span class="params">(<span class="keyword">char</span>[][] board, String word, <span class="keyword">int</span> cur, <span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">boolean</span>[][] visited)</span></span>&#123;</span><br><span class="line">        visited[i][j] = <span class="keyword">true</span>; </span><br><span class="line">        <span class="keyword">if</span>(cur == word.length() - <span class="number">1</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span>[] d: direction)&#123;</span><br><span class="line">            <span class="keyword">int</span> ni = i + d[<span class="number">0</span>]; <span class="keyword">int</span> nj = j + d[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span>(ni&lt;<span class="number">0</span>||nj&lt;<span class="number">0</span>||ni&gt;board.length - <span class="number">1</span>||nj&gt;board[<span class="number">0</span>].length - <span class="number">1</span>||board[ni][nj]!=word.charAt(cur + <span class="number">1</span>)||visited[ni][nj] == <span class="keyword">true</span>)&#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(backTracing(board, word, cur + <span class="number">1</span>, ni, nj, visited))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        visited[i][j] = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>257. 输出二叉树中从根到叶子的路径</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for a binary tree node.</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">binaryTreePaths</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;String&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        dfs(res, <span class="keyword">new</span> StringBuilder(), root);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(List&lt;String&gt; res, StringBuilder str, TreeNode node)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> curlen = str.length();</span><br><span class="line">        <span class="keyword">if</span>(curlen!=<span class="number">0</span>)&#123;</span><br><span class="line">            str.append(<span class="string">"-&gt;"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        str.append(node.val);</span><br><span class="line">        <span class="keyword">if</span>(node.left!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            dfs(res, str, node.left);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(node.right!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            dfs(res, str, node.right);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(node.left==<span class="keyword">null</span>&amp;&amp;node.right==<span class="keyword">null</span>)&#123;   </span><br><span class="line">            res.add(str.toString());</span><br><span class="line">        &#125;</span><br><span class="line">        str.delete(curlen, str.length());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>46. 全排列(无重复)</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; permute(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        dfs(res, nums, <span class="keyword">new</span> Integer[nums.length], <span class="keyword">new</span> <span class="keyword">boolean</span>[nums.length], <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(List&lt;List&lt;Integer&gt;&gt; res, <span class="keyword">int</span>[] nums, Integer[] temp, <span class="keyword">boolean</span>[] visited, <span class="keyword">int</span> rank)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(rank == nums.length)&#123;</span><br><span class="line">            res.add(Arrays.asList(Arrays.copyOf(temp, temp.length)));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;nums.length; ++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(visited[i]==<span class="keyword">false</span>)&#123;</span><br><span class="line">                temp[rank] = nums[i];</span><br><span class="line">                visited[i] = <span class="keyword">true</span>;</span><br><span class="line">                dfs(res, nums, temp, visited, rank + <span class="number">1</span>);</span><br><span class="line">                visited[i] = <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>47. 全排列II(有重复)</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; permuteUnique(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        Arrays.sort(nums);</span><br><span class="line">        dfs(res, nums, <span class="keyword">new</span> <span class="keyword">boolean</span>[nums.length], <span class="keyword">new</span> ArrayList&lt;Integer&gt;(), <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(List&lt;List&lt;Integer&gt;&gt; res, <span class="keyword">int</span>[] nums, <span class="keyword">boolean</span>[] visited, List&lt;Integer&gt; temp, <span class="keyword">int</span> rank)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(rank == nums.length)&#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> ArrayList(temp));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i&lt; nums.length; ++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i != <span class="number">0</span> &amp;&amp; nums[i - <span class="number">1</span>] == nums[i] &amp;&amp; !visited[i - <span class="number">1</span>])&#123; </span><br><span class="line">                <span class="comment">//避免重复， 当前一个和后一个相等， 且是i先被访问的情况。</span></span><br><span class="line">                <span class="comment">//i先被访问了：说明重复了，因为i-1一定先出现这种结果，已经有的结果，应该避免重复。</span></span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(visited[i])&#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            visited[i] = <span class="keyword">true</span>;</span><br><span class="line">            temp.add(nums[i]);</span><br><span class="line">            dfs(res, nums, visited, temp, rank + <span class="number">1</span>);</span><br><span class="line">            temp.remove(rank);</span><br><span class="line">            visited[i] = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>77. 组合</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combine(<span class="keyword">int</span> n, <span class="keyword">int</span> k) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>||k==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        dfs(n, k, res, <span class="keyword">new</span> ArrayList&lt;&gt;(), <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> n, <span class="keyword">int</span> k, List&lt;List&lt;Integer&gt;&gt; res, List&lt;Integer&gt; temp, <span class="keyword">int</span> start)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="number">0</span>==k)&#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> ArrayList(temp));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = start; i&lt;=n - k + <span class="number">1</span>; ++i)&#123;  <span class="comment">//剪枝，前第k个数最多只会取到n - k + 1， 不然就重复了。</span></span><br><span class="line">            temp.add(i);</span><br><span class="line">            dfs(n, k - <span class="number">1</span>, res, temp, i + <span class="number">1</span>);</span><br><span class="line">            temp.remove(temp.size() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>39. 组合总和</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combinationSum(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        find(res, <span class="keyword">new</span> ArrayList&lt;Integer&gt;(), candidates, target, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">find</span><span class="params">(List&lt;List&lt;Integer&gt;&gt; res, ArrayList&lt;Integer&gt; temp, <span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target, <span class="keyword">int</span> start)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(target == <span class="number">0</span>)&#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> ArrayList(temp));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = start; i &lt; candidates.length; ++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(candidates[i]&gt;target)&#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            temp.add(candidates[i]);</span><br><span class="line">            find(res, temp, candidates, target - candidates[i], i);</span><br><span class="line">            temp.remove(temp.size() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>40. 组合总和II</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combinationSum2(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        Arrays.sort(candidates);</span><br><span class="line">        <span class="keyword">boolean</span>[] visited = <span class="keyword">new</span> <span class="keyword">boolean</span>[candidates.length];</span><br><span class="line">        dfs(candidates, res, <span class="keyword">new</span> ArrayList&lt;Integer&gt;(), visited, <span class="number">0</span>, target);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span>[] candidates,List&lt;List&lt;Integer&gt;&gt; res, ArrayList&lt;Integer&gt; temp, <span class="keyword">boolean</span>[] visited, <span class="keyword">int</span> start, <span class="keyword">int</span> target)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(target == <span class="number">0</span>)&#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> ArrayList(temp));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = start; i &lt; candidates.length; ++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(i!=<span class="number">0</span>&amp;&amp;candidates[i] ==candidates[i - <span class="number">1</span>]&amp;&amp;!visited[i - <span class="number">1</span>]||target - candidates[i]&lt;<span class="number">0</span> || visited[i])&#123;</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            visited[i] = <span class="keyword">true</span>;</span><br><span class="line">            temp.add(candidates[i]);</span><br><span class="line">            dfs(candidates, res, temp, visited, i, target - candidates[i]);</span><br><span class="line">            temp.remove(temp.size() - <span class="number">1</span>);</span><br><span class="line">            visited[i] = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>216. 组合总和III</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combinationSum3(<span class="keyword">int</span> k, <span class="keyword">int</span> n) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> ArrayList();</span><br><span class="line">        <span class="keyword">if</span>(k==<span class="number">0</span>||n==<span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> res;</span><br><span class="line">        &#125;</span><br><span class="line">        backTracking(res, <span class="keyword">new</span> ArrayList&lt;Integer&gt;(), k, n, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">backTracking</span><span class="params">(List&lt;List&lt;Integer&gt;&gt; res, ArrayList&lt;Integer&gt; temp, <span class="keyword">int</span> k, <span class="keyword">int</span> n, <span class="keyword">int</span> start)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(n == <span class="number">0</span>&amp;&amp;k==<span class="number">0</span>)&#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> ArrayList(temp));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = start + <span class="number">1</span>; i &lt;= <span class="number">9</span>; ++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(n - i &lt; <span class="number">0</span>||k - <span class="number">1</span>&lt; <span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            temp.add(i);</span><br><span class="line">            backTracking(res, temp, k - <span class="number">1</span>, n - i, i);</span><br><span class="line">            temp.remove(temp.size() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>78.子集</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//回溯法就不写出来了</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//bitmask 可以构造一个，达到选某一位的效果</span></span><br><span class="line"><span class="keyword">int</span> nthBit = <span class="number">1</span> &lt;&lt; n;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)Math.pow(<span class="number">2</span>, n); ++i) &#123;</span><br><span class="line">    <span class="comment">// generate bitmask, from 0..00 to 1..11</span></span><br><span class="line">    String bitmask = Integer.toBinaryString(i | nthBit).substring(<span class="number">1</span>); <span class="comment">//截出后n - 1位</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//bitmask解</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; subsets(<span class="keyword">int</span>[] nums) &#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; output = <span class="keyword">new</span> ArrayList();</span><br><span class="line">    <span class="keyword">int</span> n = nums.length;</span><br><span class="line">    <span class="keyword">int</span> nthBit = <span class="number">1</span> &lt;&lt; n;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; (<span class="keyword">int</span>)Math.pow(<span class="number">2</span>, n); ++i) &#123;</span><br><span class="line">      <span class="comment">// generate bitmask, from 0..00 to 1..11</span></span><br><span class="line">      String bitmask = Integer.toBinaryString(i|nthBit).substring(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// append subset corresponding to that bitmask</span></span><br><span class="line">      List&lt;Integer&gt; curr = <span class="keyword">new</span> ArrayList();</span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; n; ++j) &#123;</span><br><span class="line">        <span class="keyword">if</span> (bitmask.charAt(j) == <span class="string">'1'</span>) curr.add(nums[j]);</span><br><span class="line">      &#125;</span><br><span class="line">      output.add(curr);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> output;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>90.子集II</h1>
+<h1>131.分割回文串</h1>
+<p>注意String.substring(int begin, int end);是[begin, end)的</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;String&gt;&gt; partition(String s) &#123;</span><br><span class="line">        List&lt;List&lt;String&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        backtracking(res, <span class="keyword">new</span> ArrayList&lt;String&gt;(), s);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">backtracking</span><span class="params">(List&lt;List&lt;String&gt;&gt; res, ArrayList&lt;String&gt; temp, String s)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> slen = s.length();</span><br><span class="line">        <span class="keyword">if</span>(slen == <span class="number">0</span>)&#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> ArrayList(temp));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt; slen;++i)&#123;</span><br><span class="line">            String cur = s.substring(<span class="number">0</span>, i+<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">if</span>(isPalindrome(cur))&#123;</span><br><span class="line">                temp.add(cur);</span><br><span class="line">                backtracking(res, temp, s.substring(i + <span class="number">1</span>));</span><br><span class="line">                temp.remove(temp.size() - <span class="number">1</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isPalindrome</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> begin = <span class="number">0</span>; <span class="keyword">int</span> end = s.length() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (begin &lt; end) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s.charAt(begin++) != s.charAt(end--)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1>37.解数独</h1>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">boolean</span>[][] rowused = <span class="keyword">new</span> <span class="keyword">boolean</span>[<span class="number">9</span>][<span class="number">10</span>];</span><br><span class="line">    <span class="keyword">boolean</span>[][] colused = <span class="keyword">new</span> <span class="keyword">boolean</span>[<span class="number">9</span>][<span class="number">10</span>];</span><br><span class="line">    <span class="keyword">boolean</span>[][] cubeused = <span class="keyword">new</span> <span class="keyword">boolean</span>[<span class="number">9</span>][<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">solveSudoku</span><span class="params">(<span class="keyword">char</span>[][] board)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">9</span>;++i)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">9</span>;++j)&#123;</span><br><span class="line">                <span class="keyword">if</span>(board[i][j]!= <span class="string">'.'</span>)&#123;</span><br><span class="line">                    <span class="keyword">int</span> num = board[i][j] - <span class="string">'0'</span>;</span><br><span class="line">                    rowused[i][num] = <span class="keyword">true</span>;</span><br><span class="line">                    colused[j][num] = <span class="keyword">true</span>;</span><br><span class="line">                    cubeused[cube(i,j)][num] = <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        backtracking(board, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">backtracking</span><span class="params">(<span class="keyword">char</span>[][] board, <span class="keyword">int</span> row, <span class="keyword">int</span> col)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(col == board[<span class="number">0</span>].length)&#123;</span><br><span class="line">            col = <span class="number">0</span>;</span><br><span class="line">            ++row;</span><br><span class="line">            <span class="keyword">if</span>(row== board.length)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(board[row][col] ==<span class="string">'.'</span>)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> num = <span class="number">1</span>; num&lt;<span class="number">10</span>;++num)&#123;</span><br><span class="line">                <span class="keyword">if</span>(rowused[row][num]||colused[col][num]||cubeused[cube(row, col)][num])&#123;</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                rowused[row][num] = colused[col][num] = cubeused[cube(row, col)][num] = <span class="keyword">true</span>;</span><br><span class="line">                board[row][col] = (<span class="keyword">char</span>) (num + <span class="string">'0'</span>);</span><br><span class="line">                <span class="keyword">if</span>(backtracking(board, row, col + <span class="number">1</span>))&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                board[row][col] = <span class="string">'.'</span>;</span><br><span class="line">                rowused[row][num] = colused[col][num] = cubeused[cube(row, col)][num] = <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> backtracking(board, row, col + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">cube</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> (i/<span class="number">3</span>) * <span class="number">3</span> + j/<span class="number">3</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/27/Leetcode4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="TYH">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/IMG_2273.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="21号避难所">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/04/27/Leetcode4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/" itemprop="url">Leetcode4寻找两个排序数组的中位数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-27T18:59:53+08:00">
+                2020-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <pre><code>题目：给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。
+请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。
+你可以假设 nums1 和 nums2 不会同时为空。
+</code></pre>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/04/27/Leetcode4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/27/Leetcode198%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1186,485 +1595,6 @@ end表示当前位置跳到的最远位置。</p>
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/14/%E5%89%8D%E7%AB%AF%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E6%80%BB%E7%BB%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/14/%E5%89%8D%E7%AB%AF%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E6%80%BB%E7%BB%93/" itemprop="url">前端语言基础总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-14T00:22:53+08:00">
-                2020-04-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1>HTML</h1>
-<h2 id="基本元素"><a class="header-anchor" href="#基本元素">¶</a>基本元素</h2>
-<h3 id="图像-img标签"><a class="header-anchor" href="#图像-img标签">¶</a>图像 img标签</h3>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span>&gt;</span> 即图像标签；</span><br></pre></td></tr></table></figure>
-<p>需要设置其属性 src指定图像的路径；<br>
-width=“200” height=&quot;200&quot;设置大小；</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<p>img不能够自己居中，需要放在其他能够居中的标签中实现这个效果，比如h1标签,p标签.<br>
-经常采用的手段是放在div中居中</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">"left"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">"center"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"> </span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">align</span>=<span class="string">"right"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="超链接-a标签"><a class="header-anchor" href="#超链接-a标签">¶</a>超链接 a标签</h3>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"跳转到的页面地址"</span>&gt;</span>超链显示文本<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.12306.com"</span>&gt;</span>12306<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//title: 当鼠标放在超链上的时候，就会弹出提示文字</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.12306.com"</span> <span class="attr">title</span>=<span class="string">"跳转到http://www.12306.com"</span>&gt;</span>www.12306.com<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//图片作为超链</span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.12306.com"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="表格-table标签"><a class="header-anchor" href="#表格-table标签">¶</a>表格 table标签</h3>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;table&gt;标签用于显示一个表格 </span><br><span class="line">&lt;tr&gt; 表示行 </span><br><span class="line">&lt;td&gt; 表示列又叫单元格</span><br></pre></td></tr></table></figure>
-<h4 id="属性"><a class="header-anchor" href="#属性">¶</a>属性</h4>
-<p>属性border： 表形式<br>
-属性 width<br>
-属性align： 元素位置<br>
-设置tr或者td的属性bgcolor： 背景色</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">table</span> <span class="attr">border</span>=<span class="string">"1"</span> <span class="attr">width</span>=<span class="string">"200px"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span> <span class="attr">bgcolor</span>=<span class="string">"gray"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span> <span class="attr">width</span>=<span class="string">"50%"</span>&gt;</span>1<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>2<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>3<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>4<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">tr</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>&gt;</span>a<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">td</span>  <span class="attr">bgcolor</span>=<span class="string">"pink"</span>&gt;</span>b<span class="tag">&lt;/<span class="name">td</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">tr</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="列表-ul标签和ol标签"><a class="header-anchor" href="#列表-ul标签和ol标签">¶</a>列表 ul标签和ol标签</h3>
-<p>列表分无序列表和有序列表<br>
-分别用<ul>标签和<ol>标签表示</ol></ul></p>
-<h5 id="1-无序列表"><a class="header-anchor" href="#1-无序列表">¶</a>1. 无序列表</h5>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>DOTA<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>LOL<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h5 id="2-有序列表"><a class="header-anchor" href="#2-有序列表">¶</a>2. 有序列表</h5>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">ol</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>地卜师<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>卡尔<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">ol</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="块标签-div和span"><a class="header-anchor" href="#块标签-div和span">¶</a>块标签 div和span</h3>
-<p>这两种标签都是布局用的<br>
-这种标签本身没有任何显示效果<br>
-通常是用来结合css进行页面布局</p>
-<h5 id="两者区别"><a class="header-anchor" href="#两者区别">¶</a>两者区别</h5>
-<p>div是块元素，即自动换行<br>
-常见的块元素还有h1,table,p<br>
-span是内联元素，即不会换行<br>
-常见的内联元素还有img,a,b,strong</p>
-<h4 id="fron字体标签"><a class="header-anchor" href="#fron字体标签">¶</a>fron字体标签</h4>
-<p>可以调整颜色color<br>
-大小size</p>
-<h3 id="内联框架-iframe"><a class="header-anchor" href="#内联框架-iframe">¶</a>内联框架 iframe</h3>
-<h2 id="通过内联框架-可以实现在网页中“插入”网页"><a class="header-anchor" href="#通过内联框架-可以实现在网页中“插入”网页">¶</a>通过内联框架 可以实现在网页中“插入”网页</h2>
-<h2 id="表单元素"><a class="header-anchor" href="#表单元素">¶</a>表单元素</h2>
-<h3 id="表单-form"><a class="header-anchor" href="#表单-form">¶</a>表单 form</h3>
-<p>向服务器提交数据, action表示将数据提交到哪里，method用来选择http提交数据方式</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"get"</span> <span class="attr">action</span>=<span class="string">"https://how2j.cn/study/login.jsp"</span>&gt;</span></span><br><span class="line">账号：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span>&gt;</span> <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span> &gt;</span> <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"登陆"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="input类"><a class="header-anchor" href="#input类">¶</a>input类</h3>
-<p>使用type选择对应的类型</p>
-<h5 id="文本框"><a class="header-anchor" href="#文本框">¶</a>文本框</h5>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span>&gt;</span> 即表示文本框 </span><br><span class="line">要输入多行使用 文本域<span class="tag">&lt;<span class="name">textarea</span>&gt;</span></span><br><span class="line">- 属性：</span><br><span class="line">    size    改变大小</span><br><span class="line">    value   初始值</span><br><span class="line">    placeholder 背景文字</span><br></pre></td></tr></table></figure>
-<h5 id="密码框-t"><a class="header-anchor" href="#密码框-t">¶</a>密码框 t</h5>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span> = <span class="string">"password"</span>&gt;</span>6</span><br></pre></td></tr></table></figure>
-<h5 id="选框"><a class="header-anchor" href="#选框">¶</a>选框</h5>
-<p>单选：input type=“radio”<br>
-复选：input type=“checkbox”<br>
-checked默认选</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>今天晚上做什么？<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"> </span><br><span class="line">学习java<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">value</span>=<span class="string">"学习java"</span> &gt;</span> <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">东京热<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">checked</span>=<span class="string">"checked"</span>  <span class="attr">name</span>=<span class="string">"activity"</span> <span class="attr">value</span>=<span class="string">"tokyohot"</span> &gt;</span> <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">dota<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">value</span>=<span class="string">"dota"</span> &gt;</span> <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">LOL<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"checkbox"</span> <span class="attr">value</span>=<span class="string">"lol"</span>&gt;</span> <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br></pre></td></tr></table></figure>
-<h5 id="下拉列表-select"><a class="header-anchor" href="#下拉列表-select">¶</a>下拉列表 select</h5>
-<p>使用select和option, size框的大小，multiple表示可以多选，selected默认选</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">size</span>=<span class="string">"3"</span> <span class="attr">multiple</span>=<span class="string">"multiple"</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">option</span> &gt;</span>苍老师<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">option</span> <span class="attr">selected</span>=<span class="string">"selected"</span>&gt;</span>高树玛利亚<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">option</span> <span class="attr">selected</span>=<span class="string">"selected"</span>&gt;</span>遥美<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="按钮系列"><a class="header-anchor" href="#按钮系列">¶</a>按钮系列</h3>
-<h5 id="普通按钮button"><a class="header-anchor" href="#普通按钮button">¶</a>普通按钮button</h5>
-<p>value显示文本，不能用于提交数据。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"button"</span> <span class="attr">value</span>=<span class="string">"一个按钮"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h5 id="提交按钮submit"><a class="header-anchor" href="#提交按钮submit">¶</a>提交按钮submit</h5>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/study/login.jsp"</span> <span class="attr">method</span>=<span class="string">"get"</span>&gt;</span></span><br><span class="line">账号：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span>&gt;</span> <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span> &gt;</span> <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"登陆"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h5 id="重置按钮reset"><a class="header-anchor" href="#重置按钮reset">¶</a>重置按钮reset</h5>
-<p>将输入框复原</p>
-<h5 id="图像提交-input-image"><a class="header-anchor" href="#图像提交-input-image">¶</a>图像提交 input image</h5>
-<p>src放图片uri</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/study/login.jsp"</span>&gt;</span></span><br><span class="line">账号：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span>&gt;</span> <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span> &gt;</span> <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"image"</span> <span class="attr">src</span>=<span class="string">"https://how2j.cn/example.gif"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="button按钮标签"><a class="header-anchor" href="#button按钮标签">¶</a>button按钮标签</h3>
-<p>如果type是submmit就有提交数据的功能</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/study/login.jsp"</span>&gt;</span></span><br><span class="line">账号：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span>&gt;</span> <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line">密码：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"password"</span> <span class="attr">name</span>=<span class="string">"password"</span> &gt;</span> <span class="tag">&lt;<span class="name">br</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span>登陆<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h1>CSS</h1>
-<p>可以控制内容的属性，比如颜色等。</p>
-<h3 id="格式-style框住"><a class="header-anchor" href="#格式-style框住">¶</a>格式 style框住</h3>
-<p>选择器{属性：值}</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line"><span class="selector-tag">p</span>&#123;</span><br><span class="line">   <span class="attribute">color</span>:red;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;p&gt;这是一个P&lt;/p&gt;</span><br><span class="line">&lt;p&gt;这是一个P&lt;/p&gt;</span><br><span class="line">&lt;p&gt;这是一个P&lt;/p&gt;</span><br><span class="line">&lt;p&gt;这是一个P&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="选择器"><a class="header-anchor" href="#选择器">¶</a>选择器</h3>
-<ul>
-<li>id选择器： #p 每个标签的id都应该是唯一的</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line"><span class="selector-tag">p</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>:red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#p1</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>:blue;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-id">#p2</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>:green;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;p&gt;没有id的p&lt;/p&gt;</span><br><span class="line">&lt;p id="p1"&gt;id=p1的p&lt;/p&gt;</span><br><span class="line">&lt;p id="p2"&gt;id=p2的p&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>类选择器： …pre{color:blue;}</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line"><span class="selector-class">.pre</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>:blue;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.after</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>:green;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;p class="pre"&gt;前3个&lt;/p&gt;</span><br><span class="line">&lt;p class="pre"&gt;前3个&lt;/p&gt;</span><br><span class="line">&lt;p class="pre"&gt;前3个&lt;/p&gt;</span><br><span class="line">&lt;p class="after"&gt;后3个&lt;/p&gt;</span><br><span class="line">&lt;p class="after"&gt;后3个&lt;/p&gt;</span><br><span class="line">&lt;p class="after"&gt;后3个&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>准确选择: 根据元素名和class选择。</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*元素和class都要符合*/</span></span><br><span class="line">&lt;<span class="selector-tag">style</span>&gt;</span><br><span class="line"><span class="selector-tag">p</span><span class="selector-class">.blue</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>:blue;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">&lt;p class="blue"&gt;class=blue的p&lt;/p&gt;</span><br><span class="line">&lt;span class="blue"&gt;class=blue的span&lt;/span&gt;</span><br></pre></td></tr></table></figure>
-<h3 id="CSS与html文件分离"><a class="header-anchor" href="#CSS与html文件分离">¶</a>CSS与html文件分离</h3>
-<p>创建一个文件叫style.css<br>
-其内容为</p>
-<p>.p1{<br>
-color:red;<br>
-}<br>
-.span1{<br>
-color:blue;<br>
-}</p>
-<p>然后在html中包含该文件</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"/study/style.css"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/13/Leetcode%E6%8E%92%E5%BA%8F%E5%90%88%E9%9B%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/13/Leetcode%E6%8E%92%E5%BA%8F%E5%90%88%E9%9B%86/" itemprop="url">Leetcode排序合集</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-13T14:50:02+08:00">
-                2020-04-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>堆和快排能解决百分之八十的问题。
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/13/Leetcode%E6%8E%92%E5%BA%8F%E5%90%88%E9%9B%86/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://noonett.github.io/2020/04/12/Leetcode322-%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="TYH">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/IMG_2273.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="21号避难所">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2020/04/12/Leetcode322-%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/" itemprop="url">Leetcode322.零钱兑换</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-04-12T20:34:53+08:00">
-                2020-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <pre><code>题目：给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。
-</code></pre>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2020/04/12/Leetcode322-%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1719,7 +1649,7 @@ color:blue;<br>
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">145</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1732,7 +1662,7 @@ color:blue;<br>
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">46</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
