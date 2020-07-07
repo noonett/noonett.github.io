@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="矩阵与Numpy"><meta name="keywords" content="数学"><meta name="author" content="TYH"><meta name="copyright" content="TYH"><title>矩阵与Numpy | 21号避难所</title><link rel="shortcut icon" href="/images/yuhangyuanfeixiang.png"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">矩阵乘法实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">2.</span> <span class="toc-text">Numpy</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2904152762,521104362&amp;fm=16&amp;gp=0.jpg"></div><div class="author-info__name text-center">TYH</div><div class="author-info__description text-center">反复敲打，登峰造极</div><div class="follow-button"><a href="https://github.com/noonett" target="_blank" rel="noopener">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">145</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">46</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1594158827275&amp;di=df17e1e2aa2bed8856de89b2908df8f5&amp;imgtype=0&amp;src=http%3A%2F%2Fww3.sinaimg.cn%2Flarge%2F6d468373gw1exvx1shtr1j21hc0u0h5x.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">21号避难所</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">矩阵与Numpy</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-02-24</time><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">597</span><span class="post-meta__separator">|</span><span>阅读时长: 3 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><h1>矩阵乘法实现</h1>
+<pre><code>这个函数还是很简单的，就是对应位置相乘就完事了，最后再用numpy来确认一下函数的正确性。
+</code></pre>
+<a id="more"></a>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Matrix_multiplication</span><span class="params">(A,B, data = [])</span>:</span></span><br><span class="line">    C = []</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">not</span> A) <span class="keyword">or</span> (<span class="keyword">not</span> B):</span><br><span class="line">        <span class="keyword">return</span> C</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(A)):</span><br><span class="line">        row = []</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(len(B[<span class="number">0</span>])):</span><br><span class="line">            temp = <span class="number">0</span></span><br><span class="line">            <span class="keyword">for</span> a,b <span class="keyword">in</span> zip(range(len(A[<span class="number">0</span>])),range(len(B))):</span><br><span class="line">                temp += A[i][a] * B[b][j]</span><br><span class="line">            row.append(temp)</span><br><span class="line">        C.append(row)</span><br><span class="line">    <span class="keyword">return</span> C</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">A = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">7</span>):</span><br><span class="line">    row = []</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">7</span>):</span><br><span class="line">        row.append(i+j)</span><br><span class="line">    A.append(row)</span><br><span class="line">print(<span class="string">'A:'</span>)</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> A:</span><br><span class="line">    print(row) </span><br><span class="line">    </span><br><span class="line">B = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>,<span class="number">9</span>):</span><br><span class="line">    row = []</span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">6</span>):</span><br><span class="line">        row.append(i+j)</span><br><span class="line">    B.append(row)</span><br><span class="line">print(<span class="string">'B:'</span>)</span><br><span class="line"><span class="keyword">for</span> row <span class="keyword">in</span> B:</span><br><span class="line">    print(row)</span><br></pre></td></tr></table></figure>
+<pre><code>A:
+[2, 3, 4, 5, 6, 7]
+[3, 4, 5, 6, 7, 8]
+[4, 5, 6, 7, 8, 9]
+[5, 6, 7, 8, 9, 10]
+[6, 7, 8, 9, 10, 11]
+[7, 8, 9, 10, 11, 12]
+B:
+[3, 4, 5, 6, 7, 8]
+[4, 5, 6, 7, 8, 9]
+[5, 6, 7, 8, 9, 10]
+[6, 7, 8, 9, 10, 11]
+[7, 8, 9, 10, 11, 12]
+[8, 9, 10, 11, 12, 13]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#A = []</span></span><br><span class="line">Matrix_multiplication(A,B)</span><br></pre></td></tr></table></figure>
+<pre><code>[[166, 193, 220, 247, 274, 301],
+ [199, 232, 265, 298, 331, 364],
+ [232, 271, 310, 349, 388, 427],
+ [265, 310, 355, 400, 445, 490],
+ [298, 349, 400, 451, 502, 553],
+ [331, 388, 445, 502, 559, 616]]
+</code></pre>
+<h1>Numpy</h1>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a = np.array([</span><br><span class="line">(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>),</span><br><span class="line">(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>),</span><br><span class="line">(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>),</span><br><span class="line">(<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>),</span><br><span class="line">(<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>),</span><br><span class="line">(<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>)])</span><br><span class="line">b = np.array([</span><br><span class="line">(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>),</span><br><span class="line">(<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>),</span><br><span class="line">(<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>),</span><br><span class="line">(<span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>),</span><br><span class="line">(<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>),</span><br><span class="line">(<span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>, <span class="number">11</span>, <span class="number">12</span>, <span class="number">13</span>)])</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#矩阵乘法</span></span><br><span class="line">np.dot(a,b)</span><br></pre></td></tr></table></figure>
+<pre><code>array([[166, 193, 220, 247, 274, 301],
+       [199, 232, 265, 298, 331, 364],
+       [232, 271, 310, 349, 388, 427],
+       [265, 310, 355, 400, 445, 490],
+       [298, 349, 400, 451, 502, 553],
+       [331, 388, 445, 502, 559, 616]])
+</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#矩阵加减</span></span><br><span class="line">print(a + b)</span><br><span class="line"><span class="comment">#矩阵平方</span></span><br><span class="line">print(a**<span class="number">2</span>)</span><br><span class="line"><span class="comment">#矩阵转置</span></span><br><span class="line">print(a.T)</span><br></pre></td></tr></table></figure>
+<pre><code>[[ 5  7  9 11 13 15]
+ [ 7  9 11 13 15 17]
+ [ 9 11 13 15 17 19]
+ [11 13 15 17 19 21]
+ [13 15 17 19 21 23]
+ [15 17 19 21 23 25]]
+[[  4   9  16  25  36  49]
+ [  9  16  25  36  49  64]
+ [ 16  25  36  49  64  81]
+ [ 25  36  49  64  81 100]
+ [ 36  49  64  81 100 121]
+ [ 49  64  81 100 121 144]]
+[[ 2  3  4  5  6  7]
+ [ 3  4  5  6  7  8]
+ [ 4  5  6  7  8  9]
+ [ 5  6  7  8  9 10]
+ [ 6  7  8  9 10 11]
+ [ 7  8  9 10 11 12]]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 返回逆矩阵</span></span><br><span class="line">c = np.array([[<span class="number">1.0</span>, <span class="number">2.0</span>], [<span class="number">3.0</span>, <span class="number">4.0</span>]])</span><br><span class="line">print(np.linalg.inv(c))</span><br><span class="line"><span class="comment"># 矩阵的迹</span></span><br><span class="line">print(np.trace(c))</span><br></pre></td></tr></table></figure>
+<pre><code>[[-2.   1. ]
+ [ 1.5 -0.5]]
+5.0
+</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 特征值和特征向量</span></span><br><span class="line">eigenvalues, eigenvector = np.linalg.eig(c)</span><br><span class="line">print(eigenvalues)</span><br><span class="line">print(eigenvector)</span><br></pre></td></tr></table></figure>
+<pre><code>[-0.37228132  5.37228132]
+[[-0.82456484 -0.41597356]
+ [ 0.56576746 -0.90937671]]
+</code></pre>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E5%AD%A6/">数学</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/02/26/Git_learning/"><i class="fa fa-chevron-left">  </i><span>Git一文通</span></a></div><div class="next-post pull-right"><a href="/2020/02/23/douban_movie-3/"><span>爬取豆瓣电影前250的数据</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1594158827275&amp;di=df17e1e2aa2bed8856de89b2908df8f5&amp;imgtype=0&amp;src=http%3A%2F%2Fww3.sinaimg.cn%2Flarge%2F6d468373gw1exvx1shtr1j21hc0u0h5x.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By TYH</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

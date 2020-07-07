@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="面向对象思想"><meta name="keywords" content="程序设计"><meta name="author" content="TYH"><meta name="copyright" content="TYH"><title>面向对象思想 | 21号避难所</title><link rel="shortcut icon" href="/images/yuhangyuanfeixiang.png"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">三大特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-封装"><span class="toc-number">1.0.1.</span> <span class="toc-text">1 封装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优点"><span class="toc-number">1.0.2.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-继承"><span class="toc-number">1.0.3.</span> <span class="toc-text">2 继承</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-多态"><span class="toc-number">1.0.4.</span> <span class="toc-text">3 多态</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#运行时多态的三个条件："><span class="toc-number">1.0.4.0.1.</span> <span class="toc-text">运行时多态的三个条件：</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">2.</span> <span class="toc-text">类图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">3.</span> <span class="toc-text">六大设计原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#S-O-L-I-D"><span class="toc-number">3.0.1.</span> <span class="toc-text">S.O.L.I.D</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-单一责任原则：修改一个类的原因只有一个"><span class="toc-number">3.0.2.</span> <span class="toc-text">1 单一责任原则：修改一个类的原因只有一个</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-开放封闭原则：类应该对拓展开放，对修改关闭"><span class="toc-number">3.0.3.</span> <span class="toc-text">2 开放封闭原则：类应该对拓展开放，对修改关闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-里氏替换原则：子类对象可以完全替换超类对象"><span class="toc-number">3.0.4.</span> <span class="toc-text">3 里氏替换原则：子类对象可以完全替换超类对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-接口分离原则：不应该强迫客户依赖于它们不用的方法。"><span class="toc-number">3.0.5.</span> <span class="toc-text">4 接口分离原则：不应该强迫客户依赖于它们不用的方法。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-依赖倒置原则：高层模块不应该依赖于低层模块，二者都应该依赖于抽象；抽象不应该依赖于细节，细节应该依赖于抽象。"><span class="toc-number">3.0.6.</span> <span class="toc-text">5 依赖倒置原则：高层模块不应该依赖于低层模块，二者都应该依赖于抽象；抽象不应该依赖于细节，细节应该依赖于抽象。</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">4.</span> <span class="toc-text">其他原则</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2904152762,521104362&amp;fm=16&amp;gp=0.jpg"></div><div class="author-info__name text-center">TYH</div><div class="author-info__description text-center">反复敲打，登峰造极</div><div class="follow-button"><a href="https://github.com/noonett" target="_blank" rel="noopener">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">145</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">46</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1594158827275&amp;di=df17e1e2aa2bed8856de89b2908df8f5&amp;imgtype=0&amp;src=http%3A%2F%2Fww3.sinaimg.cn%2Flarge%2F6d468373gw1exvx1shtr1j21hc0u0h5x.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">21号避难所</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">面向对象思想</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-03-20</time><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.7k</span><span class="post-meta__separator">|</span><span>阅读时长: 5 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><a id="more"></a>
+<h1>三大特性</h1>
+<h3 id="1-封装"><a class="header-anchor" href="#1-封装"></a>1 封装</h3>
+<p>利用抽象数据类型将数据和使用数据的方法封装，对外开放接口而不暴露对象内部实现的细节。使得用户无须关心对象内部的细节，而可以通过接口访问对象的数据和方法。</p>
+<h3 id="优点"><a class="header-anchor" href="#优点"></a>优点</h3>
+<ol>
+<li>减少耦合：可以独立地开发、测试、优化、使用、理解和修改</li>
+<li>减轻维护的负担：可以更容易被理解，并且在调试的时候可以不影响其他模块</li>
+<li>有效地调节性能：可以通过剖析来确定哪些模块影响了系统的性能</li>
+<li>提高软件的可重用性</li>
+<li>降低了构建大型系统的风险：即使整个系统不可用，但是这些独立的模块却有可能是可用的</li>
+</ol>
+<h3 id="2-继承"><a class="header-anchor" href="#2-继承"></a>2 继承</h3>
+<p>实现is-A关系，子类可以继承自超类，获得超类非private的字段和方法。<br>
+要遵循里氏替换原则：子类对象必须能够替换掉所有父类对象。只要有父类出现的地方，都可以用子类来替代，而且不会出现任何错误和异常。<br>
+即可以实现向上转型。</p>
+<h3 id="3-多态"><a class="header-anchor" href="#3-多态"></a>3 多态</h3>
+<p>包括编译时多态和运行时多态：</p>
+<ul>
+<li>编译时多态是指方法的重载，overload。</li>
+<li>运行时多态是指动态绑定，程序运行时能自动选择合适的方法。即程序中定义的对象引用所指向的实际类型在运行期间才确定。</li>
+</ul>
+<h5 id="运行时多态的三个条件："><a class="header-anchor" href="#运行时多态的三个条件："></a>运行时多态的三个条件：</h5>
+<ul>
+<li>继承</li>
+<li>覆写override</li>
+<li>向上转型<br>
+乐器类（Instrument）有两个子类：Wind 和 Percussion，它们都覆盖了父类的 play() 方法，并且在 main() 方法中使用父类 Instrument 来引用 Wind 和 Percussion 对象。在 Instrument 引用调用 play() 方法时，会执行实际引用对象所在类的 play() 方法，而不是 Instrument 类的方法。</li>
+</ul>
+<hr>
+<h1>类图</h1>
+<ol>
+<li>泛化关系 (Generalization)<br>
+用来描述继承关系，在 Java 中使用 extends 关键字。</li>
+<li>实现关系 (Realization)<br>
+用来实现一个接口，在 Java 中使用 implements 关键字。</li>
+<li>聚合关系<br>
+表示整体由部分组成，但是整体和部分不是强依赖的，整体不存在了部分还是会存在。</li>
+<li>组合关系<br>
+和聚合不同，组合中整体和部分是强依赖的，整体不存在了部分也不存在了。比如公司和部门，公司没了部门就不存在了。但是公司和员工就属于聚合关系了，因为公司没了员工还在。</li>
+<li>关联关系<br>
+表示不同类对象之间有关联，这是一种静态关系，与运行过程的状态无关，在最开始就可以确定。因此也可以用 1 对 1、多对 1、多对多这种关联关系来表示。比如学生和学校就是一种关联关系，一个学校可以有很多学生，但是一个学生只属于一个学校，因此这是一种多对一的关系，在运行开始之前就可以确定。</li>
+<li>依赖关系<br>
+和关联关系不同的是，依赖关系是在运行过程中起作用的。A 类和 B 类是依赖关系主要有三种形式：</li>
+</ol>
+<ul>
+<li>A 类是 B 类方法的局部变量；</li>
+<li>A 类是 B 类方法的参数；</li>
+<li>A 类向 B 类发送消息，从而影响 B 类发生变化。<br>
+.</li>
+</ul>
+<hr>
+<h1>六大设计原则</h1>
+<h3 id="S-O-L-I-D"><a class="header-anchor" href="#S-O-L-I-D"></a>S.O.L.I.D</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">简写</th>
+<th style="text-align:center">全拼</th>
+<th style="text-align:center">中文翻译</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">SRP</td>
+<td style="text-align:center">The Single Responsibility Principle</td>
+<td style="text-align:center">单一责任原则</td>
+</tr>
+<tr>
+<td style="text-align:right">OCP</td>
+<td style="text-align:center">The Open Closed Principle</td>
+<td style="text-align:center">开放封闭原则</td>
+</tr>
+<tr>
+<td style="text-align:right">LSP</td>
+<td style="text-align:center">The Liskov Substitution Principle</td>
+<td style="text-align:center">里氏替换原则</td>
+</tr>
+<tr>
+<td style="text-align:right">ISP</td>
+<td style="text-align:center">The Interface Segregation Principle</td>
+<td style="text-align:center">接口分离原则</td>
+</tr>
+<tr>
+<td style="text-align:right">DIP</td>
+<td style="text-align:center">The Dependency Inversion Principle</td>
+<td style="text-align:center">依赖倒置原则</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-单一责任原则：修改一个类的原因只有一个"><a class="header-anchor" href="#1-单一责任原则：修改一个类的原因只有一个"></a>1 单一责任原则：修改一个类的原因只有一个</h3>
+<p>换句话说就是让一个类只负责一件事，当这个类需要做过多事情的时候，就需要分解这个类。<br>
+降低耦合</p>
+<h3 id="2-开放封闭原则：类应该对拓展开放，对修改关闭"><a class="header-anchor" href="#2-开放封闭原则：类应该对拓展开放，对修改关闭"></a>2 开放封闭原则：类应该对拓展开放，对修改关闭</h3>
+<p>扩展就是添加新功能的意思，因此该原则要求在添加新功能时不需要修改代码。<br>
+符合开闭原则最典型的设计模式是装饰者模式，它可以动态地将责任附加到对象上，而不用去修改类的代码。</p>
+<h3 id="3-里氏替换原则：子类对象可以完全替换超类对象"><a class="header-anchor" href="#3-里氏替换原则：子类对象可以完全替换超类对象"></a>3 里氏替换原则：子类对象可以完全替换超类对象</h3>
+<p>继承是一种 IS-A 关系，子类需要能够当成父类来使用，并且需要比父类更特殊。<br>
+如果不满足这个原则，那么各个子类的行为上就会有很大差异，增加继承体系的复杂度。</p>
+<h3 id="4-接口分离原则：不应该强迫客户依赖于它们不用的方法。"><a class="header-anchor" href="#4-接口分离原则：不应该强迫客户依赖于它们不用的方法。"></a>4 接口分离原则：不应该强迫客户依赖于它们不用的方法。</h3>
+<p>因此使用多个专门的接口比使用单一的总接口要好。</p>
+<h3 id="5-依赖倒置原则：高层模块不应该依赖于低层模块，二者都应该依赖于抽象；抽象不应该依赖于细节，细节应该依赖于抽象。"><a class="header-anchor" href="#5-依赖倒置原则：高层模块不应该依赖于低层模块，二者都应该依赖于抽象；抽象不应该依赖于细节，细节应该依赖于抽象。"></a>5 依赖倒置原则：高层模块不应该依赖于低层模块，二者都应该依赖于抽象；抽象不应该依赖于细节，细节应该依赖于抽象。</h3>
+<p>高层模块包含一个应用程序中重要的策略选择和业务模块，如果高层模块依赖于低层模块，那么低层模块的改动就会直接影响到高层模块，从而迫使高层模块也需要改动。<br>
+面向抽象<br>
+依赖于抽象意味着：</p>
+<ul>
+<li>任何变量都不应该持有一个指向具体类的指针或者引用；</li>
+<li>任何类都不应该从具体类派生；</li>
+<li>任何方法都不应该覆写它的任何基类中的已经实现的方法。<br>
+.</li>
+</ul>
+<hr>
+<h1>其他原则</h1>
+<ol>
+<li>迪米特法则<br>
+迪米特法则又叫作最少知识原则（Least Knowledge Principle，简写 LKP），就是说一个对象应当对其他对象有尽可能少的了解，不和陌生人说话。</li>
+<li>合成复用原则<br>
+尽量使用对象组合，而不是通过继承来达到复用的目的。</li>
+<li>共同封闭原则<br>
+一起修改的类，应该组合在一起（同一个包里）。如果必须修改应用程序里的代码，我们希望所有的修改都发生在一个包里（修改关闭），而不是遍布在很多包里。</li>
+<li>稳定抽象原则<br>
+最稳定的包应该是最抽象的包，不稳定的包应该是具体的包，即包的抽象程度跟它的稳定性成正比。</li>
+<li>稳定依赖原则<br>
+包之间的依赖关系都应该是稳定方向依赖的，包要依赖的包要比自己更具有稳定性。</li>
+</ol>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/">程序设计</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/03/21/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%95%9C%E5%83%8F%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/"><i class="fa fa-chevron-left">  </i><span>二叉树的镜像｜《剑指offer》</span></a></div><div class="next-post pull-right"><a href="/2020/03/20/%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/"><span>树的子结构｜《剑指offer》</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1594158827275&amp;di=df17e1e2aa2bed8856de89b2908df8f5&amp;imgtype=0&amp;src=http%3A%2F%2Fww3.sinaimg.cn%2Flarge%2F6d468373gw1exvx1shtr1j21hc0u0h5x.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By TYH</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

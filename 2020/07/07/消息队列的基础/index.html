@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="消息队列的基础"><meta name="keywords" content="系统设计"><meta name="author" content="TYH"><meta name="copyright" content="TYH"><title>消息队列的基础 | 21号避难所</title><link rel="shortcut icon" href="/images/yuhangyuanfeixiang.png"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">消息队列</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、消息模型"><span class="toc-number">1.1.</span> <span class="toc-text">一、消息模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#点对点"><span class="toc-number">1.1.1.</span> <span class="toc-text">点对点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发布-订阅"><span class="toc-number">1.1.2.</span> <span class="toc-text">发布&#x2F;订阅</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、使用场景"><span class="toc-number">1.2.</span> <span class="toc-text">二、使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#异步处理"><span class="toc-number">1.2.1.</span> <span class="toc-text">异步处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#流量削峰"><span class="toc-number">1.2.2.</span> <span class="toc-text">流量削峰</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#应用解藕"><span class="toc-number">1.2.3.</span> <span class="toc-text">应用解藕</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、可靠性"><span class="toc-number">1.3.</span> <span class="toc-text">三、可靠性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#发送端的可靠性"><span class="toc-number">1.3.1.</span> <span class="toc-text">发送端的可靠性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#接收端的可靠性"><span class="toc-number">1.3.2.</span> <span class="toc-text">接收端的可靠性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、消息队列带来的问题"><span class="toc-number">1.4.</span> <span class="toc-text">四、消息队列带来的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-系统可用性降低"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. 系统可用性降低</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-系统复杂度提高了"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. 系统复杂度提高了</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-一致性问题"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. 一致性问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#五、常见消息队列对比"><span class="toc-number">1.5.</span> <span class="toc-text">五、常见消息队列对比</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Kafka"><span class="toc-number">1.5.1.</span> <span class="toc-text">Kafka</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2904152762,521104362&amp;fm=16&amp;gp=0.jpg"></div><div class="author-info__name text-center">TYH</div><div class="author-info__description text-center">反复敲打，登峰造极</div><div class="follow-button"><a href="https://github.com/noonett" target="_blank" rel="noopener">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">145</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">46</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1594158827275&amp;di=df17e1e2aa2bed8856de89b2908df8f5&amp;imgtype=0&amp;src=http%3A%2F%2Fww3.sinaimg.cn%2Flarge%2F6d468373gw1exvx1shtr1j21hc0u0h5x.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">21号避难所</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">消息队列的基础</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-07</time><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">1.3k</span><span class="post-meta__separator">|</span><span>阅读时长: 3 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>消息队列是个好东西，将系统调用彻底解藕，并异步处理，还能在高并发场景下，将大量请求的压力转移到消息队列，从而降低系统的响应时间。完美的第三者。</p>
+<a id="more"></a>
+<h1>消息队列</h1>
+<p><img src="/2020/07/07/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E5%9F%BA%E7%A1%80/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.png" alt="消息队列"></p>
+<h2 id="一、消息模型"><a class="header-anchor" href="#一、消息模型"></a>一、消息模型</h2>
+<h3 id="点对点"><a class="header-anchor" href="#点对点"></a>点对点</h3>
+<ul>
+<li>一个消息只能被一个消费者消费一次</li>
+</ul>
+<h3 id="发布-订阅"><a class="header-anchor" href="#发布-订阅"></a>发布/订阅</h3>
+<ul>
+<li>
+<p>多个消费者可以从频道订阅这个消息</p>
+</li>
+<li>
+<p>与观察者模式的不同</p>
+<ul>
+<li>
+<ol>
+<li>可见性：观察者模式观察者和主题都知道对方的存在，双方是松耦合；发布/订阅模式中，生产者和消费者通过频道通信，双方不可见，彻底解藕。</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>异步性：观察者模式是同步的，当事件触发时，主题会调用观察者方法，等待方法返回。发布/订阅模式是异步的，生产者发布消息之后不关心消费者何时订阅这个消息，可以立即返回。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、使用场景"><a class="header-anchor" href="#二、使用场景"></a>二、使用场景</h2>
+<h3 id="异步处理"><a class="header-anchor" href="#异步处理"></a>异步处理</h3>
+<p>发送者将消息发送给消息队列之后，不需要同步等待消息接收者处理完毕，而是立即返回进行其它操作。消息接收者从消息队列中订阅消息之后异步处理。<br>
+例如在注册流程中通常需要发送验证邮件来确保注册用户身份的合法性，可以使用消息队列使发送验证邮件的操作异步处理，用户在填写完注册信息之后就可以完成注册，而将发送验证邮件这一消息发送到消息队列中。<br>
+只有在业务流程允许异步处理的情况下才能这么做，例如上面的注册流程中，如果要求用户对验证邮件进行点击之后才能完成注册的话，就不能再使用消息队列</p>
+<h3 id="流量削峰"><a class="header-anchor" href="#流量削峰"></a>流量削峰</h3>
+<p>在高并发的场景下，如果短时间有大量的请求到达会压垮服务器。<br>
+可以将请求发送到消息队列中，服务器按照其处理能力从消息队列中订阅消息进行处理。</p>
+<h3 id="应用解藕"><a class="header-anchor" href="#应用解藕"></a>应用解藕</h3>
+<p>如果模块之间不直接进行调用，模块之间耦合度就会很低，那么修改一个模块或者新增一个模块对其它模块的影响会很小，从而实现可扩展性。<br>
+通过使用消息队列，一个模块只需要向消息队列中发送消息，其它模块可以选择性地从消息队列中订阅消息从而完成调用。</p>
+<h2 id="三、可靠性"><a class="header-anchor" href="#三、可靠性"></a>三、可靠性</h2>
+<h3 id="发送端的可靠性"><a class="header-anchor" href="#发送端的可靠性"></a>发送端的可靠性</h3>
+<ul>
+<li>
+<p>发送端完成操作后一定能将消息成功发送到消费队列中</p>
+<p>实现方法：在本地数据库建一张消息表，将消息数据与业务数据保存在同一数据库实例里，这样就可以利用本地数据库的事务机制。事务提交成功后，将消息表中的消息转移到消息队列中，若转移消息成功则删除消息表中的数据，否则继续重传。</p>
+</li>
+</ul>
+<h3 id="接收端的可靠性"><a class="header-anchor" href="#接收端的可靠性"></a>接收端的可靠性</h3>
+<ul>
+<li>
+<p>接收端能够从消息队列成功消费一次消息</p>
+<p>两种实现方法：<br>
+保证接收端处理消息的业务逻辑具有幂等性：只要具有幂等性，那么消费多少次消息，最后处理的结果都是一样的。<br>
+保证消息具有唯一编号，并使用一张日志表来记录已经消费的消息编号。</p>
+</li>
+</ul>
+<h2 id="四、消息队列带来的问题"><a class="header-anchor" href="#四、消息队列带来的问题"></a>四、消息队列带来的问题</h2>
+<h3 id="1-系统可用性降低"><a class="header-anchor" href="#1-系统可用性降低"></a>1. 系统可用性降低</h3>
+<p>系统可用性在某种程度上降低，为什么这样说呢？在加入MQ之前，你不用考虑消息丢失或者说MQ挂掉等等的情况，但是，引入MQ之后你就需要去考虑了！</p>
+<h3 id="2-系统复杂度提高了"><a class="header-anchor" href="#2-系统复杂度提高了"></a>2. 系统复杂度提高了</h3>
+<p>加入MQ之后，你需要保证消息没有被重复消费、处理消息丢失的情况、保证消息传递的顺序性等等问题！</p>
+<h3 id="3-一致性问题"><a class="header-anchor" href="#3-一致性问题"></a>3. 一致性问题</h3>
+<p>我上面讲了消息队列可以实现异步，消息队列带来的异步确实可以提高系统响应速度。但是，万一消息的真正消费者并没有正确消费消息怎么办？这样就会导致数据不一致的情况了!</p>
+<h2 id="五、常见消息队列对比"><a class="header-anchor" href="#五、常见消息队列对比"></a>五、常见消息队列对比</h2>
+<h3 id="Kafka"><a class="header-anchor" href="#Kafka"></a>Kafka</h3>
+<p>kafka 的特点其实很明显，就是仅仅提供较少的核心功能，但是提供超高的吞吐量，ms 级的延迟，极高的可用性以及可靠性，而且分布式可以任意扩展。同时 kafka 最好是支撑较少的 topic 数量即可，保证其超高吞吐量。kafka 唯一的一点劣势是有可能消息重复消费，那么对数据准确性会造成极其轻微的影响，在大数据领域中以及日志采集中，这点轻微影响可以忽略这个特性天然适合大数据实时计算以及日志收集。</p>
+<p><em>XMind: ZEN - Trial Version</em></p>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/2020/07/07/Kafka/"><i class="fa fa-chevron-left">  </i><span>Hello-Kafka!</span></a></div><div class="next-post pull-right"><a href="/2020/07/07/%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/"><span>系统的一些基础概念</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1594158827275&amp;di=df17e1e2aa2bed8856de89b2908df8f5&amp;imgtype=0&amp;src=http%3A%2F%2Fww3.sinaimg.cn%2Flarge%2F6d468373gw1exvx1shtr1j21hc0u0h5x.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By TYH</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>

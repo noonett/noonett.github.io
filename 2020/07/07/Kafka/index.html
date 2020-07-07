@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Hello-Kafka!"><meta name="keywords" content="系统设计"><meta name="author" content="TYH"><meta name="copyright" content="TYH"><title>Hello-Kafka! | 21号避难所</title><link rel="shortcut icon" href="/images/yuhangyuanfeixiang.png"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">Kafka</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、重要概念"><span class="toc-number">1.1.</span> <span class="toc-text">一、重要概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Producer"><span class="toc-number">1.1.1.</span> <span class="toc-text">Producer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Consumer"><span class="toc-number">1.1.2.</span> <span class="toc-text">Consumer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Broker服务器"><span class="toc-number">1.1.3.</span> <span class="toc-text">Broker服务器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、zookeeper在Kafka中的作用"><span class="toc-number">1.2.</span> <span class="toc-text">二、zookeeper在Kafka中的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Broker注册"><span class="toc-number">1.2.1.</span> <span class="toc-text">1. Broker注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Topic注册"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. Topic注册</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-负载均衡"><span class="toc-number">1.2.3.</span> <span class="toc-text">3. 负载均衡</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、Kafka如何保证消费顺序"><span class="toc-number">1.3.</span> <span class="toc-text">三、Kafka如何保证消费顺序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-消息是如何被分配和消费的"><span class="toc-number">1.3.1.</span> <span class="toc-text">1. 消息是如何被分配和消费的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-解决方案"><span class="toc-number">1.3.2.</span> <span class="toc-text">2. 解决方案</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、Kafka如何保证消息不丢失"><span class="toc-number">1.4.</span> <span class="toc-text">四、Kafka如何保证消息不丢失</span></a></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2904152762,521104362&amp;fm=16&amp;gp=0.jpg"></div><div class="author-info__name text-center">TYH</div><div class="author-info__description text-center">反复敲打，登峰造极</div><div class="follow-button"><a href="https://github.com/noonett" target="_blank" rel="noopener">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">145</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">46</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1594158827275&amp;di=df17e1e2aa2bed8856de89b2908df8f5&amp;imgtype=0&amp;src=http%3A%2F%2Fww3.sinaimg.cn%2Flarge%2F6d468373gw1exvx1shtr1j21hc0u0h5x.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">21号避难所</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">Hello-Kafka!</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-07</time><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">838</span><span class="post-meta__separator">|</span><span>阅读时长: 2 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>Kafka算是现今企业用的应用最多的消息队列，数据处理的平台。它的消息是存储在硬盘上的，大量的使用了批量处理和异步的思想，所以它的吞吐量很大。消费者对消息的获取是顺序IO，所以消费者的访问速度也不差。</p>
+<a id="more"></a>
+<h1>Kafka</h1>
+<p><img src="/2020/07/07/Kafka/Kafka.png" alt="Kafka"></p>
+<h2 id="一、重要概念"><a class="header-anchor" href="#一、重要概念"></a>一、重要概念</h2>
+<h3 id="Producer"><a class="header-anchor" href="#Producer"></a>Producer</h3>
+<h3 id="Consumer"><a class="header-anchor" href="#Consumer"></a>Consumer</h3>
+<h3 id="Broker服务器"><a class="header-anchor" href="#Broker服务器"></a>Broker服务器</h3>
+<p>可以看作是一个独立的 Kafka 实例。多个 Kafka Broker 组成一个 Kafka Cluster。</p>
+<ul>
+<li>
+<p>Topic</p>
+<ul>
+<li>Producer 将消息发送到特定的主题，Consumer 通过订阅特定的 Topic(主题) 来消费消息。</li>
+<li>同一个Topic的Partition可以分布在不同Broker上，即Topic可以横跨多个Broker</li>
+<li>Topic对于多个Partition的消息分配是雨露均沾，这样也带来了消费顺序的问题</li>
+</ul>
+</li>
+<li>
+<p>Partition</p>
+<ul>
+<li>
+<p>Partition 属于 Topic 的一部分。一个 Topic 可以有多个 Partition</p>
+</li>
+<li>
+<p>Partition可以有多个副本Replica</p>
+<ul>
+<li>其中一个为Leader其他的为follower</li>
+<li>follower通过拉消息备份</li>
+<li>只有leader副本发生故障才会用到followers，他们将通过选举，产生新的leader，同步程度不够的不能参加竞选</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>好处</p>
+<ul>
+<li>多Partition分布在不同的Broker可以实现较好的并发能力（负载均衡），但是雨露均沾的分配机制同时也带来了消费顺序的问题</li>
+<li>多副本可以提高kafka消息存储容灾能力，但是也提高了需要的存储空间</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、zookeeper在Kafka中的作用"><a class="header-anchor" href="#二、zookeeper在Kafka中的作用"></a>二、zookeeper在Kafka中的作用</h2>
+<h3 id="1-Broker注册"><a class="header-anchor" href="#1-Broker注册"></a>1. Broker注册</h3>
+<ul>
+<li>
+<p>有一个专门用来进行 Broker 服务器列表记录的节点</p>
+<p>每个 Broker 在启动时，都会到 Zookeeper 上进行注册，即到/brokers/ids 下创建属于自己的节点。每个 Broker 就会将自己的 IP 地址和端口等信息记录到该节点中去</p>
+</li>
+</ul>
+<h3 id="2-Topic注册"><a class="header-anchor" href="#2-Topic注册"></a>2. Topic注册</h3>
+<ul>
+<li>
+<p>partition信息及与 Broker 的对应关系也都是由 Zookeeper 在维护。</p>
+<p>比如我创建了一个名字为 my-topic 的主题并且它有两个分区，对应到 zookeeper 中会创建这些文件夹：/brokers/topics/my-topic/Partitions/0、/brokers/topics/my-topic/Partitions/1</p>
+</li>
+</ul>
+<h3 id="3-负载均衡"><a class="header-anchor" href="#3-负载均衡"></a>3. 负载均衡</h3>
+<ul>
+<li>Zookeeper 可以根据当前的 Partition 数量以及 Consumer 数量来实现生产和消费动态负载均衡。</li>
+</ul>
+<h2 id="三、Kafka如何保证消费顺序"><a class="header-anchor" href="#三、Kafka如何保证消费顺序"></a>三、Kafka如何保证消费顺序</h2>
+<h3 id="1-消息是如何被分配和消费的"><a class="header-anchor" href="#1-消息是如何被分配和消费的"></a>1. 消息是如何被分配和消费的</h3>
+<ul>
+<li>
+<p>每次添加消息到 Partition(分区) 的时候都会采用尾加法，并分配一个特定的偏移量offset。</p>
+<p>Kafka 只能为我们保证 Partition(分区) 中的消息有序，而不能保证 Topic(主题) 中的 Partition(分区) 的有序。</p>
+</li>
+<li>
+<p>Kafka 通过偏移量（offset）来保证消息在分区内的顺序性，但是分区之间的消费顺序无法保证。</p>
+</li>
+</ul>
+<h3 id="2-解决方案"><a class="header-anchor" href="#2-解决方案"></a>2. 解决方案</h3>
+<ul>
+<li>
+<p>源头上：一个Topic对应一个Partition，但是这样就丧失了并发能力</p>
+</li>
+<li>
+<p>key: 发送消息的时候指定 key/Partition，让指定key的消息发送到同一个Partition</p>
+<p>Kafka 中发送 1 条消息的时候，可以指定 topic, partition, key,data（数据） 4 个参数。如果你发送消息的时候指定了 Partition 的话，所有消息都会被发送到指定的 Partition。并且，同一个 key 的消息可以保证只发送到同一个 partition，这个我们可以采用表/对象的 id 来作为 key 。</p>
+</li>
+</ul>
+<h2 id="四、Kafka如何保证消息不丢失"><a class="header-anchor" href="#四、Kafka如何保证消息不丢失"></a>四、Kafka如何保证消息不丢失</h2>
+<p><em>XMind: ZEN - Trial Version</em></p>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/">系统设计</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/9999/01/01/top/"><i class="fa fa-chevron-left">  </i><span>今朝酒</span></a></div><div class="next-post pull-right"><a href="/2020/07/07/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E5%9F%BA%E7%A1%80/"><span>消息队列的基础</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1594158827275&amp;di=df17e1e2aa2bed8856de89b2908df8f5&amp;imgtype=0&amp;src=http%3A%2F%2Fww3.sinaimg.cn%2Flarge%2F6d468373gw1exvx1shtr1j21hc0u0h5x.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By TYH</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
