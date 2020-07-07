@@ -85,13 +85,13 @@
 <meta property="og:url" content="https://noonett.github.io/2020/02/29/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/index.html">
 <meta property="og:site_name" content="21号避难所">
 <meta property="og:description" content="面向对象编程，没有对象，怎么编程？？🤔 顺手把面向抽象，面向接口给学了。">
-<meta property="og:image" content="https://noonett.github.io/.io//%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png">
+<meta property="og:image" content="https://noonett.github.io/2020/02/29/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png">
 <meta property="article:published_time" content="2020-02-29T03:44:45.000Z">
 <meta property="article:modified_time" content="2020-05-29T14:09:14.731Z">
 <meta property="article:author" content="TYH">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://noonett.github.io/.io//%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png">
+<meta name="twitter:image" content="https://noonett.github.io/2020/02/29/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png">
 
 
 
@@ -458,7 +458,7 @@ protected可以字段和方法的访问权限控制在继承树内部，一个pr
 <p>一个接口可以继承自另一接口，用extends。</p>
 <h2 id="继承关系"><a class="header-anchor" href="#继承关系">¶</a>继承关系</h2>
 <p>充分的复用代码，参考集合类定义的一组接口：<br>
-<img src="/.io//%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png" alt="继承关系"></p>
+<img src="/2020/02/29/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png" alt="继承关系"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//总是用更抽象的类来引用实际类型。</span></span><br><span class="line">List list = <span class="keyword">new</span> ArrayList(); <span class="comment">// 用List接口引用具体子类的实例</span></span><br><span class="line">Collection coll = list; <span class="comment">// 向上转型为Collection接口</span></span><br><span class="line">Iterable it = coll; <span class="comment">// 向上转型为Iterable接口</span></span><br></pre></td></tr></table></figure>
 <h2 id="default方法"><a class="header-anchor" href="#default方法">¶</a>default方法</h2>
 <p>实现类可以不必实现default方法。其目的：<br>
