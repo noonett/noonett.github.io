@@ -1130,9 +1130,9 @@ test.csv: test data.<br>
 titanic.csv: training data.</p>
 ]]></content>
       <tags>
+        <tag>Python</tag>
         <tag>Kaggle</tag>
         <tag>Machine Learing</tag>
-        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -6941,13 +6941,13 @@ post在请求体中间</p>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>All tags</title>
-    <url>/tags/index.html</url>
+    <title>categories</title>
+    <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>categories</title>
-    <url>/categories/index.html</url>
+    <title>All tags</title>
+    <url>/tags/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
