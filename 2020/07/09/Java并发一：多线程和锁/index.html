@@ -1,0 +1,295 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="Java并发一：多线程和锁"><meta name="keywords" content="Java,并发"><meta name="author" content="TYH"><meta name="copyright" content="TYH"><title>Java并发一：多线程和锁 | 21号避难所</title><link rel="shortcut icon" href="/images/yuhangyuanfeixiang.png"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#null"><span class="toc-number">1.</span> <span class="toc-text">JUC</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、使用线程"><span class="toc-number">1.1.</span> <span class="toc-text">一、使用线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-实现Runnable接口"><span class="toc-number">1.1.1.</span> <span class="toc-text">1. 实现Runnable接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-实现Callable接口"><span class="toc-number">1.1.2.</span> <span class="toc-text">2. 实现Callable接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-继承Thread类"><span class="toc-number">1.1.3.</span> <span class="toc-text">3. 继承Thread类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-接口与继承Thread类的对比"><span class="toc-number">1.1.4.</span> <span class="toc-text">4. 接口与继承Thread类的对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、基础线程机制"><span class="toc-number">1.2.</span> <span class="toc-text">二、基础线程机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Executor"><span class="toc-number">1.2.1.</span> <span class="toc-text">Executor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deamon"><span class="toc-number">1.2.2.</span> <span class="toc-text">Deamon</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sleep"><span class="toc-number">1.2.3.</span> <span class="toc-text">sleep()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#yield"><span class="toc-number">1.2.4.</span> <span class="toc-text">yield()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stop"><span class="toc-number">1.2.5.</span> <span class="toc-text">stop()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、中断"><span class="toc-number">1.3.</span> <span class="toc-text">三、中断</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#通过interrupt-方法可以将阻塞状态的线程提前结束，但是跟stop-不同的是，JVM只是给线程做线程中断标记，何时终止可以自行判断"><span class="toc-number">1.3.1.</span> <span class="toc-text">通过interrupt()方法可以将阻塞状态的线程提前结束，但是跟stop()不同的是，JVM只是给线程做线程中断标记，何时终止可以自行判断</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、互斥同步"><span class="toc-number">1.4.</span> <span class="toc-text">四、互斥同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-synchronized锁"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. synchronized锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-ReentrantLock"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. ReentrantLock</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#两者的比较"><span class="toc-number">1.4.3.</span> <span class="toc-text">两者的比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用选择"><span class="toc-number">1.4.4.</span> <span class="toc-text">使用选择</span></a></li></ol></li></ol></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2904152762,521104362&amp;fm=16&amp;gp=0.jpg"></div><div class="author-info__name text-center">TYH</div><div class="author-info__description text-center">反复敲打，登峰造极</div><div class="follow-button"><a href="https://github.com/noonett" target="_blank" rel="noopener">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">147</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">49</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1594158827275&amp;di=df17e1e2aa2bed8856de89b2908df8f5&amp;imgtype=0&amp;src=http%3A%2F%2Fww3.sinaimg.cn%2Flarge%2F6d468373gw1exvx1shtr1j21hc0u0h5x.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">21号避难所</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">Java并发一：多线程和锁</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2020-07-09</time><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">2.2k</span><span class="post-meta__separator">|</span><span>阅读时长: 7 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><p>之前学了一波Java多线程，学的不系统，也没整理知识点，准备开始看分布式的内容了，先把最基础的Java并发给复习了，整理一下。</p>
+<a id="more"></a>
+<h1>JUC</h1>
+<p><img src="/2020/07/09/Java%E5%B9%B6%E5%8F%91%E4%B8%80%EF%BC%9A%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E9%94%81/JUC.png" alt="思维导图"></p>
+<h2 id="一、使用线程"><a class="header-anchor" href="#一、使用线程"></a>一、使用线程</h2>
+<p>实现接口只能当作一个被线程驱动的任务，需要Thread调用</p>
+<h3 id="1-实现Runnable接口"><a class="header-anchor" href="#1-实现Runnable接口"></a>1. 实现Runnable接口</h3>
+<ul>
+<li>得实现run方法，通过向Thread传入Runnable实例，调用start()方法来启动线程</li>
+</ul>
+<h3 id="2-实现Callable接口"><a class="header-anchor" href="#2-实现Callable接口"></a>2. 实现Callable接口</h3>
+<ul>
+<li>
+<p>实现call方法，Callable方法可以有返回值，通过FutureTask进行封装，向Thread传入FutureTask实例</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyCallable</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">Integer</span>&gt; </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">call</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">123</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>&#123;</span><br><span class="line">    MyCallable mc = <span class="keyword">new</span> MyCallable();</span><br><span class="line">    FutureTask&lt;Integer&gt; ft = <span class="keyword">new</span> FutureTask&lt;&gt;(mc);</span><br><span class="line">    Thread thread = <span class="keyword">new</span> Thread(ft);</span><br><span class="line">    thread.start();</span><br><span class="line">    System.out.println(ft.get());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="3-继承Thread类"><a class="header-anchor" href="#3-继承Thread类"></a>3. 继承Thread类</h3>
+<ul>
+<li>
+<p>实现run方法，启动start()方法时，JVM将该线程加入就绪队列，等待调用执行run方法</p>
+<p>public class MyThread extends Thread {<br>
+public void run() {<br>
+// …<br>
+}<br>
+}</p>
+<p>public static void main(String[] args) {<br>
+MyThread mt = new MyThread();<br>
+mt.start();<br>
+}</p>
+</li>
+</ul>
+<h3 id="4-接口与继承Thread类的对比"><a class="header-anchor" href="#4-接口与继承Thread类的对比"></a>4. 接口与继承Thread类的对比</h3>
+<ul>
+<li>
+<p>实现接口更好</p>
+<ul>
+<li>
+<ol>
+<li>Java不可以多重继承，但是可以实现多个接口</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>继承整个类的开销更大</li>
+</ol>
+</li>
+<li>
+<ol start="3">
+<li>实现接口，可以让多个线程调用同一个实现接口的类达到资源共享，但是要考虑资源竞争的问题</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>Thread继承类不能多次调用start方法，会报错，而且也没有办法实现</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、基础线程机制"><a class="header-anchor" href="#二、基础线程机制"></a>二、基础线程机制</h2>
+<h3 id="Executor"><a class="header-anchor" href="#Executor"></a>Executor</h3>
+<p>管理异步线程的对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    ExecutorService executorService = Executors.newCachedThreadPool();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">        executorService.execute(<span class="keyword">new</span> MyRunnable());</span><br><span class="line">    &#125;</span><br><span class="line">    executorService.shutdown();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>
+<p>CachedThreadPool</p>
+<ul>
+<li>一个任务一个线程</li>
+<li>会OOM，它的最大值是在初始化的时候设置为 Integer.MAX_VALUE</li>
+</ul>
+</li>
+<li>
+<p>FixedThreadPool</p>
+<ul>
+<li>固定线程数量的线程池</li>
+</ul>
+</li>
+<li>
+<p>SingleThreadExecutor</p>
+<ul>
+<li>一次一个线程，多任务会扔进队列排队</li>
+</ul>
+</li>
+</ul>
+<h3 id="Deamon"><a class="header-anchor" href="#Deamon"></a>Deamon</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    Thread thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> MyRunnable());</span><br><span class="line">    thread.setDaemon(<span class="keyword">true</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>setDeamon()来设置守护线程，守护线程会在所有非守护线程结束后被杀死，main()是非守护线程</li>
+</ul>
+<h3 id="sleep"><a class="header-anchor" href="#sleep"></a>sleep()</h3>
+<ul>
+<li>
+<p>使当前线程休眠，单位为毫秒，进入阻塞状态</p>
+<p>可能会抛出InterruptedException，因为异常不能跨线程传播回 main() 中，因此必须在本地进行处理。线程中抛出的其它异常也同样需要在本地进行处理。</p>
+</li>
+</ul>
+<h3 id="yield"><a class="header-anchor" href="#yield"></a>yield()</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Thread.yield();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对静态方法 Thread.yield() 的调用声明了当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行。该方法只是对线程调度器的一个建议，而且也只是建议具有相同优先级的其它线程可以运行。</p>
+<ul>
+<li>线程出让时间片，仍是就绪状态</li>
+</ul>
+<h3 id="stop"><a class="header-anchor" href="#stop"></a>stop()</h3>
+<ul>
+<li>立即释放对象锁，使线程进入终止状态，假如线程写入数据进行到一半，会出现数据一致性的问题</li>
+</ul>
+<h2 id="三、中断"><a class="header-anchor" href="#三、中断"></a>三、中断</h2>
+<p>一个线程执行完毕之后会自动结束，如果在运行过程中发生异常也会提前结束。</p>
+<h3 id="通过interrupt-方法可以将阻塞状态的线程提前结束，但是跟stop-不同的是，JVM只是给线程做线程中断标记，何时终止可以自行判断"><a class="header-anchor" href="#通过interrupt-方法可以将阻塞状态的线程提前结束，但是跟stop-不同的是，JVM只是给线程做线程中断标记，何时终止可以自行判断"></a>通过interrupt()方法可以将阻塞状态的线程提前结束，但是跟stop()不同的是，JVM只是给线程做线程中断标记，何时终止可以自行判断</h3>
+<ul>
+<li>
+<p>InterruptedException</p>
+<ul>
+<li>
+<p>如果线程处于阻塞状态或者等待状态，会抛出一个InterruptedException的异常，但是不可以中断I/O阻塞和synchronized锁上的等待</p>
+<ul>
+<li>
+<ol>
+<li>I/O上的阻塞用system.out.close()，但是NIO 类的 I/O 是会自动响应中断的</li>
+</ol>
+</li>
+<li>
+<ol start="2">
+<li>等待synchronized锁的线程是不会被interrupt()的，但是获取到锁之后就可以被interrupt()了。</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>interrupted()</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InterruptExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread2</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (!interrupted()) &#123;</span><br><span class="line">                <span class="comment">// ..</span></span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"Thread end"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">Copy to clipboard</span><br><span class="line">Error</span><br><span class="line">Copied</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    Thread thread2 = <span class="keyword">new</span> MyThread2();</span><br><span class="line">    thread2.start();</span><br><span class="line">    thread2.interrupt();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果线程执行的方法内部没有执行sleep()等会抛出InterruptedException的操作，此时调用interrupt()方法不会使线程中断</li>
+<li>但是interrupt()方法是会设置线程中断标记，可以通过interrupted()方法判断线程是否处于中断状态来提前结束线程（当陷入死循环的时候）</li>
+</ul>
+</li>
+<li>
+<p>Executor的中断操作</p>
+<ul>
+<li>
+<p>调用Executor的shutdown()方法会等待所有线程执行完毕之后关闭线程池</p>
+</li>
+<li>
+<p>shutdownNow()可以对每一个线程执行interrupt()方法</p>
+</li>
+<li>
+<p>对于单个线程，可以通过submit()方法来提交线程，它会返回一个Future对象，通过使用cancel()方法来中断这个线程。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Future&lt;?&gt; future = executorService.submit(() -&gt; &#123;</span><br><span class="line">    <span class="comment">// ..</span></span><br><span class="line">&#125;);</span><br><span class="line">future.cancel(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="四、互斥同步"><a class="header-anchor" href="#四、互斥同步"></a>四、互斥同步</h2>
+<p>锁机制控制多个线程对共享资源的互斥访问</p>
+<h3 id="1-synchronized锁"><a class="header-anchor" href="#1-synchronized锁"></a>1. synchronized锁</h3>
+<ul>
+<li>
+<ol>
+<li>同步代码块</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<ol start="2">
+<li>同步方法</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">func</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>同步代码块和同步方法是对同一个对象而言的，对于同一个类的两个不同对象是不会同步的</li>
+</ul>
+</li>
+<li>
+<ol start="3">
+<li>同步类的代码块</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (SynchronizedExample<span class="class">.<span class="keyword">class</span>) </span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li>
+<ol start="4">
+<li>同步静态方法</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">fun</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>同步类和静态方法就是对整个类而言的了，也就是说两个线程调用同一个类的不同对象上的这种同步语句，也会进行同步</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-ReentrantLock"><a class="header-anchor" href="#2-ReentrantLock"></a>2. ReentrantLock</h3>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LockExample</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Lock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">                System.out.print(i + <span class="string">" "</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock(); <span class="comment">// 确保释放锁，从而避免发生死锁。</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>来自JUC的锁</li>
+</ul>
+<h3 id="两者的比较"><a class="header-anchor" href="#两者的比较"></a>两者的比较</h3>
+<ul>
+<li>
+<ol>
+<li>锁实现</li>
+</ol>
+<ul>
+<li>synchronized是JVM实现，ReentrantLock是通过JDK实现的</li>
+</ul>
+</li>
+<li>
+<ol start="2">
+<li>性能</li>
+</ol>
+<ul>
+<li>平分秋色</li>
+<li>新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等，synchronized 与 ReentrantLock 大致相同。</li>
+</ul>
+</li>
+<li>
+<ol start="3">
+<li>可重入</li>
+</ol>
+<ul>
+<li>两者都是可重入的，但是ReentrantLock在重入时要却确保重复获取锁的次数必须和重复释放锁的次数一样，否则可能导致其他线程无法获得该锁。</li>
+</ul>
+</li>
+<li>
+<ol start="3">
+<li>Reentrant的额外功能</li>
+</ol>
+<ul>
+<li>
+<ol>
+<li>ReentrantLock等待可中断</li>
+</ol>
+<ul>
+<li>当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。</li>
+</ul>
+</li>
+<li>
+<ol start="2">
+<li>公平锁</li>
+</ol>
+<ul>
+<li>
+<p>公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。</p>
+</li>
+<li>
+<p>synchronized是不公平的，ReentrantLock默认不公平，但是可以在创建ReentrantLock对象时传入true参数设置为公平锁</p>
+<ul>
+<li>
+<p>ReentrantLock的公平锁和可重入的实现</p>
+<p>A、B两个线程同时执行lock()方法获取锁，假设A先执行获取到锁，此时state值加1，如果线程A在继续执行的过程中又执行了lock()方法(根据持有锁的线程是否是当前线程，判断是否可重入，可重入state值加1)，线程A会直接获取锁，同时state值加1，state的值可以简单理解为线程A执行lock()方法的次数；当线程B执行lock()方法获取锁时，会将线程B封装成Node节点，并将其插入到同步等待队列的尾部，然后阻塞当前线程，等待被唤醒再次尝试获取锁；线程A每次执行unlock()方法都会将state值减1，直到state的值等于零则表示完全释放掉了线程A持有的锁，此时将从同步等待队列的头节点开始唤醒阻塞的线程，阻塞线程恢复执行，再次尝试获取锁。ReentrantLock公平锁的实现使用了AQS的同步等待队列和state。</p>
+<ul>
+<li>AQS和state</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<ol start="3">
+<li>tryLock()可以设置等待锁的timeout，在时间内无论获取得到锁还是获取不到都会返回true或者false，从而可以做更多操作</li>
+</ol>
+</li>
+<li>
+<ol start="4">
+<li>可以绑定多个condition对象</li>
+</ol>
+<ul>
+<li>
+<p>synchronized结合Object上的wait和notify方法可以实现线程间的等待通知，condition对象也可以实现等待通知，通过ReentrantLock的对象创建condition，对应的方法是await()和signal()。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConditionTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> ReentrantLock lock = <span class="keyword">new</span> ReentrantLock();</span><br><span class="line">    <span class="keyword">static</span> Condition condition = lock.newCondition();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line"></span><br><span class="line">        lock.lock();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> SignalThread()).start();</span><br><span class="line">        System.out.println(<span class="string">"主线程等待通知"</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            condition.await();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"主线程恢复运行"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SignalThread</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            lock.lock();</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                condition.signal();</span><br><span class="line">                System.out.println(<span class="string">"子线程通知"</span>);</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                lock.unlock();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用选择"><a class="header-anchor" href="#使用选择"></a>使用选择</h3>
+<ul>
+<li>除非需要使用 ReentrantLock 的高级功能，否则优先使用 synchronized。这是因为 synchronized 是 JVM 实现的一种锁机制，JVM 原生地支持它，而 ReentrantLock 不是所有的 JDK 版本都支持。并且使用 synchronized 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放。</li>
+</ul>
+</li>
+</ul>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Java/">Java</a><a class="post-meta__tags" href="/tags/%E5%B9%B6%E5%8F%91/">并发</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/9999/01/01/top/"><i class="fa fa-chevron-left">  </i><span>今朝酒</span></a></div><div class="next-post pull-right"><a href="/2020/07/09/leetcode%E6%81%A2%E5%A4%8D%E7%A9%BA%E6%A0%BC/"><span>leetcode恢复空格</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(https://timgsa.baidu.com/timg?image&amp;quality=80&amp;size=b9999_10000&amp;sec=1594158827275&amp;di=df17e1e2aa2bed8856de89b2908df8f5&amp;imgtype=0&amp;src=http%3A%2F%2Fww3.sinaimg.cn%2Flarge%2F6d468373gw1exvx1shtr1j21hc0u0h5x.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 By TYH</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
