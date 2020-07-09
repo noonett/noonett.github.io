@@ -9,6 +9,29 @@
 ]]></content>
   </entry>
   <entry>
+    <title>leetcode恢复空格</title>
+    <url>/2020/07/09/leetcode%E6%81%A2%E5%A4%8D%E7%A9%BA%E6%A0%BC/</url>
+    <content><![CDATA[<p>今天做了一道很有意思的leetcode题，结合了前缀树和动态规划。</p>
+<h1>题目</h1>
+<p>哦，不！你不小心把一个长篇文章中的空格、标点都删掉了，并且大写也弄成了小写。像句子&quot;I reset the computer. It still didn’t boot!“已经变成了&quot;iresetthecomputeritstilldidntboot”。在处理标点符号和大小写之前，你得先把它断成词语。当然了，你有一本厚厚的词典dictionary，不过，有些词没在词典里。假设文章用sentence表示，设计一个算法，把文章断开，要求未识别的字符最少，返回未识别的字符数。</p>
+<p>注意：本题相对原题稍作改动，只需返回未识别的字符数。</p>
+<a id="more"></a>
+<h1>解法</h1>
+<ol>
+<li>这里的解法非常巧妙，利用了前缀树的性质，O(n)时间可以判断某个单词是否是字符串组里的单词。</li>
+<li>常规的前缀树是将单词内字母按顺序存入，这里是反向存入。这一手反向存入就将判断sentence中某子串是否在dictionary中转化成了判断是否是后缀的问题。简单举例，如果我们有词典：[‘aabc’, ‘babc’, ‘cbc’] ，但是我们在倒序枚举的时候检查 dc 这个子串没出现在词典中以后我们就没必要再接着往前枚举是否有合法的子串了，因为 dc 本身已经不是词典中「任意一个单词的后缀」，我们再接着枚举 *dc 或者 **dc 判断其是否在词典中都是无用功。</li>
+<li>然后利用简单的dp，状态转移方程是这样的如果能在Trie中找到单词(下标是j到i)，dp[i] = math.min(dp[i], dp[j - 1])。否则的话就可以复用前面的状态dp[i] = dp[i - 1] + 1，就是找到了一个未识别的字符。<br>
+<img src="https://assets.leetcode-cn.com/solution-static/jindian_17.13/jindian_17.13_fig1.gif" alt="示例图画解析"></li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">respace</span><span class="params">(String[] dictionary, String sentence)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = sentence.length();</span><br><span class="line"></span><br><span class="line">        Trie root = <span class="keyword">new</span> Trie();</span><br><span class="line">        <span class="comment">// 构建Trie tree</span></span><br><span class="line">        <span class="keyword">for</span> (String word: dictionary) &#123;</span><br><span class="line">            root.insert(word);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</span><br><span class="line">        <span class="comment">// 初值</span></span><br><span class="line">        Arrays.fill(dp, Integer.MAX_VALUE);</span><br><span class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">            dp[i] = dp[i - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">            Trie curPos = root;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = i; j &gt;= <span class="number">1</span>; --j) &#123;</span><br><span class="line">                <span class="keyword">int</span> t = sentence.charAt(j - <span class="number">1</span>) - <span class="string">'a'</span>;</span><br><span class="line">                <span class="keyword">if</span> (curPos.next[t] == <span class="keyword">null</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (curPos.next[t].isEnd) &#123;</span><br><span class="line">                    dp[i] = Math.min(dp[i], dp[j - <span class="number">1</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (dp[i] == <span class="number">0</span>) &#123;</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                curPos = curPos.next[t];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Trie</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> Trie[] next;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> isEnd;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trie</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        next = <span class="keyword">new</span> Trie[<span class="number">26</span>];</span><br><span class="line">        isEnd = <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        Trie curPos = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = s.length() - <span class="number">1</span>; i &gt;= <span class="number">0</span>; --i) &#123;</span><br><span class="line">            <span class="keyword">int</span> t = s.charAt(i) - <span class="string">'a'</span>;</span><br><span class="line">            <span class="keyword">if</span> (curPos.next[t] == <span class="keyword">null</span>) &#123;</span><br><span class="line">                curPos.next[t] = <span class="keyword">new</span> Trie();</span><br><span class="line">            &#125;</span><br><span class="line">            curPos = curPos.next[t];</span><br><span class="line">        &#125;</span><br><span class="line">        curPos.isEnd = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>字符串</tag>
+        <tag>动态规划</tag>
+        <tag>leetcode</tag>
+        <tag>前缀树</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello-Kafka!</title>
     <url>/2020/07/07/Kafka/</url>
     <content><![CDATA[<p>Kafka算是现今企业用的应用最多的消息队列，数据处理的平台。它的消息是存储在硬盘上的，大量的使用了批量处理和异步的思想，所以它的吞吐量很大。消费者对消息的获取是顺序IO，所以消费者的访问速度也不差。</p>
@@ -6629,13 +6652,13 @@ post在请求体中间</p>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>All tags</title>
-    <url>/tags/index.html</url>
+    <title>categories</title>
+    <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>categories</title>
-    <url>/categories/index.html</url>
+    <title>All tags</title>
+    <url>/tags/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
