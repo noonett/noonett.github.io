@@ -13,6 +13,7 @@
     <content><![CDATA[<h1>Java容器</h1>
 <p><img src="/2020/07/17/Java%E5%AE%B9%E5%99%A8/Java%E5%AE%B9%E5%99%A8.png" alt="思维导图"></p>
 <h2 id="概览"><a class="header-anchor" href="#概览"></a>概览</h2>
+<p>两大JDK内置类：</p>
 <h3 id="Collection"><a class="header-anchor" href="#Collection"></a>Collection</h3>
 <ul>
 <li>
@@ -7768,8 +7769,8 @@ post在请求体中间</p>
       </tags>
   </entry>
   <entry>
-    <title>categories</title>
-    <url>/categories/index.html</url>
+    <title>404</title>
+    <url>/404/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
@@ -7778,8 +7779,8 @@ post在请求体中间</p>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>404</title>
-    <url>/404/index.html</url>
+    <title>categories</title>
+    <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
