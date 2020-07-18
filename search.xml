@@ -3,9 +3,42 @@
   <entry>
     <title>今朝酒</title>
     <url>/9999/01/01/top/</url>
-    <content><![CDATA[<p>最近做了一吨的二叉树的题，打算整理一波究极版二叉树的前中后序遍历，Morris遍历，搜索二叉树，二叉平衡树，前缀树，树状数组各种怪怪树。<br>
-做一个树King。</p>
+    <content><![CDATA[<p>开始总结树算法，最近很糟糕，作息略混乱，状态不是很好。</p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>树King的养成一：树的存储结构和树的遍历</title>
+    <url>/2020/07/18/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%B8%80%EF%BC%9A%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/</url>
+    <content><![CDATA[<p>开始总结一下二叉树的算法和数据结构相关，目标是把基本的数据结构和算法复习一下，然后手撸一遍，做总结。<br>
+这一章先从简单的开始，树的遍历。</p>
+<a id="more"></a>
+<h1>树算法</h1>
+<p><img src="/2020/07/18/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%B8%80%EF%BC%9A%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
+<h2 id="树的结构"><a class="header-anchor" href="#树的结构"></a>树的结构</h2>
+<p>树的存储结构，链式存储比较常用。</p>
+<h3 id="顺序存储"><a class="header-anchor" href="#顺序存储"></a>顺序存储</h3>
+<ul>
+<li>线段树</li>
+<li>树状数组</li>
+</ul>
+<h3 id="链式存储"><a class="header-anchor" href="#链式存储"></a>链式存储</h3>
+<h2 id="树的遍历"><a class="header-anchor" href="#树的遍历"></a>树的遍历</h2>
+<h3 id="前中后序遍历"><a class="header-anchor" href="#前中后序遍历"></a>前中后序遍历</h3>
+<p>树的遍历算法，前中后序遍历都有递归实现和非递归实现，时间复杂度为O(N),空间复杂度为O(N)。递归实现都挺简单的，迭代实现无非就是用stack代替系统压栈。<br>
+比较麻烦的是后序遍历的非递归实现, 因为其要求的访问顺序是左右根，先访问左右子树再访问根结点，即自下向上，自左向右。那么就需要判断当前结点是第一次访问结点还是从其子树返回的结点，如果是第一次访问结点则应该先访问左右子树，如果是从其子树返回的结点则应当访问次结点并继续向上回退。还有一个巧妙的思路是根右左的访问顺序刚好是与后序遍历相反的结果，可以先按照根右左的顺序访问，最后逆序输出得到后序遍历的结果。<br>
+总结在此：<a href="https://noonett.github.io/2020/03/19/%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86%E6%80%BB%E7%BB%93/">https://noonett.github.io/2020/03/19/树的遍历总结/</a></p>
+<h4 id="相关题目"><a class="header-anchor" href="#相关题目"></a>相关题目</h4>
+<h3 id="层次遍历"><a class="header-anchor" href="#层次遍历"></a>层次遍历</h3>
+<p>层次遍历无非就是利用队列顺序访问队列内的结点，同时压左右子结点，这里每层的数量是刚好是队列内树结点的数量，因为上一层的结点遍历完，队列内的数量刚好是下一层的结点数量。</p>
+<h4 id="相关题目-v2"><a class="header-anchor" href="#相关题目-v2"></a>相关题目</h4>
+<h3 id="Morris遍历"><a class="header-anchor" href="#Morris遍历"></a>Morris遍历</h3>
+<p>Morris遍历的牛牛之处在于，其空间复杂度为O(1)。</p>
+]]></content>
+      <tags>
+        <tag>算法</tag>
+        <tag>Leetcode</tag>
+        <tag>二叉树</tag>
+      </tags>
   </entry>
   <entry>
     <title>Java容器</title>
@@ -4425,7 +4458,7 @@ Python并没有一种方法可以完全限制访问private函数或变量。</p>
 <li>而右结点的只要不是cur，说明没有遍历过右子树，需要将右结点压栈。</li>
 <li>左右结点均不能压栈，说明左右都已遍历过，添加当前结点入结果。</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; aList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        LinkedList&lt;TreeNode&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> aList;</span><br><span class="line">        &#125;</span><br><span class="line">        TreeNode cur = root;</span><br><span class="line">        stack.push(root);  </span><br><span class="line">        <span class="keyword">while</span>(!stack.isEmpty())&#123;</span><br><span class="line">            root = stack.peekFirst();  </span><br><span class="line">            <span class="keyword">if</span>(root.left!=<span class="keyword">null</span> &amp;&amp; root.left!= cur &amp;&amp; root.right!=cur)&#123;</span><br><span class="line">                stack.push(root.left);</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(root.right!=<span class="keyword">null</span>&amp;&amp; root.right!=cur)&#123;</span><br><span class="line">                stack.push(root.right);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                aList.add(stack.pop().val); </span><br><span class="line">                cur = root;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> aList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">postorderTraversal</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        List&lt;Integer&gt; aList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        LinkedList&lt;TreeNode&gt; stack = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> aList;</span><br><span class="line">        &#125;</span><br><span class="line">        TreeNode cur = root;</span><br><span class="line">        stack.push(root);  </span><br><span class="line">        <span class="keyword">while</span>(!stack.isEmpty())&#123;</span><br><span class="line">            root = stack.peekFirst();</span><br><span class="line">            <span class="keyword">if</span>(root.left!=<span class="keyword">null</span> &amp;&amp; root.left!= cur &amp;&amp; root.right!=cur)&#123;</span><br><span class="line">                stack.push(root.left);</span><br><span class="line">            &#125;<span class="keyword">else</span> <span class="keyword">if</span>(root.right!=<span class="keyword">null</span>&amp;&amp; root.right!=cur)&#123;</span><br><span class="line">                stack.push(root.right);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                aList.add(stack.pop().val); </span><br><span class="line">                cur = root;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> aList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1>层次遍历</h1>
 <h2 id="BFS-宽度优先搜索"><a class="header-anchor" href="#BFS-宽度优先搜索"></a>BFS 宽度优先搜索</h2>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Deque;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;</span><br><span class="line">        List&lt;List&lt;Integer&gt;&gt; aList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        Deque&lt;TreeNode&gt; aQueue = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>)</span><br><span class="line">            <span class="keyword">return</span> aList;</span><br><span class="line">        <span class="keyword">int</span> levels = <span class="number">0</span>;</span><br><span class="line">        aQueue.offerLast(root);</span><br><span class="line">        <span class="comment">//队列空前一直遍历</span></span><br><span class="line">        <span class="keyword">while</span>(!aQueue.isEmpty())&#123;</span><br><span class="line">            <span class="comment">//每层while循环代表一层遍历</span></span><br><span class="line">            aList.add(<span class="keyword">new</span> ArrayList&lt;Integer&gt;());</span><br><span class="line">            <span class="keyword">int</span> size = aQueue.size();</span><br><span class="line">            <span class="comment">//每层结点的数量即为队列的大小</span></span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;size; ++i)&#123;</span><br><span class="line">                root = aQueue.pollFirst();</span><br><span class="line">                aList.get(levels).add(root.val);</span><br><span class="line">                <span class="keyword">if</span>(root.left!=<span class="keyword">null</span>) aQueue.offerLast(root.left);</span><br><span class="line">                <span class="keyword">if</span>(root.right!=<span class="keyword">null</span>) aQueue.offerLast(root.right);   </span><br><span class="line">            &#125;</span><br><span class="line">            levels++;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">return</span> aList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -7774,13 +7807,13 @@ post在请求体中间</p>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>All tags</title>
-    <url>/tags/index.html</url>
+    <title>categories</title>
+    <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>categories</title>
-    <url>/categories/index.html</url>
+    <title>All tags</title>
+    <url>/tags/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
