@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content="云服务器部署小指南"><meta name="keywords" content="云部署"><meta name="author" content="TYH"><meta name="copyright" content="TYH"><title>云服务器部署小指南 | 21号避难所</title><link rel="shortcut icon" href="/images/yuhangyuanfeixiang.png"><link rel="stylesheet" href="/css/index.css?version=1.7.0"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.0.0/css/font-awesome.css?version=1.7.0"><meta name="format-detection" content="telephone=no"><meta http-equiv="x-dns-prefetch-control" content="on"><link rel="dns-prefetch" href="https://cdn.jsdelivr.net"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><script src="https://v1.hitokoto.cn/?encode=js&amp;charset=utf-8&amp;select=.footer_custom_text" defer></script><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容:${query}"}},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  }
+} </script><meta name="generator" content="Hexo 4.2.0"></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar" data-display="true"><div class="toggle-sidebar-info text-center"><span data-toggle="切换文章详情">切换站点概览</span><hr></div><div class="sidebar-toc"><div class="sidebar-toc__title">目录</div><div class="sidebar-toc__progress"><span class="progress-notice">你已经读了</span><span class="progress-num">0</span><span class="progress-percentage">%</span><div class="sidebar-toc__progress-bar"></div></div><div class="sidebar-toc__content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Yum包管理工具"><span class="toc-text">Yum包管理工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Yum常用操作"><span class="toc-text">Yum常用操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RPM链接"><span class="toc-text">RPM链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#环境变量"><span class="toc-text">环境变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Maven"><span class="toc-text">Maven</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Tomcat"><span class="toc-text">Tomcat</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx配置"><span class="toc-text">Nginx配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Elasticsearch安装"><span class="toc-text">Elasticsearch安装</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#elasticsearch-yml"><span class="toc-text">elasticsearch.yml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jvm-option"><span class="toc-text">jvm.option</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#操作系统设置"><span class="toc-text">操作系统设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#中文索引集"><span class="toc-text">中文索引集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Elasticsearch必须为普通用户启动"><span class="toc-text">Elasticsearch必须为普通用户启动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#启动elasticsearch"><span class="toc-text">启动elasticsearch</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#wkhtmltoimage安装"><span class="toc-text">wkhtmltoimage安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#安装wkhtmltoimage"><span class="toc-text">安装wkhtmltoimage</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#安装xvfb"><span class="toc-text">安装xvfb</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sh"><span class="toc-text">.sh</span></a></li></ol></div></div><div class="author-info hide"><div class="author-info__avatar text-center"><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2904152762,521104362&amp;fm=16&amp;gp=0.jpg"></div><div class="author-info__name text-center">TYH</div><div class="author-info__description text-center">反复敲打，登峰造极</div><div class="follow-button"><a href="https://github.com/noonett" target="_blank" rel="noopener">Follow Me</a></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">文章</span><span class="pull-right">156</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">标签</span><span class="pull-right">54</span></a></div></div></div><div id="content-outer"><div id="top-container" style="background-image: url(http://pic.netbian.com/uploads/allimg/200710/220558-1594389958b5b5.jpg)"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">21号避难所</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus">   <a class="site-page" href="/">主页</a><a class="site-page" href="/archives">文章</a><a class="site-page" href="/tags">标签</a></span><span class="pull-right"><a class="site-page social-icon search"><i class="fa fa-search"></i><span> 搜索</span></a></span></div><div id="post-info"><div id="post-title">云服务器部署小指南</div><div id="post-meta"><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2021-01-31</time><div class="post-meta-wordcount"><span>字数总计: </span><span class="word-count">768</span><span class="post-meta__separator">|</span><span>阅读时长: 3 分钟</span></div></div></div></div><div class="layout" id="content-inner"><article id="post"><div class="article-container" id="post-content"><pre><code>好久之前部署了一个云服务器，最近重新整，抱着可以总结一下的想法，记录一下部署的过程。
+</code></pre>
+<a id="more"></a>
+<h2 id="Yum包管理工具"><a class="header-anchor" href="#Yum包管理工具"></a>Yum包管理工具</h2>
+<p>因为用的CentOS操作系统，基于RPM包管理的系统自带的包管理工具。优势在于输入简单的指令就可以安装依赖的软件，并且会一次性的将依赖的软件都给你整好，所以主要用这个方式去下载软件。</p>
+<ul>
+<li>但是内置包含的包可能不全，需要自己去软件官网或者镜像站下载RPM包，然后通过RPM包更新的list来下载，比如MySQL。</li>
+</ul>
+<h3 id="Yum常用操作"><a class="header-anchor" href="#Yum常用操作"></a>Yum常用操作</h3>
+<ol>
+<li>yum list 关键字*<br>
+可以查看当前系统拥有的RPM链接，如果系统包含则可以通过install指令直接安装，关键字可以使用正则表达式筛选比如：mysql*。</li>
+<li>yum install -y 软件名/RPM包路径<br>
+这里的软件名list中有的软件名，如果没有需要安装RPM包更新list。比如：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y mysql80-community-release-el7-3.noarch.rpm</span><br><span class="line">yum install -y mysql-community-server.x86_64</span><br></pre></td></tr></table></figure>
+<h2 id="RPM链接"><a class="header-anchor" href="#RPM链接"></a>RPM链接</h2>
+<pre><code>需要注意的是，随时会更新版本。更新了也没事，再去上级Url拷贝新的链接就好。
+</code></pre>
+<p>MySQL: <a href="https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm" target="_blank" rel="noopener">https://dev.mysql.com/get/mysql80-community-release-el7-3.noarch.rpm</a><br>
+KafKa: <a href="https://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.6.0/kafka_2.12-2.6.0.tgz" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.6.0/kafka_2.12-2.6.0.tgz</a><br>
+ES:<a href="https://mirrors.huaweicloud.com/elasticsearch/6.4.3/elasticsearch-6.4.3.tar.gz" target="_blank" rel="noopener">https://mirrors.huaweicloud.com/elasticsearch/6.4.3/elasticsearch-6.4.3.tar.gz</a><br>
+tomcat:wget -i -c <a href="https://mirrors.bfsu.edu.cn/apache/tomcat/tomcat-9/v9.0.41/bin/apache-tomcat-9.0.41.tar.gz" target="_blank" rel="noopener">https://mirrors.bfsu.edu.cn/apache/tomcat/tomcat-9/v9.0.41/bin/apache-tomcat-9.0.41.tar.gz</a></p>
+<h2 id="环境变量"><a class="header-anchor" href="#环境变量"></a>环境变量</h2>
+<p>vim /etc/profile<br>
+source /etc/profile<br>
+echo $PATH</p>
+<h4 id="Maven"><a class="header-anchor" href="#Maven"></a>Maven</h4>
+<p>mvn clean package -Dmaven.test.skip=true<br>
+mv ROOT.war /opt/apache-tomcat-9.0.41/webapps/</p>
+<h4 id="Tomcat"><a class="header-anchor" href="#Tomcat"></a>Tomcat</h4>
+<p>export PATH=$PATH:/opt/apache-maven-3.6.3/bin<br>
+export PATH=$PATH:/opt/apache-tomcat-9.0.41/bin</p>
+<h2 id="Nginx配置"><a class="header-anchor" href="#Nginx配置"></a>Nginx配置</h2>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">upstream myserver&#123;</span><br><span class="line">        server 127.0.0.1:8080 max_fails&#x3D;3 fail_timeout&#x3D;30s;</span><br><span class="line">&#125;</span><br><span class="line">server &#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name 47.115.200.125;</span><br><span class="line">        location &#x2F; &#123;</span><br><span class="line">                proxy_pass http:&#x2F;&#x2F;myserver;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Elasticsearch安装"><a class="header-anchor" href="#Elasticsearch安装"></a>Elasticsearch安装</h2>
+<p>JDK版本：11, ES版本:6.4.3</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">yum install -y java-11-openjdk.x86_64</span><br></pre></td></tr></table></figure>
+<h4 id="elasticsearch-yml"><a class="header-anchor" href="#elasticsearch-yml"></a>elasticsearch.yml</h4>
+<figure class="highlight vim"><table><tr><td class="code"><pre><span class="line">cluster.name: nowcoder</span><br><span class="line">path.dat<span class="variable">a:</span> /tmp/elastic/data</span><br><span class="line">path.<span class="built_in">log</span><span class="variable">s:</span> /tmp/elastic/logs</span><br></pre></td></tr></table></figure>
+<h4 id="jvm-option"><a class="header-anchor" href="#jvm-option"></a>jvm.option</h4>
+<p>-Xms256m<br>
+-Xmx512m</p>
+<h4 id="操作系统设置"><a class="header-anchor" href="#操作系统设置"></a>操作系统设置</h4>
+<ol>
+<li>内存权限：用户拥有的内存权限至少262144；
+<ul>
+<li>解决方案：切换到root用户修改：sysctl -w vm.max_map_count=262144<br>
+上述方法修改之后，如果重启虚拟机将失效，所以在/etc/sysctl.conf文件最后添加一行即可永久修改：vm.max_map_count=262144</li>
+</ul>
+</li>
+<li>句柄权限：用户拥有的句柄权限至少65536；
+<ul>
+<li>解决方案：切换到root用户修改：vim /etc/security/limits.conf<br>
+在最后面追加下面内容<br>
+*** hard nofile 65536<br>
+*** soft nofile 65536</li>
+</ul>
+</li>
+</ol>
+<h4 id="中文索引集"><a class="header-anchor" href="#中文索引集"></a>中文索引集</h4>
+<p>ES-ik:<a href="https://github.com/medcl/elasticsearch-analysis-ik/releases/tag/v6.4.3" target="_blank" rel="noopener">https://github.com/medcl/elasticsearch-analysis-ik/releases/tag/v6.4.3</a><br>
+unzip -d /opt/elasticsearch-6.4.3/plugins elasticsearch-analysis-ik.zip</p>
+<h4 id="Elasticsearch必须为普通用户启动"><a class="header-anchor" href="#Elasticsearch必须为普通用户启动"></a>Elasticsearch必须为普通用户启动</h4>
+<p>增加组：groupadd nowcoder<br>
+增加用户：useradd nowcoder1 -p 123456 -g nowcoder<br>
+赋权限：chown -R nowcoder1:nowcoder *</p>
+<h4 id="启动elasticsearch"><a class="header-anchor" href="#启动elasticsearch"></a>启动elasticsearch</h4>
+<ol>
+<li>elasticsearch目录下 bin/elasticsearch -d</li>
+<li>curl -X GET &quot;localhost:9200/_cat/health?v&quot;查看是否启动成功，或者看日志。</li>
+</ol>
+<h2 id="wkhtmltoimage安装"><a class="header-anchor" href="#wkhtmltoimage安装"></a>wkhtmltoimage安装</h2>
+<h3 id="安装wkhtmltoimage"><a class="header-anchor" href="#安装wkhtmltoimage"></a>安装wkhtmltoimage</h3>
+<h2 id="安装xvfb"><a class="header-anchor" href="#安装xvfb"></a>安装xvfb</h2>
+<p>yum install -y xorg-x11-server-Xvfb.x86_64</p>
+<h2 id="sh"><a class="header-anchor" href="#sh"></a>.sh</h2>
+<p>xvfb-run --server-args=&quot;-screen 0, 1024x768x24&quot; wkhtmltoimage “$@”<br>
+chmod +x <a href="http://wkhtmltoimage.sh" target="_blank" rel="noopener">wkhtmltoimage.sh</a></p>
+</div></article><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BA%91%E9%83%A8%E7%BD%B2/">云部署</a></div><nav id="pagination"><div class="prev-post pull-left"><a href="/9999/01/01/top/"><i class="fa fa-chevron-left">  </i><span>今朝酒</span></a></div><div class="next-post pull-right"><a href="/2020/08/21/system%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/"><span>GOODS设计的论文阅读笔记</span><i class="fa fa-chevron-right"></i></a></div></nav></div></div><footer class="footer-bg" style="background-image: url(http://pic.netbian.com/uploads/allimg/200710/220558-1594389958b5b5.jpg)"><div class="layout" id="footer"><div class="copyright">&copy;2020 - 2021 By TYH</div><div class="framework-info"><span>驱动 - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>主题 - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="footer_custom_text">hitokoto</div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_page_pv"><i class="fa fa-file"></i><span id="busuanzi_value_page_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.7.0"></script><script src="/js/fancybox.js?version=1.7.0"></script><script src="/js/sidebar.js?version=1.7.0"></script><script src="/js/copy.js?version=1.7.0"></script><script src="/js/fireworks.js?version=1.7.0"></script><script src="/js/transition.js?version=1.7.0"></script><script src="/js/scroll.js?version=1.7.0"></script><script src="/js/head.js?version=1.7.0"></script><script src="/js/search/local-search.js"></script><script>if(/Android|webOS|iPhone|iPod|iPad|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+  $('#top-container').addClass('is-mobile')
+}</script><div class="search-dialog" id="local-search"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章"></div></div></div><hr><div id="local-search-results"><div id="local-hits"></div><div id="local-stats"><div class="local-search-stats__hr" id="hr"><span>由</span> <a href="https://github.com/wzpan/hexo-generator-search" target="_blank" rel="noopener" style="color:#49B1F5;">hexo-generator-search</a>
+ <span>提供支持</span></div></div></div><span class="search-close-button"><i class="fa fa-times"></i></span></div><div class="search-mask"></div></body></html>
