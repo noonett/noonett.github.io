@@ -2,14 +2,14 @@
 <search>
   <entry>
     <title>今朝酒</title>
-    <url>/9999/01/01/top/</url>
+    <url>/blog/9999/01/01/top/</url>
     <content><![CDATA[<p>我回来了，现在图书馆早上9点开到晚上9点。<br>
 准备开学了，得准备选课和开学得科目得事情才行，怕挂…</p>
 ]]></content>
   </entry>
   <entry>
     <title>云服务器部署小指南</title>
-    <url>/2021/01/31/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E5%B0%8F%E6%8C%87%E5%8D%97/</url>
+    <url>/blog/2021/01/31/%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2%E5%B0%8F%E6%8C%87%E5%8D%97/</url>
     <content><![CDATA[<pre><code>好久之前部署了一个云服务器，最近重新整，抱着可以总结一下的想法，记录一下部署的过程。
 </code></pre>
 <a id="more"></a>
@@ -96,12 +96,12 @@ chmod +x <a href="http://wkhtmltoimage.sh" target="_blank" rel="noopener">wkhtml
   </entry>
   <entry>
     <title>GOODS设计的论文阅读笔记</title>
-    <url>/2020/08/21/system%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</url>
+    <url>/blog/2020/08/21/system%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1>Managing Google’s data lake: an overview of the GOODS system</h1>
 <h2 id="一、背景"><a class="header-anchor" href="#一、背景"></a>一、背景</h2>
 <p>一个团队设计GOODS（dataset管理工具）的故事，这个GOODS提炼了数据集的元数据和数据集间的关系，为工程师和数据科学家提供支持，而且其使用的是后处理的方式，相当于场外处理，不会影响到现有业务的运行。其挑战的来源是数据的大规模和数据集之间的异构性造成的。<br>
 功能包括：search、monitoring services、 DataSet profile、 Annotation services<br>
-<img src="/.io//GOODS.png" alt="GOODS"></p>
+<img src="/blog/.io//GOODS.png" alt="GOODS"></p>
 <ul>
 <li>Search: 公司所有数据集的搜索引擎，具有缩小搜索结果的方面，帮助工程师和分析师找到最相关的数据集。</li>
 <li>DataSet profile: 每个数据集配置文件页面，呈现货物记录的关于特定数据集的元数据，从而帮助用户了解数据集及其与公司其他数据集的关系。profile页面还集成了其他可以进一步处理数据集的工具，从而帮助用户对数据进行操作。</li>
@@ -157,10 +157,10 @@ chmod +x <a href="http://wkhtmltoimage.sh" target="_blank" rel="noopener">wkhtml
   </entry>
   <entry>
     <title>树King的养成三：保持平衡真不容易</title>
-    <url>/2020/07/31/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%B8%89%EF%BC%9A%E4%BF%9D%E6%8C%81%E5%B9%B3%E8%A1%A1%E7%9C%9F%E4%B8%8D%E5%AE%B9%E6%98%93/</url>
+    <url>/blog/2020/07/31/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%B8%89%EF%BC%9A%E4%BF%9D%E6%8C%81%E5%B9%B3%E8%A1%A1%E7%9C%9F%E4%B8%8D%E5%AE%B9%E6%98%93/</url>
     <content><![CDATA[<p>这节搞一下BST、AVL、红黑树三兄弟。</p>
 <a id="more"></a>
-<p><img src="/.io//%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
+<p><img src="/blog/.io//%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
 <h2 id="二叉搜索树"><a class="header-anchor" href="#二叉搜索树"></a>二叉搜索树</h2>
 <p>二叉搜索树，顾名思义就是用来查询的。</p>
 <h3 id="特点"><a class="header-anchor" href="#特点"></a>特点</h3>
@@ -290,10 +290,10 @@ chmod +x <a href="http://wkhtmltoimage.sh" target="_blank" rel="noopener">wkhtml
   </entry>
   <entry>
     <title>树King的养成二:各种奇形怪状的树</title>
-    <url>/2020/07/29/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%BA%8C-%E5%90%84%E7%A7%8D%E5%A5%87%E5%BD%A2%E6%80%AA%E7%8A%B6%E7%9A%84%E6%A0%91/</url>
+    <url>/blog/2020/07/29/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%BA%8C-%E5%90%84%E7%A7%8D%E5%A5%87%E5%BD%A2%E6%80%AA%E7%8A%B6%E7%9A%84%E6%A0%91/</url>
     <content><![CDATA[<p>这节总结一下前缀树、B树、堆。</p>
 <a id="more"></a>
-<p><img src="/.io//%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
+<p><img src="/blog/.io//%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
 <h2 id="前缀树"><a class="header-anchor" href="#前缀树"></a>前缀树</h2>
 <p>前缀树主要用于查找某个单词是否存在于单词词集里，或者查询以某个词为前缀出现了多少次，或者某个词出现了多少次。其独特的结构导致其查找一个单词的时间复杂度为O(logN),空间复杂度也不高，因为词集里重复的前缀将不会被重复存储。</p>
 <h3 id="特点"><a class="header-anchor" href="#特点"></a>特点</h3>
@@ -382,12 +382,12 @@ B+树第一个好处它非叶子结点没存数据，我们的内存是有限的
   </entry>
   <entry>
     <title>树King的养成一：树的存储结构和树的遍历</title>
-    <url>/2020/07/18/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%B8%80%EF%BC%9A%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/</url>
+    <url>/blog/2020/07/18/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%B8%80%EF%BC%9A%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/</url>
     <content><![CDATA[<p>开始总结一下二叉树的算法和数据结构相关，目标是把基本的数据结构和算法复习一下，然后手撸一遍，做总结。<br>
 这一章先从简单的开始，树的遍历。</p>
 <a id="more"></a>
 <h1>树算法</h1>
-<p><img src="/.io//%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
+<p><img src="/blog/.io//%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
 <h2 id="树的结构"><a class="header-anchor" href="#树的结构"></a>树的结构</h2>
 <p>树的存储结构，链式存储比较常用。</p>
 <h3 id="顺序存储"><a class="header-anchor" href="#顺序存储"></a>顺序存储</h3>
@@ -424,9 +424,9 @@ Morris 算法的思想是在节点和它的直接前驱之间设置一个临时�
   </entry>
   <entry>
     <title>Java容器</title>
-    <url>/2020/07/17/Java%E5%AE%B9%E5%99%A8/</url>
+    <url>/blog/2020/07/17/Java%E5%AE%B9%E5%99%A8/</url>
     <content><![CDATA[<h1>Java容器</h1>
-<p><img src="/.io//Java%E5%AE%B9%E5%99%A8.png" alt="思维导图"></p>
+<p><img src="/blog/.io//Java%E5%AE%B9%E5%99%A8.png" alt="思维导图"></p>
 <h2 id="概览"><a class="header-anchor" href="#概览"></a>概览</h2>
 <p>两大JDK内置类：</p>
 <h3 id="Collection"><a class="header-anchor" href="#Collection"></a>Collection</h3>
@@ -819,9 +819,9 @@ WeakHashMap 主要用来实现缓存，通过使用 WeakHashMap 来引用缓存�
   </entry>
   <entry>
     <title>Java并发四：锁优化</title>
-    <url>/2020/07/16/Java%E5%B9%B6%E5%8F%91%E5%9B%9B%EF%BC%9A%E9%94%81%E4%BC%98%E5%8C%96/</url>
+    <url>/blog/2020/07/16/Java%E5%B9%B6%E5%8F%91%E5%9B%9B%EF%BC%9A%E9%94%81%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<h2 id="十二、锁优化"><a class="header-anchor" href="#十二、锁优化"></a>十二、锁优化</h2>
-<p><img src="/.io//JUC.png" alt="思维导图"></p>
+<p><img src="/blog/.io//JUC.png" alt="思维导图"></p>
 <h3 id="这里指的是JDK1-6之后，JVM对synchronized的优化"><a class="header-anchor" href="#这里指的是JDK1-6之后，JVM对synchronized的优化"></a>这里指的是JDK1.6之后，JVM对synchronized的优化</h3>
 <ul>
 <li>
@@ -899,7 +899,7 @@ WeakHashMap 主要用来实现缓存，通过使用 WeakHashMap 来引用缓存�
   </entry>
   <entry>
     <title>Java并发三：Java内存模型和线程安全</title>
-    <url>/2020/07/15/Java%E5%B9%B6%E5%8F%91%E4%B8%89%EF%BC%9AJava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
+    <url>/blog/2020/07/15/Java%E5%B9%B6%E5%8F%91%E4%B8%89%EF%BC%9AJava%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/</url>
     <content><![CDATA[<p>今天又复习了一波，主要理解两个问题：Java是如何实现跨平台的一致内存访问效果的？多线程情况下线程安全应该如何实现？<br>
 接下来一章深入一下JVM对synchronized互斥锁的优化。</p>
 <a id="more"></a>
@@ -1115,12 +1115,12 @@ WeakHashMap 主要用来实现缓存，通过使用 WeakHashMap 来引用缓存�
   </entry>
   <entry>
     <title>Java并发二：线程间的合作</title>
-    <url>/2020/07/11/Java%E5%B9%B6%E5%8F%91%E4%BA%8C%EF%BC%9A%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E5%90%88%E4%BD%9C/</url>
+    <url>/blog/2020/07/11/Java%E5%B9%B6%E5%8F%91%E4%BA%8C%EF%BC%9A%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E5%90%88%E4%BD%9C/</url>
     <content><![CDATA[<p>继续上一章的Java并发，这一章主要是线程间的协作，包括JDK自带的join，wait， notify等方法，也有JUC的await, signal等方法，应用了几个JUC的组件，包括重要的AQS，阻塞队列等。还提及了JVM内部线程的几种状态。<br>
 下一章深入一下Java多线程内部的内存模型，线程安全等原理。</p>
 <a id="more"></a>
 <h1>JUC</h1>
-<p><img src="/.io//JUC.png" alt="思维导图"></p>
+<p><img src="/blog/.io//JUC.png" alt="思维导图"></p>
 <h2 id="五、线程之间的协作"><a class="header-anchor" href="#五、线程之间的协作"></a>五、线程之间的协作</h2>
 <h3 id="1-join-方法用于同步，是Thread的方法，当前线程调用另一个线程的join-，当前线程会挂起直到目标线程结束"><a class="header-anchor" href="#1-join-方法用于同步，是Thread的方法，当前线程调用另一个线程的join-，当前线程会挂起直到目标线程结束"></a>1. join()方法用于同步，是Thread的方法，当前线程调用另一个线程的join()，当前线程会挂起直到目标线程结束</h3>
 <ul>
@@ -1257,11 +1257,11 @@ WeakHashMap 主要用来实现缓存，通过使用 WeakHashMap 来引用缓存�
   </entry>
   <entry>
     <title>Java并发一：多线程和锁</title>
-    <url>/2020/07/09/Java%E5%B9%B6%E5%8F%91%E4%B8%80%EF%BC%9A%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E9%94%81/</url>
+    <url>/blog/2020/07/09/Java%E5%B9%B6%E5%8F%91%E4%B8%80%EF%BC%9A%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E9%94%81/</url>
     <content><![CDATA[<p>之前学了一波Java多线程，学的不系统，也没整理知识点，准备开始看分布式的内容了，先把最基础的Java并发给复习了，整理一下。</p>
 <a id="more"></a>
 <h1>JUC</h1>
-<p><img src="/.io//JUC.png" alt="思维导图"></p>
+<p><img src="/blog/.io//JUC.png" alt="思维导图"></p>
 <h2 id="一、使用线程"><a class="header-anchor" href="#一、使用线程"></a>一、使用线程</h2>
 <p>实现接口只能当作一个被线程驱动的任务，需要Thread调用</p>
 <h3 id="1-实现Runnable接口"><a class="header-anchor" href="#1-实现Runnable接口"></a>1. 实现Runnable接口</h3>
@@ -1546,7 +1546,7 @@ mt.start();<br>
   </entry>
   <entry>
     <title>leetcode恢复空格</title>
-    <url>/2020/07/09/leetcode%E6%81%A2%E5%A4%8D%E7%A9%BA%E6%A0%BC/</url>
+    <url>/blog/2020/07/09/leetcode%E6%81%A2%E5%A4%8D%E7%A9%BA%E6%A0%BC/</url>
     <content><![CDATA[<p>今天做了一道很有意思的leetcode题，结合了前缀树和动态规划。</p>
 <h1>题目</h1>
 <p>哦，不！你不小心把一个长篇文章中的空格、标点都删掉了，并且大写也弄成了小写。像句子&quot;I reset the computer. It still didn’t boot!“已经变成了&quot;iresetthecomputeritstilldidntboot”。在处理标点符号和大小写之前，你得先把它断成词语。当然了，你有一本厚厚的词典dictionary，不过，有些词没在词典里。假设文章用sentence表示，设计一个算法，把文章断开，要求未识别的字符最少，返回未识别的字符数。</p>
@@ -1569,11 +1569,11 @@ mt.start();<br>
   </entry>
   <entry>
     <title>Hello-Kafka!</title>
-    <url>/2020/07/07/Kafka/</url>
+    <url>/blog/2020/07/07/Kafka/</url>
     <content><![CDATA[<p>Kafka算是现今企业用的应用最多的消息队列，数据处理的平台。它的消息是存储在硬盘上的，大量的使用了批量处理和异步的思想，所以它的吞吐量很大。消费者对消息的获取是顺序IO，所以消费者的访问速度也不差。</p>
 <a id="more"></a>
 <h1>Kafka</h1>
-<p><img src="/.io//Kafka.png" alt="Kafka"></p>
+<p><img src="/blog/.io//Kafka.png" alt="Kafka"></p>
 <h2 id="一、重要概念"><a class="header-anchor" href="#一、重要概念"></a>一、重要概念</h2>
 <h3 id="Producer"><a class="header-anchor" href="#Producer"></a>Producer</h3>
 <h3 id="Consumer"><a class="header-anchor" href="#Consumer"></a>Consumer</h3>
@@ -1661,11 +1661,11 @@ mt.start();<br>
   </entry>
   <entry>
     <title>消息队列的基础</title>
-    <url>/2020/07/07/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E5%9F%BA%E7%A1%80/</url>
+    <url>/blog/2020/07/07/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<p>消息队列是个好东西，将系统调用彻底解藕，并异步处理，还能在高并发场景下，将大量请求的压力转移到消息队列，从而降低系统的响应时间。完美的第三者。</p>
 <a id="more"></a>
 <h1>消息队列</h1>
-<p><img src="/.io//%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.png" alt="消息队列"></p>
+<p><img src="/blog/.io//%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.png" alt="消息队列"></p>
 <h2 id="一、消息模型"><a class="header-anchor" href="#一、消息模型"></a>一、消息模型</h2>
 <h3 id="点对点"><a class="header-anchor" href="#点对点"></a>点对点</h3>
 <ul>
@@ -1738,11 +1738,11 @@ mt.start();<br>
   </entry>
   <entry>
     <title>系统的一些基础概念</title>
-    <url>/2020/07/07/%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</url>
+    <url>/blog/2020/07/07/%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/</url>
     <content><![CDATA[<p>最近在做项目，学了点系统设计的知识，简单记录一下。</p>
 <a id="more"></a>
 <h1>系统设计基础</h1>
-<p><img src="/.io//%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80.png" alt="系统设计基础"></p>
+<p><img src="/blog/.io//%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80.png" alt="系统设计基础"></p>
 <h2 id="性能"><a class="header-anchor" href="#性能"></a>性能</h2>
 <h3 id="性能指标"><a class="header-anchor" href="#性能指标"></a>性能指标</h3>
 <ul>
@@ -1866,7 +1866,7 @@ mt.start();<br>
   </entry>
   <entry>
     <title>一些框架的使用和原理</title>
-    <url>/2020/06/08/%E4%B8%80%E4%BA%9B%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8E%9F%E7%90%86/</url>
+    <url>/blog/2020/06/08/%E4%B8%80%E4%BA%9B%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BD%BF%E7%94%A8%E5%92%8C%E5%8E%9F%E7%90%86/</url>
     <content><![CDATA[<p>总结一下上周demo用到的框架的实现原理，多而且杂，理理思路。</p>
 <a id="more"></a>
 <h1>Spring</h1>
@@ -1987,7 +1987,7 @@ initialization 和 destroy：在Bean构造函数之后，Bean销毁之前，想�
   </entry>
   <entry>
     <title>SpringBoot上手记录二Demo</title>
-    <url>/2020/06/08/SpringBoot%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95%E4%BA%8C/</url>
+    <url>/blog/2020/06/08/SpringBoot%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95%E4%BA%8C/</url>
     <content><![CDATA[<p>上周做了几个Demo，简单记录一下。</p>
 <a id="more"></a>
 <h1>SpringBoot-Demo</h1>
@@ -2035,7 +2035,7 @@ Create a homecontroller using two service to deal with request from homepage. Cr
   </entry>
   <entry>
     <title>字符串算法</title>
-    <url>/2020/06/07/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95/</url>
+    <url>/blog/2020/06/07/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%AE%97%E6%B3%95/</url>
     <content><![CDATA[<pre><code>包括KMP算法、Manacher算法，BFPRT算法
 </code></pre>
 <a id="more"></a>
@@ -2052,7 +2052,7 @@ Create a homecontroller using two service to deal with request from homepage. Cr
   </entry>
   <entry>
     <title>Leetcode数据结构合辑</title>
-    <url>/2020/05/30/Leetcode%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%90%88%E8%BE%91/</url>
+    <url>/blog/2020/05/30/Leetcode%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%90%88%E8%BE%91/</url>
     <content><![CDATA[<pre><code>一些数据结构在算法上的妙用。
 </code></pre>
 <a id="more"></a>
@@ -2074,7 +2074,7 @@ Create a homecontroller using two service to deal with request from homepage. Cr
   </entry>
   <entry>
     <title>SpringBoot上手记录</title>
-    <url>/2020/05/26/SpringBoot%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/</url>
+    <url>/blog/2020/05/26/SpringBoot%E4%B8%8A%E6%89%8B%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<p>记录一下基础概念和demo啥的。</p>
 <a id="more"></a>
 <h1>SpringBoot是啥</h1>
@@ -2107,7 +2107,7 @@ Mapper映射器：编写依赖的SQL，将SQL与实体类映射</p>
   </entry>
   <entry>
     <title>Spring开发基础</title>
-    <url>/2020/05/26/Spring%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/</url>
+    <url>/blog/2020/05/26/Spring%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<pre><code>Web开发框架。
 </code></pre>
 <a id="more"></a>
@@ -2165,7 +2165,7 @@ AOP对于解决特定问题，例如事务管理非常有用，这是因为分�
   </entry>
   <entry>
     <title>LRUCache实现</title>
-    <url>/2020/05/25/LRUCache%E5%AE%9E%E7%8E%B0/</url>
+    <url>/blog/2020/05/25/LRUCache%E5%AE%9E%E7%8E%B0/</url>
     <content><![CDATA[<pre><code>实现LRU缓存。
 </code></pre>
 <a id="more"></a>
@@ -2184,7 +2184,7 @@ AOP对于解决特定问题，例如事务管理非常有用，这是因为分�
   </entry>
   <entry>
     <title>Leetcode位运算合辑</title>
-    <url>/2020/05/24/Leetcode%E4%BD%8D%E8%BF%90%E7%AE%97%E5%90%88%E8%BE%91/</url>
+    <url>/blog/2020/05/24/Leetcode%E4%BD%8D%E8%BF%90%E7%AE%97%E5%90%88%E8%BE%91/</url>
     <content><![CDATA[<pre><code>这里记录有点意思的位运算打开方式😊。
 </code></pre>
 <a id="more"></a>
@@ -2199,7 +2199,7 @@ AOP对于解决特定问题，例如事务管理非常有用，这是因为分�
   </entry>
   <entry>
     <title>Leetcode1271.十六进制转换</title>
-    <url>/2020/05/20/Leetcode1271-%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/</url>
+    <url>/blog/2020/05/20/Leetcode1271-%E5%8D%81%E5%85%AD%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2/</url>
     <content><![CDATA[<pre><code>题目：你有一个十进制数字，请按照此规则将它变成「十六进制魔术数字」：首先将它变成字母大写的十六进制字符串，然后将所有的数字 0 变成字母 O ，将数字 1  变成字母 I 。
 如果一个数字在转换后只包含 {&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;, &quot;E&quot;, &quot;F&quot;, &quot;I&quot;, &quot;O&quot;} ，那么我们就认为这个转换是有效的。
 给你一个字符串 num ，它表示一个十进制数 N，如果它的十六进制魔术数字转换是有效的，请返回转换后的结果，否则返回 &quot;ERROR&quot; 。
@@ -2217,7 +2217,7 @@ AOP对于解决特定问题，例如事务管理非常有用，这是因为分�
   </entry>
   <entry>
     <title>Leetcode1371.每个元音包含偶数次的最长子字符串</title>
-    <url>/2020/05/20/Leetcode1371-%E6%AF%8F%E4%B8%AA%E5%85%83%E9%9F%B3%E5%8C%85%E5%90%AB%E5%81%B6%E6%95%B0%E6%AC%A1%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <url>/blog/2020/05/20/Leetcode1371-%E6%AF%8F%E4%B8%AA%E5%85%83%E9%9F%B3%E5%8C%85%E5%90%AB%E5%81%B6%E6%95%B0%E6%AC%A1%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
     <content><![CDATA[<pre><code>题目：给你一个字符串 s ，请你返回满足以下条件的最长子字符串的长度：每个元音字母，即 'a'，'e'，'i'，'o'，'u' ，在子字符串中都恰好出现了偶数次。
 </code></pre>
 <a id="more"></a>
@@ -2237,7 +2237,7 @@ AOP对于解决特定问题，例如事务管理非常有用，这是因为分�
   </entry>
   <entry>
     <title>Leetcode874.模拟行走</title>
-    <url>/2020/05/19/Leetcode874-%E6%A8%A1%E6%8B%9F%E8%A1%8C%E8%B5%B0/</url>
+    <url>/blog/2020/05/19/Leetcode874-%E6%A8%A1%E6%8B%9F%E8%A1%8C%E8%B5%B0/</url>
     <content><![CDATA[<pre><code>题目：机器人在一个无限大小的网格上行走，从点 (0, 0) 处开始出发，面向北方。
 1. 该机器人可以接收以下三种类型的命令：
     -2：向左转 90 度
@@ -2259,7 +2259,7 @@ AOP对于解决特定问题，例如事务管理非常有用，这是因为分�
   </entry>
   <entry>
     <title>Leetcode拓扑排序</title>
-    <url>/2020/05/17/Leetcode%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/</url>
+    <url>/blog/2020/05/17/Leetcode%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F/</url>
     <content><![CDATA[<a id="more"></a>
 <h1>课程表II</h1>
 <p>这里用深度优先搜索：先记录入度为0的结点，然后将结果翻转即可。</p>
@@ -2280,7 +2280,7 @@ AOP对于解决特定问题，例如事务管理非常有用，这是因为分�
   </entry>
   <entry>
     <title>Leetcode数学合集</title>
-    <url>/2020/05/13/Leetcode%E6%95%B0%E5%AD%A6%E5%90%88%E9%9B%86/</url>
+    <url>/blog/2020/05/13/Leetcode%E6%95%B0%E5%AD%A6%E5%90%88%E9%9B%86/</url>
     <content><![CDATA[<h1>204. 计算质数的个数</h1>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">countPrimes</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">boolean</span>[] b = <span class="keyword">new</span> <span class="keyword">boolean</span>[n];   <span class="comment">// 初始化默认值都为 false，为质数标记</span></span><br><span class="line">        <span class="keyword">if</span>(<span class="number">2</span> &lt; n) result++; <span class="comment">// 如果大于 2 则一定拥有 2 这个质数</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">3</span>; i &lt; n; i += <span class="number">2</span>)&#123;  <span class="comment">// 从 3 开始遍历，且只遍历奇数</span></span><br><span class="line">            <span class="keyword">if</span>(!b[i])&#123;  <span class="comment">// 是质数</span></span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> j = <span class="number">3</span>; i * j &lt; n; j += <span class="number">2</span>)&#123;</span><br><span class="line">                    b[i * j] = <span class="keyword">true</span>;    <span class="comment">// 将当前质数的奇数倍都设置成非质数标记 true</span></span><br><span class="line">                &#125;</span><br><span class="line">                result++;   <span class="comment">// 质数个数 +1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
@@ -2291,7 +2291,7 @@ AOP对于解决特定问题，例如事务管理非常有用，这是因为分�
   </entry>
   <entry>
     <title>Leetcode221.最大正方形</title>
-    <url>/2020/05/08/Leetcode221-%E6%9C%80%E5%A4%A7%E6%AD%A3%E6%96%B9%E5%BD%A2/</url>
+    <url>/blog/2020/05/08/Leetcode221-%E6%9C%80%E5%A4%A7%E6%AD%A3%E6%96%B9%E5%BD%A2/</url>
     <content><![CDATA[<pre><code>题目：
 </code></pre>
 <a id="more"></a>
@@ -2310,7 +2310,7 @@ AOP对于解决特定问题，例如事务管理非常有用，这是因为分�
   </entry>
   <entry>
     <title>Leetcode983.最低票价</title>
-    <url>/2020/05/06/Leetcode983-%E6%9C%80%E4%BD%8E%E7%A5%A8%E4%BB%B7/</url>
+    <url>/blog/2020/05/06/Leetcode983-%E6%9C%80%E4%BD%8E%E7%A5%A8%E4%BB%B7/</url>
     <content><![CDATA[<pre><code>题目：在一个火车旅行很受欢迎的国度，你提前一年计划了一些火车旅行。在接下来的一年里，你要旅行的日子将以一个名为 days 的数组给出。每一项是一个从 1 到 365 的整数。
 火车票有三种不同的销售方式：
     一张为期一天的通行证售价为 costs[0] 美元；
@@ -2330,7 +2330,7 @@ AOP对于解决特定问题，例如事务管理非常有用，这是因为分�
   </entry>
   <entry>
     <title>Titanic-survival-prediction</title>
-    <url>/2020/05/04/Titanic-survival-prediction/</url>
+    <url>/blog/2020/05/04/Titanic-survival-prediction/</url>
     <content><![CDATA[<h2 id="What-is-Titanic"><a class="header-anchor" href="#What-is-Titanic"></a>What is Titanic?</h2>
 <pre><code> The worst maritime disaster ever.
 </code></pre>
@@ -2384,7 +2384,7 @@ titanic.csv: training data.</p>
   </entry>
   <entry>
     <title>Leetcode动态规划合集</title>
-    <url>/2020/04/30/Leetcode%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%90%88%E9%9B%86/</url>
+    <url>/blog/2020/04/30/Leetcode%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%E5%90%88%E9%9B%86/</url>
     <content><![CDATA[<pre><code>状态的传递。
 </code></pre>
 <a id="more"></a>
@@ -2469,7 +2469,7 @@ titanic.csv: training data.</p>
   </entry>
   <entry>
     <title>Leetcode回溯法合集</title>
-    <url>/2020/04/28/Leetcode%E5%9B%9E%E6%BA%AF%E6%B3%95%E5%90%88%E9%9B%86/</url>
+    <url>/blog/2020/04/28/Leetcode%E5%9B%9E%E6%BA%AF%E6%B3%95%E5%90%88%E9%9B%86/</url>
     <content><![CDATA[<a id="more"></a>
 <h1>17.电话号码的数字组合</h1>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    String[] map = <span class="keyword">new</span> String[]&#123;<span class="string">""</span>,<span class="string">""</span>,<span class="string">"abc"</span>,<span class="string">"def"</span>,<span class="string">"ghi"</span>,<span class="string">"jkl"</span>,<span class="string">"mno"</span>,<span class="string">"pqrs"</span>,<span class="string">"tuv"</span>,<span class="string">"wxyz"</span>&#125;;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">letterCombinations</span><span class="params">(String digits)</span> </span>&#123;   </span><br><span class="line">        List&lt;String&gt; combinations = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span> (digits == <span class="keyword">null</span> || digits.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> combinations;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">char</span>[] chars = digits.toCharArray();</span><br><span class="line">        dfs(chars, <span class="keyword">new</span> StringBuilder(), combinations, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> combinations;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">char</span>[] chars, StringBuilder resi,List&lt;String&gt; combinations, <span class="keyword">int</span> i)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(i == chars.length)&#123;</span><br><span class="line">            combinations.add(resi.toString());</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">char</span> cur:map[chars[i]-<span class="string">'0'</span>].toCharArray())&#123;</span><br><span class="line">            resi.append(cur);</span><br><span class="line">            dfs(chars, resi, combinations, i + <span class="number">1</span>);</span><br><span class="line">            resi.deleteCharAt(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -2508,7 +2508,7 @@ titanic.csv: training data.</p>
   </entry>
   <entry>
     <title>Leetcode4寻找两个排序数组的中位数</title>
-    <url>/2020/04/27/Leetcode4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/</url>
+    <url>/blog/2020/04/27/Leetcode4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/</url>
     <content><![CDATA[<pre><code>题目：给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。
 请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。
 你可以假设 nums1 和 nums2 不会同时为空。
@@ -2527,7 +2527,7 @@ titanic.csv: training data.</p>
   </entry>
   <entry>
     <title>Leetcode198打家劫舍</title>
-    <url>/2020/04/27/Leetcode198%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D/</url>
+    <url>/blog/2020/04/27/Leetcode198%E6%89%93%E5%AE%B6%E5%8A%AB%E8%88%8D/</url>
     <content><![CDATA[<pre><code>题目：你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
 给定一个代表每个房屋存放金额的非负整数数组，计算你在不触动警报装置的情况下，能够偷窃到的最高金额。
 </code></pre>
@@ -2542,7 +2542,7 @@ titanic.csv: training data.</p>
   </entry>
   <entry>
     <title>Leetcode1071字符串最大公因子</title>
-    <url>/2020/04/26/Leetcode1071%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9C%80%E5%A4%A7%E5%85%AC%E5%9B%A0%E5%AD%90/</url>
+    <url>/blog/2020/04/26/Leetcode1071%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9C%80%E5%A4%A7%E5%85%AC%E5%9B%A0%E5%AD%90/</url>
     <content><![CDATA[<pre><code>题目：对于字符串 S 和 T，只有在 S = T + ... + T（T 与自身连接 1 次或多次）时，我们才认定 “T 能除尽 S”。
 返回最长字符串 X，要求满足 X 能除尽 str1 且 X 能除尽 str2。
 </code></pre>
@@ -2559,7 +2559,7 @@ titanic.csv: training data.</p>
   </entry>
   <entry>
     <title>Leetcode滑动窗口合集</title>
-    <url>/2020/04/18/Leetcode%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%90%88%E9%9B%86/</url>
+    <url>/blog/2020/04/18/Leetcode%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E5%90%88%E9%9B%86/</url>
     <content><![CDATA[<h1>3. 无重复字符的最长字串</h1>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//滑动窗口，j开拓，如果遇到重复字符，i一直删直到不重复</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        HashSet&lt;Character&gt; set = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        <span class="keyword">char</span>[] chars = s.toCharArray();</span><br><span class="line">        <span class="keyword">int</span> i =<span class="number">0</span>; <span class="keyword">int</span> j = <span class="number">0</span>; <span class="keyword">int</span> len = chars.length; <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(i&lt;len &amp;&amp; j&lt;len)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!set.contains(chars[j]))&#123;</span><br><span class="line">                set.add(chars[j++]);</span><br><span class="line">                res = Math.max(res,j-i);</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                set.remove(chars[i++]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//优化</span></span><br><span class="line"><span class="comment">//Hashmap可以记录重复字符的下一个位置，快速给i赋值。</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        HashMap&lt;Character, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">char</span>[] chars = s.toCharArray();</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>, j=<span class="number">0</span>;j&lt;chars.length;++j)&#123;</span><br><span class="line">            <span class="keyword">if</span>(map.containsKey(chars[j]))&#123;</span><br><span class="line">                i = Math.max(map.get(chars[j]),i);</span><br><span class="line">            &#125;</span><br><span class="line">            res = Math.max(j-i+<span class="number">1</span>,res);</span><br><span class="line">            map.put(chars[j],j+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
@@ -2570,7 +2570,7 @@ titanic.csv: training data.</p>
   </entry>
   <entry>
     <title>LeetcodeBFS和DFS合集</title>
-    <url>/2020/04/17/LeetcodeBFS%E5%92%8CDFS%E5%90%88%E9%9B%86/</url>
+    <url>/blog/2020/04/17/LeetcodeBFS%E5%92%8CDFS%E5%90%88%E9%9B%86/</url>
     <content><![CDATA[<h1>BFS</h1>
 <p>BFS一般用来求解最短路径等最优解问题，不过最短路径只能是无权图的最短路径。</p>
 <h2 id="1091-二维矩阵的最短路径"><a class="header-anchor" href="#1091-二维矩阵的最短路径"></a>1091.二维矩阵的最短路径</h2>
@@ -2603,7 +2603,7 @@ titanic.csv: training data.</p>
   </entry>
   <entry>
     <title>Leetcode分治合集</title>
-    <url>/2020/04/16/Leetcode%E5%88%86%E6%B2%BB%E5%90%88%E9%9B%86/</url>
+    <url>/blog/2020/04/16/Leetcode%E5%88%86%E6%B2%BB%E5%90%88%E9%9B%86/</url>
     <content><![CDATA[<h1>241. 为运算表达式设计优先级</h1>
 <p>分而治之，将整个运算表达式的问题，分解成各个项的问题。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">diffWaysToCompute</span><span class="params">(String input)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, List&lt;Integer&gt;&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(map.containsKey(input))&#123;</span><br><span class="line">            <span class="keyword">return</span> map.get(input);</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;Integer&gt; aList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(input==<span class="keyword">null</span>||input.length()&lt;<span class="number">1</span>) <span class="keyword">return</span> aList;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;input.length();++i)&#123;</span><br><span class="line">            <span class="keyword">char</span> c = input.charAt(i);</span><br><span class="line">            <span class="keyword">if</span>(c==<span class="string">'+'</span>||c==<span class="string">'-'</span>||c==<span class="string">'*'</span>)&#123;</span><br><span class="line">                List&lt;Integer&gt; left = diffWaysToCompute(input.substring(<span class="number">0</span>,i));</span><br><span class="line">                List&lt;Integer&gt; right = diffWaysToCompute(input.substring(i+<span class="number">1</span>));</span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> x: left)&#123;</span><br><span class="line">                    <span class="keyword">for</span>(<span class="keyword">int</span> y: right)&#123;</span><br><span class="line">                        <span class="keyword">if</span>(c==<span class="string">'+'</span>)&#123;</span><br><span class="line">                            aList.add(x+y);</span><br><span class="line">                        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(c==<span class="string">'-'</span>)&#123;</span><br><span class="line">                            aList.add(x-y);</span><br><span class="line">                        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                            aList.add(x*y);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(aList.size() == <span class="number">0</span>)&#123;</span><br><span class="line">            aList.add(Integer.valueOf(input));</span><br><span class="line">        &#125;</span><br><span class="line">        map.put(input, aList);</span><br><span class="line">        <span class="keyword">return</span> aList;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -2623,7 +2623,7 @@ titanic.csv: training data.</p>
   </entry>
   <entry>
     <title>Leetcode二分查找合集</title>
-    <url>/2020/04/15/Leetcode%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%90%88%E9%9B%86/</url>
+    <url>/blog/2020/04/15/Leetcode%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE%E5%90%88%E9%9B%86/</url>
     <content><![CDATA[<p>如果是right = mid， 那么循环条件应为left &lt; right, 否则会陷入死循环。</p>
 <h1>69. 求开方</h1>
 <h1>744. 大于给定元素的最小元素</h1>
@@ -2647,7 +2647,7 @@ titanic.csv: training data.</p>
   </entry>
   <entry>
     <title>Leetcode贪心策略合集</title>
-    <url>/2020/04/14/Leetcode%E8%B4%AA%E5%BF%83%E7%AD%96%E7%95%A5%E5%90%88%E9%9B%86/</url>
+    <url>/blog/2020/04/14/Leetcode%E8%B4%AA%E5%BF%83%E7%AD%96%E7%95%A5%E5%90%88%E9%9B%86/</url>
     <content><![CDATA[<h1>455.分发饼干</h1>
 <h1>435.无重叠区间</h1>
 <p>按照结尾最小排序</p>
@@ -2688,7 +2688,7 @@ end表示当前位置跳到的最远位置。</p>
   </entry>
   <entry>
     <title>前端语言基础总结</title>
-    <url>/2020/04/14/%E5%89%8D%E7%AB%AF%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E6%80%BB%E7%BB%93/</url>
+    <url>/blog/2020/04/14/%E5%89%8D%E7%AB%AF%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<h1>HTML</h1>
 <h2 id="基本元素"><a class="header-anchor" href="#基本元素"></a>基本元素</h2>
 <h3 id="图像-img标签"><a class="header-anchor" href="#图像-img标签"></a>图像 img标签</h3>
@@ -2797,7 +2797,7 @@ color:blue;<br>
   </entry>
   <entry>
     <title>Leetcode排序合集</title>
-    <url>/2020/04/13/Leetcode%E6%8E%92%E5%BA%8F%E5%90%88%E9%9B%86/</url>
+    <url>/blog/2020/04/13/Leetcode%E6%8E%92%E5%BA%8F%E5%90%88%E9%9B%86/</url>
     <content><![CDATA[<pre><code>堆和快排能解决百分之八十的问题。
 </code></pre>
 <a id="more"></a>
@@ -2827,7 +2827,7 @@ color:blue;<br>
   </entry>
   <entry>
     <title>Leetcode322.零钱兑换</title>
-    <url>/2020/04/12/Leetcode322-%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/</url>
+    <url>/blog/2020/04/12/Leetcode322-%E9%9B%B6%E9%92%B1%E5%85%91%E6%8D%A2/</url>
     <content><![CDATA[<pre><code>题目：给定不同面额的硬币 coins 和一个总金额 amount。编写一个函数来计算可以凑成总金额所需的最少的硬币个数。如果没有任何一种硬币组合能组成总金额，返回 -1。
 </code></pre>
 <a id="more"></a>
@@ -2848,7 +2848,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>Leetcode双指针合集</title>
-    <url>/2020/04/12/Leetcode%E5%8F%8C%E6%8C%87%E9%92%88%E5%90%88%E9%9B%86/</url>
+    <url>/blog/2020/04/12/Leetcode%E5%8F%8C%E6%8C%87%E9%92%88%E5%90%88%E9%9B%86/</url>
     <content><![CDATA[<pre><code>总结一波
 </code></pre>
 <a id="more"></a>
@@ -2891,7 +2891,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>Leetcode2.两数相加</title>
-    <url>/2020/04/11/Leetcode2-%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/</url>
+    <url>/blog/2020/04/11/Leetcode2-%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0/</url>
     <content><![CDATA[<pre><code>题目：给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
 如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。您可以假设除了数字 0 之外，这两个数都不会以 0 开头。
 </code></pre>
@@ -2910,7 +2910,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>Leetcode560.和为k的子数组</title>
-    <url>/2020/04/11/leetcode560-%E5%92%8C%E4%B8%BAk%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/</url>
+    <url>/blog/2020/04/11/leetcode560-%E5%92%8C%E4%B8%BAk%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/</url>
     <content><![CDATA[<pre><code>题目：给定一个整数数组和一个整数 k，你需要找到该数组中和为 k 的连续的子数组的个数。
 妙解：以当前sum - k检索之前的sum。
 </code></pre>
@@ -2933,7 +2933,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>滑动窗口的最大值｜《剑指offer》</title>
-    <url>/2020/04/10/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/10/%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E7%9A%84%E6%9C%80%E5%A4%A7%E5%80%BC%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：给定一个数组和滑动窗口的大小，找出所有滑动窗口里数值的最大值。例如，如果输入数组{2,3,4,2,6,2,5,1}及滑动窗口的大小3，那么一共存在6个滑动窗口，他们的最大值分别为{4,4,6,6,6,5}； 针对数组{2,3,4,2,6,2,5,1}的滑动窗口有以下6个： {[2,3,4],2,6,2,5,1}， {2,[3,4,2],6,2,5,1}， {2,3,[4,2,6],2,5,1}， {2,3,4,[2,6,2],5,1}， {2,3,4,2,[6,2,5],1}， {2,3,4,2,6,[2,5,1]}。
 </code></pre>
 <a id="more"></a>
@@ -2952,7 +2952,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>矩阵中的路径｜《剑指offer》</title>
-    <url>/2020/04/10/%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E8%B7%AF%E5%BE%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/10/%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E8%B7%AF%E5%BE%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：请设计一个函数，用来判断在一个矩阵中是否存在一条包含某字符串所有字符的路径。路径可以从矩阵中的任意一个格子开始，每一步可以在矩阵中向左，向右，向上，向下移动一个格子。如果一条路径经过了矩阵中的某一个格子，则该路径不能再进入该格子。
 </code></pre>
 <a id="more"></a>
@@ -2965,7 +2965,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>切绳子｜《剑指offer》</title>
-    <url>/2020/04/10/%E5%88%87%E7%BB%B3%E5%AD%90%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/10/%E5%88%87%E7%BB%B3%E5%AD%90%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：给你一根长度为n的绳子，请把绳子剪成整数长的m段（m、n都是整数，n&gt;1并且m&gt;1），每段绳子的长度记为k[0],k[1],...,k[m]。请问k[0]xk[1]x...xk[m]可能的最大乘积是多少？例如，当绳子的长度是8时，我们把它剪成长度分别为2、3、3的三段，此时得到的最大乘积是18。
 </code></pre>
 <a id="more"></a>
@@ -2977,7 +2977,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>数据流中的中位数｜《剑指offer》</title>
-    <url>/2020/04/10/%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%AD%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/10/%E6%95%B0%E6%8D%AE%E6%B5%81%E4%B8%AD%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：如何得到一个数据流中的中位数？如果从数据流中读出奇数个数值，那么中位数就是所有数值排序之后位于中间的数值。如果从数据流中读出偶数个数值，那么中位数就是所有数值排序之后中间两个数的平均值。我们使用Insert()方法读取数据流，使用GetMedian()方法获取当前读取数据的中位数。
 </code></pre>
 <a id="more"></a>
@@ -2995,7 +2995,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>二叉搜索树的第k个结点</title>
-    <url>/2020/04/09/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%AC%ACk%E4%B8%AA%E7%BB%93%E7%82%B9/</url>
+    <url>/blog/2020/04/09/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E7%AC%ACk%E4%B8%AA%E7%BB%93%E7%82%B9/</url>
     <content><![CDATA[<pre><code>题目：给定一棵二叉搜索树，请找出其中的第k小的结点。例如， （5，3，7，2，4，6，8）    中，按结点数值大小顺序第三小结点的值为4。
 </code></pre>
 <a id="more"></a>
@@ -3010,7 +3010,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>序列化二叉树｜《剑指offer》</title>
-    <url>/2020/04/09/%E5%BA%8F%E5%88%97%E5%8C%96%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/09/%E5%BA%8F%E5%88%97%E5%8C%96%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：请实现两个函数，分别用来序列化和反序列化二叉树
 二叉树的序列化是指：把一棵二叉树按照某种遍历方式的结果以某种格式保存为字符串，从而使得内存中建立起来的二叉树可以持久保存。序列化可以基于先序、中序、后序、层序的二叉树遍历方式来进行修改，序列化的结果是一个字符串，序列化时通过 某种符号表示空节点（#），以 ！ 表示一个结点值的结束（value!）。
 二叉树的反序列化是指：根据某种遍历顺序得到的序列化字符串结果str，重构二叉树。
@@ -3027,7 +3027,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>层序遍历｜《剑指offer》</title>
-    <url>/2020/04/08/%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/08/%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：从上到下按层打印二叉树，同一层结点从左至右输出。每一层输出一行。
 </code></pre>
 <a id="more"></a>
@@ -3042,7 +3042,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>按之字形顺序打印二叉树｜《剑指offer》</title>
-    <url>/2020/04/08/%E6%8C%89%E4%B9%8B%E5%AD%97%E5%BD%A2%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/08/%E6%8C%89%E4%B9%8B%E5%AD%97%E5%BD%A2%E9%A1%BA%E5%BA%8F%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。
 </code></pre>
 <a id="more"></a>
@@ -3056,7 +3056,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>对称的二叉树｜《剑指offer》</title>
-    <url>/2020/04/07/%E5%AF%B9%E7%A7%B0%E7%9A%84%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/07/%E5%AF%B9%E7%A7%B0%E7%9A%84%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：请实现一个函数，用来判断一颗二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。
 </code></pre>
 <a id="more"></a>
@@ -3073,7 +3073,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>把字符串转换成整数｜《剑指offer》</title>
-    <url>/2020/04/07/%E6%8A%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%88%90%E6%95%B4%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/07/%E6%8A%8A%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E6%8D%A2%E6%88%90%E6%95%B4%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：将一个字符串转换成一个整数，要求不能使用字符串转换整数的库函数。 数值为0或者字符串不是一个合法的数值则返回0
 </code></pre>
 <a id="more"></a>
@@ -3087,7 +3087,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>不用加减乘除做加法｜《剑指offer》</title>
-    <url>/2020/04/07/%E4%B8%8D%E7%94%A8%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E5%81%9A%E5%8A%A0%E6%B3%95%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/07/%E4%B8%8D%E7%94%A8%E5%8A%A0%E5%87%8F%E4%B9%98%E9%99%A4%E5%81%9A%E5%8A%A0%E6%B3%95%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。
 </code></pre>
 <p>又是一道位运算，神仙题。</p>
@@ -3103,7 +3103,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>求1+2+3+...+n｜《剑指offer》</title>
-    <url>/2020/04/07/%E6%B1%821-2-3-n%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/07/%E6%B1%821-2-3-n%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题解：求1+2+3+...+n，要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
 </code></pre>
 <p>这题更尼玛是神仙题，各种位运算大佬，我服了，🐂🍺</p>
@@ -3125,12 +3125,12 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>求1+2+3+...+n</title>
-    <url>/2020/04/07/%E6%B1%821-2-3-n/</url>
+    <url>/blog/2020/04/07/%E6%B1%821-2-3-n/</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>圆圈中最后剩下的数｜《剑指offer》</title>
-    <url>/2020/04/07/%E5%9C%86%E5%9C%88%E4%B8%AD%E6%9C%80%E5%90%8E%E5%89%A9%E4%B8%8B%E7%9A%84%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/07/%E5%9C%86%E5%9C%88%E4%B8%AD%E6%9C%80%E5%90%8E%E5%89%A9%E4%B8%8B%E7%9A%84%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：n个人（编号0~(n-1))，从0开始报数，报到(m-1)的退出，剩下的人 继续从退出的人的下一个开始报数，直到只剩下一个人获得胜利。求胜利者的编号。
 </code></pre>
 <p>一个什么怪怪环问题，约瑟夫环问题，可以模拟过程，也可以用数学的方法求出递推式，真的无语，题目等级竟然是简单。。</p>
@@ -3146,7 +3146,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>删除链表中重复的结点｜《剑指offer》</title>
-    <url>/2020/04/06/%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/06/%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E4%B8%AD%E9%87%8D%E5%A4%8D%E7%9A%84%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。 例如，链表1-&gt;2-&gt;3-&gt;3-&gt;4-&gt;4-&gt;5 处理后为 1-&gt;2-&gt;5
 </code></pre>
 <a id="more"></a>
@@ -3159,7 +3159,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>链表中环的入口结点｜《剑指offer》</title>
-    <url>/2020/04/06/%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%8E%AF%E7%9A%84%E5%85%A5%E5%8F%A3%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/06/%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%8E%AF%E7%9A%84%E5%85%A5%E5%8F%A3%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：给一个链表，若其中包含环，请找出该链表的环的入口结点，否则，输出null。
 </code></pre>
 <a id="more"></a>
@@ -3173,7 +3173,7 @@ dp[i] = min(dp[i - coins[1-max]])+1;<br>
   </entry>
   <entry>
     <title>JavaEE-Web入门</title>
-    <url>/2020/04/05/JavaEE-Web/</url>
+    <url>/blog/2020/04/05/JavaEE-Web/</url>
     <content><![CDATA[<h1>Servlet</h1>
 <p>一款API提供部署在web server上处理HTTP请求的对象。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// WebServlet注解表示这是一个Servlet，并映射到地址/:</span></span><br><span class="line"><span class="meta">@WebServlet</span>(urlPatterns = <span class="string">"/"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 设置响应类型:</span></span><br><span class="line">        resp.setContentType(<span class="string">"text/html"</span>);</span><br><span class="line">        <span class="comment">// 获取输出流:</span></span><br><span class="line">        PrintWriter pw = resp.getWriter();</span><br><span class="line">        <span class="comment">// 写入响应:</span></span><br><span class="line">        pw.write(<span class="string">"&lt;h1&gt;Hello, world!&lt;/h1&gt;"</span>);</span><br><span class="line">        <span class="comment">// 最后不要忘记flush强制输出:</span></span><br><span class="line">        pw.flush();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -3337,7 +3337,7 @@ ServletContext是一个WebApp运行期的全局唯一实例，可用于设置和
   </entry>
   <entry>
     <title>Json入门</title>
-    <url>/2020/04/05/Json%E5%85%A5%E9%97%A8/</url>
+    <url>/blog/2020/04/05/Json%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<h1>Json</h1>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"id"</span>: <span class="number">1</span>,</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"Java核心技术"</span>,</span><br><span class="line">    <span class="attr">"author"</span>: &#123;</span><br><span class="line">        <span class="attr">"firstName"</span>: <span class="string">"Abc"</span>,</span><br><span class="line">        <span class="attr">"lastName"</span>: <span class="string">"Xyz"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"isbn"</span>: <span class="string">"1234567"</span>,</span><br><span class="line">    <span class="attr">"tags"</span>: [<span class="string">"Java"</span>, <span class="string">"Network"</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="优点"><a class="header-anchor" href="#优点"></a>优点</h3>
@@ -3383,7 +3383,7 @@ ServletContext是一个WebApp运行期的全局唯一实例，可用于设置和
   </entry>
   <entry>
     <title>扑克牌顺子｜《剑指offer》</title>
-    <url>/2020/04/05/%E6%89%91%E5%85%8B%E7%89%8C%E9%A1%BA%E5%AD%90%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/05/%E6%89%91%E5%85%8B%E7%89%8C%E9%A1%BA%E5%AD%90%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：LL今天心情特别好,因为他去买了一副扑克牌,发现里面居然有2个大王,2个小王(一副牌原本是54张^_^)...他随机从中抽出了5张牌,想测测自己的手气,看看能不能抽到顺子,如果抽到的话,他决定去买体育彩票,嘿嘿！！“红心A,黑桃3,小王,大王,方片5”,“Oh My God!”不是顺子.....LL不高兴了,他想了想,决定大\小 王可以看成任何数字,并且A看作1,J为11,Q为12,K为13。上面的5张牌就可以变成“1,2,3,4,5”(大小王分别看作2和4),“So Lucky!”。LL决定去买体育彩票啦。 现在,要求你使用这幅牌模拟上面的过程,然后告诉我们LL的运气如何， 如果牌能组成顺子就输出true，否则就输出false。为了方便起见,你可以认为大小王是0。
 </code></pre>
 <a id="more"></a>
@@ -3400,7 +3400,7 @@ ServletContext是一个WebApp运行期的全局唯一实例，可用于设置和
   </entry>
   <entry>
     <title>翻转单词顺序列｜《剑指offer》</title>
-    <url>/2020/04/05/%E7%BF%BB%E8%BD%AC%E5%8D%95%E8%AF%8D%E9%A1%BA%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/05/%E7%BF%BB%E8%BD%AC%E5%8D%95%E8%AF%8D%E9%A1%BA%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：牛客最近来了一个新员工Fish，每天早晨总是会拿着一本英文杂志，写些句子在本子上。同事Cat对Fish写的内容颇感兴趣，有一天他向Fish借来翻看，但却读不懂它的意思。例如，“student. a am I”。后来才意识到，这家伙原来把句子单词的顺序翻转了，正确的句子应该是“I am a student.”。Cat对一一的翻转这些单词顺序可不在行，你能帮助他么？
 
 灵活使用String方法，split和trim。
@@ -3414,7 +3414,7 @@ ServletContext是一个WebApp运行期的全局唯一实例，可用于设置和
   </entry>
   <entry>
     <title>左旋转字符串｜《剑指offer》</title>
-    <url>/2020/04/05/%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/05/%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：汇编语言中有一种移位指令叫做循环左移（ROL），现在有个简单的任务，就是用字符串模拟这个指令的运算结果。对于一个给定的字符序列S，请你把其循环左移K位后的序列输出。例如，字符序列S=”abcXYZdef”,要求输出循环左移3位后的结果，即“XYZdefabc”。是不是很简单？OK，搞定它！
 </code></pre>
 <a id="more"></a>
@@ -3427,7 +3427,7 @@ ServletContext是一个WebApp运行期的全局唯一实例，可用于设置和
   </entry>
   <entry>
     <title>Java网络编程基础</title>
-    <url>/2020/04/04/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
+    <url>/blog/2020/04/04/Java%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<h1>TCP</h1>
 <h3 id="什么是socket"><a class="header-anchor" href="#什么是socket"></a>什么是socket?</h3>
 <p>由IP地址和端口号（范围是0～65535）组成。端口号总是由操作系统分配;<br>
@@ -3503,7 +3503,7 @@ UDP端口和TCP端口虽然都使用0~65535，但他们是两套独立的端口�
   </entry>
   <entry>
     <title>和为S的两个数字｜《剑指offer》</title>
-    <url>/2020/04/04/%E5%92%8C%E4%B8%BAS%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/04/%E5%92%8C%E4%B8%BAS%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入一个递增排序的数组和一个数字S，在数组中查找两个数，使得他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的。
 滑动窗口又来了，kimochi
 </code></pre>
@@ -3532,7 +3532,7 @@ a + b = s;<br>
   </entry>
   <entry>
     <title>和为S的连续正数序列｜《剑指offer》</title>
-    <url>/2020/04/04/%E5%92%8C%E4%B8%BAS%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%AD%A3%E6%95%B0%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/04/%E5%92%8C%E4%B8%BAS%E7%9A%84%E8%BF%9E%E7%BB%AD%E6%AD%A3%E6%95%B0%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：找出所有和为S的连续正数序列?
 </code></pre>
 <a id="more"></a>
@@ -3549,7 +3549,7 @@ a + b = s;<br>
   </entry>
   <entry>
     <title>数组中只出现一次的数字｜《剑指offer》</title>
-    <url>/2020/04/03/%E6%95%B0%E7%BB%84%E4%B8%AD%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/03/%E6%95%B0%E7%BB%84%E4%B8%AD%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：一个整型数组里除了两个数字之外，其他的数字都出现了两次。请写程序找出这两个只出现一次的数字。
 </code></pre>
 <a id="more"></a>
@@ -3564,7 +3564,7 @@ a + b = s;<br>
   </entry>
   <entry>
     <title>平衡二叉树｜《剑指offer》</title>
-    <url>/2020/04/03/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/03/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入一棵二叉树，判断该二叉树是否是平衡二叉树。
 </code></pre>
 <a id="more"></a>
@@ -3581,7 +3581,7 @@ a + b = s;<br>
   </entry>
   <entry>
     <title>Maven基础</title>
-    <url>/2020/04/02/Maven%E5%9F%BA%E7%A1%80/</url>
+    <url>/blog/2020/04/02/Maven%E5%9F%BA%E7%A1%80/</url>
     <content><![CDATA[<pre><code>迫不及待想开始做项目，语法、框架两手抓，先来了解一下Maven吧。
 Maven声明周期
 Maven deploy命令
@@ -3693,7 +3693,7 @@ findbugs-maven-plugin：对Java源码进行静态分析以找出潜在问题。<
   </entry>
   <entry>
     <title>JDBC入门</title>
-    <url>/2020/04/02/JDBC%E5%85%A5%E9%97%A8/</url>
+    <url>/blog/2020/04/02/JDBC%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<h1>ORM 对象关系数据库映射</h1>
 <p>一个对象对应数据库的一条记录</p>
 <h1>DAO 数据访问对象</h1>
@@ -3729,7 +3729,7 @@ findbugs-maven-plugin：对Java源码进行静态分析以找出潜在问题。<
   </entry>
   <entry>
     <title>二叉树的深度｜《剑指offer》</title>
-    <url>/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%B7%B1%E5%BA%A6%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/02/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%B7%B1%E5%BA%A6%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：求二叉树的深度。
 </code></pre>
 <a id="more"></a>
@@ -3742,7 +3742,7 @@ findbugs-maven-plugin：对Java源码进行静态分析以找出潜在问题。<
   </entry>
   <entry>
     <title>数字在排序数组中出现的位置｜《剑指offer》</title>
-    <url>/2020/04/02/%E6%95%B0%E5%AD%97%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E5%87%BA%E7%8E%B0%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/02/%E6%95%B0%E5%AD%97%E5%9C%A8%E6%8E%92%E5%BA%8F%E6%95%B0%E7%BB%84%E4%B8%AD%E5%87%BA%E7%8E%B0%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：统计一个数字在排序数组中出现的次数。
 </code></pre>
 <a id="more"></a>
@@ -3755,7 +3755,7 @@ findbugs-maven-plugin：对Java源码进行静态分析以找出潜在问题。<
   </entry>
   <entry>
     <title>两个链表的第一个公共结点｜《剑指offer》</title>
-    <url>/2020/04/02/%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%AC%E5%85%B1%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/02/%E4%B8%A4%E4%B8%AA%E9%93%BE%E8%A1%A8%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%85%AC%E5%85%B1%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入两个链表，找出它们的第一个公共结点。（注意因为传入数据是链表，所以错误测试数据的提示是用其他方式显示的，保证传入数据是正确的）
 </code></pre>
 <a id="more"></a>
@@ -3771,7 +3771,7 @@ findbugs-maven-plugin：对Java源码进行静态分析以找出潜在问题。<
   </entry>
   <entry>
     <title>Java多线程三：线程池</title>
-    <url>/2020/04/02/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%89%EF%BC%9A%E7%BA%BF%E7%A8%8B%E6%B1%A0/</url>
+    <url>/blog/2020/04/02/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%89%EF%BC%9A%E7%BA%BF%E7%A8%8B%E6%B1%A0/</url>
     <content><![CDATA[<pre><code>终于到了这一步了吗，海王的第一步。
 </code></pre>
 <a id="more"></a>
@@ -3896,7 +3896,7 @@ ThreadLocal适合在一个线程的处理流程中保持上下文（避免了同
   </entry>
   <entry>
     <title>数组中的逆序对｜《剑指offer》</title>
-    <url>/2020/04/01/%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/01/%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E9%80%86%E5%BA%8F%E5%AF%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：在数组中的两个数字，如果前面一个数字大于后面的数字，则这两个数字组成一个逆序对。输入一个数组,求出这个数组中的逆序对的总数P。并将P对1000000007取模的结果输出。 即输出P%1000000007
 </code></pre>
 <a id="more"></a>
@@ -3910,7 +3910,7 @@ ThreadLocal适合在一个线程的处理流程中保持上下文（避免了同
   </entry>
   <entry>
     <title>字符串中第一个只出现一次的字符｜《剑指offer》</title>
-    <url>/2020/04/01/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/04/01/%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8F%AA%E5%87%BA%E7%8E%B0%E4%B8%80%E6%AC%A1%E7%9A%84%E5%AD%97%E7%AC%A6%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：在一个字符串(0&lt;=字符串长度&lt;=10000，全部由字母组成)中找到第一个只出现一次的字符,并返回它的位置, 如果没有则返回 -1（需要区分大小写）.
 这题大佬的解很妙，把存Integer改为存Boolean，太妙了！
 </code></pre>
@@ -3929,7 +3929,7 @@ ThreadLocal适合在一个线程的处理流程中保持上下文（避免了同
   </entry>
   <entry>
     <title>Java多线程二：代码级别的锁</title>
-    <url>/2020/04/01/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BA%8C/</url>
+    <url>/blog/2020/04/01/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%BA%8C/</url>
     <content><![CDATA[<pre><code>JDK1.5之后，欢迎来到java.util.concurrent包。可重入锁，悲观读锁，乐观读锁，线程安全数据结构。
 </code></pre>
 <a id="more"></a>
@@ -4037,7 +4037,7 @@ ThreadLocal适合在一个线程的处理流程中保持上下文（避免了同
   </entry>
   <entry>
     <title>Java多线程一：语言级别的锁</title>
-    <url>/2020/03/31/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
+    <url>/blog/2020/03/31/Java%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
     <content><![CDATA[<pre><code>一个线程都搞不好，搞什么多线程。
 </code></pre>
 <a id="more"></a>
@@ -4148,7 +4148,7 @@ t.notify(), t.notifyAll(): 唤醒其他线程，只能在已获得锁对象内�
   </entry>
   <entry>
     <title>丑数｜《剑指offer》</title>
-    <url>/2020/03/31/%E4%B8%91%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/31/%E4%B8%91%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：把只包含质因子2、3和5的数称作丑数（Ugly Number）。例如6、8都是丑数，但14不是，因为它包含质因子7。 习惯上我们把1当做是第一个丑数。求按从小到大的顺序的第N个丑数。
 </code></pre>
 <a id="more"></a>
@@ -4171,7 +4171,7 @@ t.notify(), t.notifyAll(): 唤醒其他线程，只能在已获得锁对象内�
   </entry>
   <entry>
     <title>把数组排成最小的数｜《剑指offer》</title>
-    <url>/2020/03/31/%E6%8A%8A%E6%95%B0%E7%BB%84%E6%8E%92%E6%88%90%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/31/%E6%8A%8A%E6%95%B0%E7%BB%84%E6%8E%92%E6%88%90%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入一个正整数数组，把数组里所有数字拼接起来排成一个数，打印能拼接出的所有数字中最小的一个。例如输入数组{3，32，321}，则打印出这三个数字能排成的最小数字为321323。
 </code></pre>
 <a id="more"></a>
@@ -4185,7 +4185,7 @@ t.notify(), t.notifyAll(): 唤醒其他线程，只能在已获得锁对象内�
   </entry>
   <entry>
     <title>整数中1出现的次数｜《剑指offer》</title>
-    <url>/2020/03/30/%E6%95%B4%E6%95%B0%E4%B8%AD1%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/30/%E6%95%B4%E6%95%B0%E4%B8%AD1%E5%87%BA%E7%8E%B0%E7%9A%84%E6%AC%A1%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：求出任意非负整数区间中1出现的次数（从1 到 n 中1出现的次数）。
 </code></pre>
 <a id="more"></a>
@@ -4202,7 +4202,7 @@ t.notify(), t.notifyAll(): 唤醒其他线程，只能在已获得锁对象内�
   </entry>
   <entry>
     <title>连续子数组的最大和｜《剑指offer》</title>
-    <url>/2020/03/29/%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/29/%E8%BF%9E%E7%BB%AD%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%A4%A7%E5%92%8C%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：给一个数组，返回它的最大连续子序列的和(子向量的长度至少是1)
 </code></pre>
 <a id="more"></a>
@@ -4219,7 +4219,7 @@ t.notify(), t.notifyAll(): 唤醒其他线程，只能在已获得锁对象内�
   </entry>
   <entry>
     <title>字符串的排列｜《剑指offer》</title>
-    <url>/2020/03/29/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%8E%92%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/29/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%8E%92%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入一个字符串,按字典序打印出该字符串中字符的所有排列。例如输入字符串abc,则打印出由字符a,b,c所能排列出来的所有字符串abc,acb,bac,bca,cab和cba。
 </code></pre>
 <a id="more"></a>
@@ -4233,7 +4233,7 @@ t.notify(), t.notifyAll(): 唤醒其他线程，只能在已获得锁对象内�
   </entry>
   <entry>
     <title>数组中出现次数超过一半的数｜《剑指offer》</title>
-    <url>/2020/03/28/%E6%95%B0%E7%BB%84%E4%B8%AD%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E8%B6%85%E8%BF%87%E4%B8%80%E5%8D%8A%E7%9A%84%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/28/%E6%95%B0%E7%BB%84%E4%B8%AD%E5%87%BA%E7%8E%B0%E6%AC%A1%E6%95%B0%E8%B6%85%E8%BF%87%E4%B8%80%E5%8D%8A%E7%9A%84%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，超过数组长度的一半，因此输出2。如果不存在则输出0。
 </code></pre>
 <a id="more"></a>
@@ -4254,7 +4254,7 @@ t.notify(), t.notifyAll(): 唤醒其他线程，只能在已获得锁对象内�
   </entry>
   <entry>
     <title>最小的k个数｜《剑指offer》</title>
-    <url>/2020/03/27/%E6%9C%80%E5%B0%8F%E7%9A%84k%E4%B8%AA%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/27/%E6%9C%80%E5%B0%8F%E7%9A%84k%E4%B8%AA%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4,。
 </code></pre>
 <a id="more"></a>
@@ -4285,7 +4285,7 @@ O(n)，最坏情况下的时间复杂度为 O(n2)。</li>
   </entry>
   <entry>
     <title>二叉搜索树与双向链表｜《剑指offer》</title>
-    <url>/2020/03/27/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/</url>
+    <url>/blog/2020/03/27/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E4%B8%8E%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8/</url>
     <content><![CDATA[<pre><code>题目：输入一棵二叉搜索树，将该二叉搜索树转换成一个排序的双向链表。要求不能创建任何新的结点，只能调整树中结点指针的指向。
 </code></pre>
 <a id="more"></a>
@@ -4302,7 +4302,7 @@ O(n)，最坏情况下的时间复杂度为 O(n2)。</li>
   </entry>
   <entry>
     <title>机器人的运动范围｜《剑指offer》</title>
-    <url>/2020/03/25/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF%E5%BE%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/25/%E6%9C%BA%E5%99%A8%E4%BA%BA%E8%B5%B0%E8%BF%87%E7%9A%84%E8%B7%AF%E5%BE%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：地上有一个m行和n列的方格。一个机器人从坐标0,0的格子开始移动，每一次只能向左，右，上，下四个方向移动一格，但是不能进入行坐标和列坐标的数位之和大于k的格子。 例如，当k为18时，机器人能够进入方格（35,37），因为3+5+3+7 = 18。但是，它不能进入方格（35,38），因为3+5+3+8 = 19。请问该机器人能够达到多少个格子？
 </code></pre>
 <a id="more"></a>
@@ -4320,7 +4320,7 @@ O(n)，最坏情况下的时间复杂度为 O(n2)。</li>
   </entry>
   <entry>
     <title>二叉树中和为某一值的路径｜《剑指offer》</title>
-    <url>/2020/03/25/%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%92%8C%E4%B8%BA%E6%9F%90%E4%B8%80%E5%80%BC%E7%9A%84%E8%B7%AF%E5%BE%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/25/%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%92%8C%E4%B8%BA%E6%9F%90%E4%B8%80%E5%80%BC%E7%9A%84%E8%B7%AF%E5%BE%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入一颗二叉树的根节点和一个整数，打印出二叉树中结点值的和为输入整数的所有路径。路径定义为从树的根结点开始往下一直到叶结点所经过的结点形成一条路径。(注意: 在返回值的list中，数组长度大的数组靠前)
 </code></pre>
 <a id="more"></a>
@@ -4339,7 +4339,7 @@ O(n)，最坏情况下的时间复杂度为 O(n2)。</li>
   </entry>
   <entry>
     <title>sql好题总结</title>
-    <url>/2020/03/25/sql%E4%B9%A0%E9%A2%98%E6%80%BB%E7%BB%93/</url>
+    <url>/blog/2020/03/25/sql%E4%B9%A0%E9%A2%98%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<pre><code>合格的SQL BOY练成之路。
 </code></pre>
 <a id="more"></a>
@@ -4379,7 +4379,7 @@ O(n)，最坏情况下的时间复杂度为 O(n2)。</li>
   </entry>
   <entry>
     <title>树的数据结构补充</title>
-    <url>/2020/03/25/%E6%A0%91%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%A1%A5%E5%85%85/</url>
+    <url>/blog/2020/03/25/%E6%A0%91%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%A1%A5%E5%85%85/</url>
     <content><![CDATA[<h1>前缀树</h1>
 <p>Trie树的基本性质：<br>
 ①根节点不包含字符，除根节点外的每一个子节点都包含一个字符。<br>
@@ -4411,7 +4411,7 @@ PriorityQueue使用时要实现比较器，定义排序方法。<br>
   </entry>
   <entry>
     <title>二叉搜索树的后序遍历序列｜《剑指offer》</title>
-    <url>/2020/03/24/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/24/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<h1>题解</h1>
 <p>二叉搜索树的后序遍历序列，最后一个结点为root，则往前找第一个小于root即为左子树的最右结点，即可将序列分为左子树和右子树。</p>
 <h1>code</h1>
@@ -4424,7 +4424,7 @@ PriorityQueue使用时要实现比较器，定义排序方法。<br>
   </entry>
   <entry>
     <title>栈的压入、弹出序列｜《剑指offer》</title>
-    <url>/2020/03/23/%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/23/%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）
 </code></pre>
 <a id="more"></a>
@@ -4439,7 +4439,7 @@ PriorityQueue使用时要实现比较器，定义排序方法。<br>
   </entry>
   <entry>
     <title>python复习</title>
-    <url>/2020/03/22/python%E5%A4%8D%E4%B9%A0/</url>
+    <url>/blog/2020/03/22/python%E5%A4%8D%E4%B9%A0/</url>
     <content><![CDATA[<pre><code>再过一遍python语法，记点有趣的。
 </code></pre>
 <a id="more"></a>
@@ -4619,7 +4619,7 @@ Python并没有一种方法可以完全限制访问private函数或变量。</p>
   </entry>
   <entry>
     <title>包含min函数的栈｜《剑指offer》</title>
-    <url>/2020/03/22/%E5%8C%85%E5%90%ABmin%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/22/%E5%8C%85%E5%90%ABmin%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。
 注意：保证测试中不会当栈为空的时候，对栈调用pop()或者min()或者top()方法。
 </code></pre>
@@ -4636,7 +4636,7 @@ Python并没有一种方法可以完全限制访问private函数或变量。</p>
   </entry>
   <entry>
     <title>顺时针打印矩阵｜《剑指offer》</title>
-    <url>/2020/03/22/%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/22/%E9%A1%BA%E6%97%B6%E9%92%88%E6%89%93%E5%8D%B0%E7%9F%A9%E9%98%B5%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，如果输入如下4 X 4矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.
 </code></pre>
 <a id="more"></a>
@@ -4649,7 +4649,7 @@ Python并没有一种方法可以完全限制访问private函数或变量。</p>
   </entry>
   <entry>
     <title>二叉树的镜像｜《剑指offer》</title>
-    <url>/2020/03/21/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%95%9C%E5%83%8F%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/21/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E9%95%9C%E5%83%8F%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：操作给定的二叉树，将其变换为源二叉树的镜像。
 </code></pre>
 <a id="more"></a>
@@ -4664,7 +4664,7 @@ Python并没有一种方法可以完全限制访问private函数或变量。</p>
   </entry>
   <entry>
     <title>面向对象思想</title>
-    <url>/2020/03/20/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%80%9D%E6%83%B3/</url>
+    <url>/blog/2020/03/20/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%80%9D%E6%83%B3/</url>
     <content><![CDATA[<a id="more"></a>
 <h1>三大特性</h1>
 <h3 id="1-封装"><a class="header-anchor" href="#1-封装"></a>1 封装</h3>
@@ -4797,7 +4797,7 @@ Python并没有一种方法可以完全限制访问private函数或变量。</p>
   </entry>
   <entry>
     <title>树的子结构｜《剑指offer》</title>
-    <url>/2020/03/20/%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/20/%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
 </code></pre>
 <a id="more"></a>
@@ -4810,7 +4810,7 @@ Python并没有一种方法可以完全限制访问private函数或变量。</p>
   </entry>
   <entry>
     <title>树的遍历总结</title>
-    <url>/2020/03/19/%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86%E6%80%BB%E7%BB%93/</url>
+    <url>/blog/2020/03/19/%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<pre><code>今天刷到二叉树，顺手总结一波树的遍历，实现一下。
 </code></pre>
 <a id="more"></a>
@@ -4857,7 +4857,7 @@ Python并没有一种方法可以完全限制访问private函数或变量。</p>
   </entry>
   <entry>
     <title>反转链表｜《剑指offer》</title>
-    <url>/2020/03/19/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/19/%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入一个链表，反转链表后，输出新链表的表头。
 </code></pre>
 <a id="more"></a>
@@ -4872,12 +4872,12 @@ Python并没有一种方法可以完全限制访问private函数或变量。</p>
   </entry>
   <entry>
     <title>操作系统总结-进程管理</title>
-    <url>/2020/03/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/</url>
+    <url>/blog/2020/03/18/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BB%93-%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86/</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>《Java核心技术卷一》读书笔记二</title>
-    <url>/2020/03/18/%E3%80%8AJava%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7%E4%B8%80%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%BA%8C/</url>
+    <url>/blog/2020/03/18/%E3%80%8AJava%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E5%8D%B7%E4%B8%80%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%BA%8C/</url>
     <content><![CDATA[<a id="more"></a>
 <h1>第五章 继承</h1>
 <ol>
@@ -4943,7 +4943,7 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
   </entry>
   <entry>
     <title>调整数组顺序使奇数位于偶数前面｜《剑指offer》</title>
-    <url>/2020/03/18/%E8%B0%83%E6%95%B4%E6%95%B0%E7%BB%84%E9%A1%BA%E5%BA%8F%E4%BD%BF%E5%A5%87%E6%95%B0%E4%BD%8D%E4%BA%8E%E5%81%B6%E6%95%B0%E5%89%8D%E9%9D%A2%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/18/%E8%B0%83%E6%95%B4%E6%95%B0%E7%BB%84%E9%A1%BA%E5%BA%8F%E4%BD%BF%E5%A5%87%E6%95%B0%E4%BD%8D%E4%BA%8E%E5%81%B6%E6%95%B0%E5%89%8D%E9%9D%A2%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
 </code></pre>
 <a id="more"></a>
@@ -4955,7 +4955,7 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
   </entry>
   <entry>
     <title>数值的整数次方｜《剑指offer》</title>
-    <url>/2020/03/18/%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/18/%E6%95%B0%E5%80%BC%E7%9A%84%E6%95%B4%E6%95%B0%E6%AC%A1%E6%96%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。保证base和exponent不同时为0
 </code></pre>
 <a id="more"></a>
@@ -4969,7 +4969,7 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
   </entry>
   <entry>
     <title>二进制中1的个数｜《剑指Offer》</title>
-    <url>/2020/03/18/%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD1%E7%9A%84%E4%B8%AA%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/</url>
+    <url>/blog/2020/03/18/%E4%BA%8C%E8%BF%9B%E5%88%B6%E4%B8%AD1%E7%9A%84%E4%B8%AA%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87Offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
 </code></pre>
 <a id="more"></a>
@@ -4981,7 +4981,7 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
   </entry>
   <entry>
     <title>Java_Design_Patterns</title>
-    <url>/2020/03/17/Java-Design-Patterns/</url>
+    <url>/blog/2020/03/17/Java-Design-Patterns/</url>
     <content><![CDATA[<h1>创新型模式</h1>
 <p>关注点是如何创建对象，对象的创建和使用相分离，这样使得两者能相对独立地变换。</p>
 <h3 id="工厂方法-Factory-Method"><a class="header-anchor" href="#工厂方法-Factory-Method"></a>工厂方法 Factory Method</h3>
@@ -5070,7 +5070,7 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
   </entry>
   <entry>
     <title>距形覆盖｜《剑指offer》</title>
-    <url>/2020/03/17/%E8%B7%9D%E5%BD%A2%E8%A6%86%E7%9B%96%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/17/%E8%B7%9D%E5%BD%A2%E8%A6%86%E7%9B%96%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：我们可以用2*1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2*1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？
 </code></pre>
 <h1>题解</h1>
@@ -5085,7 +5085,7 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
   </entry>
   <entry>
     <title>旋转数组最小的数字｜《剑指offer》</title>
-    <url>/2020/03/16/%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/16/%E6%97%8B%E8%BD%AC%E6%95%B0%E7%BB%84%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%E5%AD%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非递减排序的数组的一个旋转，输出旋转数组的最小元素。例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
 </code></pre>
 <a id="more"></a>
@@ -5100,7 +5100,7 @@ value 数组被声明为 final，这意味着 value 数组初始化之后就不�
   </entry>
   <entry>
     <title>Java的函数式编程</title>
-    <url>/2020/03/15/Java%E7%9A%84%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/</url>
+    <url>/blog/2020/03/15/Java%E7%9A%84%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/</url>
     <content><![CDATA[<pre><code>又名Lambda计算，函数式编程还是挺好玩的，可以把函数本身作为参数传入另一个函数，还允许返回一个函数，很方便。不过这类编程不稳定，函数内部的变量状态不确定，相同的输入可能得到不同的输出。而且抽象程度高，那么运行效率就会偏低。
 </code></pre>
 <a id="more"></a>
@@ -5237,7 +5237,7 @@ boolean anyMatch(Predicate&lt;? super T&gt;)：测试是否至少有一个元素
   </entry>
   <entry>
     <title>Java正则表达式</title>
-    <url>/2020/03/15/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+    <url>/blog/2020/03/15/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
     <content><![CDATA[<pre><code>Java标准库的java.util.regex包内置了正则表达式引擎。Java使用正则记得前面加多一个转意字符\。
 </code></pre>
 <a id="more"></a>
@@ -5268,7 +5268,7 @@ tab:\t</p>
   </entry>
   <entry>
     <title>汉诺塔和哈夫曼编码</title>
-    <url>/2020/03/15/%E6%B1%89%E8%AF%BA%E5%A1%94%E5%92%8C%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/</url>
+    <url>/blog/2020/03/15/%E6%B1%89%E8%AF%BA%E5%A1%94%E5%92%8C%E5%93%88%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81/</url>
     <content><![CDATA[<h1>汉诺塔</h1>
 <p>an = 2 * an-1 + 1，an = 2n - 1，n 个圆盘需要移动 2n - 1 次。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hanoi</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">move</span><span class="params">(<span class="keyword">int</span> n, String from, String buffer, String to)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">"from "</span> + from + <span class="string">" to "</span> + to);</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        move(n - <span class="number">1</span>, from, to, buffer);</span><br><span class="line">        move(<span class="number">1</span>, from, buffer, to);</span><br><span class="line">        move(n - <span class="number">1</span>, buffer, from, to);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Hanoi.move(<span class="number">3</span>, <span class="string">"H1"</span>, <span class="string">"H2"</span>, <span class="string">"H3"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -5293,7 +5293,7 @@ tab:\t</p>
   </entry>
   <entry>
     <title>Java单元测试</title>
-    <url>/2020/03/14/Java%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</url>
+    <url>/blog/2020/03/14/Java%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95/</url>
     <content><![CDATA[<h1>JUnit</h1>
 <p>TDD: 测试驱动开发，是指先编写接口，紧接着编写测试。编写完测试后，我们才开始真正编写实现代码。</p>
 <a id="more"></a>
@@ -5347,7 +5347,7 @@ tab:\t</p>
   </entry>
   <entry>
     <title>《Java核心技术卷一》读书笔记一</title>
-    <url>/2020/03/13/%E3%80%8AJava%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%80%E3%80%8B/</url>
+    <url>/blog/2020/03/13/%E3%80%8AJava%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%80%E3%80%8B/</url>
     <content><![CDATA[<pre><code>随意记录一下有趣的。
 </code></pre>
 <a id="more"></a>
@@ -5388,7 +5388,7 @@ Java的参数传递是按值传递，对象引用到方法中，实际是方法�
   </entry>
   <entry>
     <title>Java时间</title>
-    <url>/2020/03/13/Java%E6%97%B6%E9%97%B4/</url>
+    <url>/blog/2020/03/13/Java%E6%97%B6%E9%97%B4/</url>
     <content><![CDATA[<pre><code>如果以GMT或者UTC作为时区，这不两算夏令时，无论日期是多少，时间都是标准的。
 如果以国家／城市表示，例如America／NewYork，虽然纽约也在西五区，但是，因为夏令时的存在，在不同的日期，GMT时间和纽约时间可能是不一样的。
 
@@ -5449,7 +5449,7 @@ Calendar只有一种方式获取，即Calendar.getInstance()，而且一获取�
   </entry>
   <entry>
     <title>符号表</title>
-    <url>/2020/03/13/%E7%AC%A6%E5%8F%B7%E8%A1%A8/</url>
+    <url>/blog/2020/03/13/%E7%AC%A6%E5%8F%B7%E8%A1%A8/</url>
     <content><![CDATA[<pre><code>符号表（Symbol Table）是一种存储键值对的数据结构，可以支持快速查找操作。
 
 符号表分为有序和无序两种，有序符号表主要指支持 min()、max() 等根据键的大小关系来实现的操作。
@@ -5612,7 +5612,7 @@ java.util.HashMap：拉链法的散列表<br>
   </entry>
   <entry>
     <title>栈和队列</title>
-    <url>/2020/03/12/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</url>
+    <url>/blog/2020/03/12/%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97/</url>
     <content><![CDATA[<pre><code>栈和队列的算法实现。
 </code></pre>
 <a id="more"></a>
@@ -5633,7 +5633,7 @@ java.util.HashMap：拉链法的散列表<br>
   </entry>
   <entry>
     <title>并查集</title>
-    <url>/2020/03/12/%E5%B9%B6%E6%9F%A5%E9%9B%86/</url>
+    <url>/blog/2020/03/12/%E5%B9%B6%E6%9F%A5%E9%9B%86/</url>
     <content><![CDATA[<pre><code>用来解决动态连通性的问题，能动态连接两个点，能判断两个点是否连通。
 </code></pre>
 <a id="more"></a>
@@ -5700,7 +5700,7 @@ boolean connected(int p, int q)     判断p，q两点是否连通</p>
   </entry>
   <entry>
     <title>排序算法总结</title>
-    <url>/2020/03/11/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</url>
+    <url>/blog/2020/03/11/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93/</url>
     <content><![CDATA[<pre><code>总结一波基础算法再刷题把
 </code></pre>
 <a id="more"></a>
@@ -5819,7 +5819,7 @@ Java 主要排序方法为 java.util.Arrays.sort()，对于原始数据类型使
   </entry>
   <entry>
     <title>JavaIO</title>
-    <url>/2020/03/10/JavaIO/</url>
+    <url>/blog/2020/03/10/JavaIO/</url>
     <content><![CDATA[<pre><code>I：input把数据从外部读入内存
 O：output把数据从内存输出到外部
 </code></pre>
@@ -5984,7 +5984,7 @@ System.err是系统默认提供的标准错误输出。<br>
   </entry>
   <entry>
     <title>两个栈实现队列｜《剑指offer》</title>
-    <url>/2020/03/10/%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/10/%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题解：用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
 </code></pre>
 <a id="more"></a>
@@ -5997,7 +5997,7 @@ System.err是系统默认提供的标准错误输出。<br>
   </entry>
   <entry>
     <title>二叉树的下一个结点｜《剑指offer》</title>
-    <url>/2020/03/09/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%8B%E4%B8%80%E4%B8%AA%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/09/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%8B%E4%B8%80%E4%B8%AA%E7%BB%93%E7%82%B9%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针。
 </code></pre>
 <a id="more"></a>
@@ -6020,7 +6020,7 @@ System.err是系统默认提供的标准错误输出。<br>
   </entry>
   <entry>
     <title>重建二叉树｜《剑指offer》</title>
-    <url>/2020/03/09/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/09/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
 </code></pre>
 <h1>题解一</h1>
@@ -6036,7 +6036,7 @@ System.err是系统默认提供的标准错误输出。<br>
   </entry>
   <entry>
     <title>从尾到头打印链表｜《剑指offer》</title>
-    <url>/2020/03/08/%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/08/%E4%BB%8E%E5%B0%BE%E5%88%B0%E5%A4%B4%E6%89%93%E5%8D%B0%E9%93%BE%E8%A1%A8%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：输入一个链表，按链表从尾到头的顺序返回一个ArrayList。
 </code></pre>
 <a id="more"></a>
@@ -6051,7 +6051,7 @@ System.err是系统默认提供的标准错误输出。<br>
   </entry>
   <entry>
     <title>表示数值的字符串｜《剑指offer》</title>
-    <url>/2020/03/08/%E8%A1%A8%E7%A4%BA%E6%95%B0%E5%80%BC%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/08/%E8%A1%A8%E7%A4%BA%E6%95%B0%E5%80%BC%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：请实现一个函数用来判断字符串是否表示数值（包括整数和小数）。例如，字符串&quot;+100&quot;,&quot;5e2&quot;,&quot;-123&quot;,&quot;3.1416&quot;和&quot;-1E-16&quot;都表示数值。 但是&quot;12e&quot;,&quot;1a3.14&quot;,&quot;1.2.3&quot;,&quot;+-5&quot;和&quot;12e+4.3&quot;都不是。
 </code></pre>
 <a id="more"></a>
@@ -6074,7 +6074,7 @@ System.err是系统默认提供的标准错误输出。<br>
   </entry>
   <entry>
     <title>正则表达式匹配｜《剑指offer》</title>
-    <url>/2020/03/07/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D/</url>
+    <url>/blog/2020/03/07/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D/</url>
     <content><![CDATA[<pre><code>题目：请实现一个函数用来匹配包括'.'和'*'的正则表达式。模式中的字符'.'表示任意一个字符，而'*'表示它前面的字符可以出现任意次（包含0次）。 在本题中，匹配是指字符串的所有字符匹配整个模式。例如，字符串&quot;aaa&quot;与模式&quot;a.a&quot;和&quot;ab*ac*a&quot;匹配，但是与&quot;aa.a&quot;和&quot;ab*a&quot;均不匹配
 </code></pre>
 <h1>题解：</h1>
@@ -6096,7 +6096,7 @@ System.err是系统默认提供的标准错误输出。<br>
   </entry>
   <entry>
     <title>Java集合</title>
-    <url>/2020/03/07/Java%E9%9B%86%E5%90%88/</url>
+    <url>/blog/2020/03/07/Java%E9%9B%86%E5%90%88/</url>
     <content><![CDATA[<pre><code>在Java中，如果一个Java对象可以在内部持有若干其他Java对象，并对外提供访问接口，我们把这种Java对象称为集合。
 </code></pre>
 <a id="more"></a>
@@ -6333,7 +6333,7 @@ E element()/E peek()：获取队首元素但并不从队列中删除。<br>
   </entry>
   <entry>
     <title>Java注解</title>
-    <url>/2020/03/07/Java%E6%B3%A8%E8%A7%A3/</url>
+    <url>/blog/2020/03/07/Java%E6%B3%A8%E8%A7%A3/</url>
     <content><![CDATA[<pre><code>注释会被编译器直接忽略，注解则可以被编译器打包进入class文件，因此，注解是一种用作标注的“元数据”。
 </code></pre>
 <a id="more"></a>
@@ -6402,7 +6402,7 @@ Constructor.getAnnotation(Class)</p>
   </entry>
   <entry>
     <title>字符流中第一个不重复的字符</title>
-    <url>/2020/03/07/%E5%AD%97%E7%AC%A6%E6%B5%81%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%97%E7%AC%A6/</url>
+    <url>/blog/2020/03/07/%E5%AD%97%E7%AC%A6%E6%B5%81%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E4%B8%8D%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%97%E7%AC%A6/</url>
     <content><![CDATA[<pre><code>题目：请实现一个函数用来找出字符流中第一个只出现一次的字符。例如，当从字符流中只读出前两个字符&quot;go&quot;时，第一个只出现一次的字符是&quot;g&quot;。当从该字符流中读出前六个字符“google&quot;时，第一个只出现一次的字符是&quot;l&quot;。
 </code></pre>
 <a id="more"></a>
@@ -6418,7 +6418,7 @@ Constructor.getAnnotation(Class)</p>
   </entry>
   <entry>
     <title>Java泛型</title>
-    <url>/2020/03/06/Java%E6%B3%9B%E5%9E%8B/</url>
+    <url>/blog/2020/03/06/Java%E6%B3%9B%E5%9E%8B/</url>
     <content><![CDATA[<p>泛型是一种“代码模板”，可以用一套代码套用各种类型。编写一次，万能匹配。</p>
 <a id="more"></a>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArrayList</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> T[] array;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">(T e)</span> </span>&#123;...&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;...&#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> T <span class="title">get</span><span class="params">(<span class="keyword">int</span> index)</span> </span>&#123;...&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -6523,7 +6523,7 @@ Constructor.getAnnotation(Class)</p>
   </entry>
   <entry>
     <title>替换空格｜《剑指offer》</title>
-    <url>/2020/03/06/%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/06/%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BC%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy。
 </code></pre>
 <a id="more"></a>
@@ -6547,7 +6547,7 @@ Constructor.getAnnotation(Class)</p>
   </entry>
   <entry>
     <title>构建乘积数组｜《剑指offer》</title>
-    <url>/2020/03/06/%E2%80%9C%E6%9E%84%E5%BB%BA%E4%B9%98%E7%A7%AF%E6%95%B0%E7%BB%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B%E2%80%9D/</url>
+    <url>/blog/2020/03/06/%E2%80%9C%E6%9E%84%E5%BB%BA%E4%B9%98%E7%A7%AF%E6%95%B0%E7%BB%84%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B%E2%80%9D/</url>
     <content><![CDATA[<pre><code>题目：给定一个数组A[0,1,...,n-1],请构建一个数组B[0,1,...,n-1],其中B中的元素B[i]=A[0]*A[1]*...*A[i-1]*A[i+1]*...*A[n-1]。不能使用除法。（注意：规定B[0] = A[1] * A[2] * ... * A[n-1]，B[n-1] = A[0] * A[1] * ... * A[n-2];）
 </code></pre>
 <a id="more"></a>
@@ -6568,7 +6568,7 @@ Constructor.getAnnotation(Class)</p>
   </entry>
   <entry>
     <title>二维数组中的查找｜《剑指offer》</title>
-    <url>/2020/03/06/%E6%95%B0%E7%BB%84%E4%B8%AD%E6%89%BE%E5%88%B0%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/06/%E6%95%B0%E7%BB%84%E4%B8%AD%E6%89%BE%E5%88%B0%E9%87%8D%E5%A4%8D%E7%9A%84%E6%95%B0%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
 </code></pre>
 <a id="more"></a>
@@ -6590,7 +6590,7 @@ Constructor.getAnnotation(Class)</p>
   </entry>
   <entry>
     <title>MapReduce：Simplified Data Processing on Large Clusters</title>
-    <url>/2020/03/06/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/</url>
+    <url>/blog/2020/03/06/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/</url>
     <content><![CDATA[<h3 id="摘要"><a class="header-anchor" href="#摘要"></a>摘要</h3>
 <pre><code>MapReduce既是一种编程模型，也是一种与之关联的、用于处理和产生大数据集的实现。用户要特化一个map程序去处理key/value对，并产生中间key/value对的集合，以及一个reduce程序去合并有着相同key的所有中间key/value对。本文指出，许多实际的任务都可以用这种模型来表示。
 
@@ -6663,7 +6663,7 @@ Constructor.getAnnotation(Class)</p>
 </ol>
 <h4 id="执行过程概述"><a class="header-anchor" href="#执行过程概述"></a>执行过程概述</h4>
 <p>通过自动将输入数据切分为M块，map调用分布在多台机器上进行。输入划分可以在不同的机器上并行执行。reduce调用是通过一个划分函数（例如hash(key) mod R)将中间key空间划分为R块来分布运行。划分的块数R和划分函数都由用户指定。</p>
-<p><img src="/.io//Execution_overview.png" alt="Execution_overview"></p>
+<p><img src="/blog/.io//Execution_overview.png" alt="Execution_overview"></p>
 <p>图1展示了我们的实现中MapReduce操作的整体流程。当用户程序调用MapReduce函数时，会发生下面一系列动作（图1中的标号与下面列表顺序相同）：</p>
 <ol>
 <li>
@@ -6755,14 +6755,14 @@ Constructor.getAnnotation(Class)</p>
 <p>除了4GB的内存，还有1-1.5GB的内存保留给了集群上运行的其它任务。程序运行的时间是一个周末的下午，此时大多数CPU、磁盘和网络资源都空闲中。</p>
 <h4 id="5-2-Grep"><a class="header-anchor" href="#5-2-Grep"></a>5.2  Grep</h4>
 <p>grep程序要扫描1010个长度为100字节的记录来寻找一个相当罕见的三字符模式（这个模式出现于92337个记录中）。输入被切分成64MB大小的部分（M = 15000），整个输出为一个文件（R = 1）。</p>
-<p><img src="/.io//transfer.png" alt="transfer"></p>
+<p><img src="/blog/.io//transfer.png" alt="transfer"></p>
 <p>图2显示了随时间变化的计算进度。Y轴是输入数据扫描的速率。这个速率逐渐提升代表更多的机器被分配给MapReduce计算，并在分配的机器数达到1764台时超过了30GB/s。随着map任务的结束，这个速率开始下降，并在计算开始后80s时降至0。整个计算过程共花费约150s。这包括了大约1分钟的启动开销。启动开销是由于要把程序传播到所有工作机器上，还包括GFS要打开1000个输入文件和获取局部优化所需信息而导致的延迟。</p>
 <h4 id="5-3-排序"><a class="header-anchor" href="#5-3-排序"></a>5.3  排序</h4>
 <p>排序程序要对10100个100字节的记录进行排序（差不多1TB数据）。这个程序模仿了TeraSort测试程序。</p>
 <p>排序程序只包括不到50行的用户代码。map函数一共3行，它从一个文本行中提取出10字节的排序key，再将key和原始文本行输出为中间key/value对。我们使用了一个内置的Identity函数作为reduce函数。这个函数会将未更改的中间key/value输出为结果。最终的排序后输出被出到一组2路复制的GFS文件（例如，这个程序的输出要写2TB的数据）。</p>
 <p>如前所述，输入数据被分成若干个64MB大小的部分（M = 15000）。我们将已排序的输出分成4000个文件（R = 4000）。划分函数使用key的首字节来将它分到R个文件中的一个。</p>
 <p>此次测试中我们的划分函数使用了key分布的内建知识。在一个一般的排序程序中，我们会预先加一轮MapReduce操作，收集key的样本，并使用key抽样的分布来计算最终输出文件的划分点。</p>
-<p><img src="/.io//rates.png" alt="rates"></p>
+<p><img src="/blog/.io//rates.png" alt="rates"></p>
 <p>图3(a)是排序程序的正常执行过程。上边的图显示了输入读取的速度。输入速度的峰值为13GB/s，并在200秒后所有的map任务都完成时迅速下降至0。可以注意到这个速度要比grep的速度小。这是因为排序的map任务要在向本地磁盘写中间文件上花费大约一半的时间和I/O带宽。而grep中相应的中间输出则可以忽略不计。</p>
 <p>中间的图显示了数据从map节点通过网络向reduce节点发送的速度。这个移动开始于第一个map任务完成。图中的第一个驼峰出现在reduce任务第一次达到1700个时（整个MapReduce共分配到1700台机器，每台机器同时最多只运行一个reduce任务）。计算开始差不多300秒时，第一批reduce任务已经有部分完成，我们开始向剩余的reduce任务传送数据。所有传送过程在计算开始600秒后结束。</p>
 <p>下面的图是reduce任务向最终的输出文件写入已排序数据的速度。在第一个传输周期的结束与写入周期的开始之间有一个延迟，因为此时机器正在排序中间数据。写入速度在2-4GB/s下持续了一段时间。所有的写操作在计算开始后850秒左右结束。包括启动开销的话，整个计算花费了891秒。这与TeraSort上目前公布的最佳记录1057秒很接近。</p>
@@ -6791,9 +6791,9 @@ Constructor.getAnnotation(Class)</p>
 <p>大规模的图计算。</p>
 </li>
 </ul>
-<p><img src="/.io//instances.png" alt="instances"></p>
+<p><img src="/blog/.io//instances.png" alt="instances"></p>
 <p>图4显示了在我们的源代码管理系统中进行了登记的MapReduce程序的数量随时间的显著增长，从2003年初的0到2004年9月底的接近900个不同版本。MapReduce取得如此成功的原因是它令花半小时时间写出一个简单的程序并运行在一千台机器上成为了可能，这极大地加速了开发和原型实现循环。进一步说，它允许没有分布式与并行系统经验的程序员也能轻松地利用大量的资源。</p>
-<p><img src="/.io//jobs.png" alt="jobs"></p>
+<p><img src="/blog/.io//jobs.png" alt="jobs"></p>
 <p>在每项作业的结尾，MapReduce库会将作业花费的计算资源统计写入日志。在表1中，我们能看到Google在2004年8月运行的MapReduce作业的一部分统计情况。</p>
 <h4 id="6-1-大规模索引"><a class="header-anchor" href="#6-1-大规模索引"></a>6.1  大规模索引</h4>
 <p>迄今为止我们的一个最重要的MapReduce应用是完全重写了生产索引系统，它负责产生用于Google网络搜索服务的数据结构。索引系统把由我们的爬取系统检索的一个大的文档集合作为输入，并存储为一组GFS文件。这些文档的原始文本数据超过了20TB。索引进程分成了5-10个MapReduce操作运行。使用MapReduce（而不是之前版本使用的ad-hoc分布系统）提供了许多好处：</p>
@@ -6832,7 +6832,7 @@ Constructor.getAnnotation(Class)</p>
   </entry>
   <entry>
     <title>Java反射</title>
-    <url>/2020/03/04/Java%E5%8F%8D%E5%B0%84/</url>
+    <url>/blog/2020/03/04/Java%E5%8F%8D%E5%B0%84/</url>
     <content><![CDATA[<p>反射reflection是指程序在运行期可以拿到一个对象的所有信息。</p>
 <a id="more"></a>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function">String <span class="title">getFullName</span><span class="params">(Object obj)</span> </span>&#123;</span><br><span class="line">    Person p = (Person) obj;</span><br><span class="line">    <span class="keyword">return</span> p.getFirstName() + <span class="string">" "</span> + p.getLastName();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -6925,7 +6925,7 @@ getDeclaredConstructors()：获取所有Constructor。
   </entry>
   <entry>
     <title>数组中找到重复的数｜《剑指offer》</title>
-    <url>/2020/03/04/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
+    <url>/blog/2020/03/04/%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E4%B8%AD%E7%9A%84%E6%9F%A5%E6%89%BE%EF%BD%9C%E3%80%8A%E5%89%91%E6%8C%87offer%E3%80%8B/</url>
     <content><![CDATA[<pre><code>题目：在一个长度为n的数组里的所有数字都在0到n-1的范围内。 数组中某些数字是重复的，但不知道有几个数字是重复的。也不知道每个数字重复几次。请找出数组中任意一个重复的数字。 例如，如果输入长度为7的数组{2,3,1,0,2,5,3}，那么对应的输出是第一个重复的数字2。
 </code></pre>
 <a id="more"></a>
@@ -6971,7 +6971,7 @@ getDeclaredConstructors()：获取所有Constructor。
   </entry>
   <entry>
     <title>JavaLog</title>
-    <url>/2020/03/03/JavaLog/</url>
+    <url>/blog/2020/03/03/JavaLog/</url>
     <content><![CDATA[<h5 id="Java内置logging包"><a class="header-anchor" href="#Java内置logging包"></a>Java内置logging包</h5>
 <p>日志会自动打印了时间、调用类、调用方法等很多有用的信息。</p>
 <a id="more"></a>
@@ -7013,7 +7013,7 @@ Commons Logging会自动发现并使用Log4j，所以，把上一节下载的com
   </entry>
   <entry>
     <title>Java异常处理</title>
-    <url>/2020/03/03/Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</url>
+    <url>/blog/2020/03/03/Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/</url>
     <content><![CDATA[<pre><code>便于调试，运行检测。
 </code></pre>
 <a id="more"></a>
@@ -7040,7 +7040,7 @@ IndexOutOfBoundsException：数组索引越界</li>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">byte</span>[] bs = toGBK(<span class="string">"中文"</span>);</span><br><span class="line">            System.out.println(Arrays.toString(bs));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            System.out.println(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">byte</span>[] toGBK(String s) <span class="keyword">throws</span> UnsupportedEncodingException &#123;</span><br><span class="line">        <span class="comment">// 用指定编码转换String为byte[]:</span></span><br><span class="line">        <span class="keyword">return</span> s.getBytes(<span class="string">"GBK"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果方法抛出了可能出现的异常，可以不写catch。</p>
 <h3 id="多捕获异常"><a class="header-anchor" href="#多捕获异常"></a>多捕获异常</h3>
-<p><img src="/.io//Exception.png" alt></p>
+<p><img src="/blog/.io//Exception.png" alt></p>
 <p>子类一定要写在前面，否则子类永远捕获不到。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(string[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        process1();</span><br><span class="line">        process2();</span><br><span class="line">        process3();</span><br><span class="line">    &#125;<span class="keyword">catch</span> (IOException e)(</span><br><span class="line">        System.out.println(<span class="string">"IO error"</span>);</span><br><span class="line">    ) <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123; <span class="comment">// 永远捕获不到</span></span><br><span class="line">        System.out.println(<span class="string">"Bad encoding"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//合并异常处理，可以用｜：</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        process1();</span><br><span class="line">        process2();</span><br><span class="line">        process3();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException | NumberFormatException e) &#123; <span class="comment">// IOException或NumberFormatException</span></span><br><span class="line">        System.out.println(<span class="string">"Bad input"</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        System.out.println(<span class="string">"Unknown error"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="finally语句"><a class="header-anchor" href="#finally语句"></a>finally语句</h3>
@@ -7105,7 +7105,7 @@ OFF level：关闭所有日志记录开关；是最高等级的，用于关闭�
   </entry>
   <entry>
     <title>python爬取偷廖老师的Java教程</title>
-    <url>/2020/03/01/%E5%81%B7%E5%BB%96%E8%80%81%E5%B8%88%E7%9A%84Java%E6%95%99%E7%A8%8B/</url>
+    <url>/blog/2020/03/01/%E5%81%B7%E5%BB%96%E8%80%81%E5%B8%88%E7%9A%84Java%E6%95%99%E7%A8%8B/</url>
     <content><![CDATA[<pre><code>今天想学点Java，访问了一下廖老师的网站，结果网很卡，可能廖老师在更新网站，然后突然想到可以写个爬虫一劳永逸。做这个爬虫的目的也是方便学习廖雪峰老师的Java教程，毕竟把网页存在本地方便浏览，并无他意。
 </code></pre>
 <a id="more"></a>
@@ -7128,7 +7128,7 @@ OFF level：关闭所有日志记录开关；是最高等级的，用于关闭�
   </entry>
   <entry>
     <title>Java核心类</title>
-    <url>/2020/03/01/Java%E6%A0%B8%E5%BF%83%E7%B1%BB/</url>
+    <url>/blog/2020/03/01/Java%E6%A0%B8%E5%BF%83%E7%B1%BB/</url>
     <content><![CDATA[<p>Java内部的核心类。</p>
 <a id="more"></a>
 <h1>String</h1>
@@ -7311,7 +7311,7 @@ BigDecimal是用一个BigInteger和scale表示的。</h2>
   </entry>
   <entry>
     <title>Java面向对象基础</title>
-    <url>/2020/02/29/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
+    <url>/blog/2020/02/29/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/</url>
     <content><![CDATA[<pre><code>面向对象编程，没有对象，怎么编程？？🤔
 顺手把面向抽象，面向接口给学了。
 </code></pre>
@@ -7442,7 +7442,7 @@ protected可以字段和方法的访问权限控制在继承树内部，一个pr
 <p>一个接口可以继承自另一接口，用extends。</p>
 <h2 id="继承关系"><a class="header-anchor" href="#继承关系"></a>继承关系</h2>
 <p>充分的复用代码，参考集合类定义的一组接口：<br>
-<img src="/.io//%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png" alt="继承关系"></p>
+<img src="/blog/.io//%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png" alt="继承关系"></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//总是用更抽象的类来引用实际类型。</span></span><br><span class="line">List list = <span class="keyword">new</span> ArrayList(); <span class="comment">// 用List接口引用具体子类的实例</span></span><br><span class="line">Collection coll = list; <span class="comment">// 向上转型为Collection接口</span></span><br><span class="line">Iterable it = coll; <span class="comment">// 向上转型为Iterable接口</span></span><br></pre></td></tr></table></figure>
 <h2 id="default方法"><a class="header-anchor" href="#default方法"></a>default方法</h2>
 <p>实现类可以不必实现default方法。其目的：<br>
@@ -7511,7 +7511,7 @@ MANIFEST.MF文件里配置classpath.</h2>
   </entry>
   <entry>
     <title>Java入门</title>
-    <url>/2020/02/28/java%E5%85%A5%E9%97%A8/</url>
+    <url>/blog/2020/02/28/java%E5%85%A5%E9%97%A8/</url>
     <content><![CDATA[<p>Cloud computing要用到Java，正好打算学习后端开发，就从Java开始入门，慢慢学，慢慢更新,先开个坑。</p>
 <a id="more"></a>
 <h1>基本知识</h1>
@@ -7683,7 +7683,7 @@ continue： 提前结束本次循环，进入下一次循环。
   </entry>
   <entry>
     <title>Git一文通</title>
-    <url>/2020/02/26/Git_learning/</url>
+    <url>/blog/2020/02/26/Git_learning/</url>
     <content><![CDATA[<h1>Git</h1>
 <pre><code>免费分布式版本管理系统。相比于集中式管理的CVS，SVN：不必联网修改，强大的分支管理。更关键的是：Git跟踪并管理的是文件的修改，减少了上传量
 </code></pre>
@@ -7750,7 +7750,7 @@ continue： 提前结束本次循环，进入下一次循环。
   </entry>
   <entry>
     <title>矩阵与Numpy</title>
-    <url>/2020/02/24/Math/</url>
+    <url>/blog/2020/02/24/Math/</url>
     <content><![CDATA[<h1>矩阵乘法实现</h1>
 <pre><code>这个函数还是很简单的，就是对应位置相乘就完事了，最后再用numpy来确认一下函数的正确性。
 </code></pre>
@@ -7829,7 +7829,7 @@ B:
   </entry>
   <entry>
     <title>爬取豆瓣电影前250的数据</title>
-    <url>/2020/02/23/douban_movie-3/</url>
+    <url>/blog/2020/02/23/douban_movie-3/</url>
     <content><![CDATA[<pre><code>爬一下豆瓣top250的电影做一下练习，今天效率比较低只做了一点，明天做完再重构一下代码，用多线程实现。
 2/24 封装了函数，最近得上课，慢慢更新了。
 </code></pre>
@@ -7863,7 +7863,7 @@ Download success!!
   </entry>
   <entry>
     <title>beatiful-soup和lxml</title>
-    <url>/2020/02/20/beatiful-soup/</url>
+    <url>/blog/2020/02/20/beatiful-soup/</url>
     <content><![CDATA[<p>beautiful soup是一个从html或xml文件中提取数据的python库，很方便。</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> beautifulsoup</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -7931,7 +7931,7 @@ Descendant：后代</p>
   </entry>
   <entry>
     <title>requests</title>
-    <url>/2020/02/19/requests/</url>
+    <url>/blog/2020/02/19/requests/</url>
     <content><![CDATA[<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">import requests</span><br></pre></td></tr></table></figure>
 <p>requests比标准库的urllib方便很多，代码也很简洁明了。</p>
 <a id="more"></a>
@@ -7964,7 +7964,7 @@ Descendant：后代</p>
   </entry>
   <entry>
     <title>url结构</title>
-    <url>/2020/02/19/url%E7%BB%93%E6%9E%84/</url>
+    <url>/blog/2020/02/19/url%E7%BB%93%E6%9E%84/</url>
     <content><![CDATA[<table>
 <thead>
 <tr>
@@ -8004,7 +8004,7 @@ Descendant：后代</p>
   </entry>
   <entry>
     <title>curl和wget</title>
-    <url>/2020/02/18/curl%E5%92%8Cwget%E4%BA%86%E8%A7%A3/</url>
+    <url>/blog/2020/02/18/curl%E5%92%8Cwget%E4%BA%86%E8%A7%A3/</url>
     <content><![CDATA[<h1>curl</h1>
 <p>curl是系统自带的c库，简单过一下，记录一下参数。<br>
 不带参数就是，GET请求。</p>
@@ -8063,7 +8063,7 @@ Descendant：后代</p>
   </entry>
   <entry>
     <title>http(超文本传输协议)</title>
-    <url>/2020/02/17/http%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/</url>
+    <url>/blog/2020/02/17/http%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE/</url>
     <content><![CDATA[<pre><code>基于TCP/IP的应用层协议，客户端和服务端数据传输的格式，默认端口：80。 基于请求与响应模式，无状态。
 </code></pre>
 <a id="more"></a>
@@ -8121,7 +8121,7 @@ post在请求体中间</p>
   </entry>
   <entry>
     <title>我的博客是怎么创建的</title>
-    <url>/2020/02/16/%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/</url>
+    <url>/blog/2020/02/16/%E5%8D%9A%E5%AE%A2%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B/</url>
     <content><![CDATA[<p>简单记录一下，博客的创建过程。</p>
 <a id="more"></a>
 <h2 id="安装环境"><a class="header-anchor" href="#安装环境"></a>安装环境</h2>
@@ -8168,7 +8168,7 @@ post在请求体中间</p>
   </entry>
   <entry>
     <title>我来网上冲浪了</title>
-    <url>/2020/02/16/%E6%88%91%E6%9D%A5%E7%BD%91%E4%B8%8A%E5%86%B2%E6%B5%AA%E4%BA%86/</url>
+    <url>/blog/2020/02/16/%E6%88%91%E6%9D%A5%E7%BD%91%E4%B8%8A%E5%86%B2%E6%B5%AA%E4%BA%86/</url>
     <content><![CDATA[<h1>hello world</h1>
 <p>村通网了。</p>
 <a id="more"></a>
@@ -8184,18 +8184,18 @@ post在请求体中间</p>
       </tags>
   </entry>
   <entry>
-    <title>categories</title>
-    <url>/categories/index.html</url>
+    <title>404</title>
+    <url>/blog/404/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>404</title>
-    <url>/404/index.html</url>
+    <title>categories</title>
+    <url>/blog/categories/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>All tags</title>
-    <url>/tags/index.html</url>
+    <url>/blog/tags/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
