@@ -79,7 +79,7 @@
 </ol>
 <h4 id="执行过程概述"><a class="header-anchor" href="#执行过程概述"></a>执行过程概述</h4>
 <p>通过自动将输入数据切分为M块，map调用分布在多台机器上进行。输入划分可以在不同的机器上并行执行。reduce调用是通过一个划分函数（例如hash(key) mod R)将中间key空间划分为R块来分布运行。划分的块数R和划分函数都由用户指定。</p>
-<p><img src="/2020/03/06/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/Execution_overview.png" alt="Execution_overview"></p>
+<p><img src="/.io//Execution_overview.png" alt="Execution_overview"></p>
 <p>图1展示了我们的实现中MapReduce操作的整体流程。当用户程序调用MapReduce函数时，会发生下面一系列动作（图1中的标号与下面列表顺序相同）：</p>
 <ol>
 <li>
@@ -171,14 +171,14 @@
 <p>除了4GB的内存，还有1-1.5GB的内存保留给了集群上运行的其它任务。程序运行的时间是一个周末的下午，此时大多数CPU、磁盘和网络资源都空闲中。</p>
 <h4 id="5-2-Grep"><a class="header-anchor" href="#5-2-Grep"></a>5.2  Grep</h4>
 <p>grep程序要扫描1010个长度为100字节的记录来寻找一个相当罕见的三字符模式（这个模式出现于92337个记录中）。输入被切分成64MB大小的部分（M = 15000），整个输出为一个文件（R = 1）。</p>
-<p><img src="/2020/03/06/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/transfer.png" alt="transfer"></p>
+<p><img src="/.io//transfer.png" alt="transfer"></p>
 <p>图2显示了随时间变化的计算进度。Y轴是输入数据扫描的速率。这个速率逐渐提升代表更多的机器被分配给MapReduce计算，并在分配的机器数达到1764台时超过了30GB/s。随着map任务的结束，这个速率开始下降，并在计算开始后80s时降至0。整个计算过程共花费约150s。这包括了大约1分钟的启动开销。启动开销是由于要把程序传播到所有工作机器上，还包括GFS要打开1000个输入文件和获取局部优化所需信息而导致的延迟。</p>
 <h4 id="5-3-排序"><a class="header-anchor" href="#5-3-排序"></a>5.3  排序</h4>
 <p>排序程序要对10100个100字节的记录进行排序（差不多1TB数据）。这个程序模仿了TeraSort测试程序。</p>
 <p>排序程序只包括不到50行的用户代码。map函数一共3行，它从一个文本行中提取出10字节的排序key，再将key和原始文本行输出为中间key/value对。我们使用了一个内置的Identity函数作为reduce函数。这个函数会将未更改的中间key/value输出为结果。最终的排序后输出被出到一组2路复制的GFS文件（例如，这个程序的输出要写2TB的数据）。</p>
 <p>如前所述，输入数据被分成若干个64MB大小的部分（M = 15000）。我们将已排序的输出分成4000个文件（R = 4000）。划分函数使用key的首字节来将它分到R个文件中的一个。</p>
 <p>此次测试中我们的划分函数使用了key分布的内建知识。在一个一般的排序程序中，我们会预先加一轮MapReduce操作，收集key的样本，并使用key抽样的分布来计算最终输出文件的划分点。</p>
-<p><img src="/2020/03/06/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/rates.png" alt="rates"></p>
+<p><img src="/.io//rates.png" alt="rates"></p>
 <p>图3(a)是排序程序的正常执行过程。上边的图显示了输入读取的速度。输入速度的峰值为13GB/s，并在200秒后所有的map任务都完成时迅速下降至0。可以注意到这个速度要比grep的速度小。这是因为排序的map任务要在向本地磁盘写中间文件上花费大约一半的时间和I/O带宽。而grep中相应的中间输出则可以忽略不计。</p>
 <p>中间的图显示了数据从map节点通过网络向reduce节点发送的速度。这个移动开始于第一个map任务完成。图中的第一个驼峰出现在reduce任务第一次达到1700个时（整个MapReduce共分配到1700台机器，每台机器同时最多只运行一个reduce任务）。计算开始差不多300秒时，第一批reduce任务已经有部分完成，我们开始向剩余的reduce任务传送数据。所有传送过程在计算开始600秒后结束。</p>
 <p>下面的图是reduce任务向最终的输出文件写入已排序数据的速度。在第一个传输周期的结束与写入周期的开始之间有一个延迟，因为此时机器正在排序中间数据。写入速度在2-4GB/s下持续了一段时间。所有的写操作在计算开始后850秒左右结束。包括启动开销的话，整个计算花费了891秒。这与TeraSort上目前公布的最佳记录1057秒很接近。</p>
@@ -207,9 +207,9 @@
 <p>大规模的图计算。</p>
 </li>
 </ul>
-<p><img src="/2020/03/06/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/instances.png" alt="instances"></p>
+<p><img src="/.io//instances.png" alt="instances"></p>
 <p>图4显示了在我们的源代码管理系统中进行了登记的MapReduce程序的数量随时间的显著增长，从2003年初的0到2004年9月底的接近900个不同版本。MapReduce取得如此成功的原因是它令花半小时时间写出一个简单的程序并运行在一千台机器上成为了可能，这极大地加速了开发和原型实现循环。进一步说，它允许没有分布式与并行系统经验的程序员也能轻松地利用大量的资源。</p>
-<p><img src="/2020/03/06/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/jobs.png" alt="jobs"></p>
+<p><img src="/.io//jobs.png" alt="jobs"></p>
 <p>在每项作业的结尾，MapReduce库会将作业花费的计算资源统计写入日志。在表1中，我们能看到Google在2004年8月运行的MapReduce作业的一部分统计情况。</p>
 <h4 id="6-1-大规模索引"><a class="header-anchor" href="#6-1-大规模索引"></a>6.1  大规模索引</h4>
 <p>迄今为止我们的一个最重要的MapReduce应用是完全重写了生产索引系统，它负责产生用于Google网络搜索服务的数据结构。索引系统把由我们的爬取系统检索的一个大的文档集合作为输入，并存储为一组GFS文件。这些文档的原始文本数据超过了20TB。索引进程分成了5-10个MapReduce操作运行。使用MapReduce（而不是之前版本使用的ad-hoc分布系统）提供了许多好处：</p>

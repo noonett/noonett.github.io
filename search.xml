@@ -101,7 +101,7 @@ chmod +x <a href="http://wkhtmltoimage.sh" target="_blank" rel="noopener">wkhtml
 <h2 id="一、背景"><a class="header-anchor" href="#一、背景"></a>一、背景</h2>
 <p>一个团队设计GOODS（dataset管理工具）的故事，这个GOODS提炼了数据集的元数据和数据集间的关系，为工程师和数据科学家提供支持，而且其使用的是后处理的方式，相当于场外处理，不会影响到现有业务的运行。其挑战的来源是数据的大规模和数据集之间的异构性造成的。<br>
 功能包括：search、monitoring services、 DataSet profile、 Annotation services<br>
-<img src="/2020/08/21/system%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/GOODS.png" alt="GOODS"></p>
+<img src="/.io//GOODS.png" alt="GOODS"></p>
 <ul>
 <li>Search: 公司所有数据集的搜索引擎，具有缩小搜索结果的方面，帮助工程师和分析师找到最相关的数据集。</li>
 <li>DataSet profile: 每个数据集配置文件页面，呈现货物记录的关于特定数据集的元数据，从而帮助用户了解数据集及其与公司其他数据集的关系。profile页面还集成了其他可以进一步处理数据集的工具，从而帮助用户对数据进行操作。</li>
@@ -160,7 +160,7 @@ chmod +x <a href="http://wkhtmltoimage.sh" target="_blank" rel="noopener">wkhtml
     <url>/2020/07/31/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%B8%89%EF%BC%9A%E4%BF%9D%E6%8C%81%E5%B9%B3%E8%A1%A1%E7%9C%9F%E4%B8%8D%E5%AE%B9%E6%98%93/</url>
     <content><![CDATA[<p>这节搞一下BST、AVL、红黑树三兄弟。</p>
 <a id="more"></a>
-<p><img src="/2020/07/31/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%B8%89%EF%BC%9A%E4%BF%9D%E6%8C%81%E5%B9%B3%E8%A1%A1%E7%9C%9F%E4%B8%8D%E5%AE%B9%E6%98%93/%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
+<p><img src="/.io//%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
 <h2 id="二叉搜索树"><a class="header-anchor" href="#二叉搜索树"></a>二叉搜索树</h2>
 <p>二叉搜索树，顾名思义就是用来查询的。</p>
 <h3 id="特点"><a class="header-anchor" href="#特点"></a>特点</h3>
@@ -293,7 +293,7 @@ chmod +x <a href="http://wkhtmltoimage.sh" target="_blank" rel="noopener">wkhtml
     <url>/2020/07/29/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%BA%8C-%E5%90%84%E7%A7%8D%E5%A5%87%E5%BD%A2%E6%80%AA%E7%8A%B6%E7%9A%84%E6%A0%91/</url>
     <content><![CDATA[<p>这节总结一下前缀树、B树、堆。</p>
 <a id="more"></a>
-<p><img src="/2020/07/29/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%BA%8C-%E5%90%84%E7%A7%8D%E5%A5%87%E5%BD%A2%E6%80%AA%E7%8A%B6%E7%9A%84%E6%A0%91/%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
+<p><img src="/.io//%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
 <h2 id="前缀树"><a class="header-anchor" href="#前缀树"></a>前缀树</h2>
 <p>前缀树主要用于查找某个单词是否存在于单词词集里，或者查询以某个词为前缀出现了多少次，或者某个词出现了多少次。其独特的结构导致其查找一个单词的时间复杂度为O(logN),空间复杂度也不高，因为词集里重复的前缀将不会被重复存储。</p>
 <h3 id="特点"><a class="header-anchor" href="#特点"></a>特点</h3>
@@ -387,7 +387,7 @@ B+树第一个好处它非叶子结点没存数据，我们的内存是有限的
 这一章先从简单的开始，树的遍历。</p>
 <a id="more"></a>
 <h1>树算法</h1>
-<p><img src="/2020/07/18/%E6%A0%91King%E7%9A%84%E5%85%BB%E6%88%90%E4%B8%80%EF%BC%9A%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86/%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
+<p><img src="/.io//%E6%A0%91%E7%AE%97%E6%B3%95.png" alt="思维导图总览"></p>
 <h2 id="树的结构"><a class="header-anchor" href="#树的结构"></a>树的结构</h2>
 <p>树的存储结构，链式存储比较常用。</p>
 <h3 id="顺序存储"><a class="header-anchor" href="#顺序存储"></a>顺序存储</h3>
@@ -403,7 +403,7 @@ B+树第一个好处它非叶子结点没存数据，我们的内存是有限的
 <h3 id="层次遍历"><a class="header-anchor" href="#层次遍历"></a>层次遍历</h3>
 <p>层次遍历无非就是利用队列顺序访问队列内的结点，同时压左右子结点，这里每层的数量是刚好是队列内树结点的数量，因为上一层的结点遍历完，队列内的数量刚好是下一层的结点数量。</p>
 <h3 id="常规遍历的总结"><a class="header-anchor" href="#常规遍历的总结"></a>常规遍历的总结</h3>
-<p><a href="https://noonett.github.io/2020/03/19/%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86%E6%80%BB%E7%BB%93/">https://noonett.github.io/2020/03/19/树的遍历总结/</a></p>
+<p><a href="https://noonett.github.io/2020/03/19/%E6%A0%91%E7%9A%84%E9%81%8D%E5%8E%86%E6%80%BB%E7%BB%93/" target="_blank" rel="noopener">https://noonett.github.io/2020/03/19/树的遍历总结/</a></p>
 <h3 id="Morris遍历"><a class="header-anchor" href="#Morris遍历"></a>Morris遍历</h3>
 <p>Morris遍历的牛牛之处在于，其空间复杂度为O(1)。<br>
 Morris 算法的思想是在节点和它的直接前驱之间设置一个临时的链接：predecessor.right = root，从该节点开始，找到它的直接前驱并验证是否存在链接。<br>
@@ -426,7 +426,7 @@ Morris 算法的思想是在节点和它的直接前驱之间设置一个临时�
     <title>Java容器</title>
     <url>/2020/07/17/Java%E5%AE%B9%E5%99%A8/</url>
     <content><![CDATA[<h1>Java容器</h1>
-<p><img src="/2020/07/17/Java%E5%AE%B9%E5%99%A8/Java%E5%AE%B9%E5%99%A8.png" alt="思维导图"></p>
+<p><img src="/.io//Java%E5%AE%B9%E5%99%A8.png" alt="思维导图"></p>
 <h2 id="概览"><a class="header-anchor" href="#概览"></a>概览</h2>
 <p>两大JDK内置类：</p>
 <h3 id="Collection"><a class="header-anchor" href="#Collection"></a>Collection</h3>
@@ -821,7 +821,7 @@ WeakHashMap 主要用来实现缓存，通过使用 WeakHashMap 来引用缓存�
     <title>Java并发四：锁优化</title>
     <url>/2020/07/16/Java%E5%B9%B6%E5%8F%91%E5%9B%9B%EF%BC%9A%E9%94%81%E4%BC%98%E5%8C%96/</url>
     <content><![CDATA[<h2 id="十二、锁优化"><a class="header-anchor" href="#十二、锁优化"></a>十二、锁优化</h2>
-<p><img src="/2020/07/16/Java%E5%B9%B6%E5%8F%91%E5%9B%9B%EF%BC%9A%E9%94%81%E4%BC%98%E5%8C%96/JUC.png" alt="思维导图"></p>
+<p><img src="/.io//JUC.png" alt="思维导图"></p>
 <h3 id="这里指的是JDK1-6之后，JVM对synchronized的优化"><a class="header-anchor" href="#这里指的是JDK1-6之后，JVM对synchronized的优化"></a>这里指的是JDK1.6之后，JVM对synchronized的优化</h3>
 <ul>
 <li>
@@ -1120,7 +1120,7 @@ WeakHashMap 主要用来实现缓存，通过使用 WeakHashMap 来引用缓存�
 下一章深入一下Java多线程内部的内存模型，线程安全等原理。</p>
 <a id="more"></a>
 <h1>JUC</h1>
-<p><img src="/2020/07/11/Java%E5%B9%B6%E5%8F%91%E4%BA%8C%EF%BC%9A%E7%BA%BF%E7%A8%8B%E9%97%B4%E7%9A%84%E5%90%88%E4%BD%9C/JUC.png" alt="思维导图"></p>
+<p><img src="/.io//JUC.png" alt="思维导图"></p>
 <h2 id="五、线程之间的协作"><a class="header-anchor" href="#五、线程之间的协作"></a>五、线程之间的协作</h2>
 <h3 id="1-join-方法用于同步，是Thread的方法，当前线程调用另一个线程的join-，当前线程会挂起直到目标线程结束"><a class="header-anchor" href="#1-join-方法用于同步，是Thread的方法，当前线程调用另一个线程的join-，当前线程会挂起直到目标线程结束"></a>1. join()方法用于同步，是Thread的方法，当前线程调用另一个线程的join()，当前线程会挂起直到目标线程结束</h3>
 <ul>
@@ -1261,7 +1261,7 @@ WeakHashMap 主要用来实现缓存，通过使用 WeakHashMap 来引用缓存�
     <content><![CDATA[<p>之前学了一波Java多线程，学的不系统，也没整理知识点，准备开始看分布式的内容了，先把最基础的Java并发给复习了，整理一下。</p>
 <a id="more"></a>
 <h1>JUC</h1>
-<p><img src="/2020/07/09/Java%E5%B9%B6%E5%8F%91%E4%B8%80%EF%BC%9A%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%92%8C%E9%94%81/JUC.png" alt="思维导图"></p>
+<p><img src="/.io//JUC.png" alt="思维导图"></p>
 <h2 id="一、使用线程"><a class="header-anchor" href="#一、使用线程"></a>一、使用线程</h2>
 <p>实现接口只能当作一个被线程驱动的任务，需要Thread调用</p>
 <h3 id="1-实现Runnable接口"><a class="header-anchor" href="#1-实现Runnable接口"></a>1. 实现Runnable接口</h3>
@@ -1573,7 +1573,7 @@ mt.start();<br>
     <content><![CDATA[<p>Kafka算是现今企业用的应用最多的消息队列，数据处理的平台。它的消息是存储在硬盘上的，大量的使用了批量处理和异步的思想，所以它的吞吐量很大。消费者对消息的获取是顺序IO，所以消费者的访问速度也不差。</p>
 <a id="more"></a>
 <h1>Kafka</h1>
-<p><img src="/2020/07/07/Kafka/Kafka.png" alt="Kafka"></p>
+<p><img src="/.io//Kafka.png" alt="Kafka"></p>
 <h2 id="一、重要概念"><a class="header-anchor" href="#一、重要概念"></a>一、重要概念</h2>
 <h3 id="Producer"><a class="header-anchor" href="#Producer"></a>Producer</h3>
 <h3 id="Consumer"><a class="header-anchor" href="#Consumer"></a>Consumer</h3>
@@ -1665,7 +1665,7 @@ mt.start();<br>
     <content><![CDATA[<p>消息队列是个好东西，将系统调用彻底解藕，并异步处理，还能在高并发场景下，将大量请求的压力转移到消息队列，从而降低系统的响应时间。完美的第三者。</p>
 <a id="more"></a>
 <h1>消息队列</h1>
-<p><img src="/2020/07/07/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E5%9F%BA%E7%A1%80/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.png" alt="消息队列"></p>
+<p><img src="/.io//%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97.png" alt="消息队列"></p>
 <h2 id="一、消息模型"><a class="header-anchor" href="#一、消息模型"></a>一、消息模型</h2>
 <h3 id="点对点"><a class="header-anchor" href="#点对点"></a>点对点</h3>
 <ul>
@@ -1742,7 +1742,7 @@ mt.start();<br>
     <content><![CDATA[<p>最近在做项目，学了点系统设计的知识，简单记录一下。</p>
 <a id="more"></a>
 <h1>系统设计基础</h1>
-<p><img src="/2020/07/07/%E7%B3%BB%E7%BB%9F%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80.png" alt="系统设计基础"></p>
+<p><img src="/.io//%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80.png" alt="系统设计基础"></p>
 <h2 id="性能"><a class="header-anchor" href="#性能"></a>性能</h2>
 <h3 id="性能指标"><a class="header-anchor" href="#性能指标"></a>性能指标</h3>
 <ul>
@@ -6663,7 +6663,7 @@ Constructor.getAnnotation(Class)</p>
 </ol>
 <h4 id="执行过程概述"><a class="header-anchor" href="#执行过程概述"></a>执行过程概述</h4>
 <p>通过自动将输入数据切分为M块，map调用分布在多台机器上进行。输入划分可以在不同的机器上并行执行。reduce调用是通过一个划分函数（例如hash(key) mod R)将中间key空间划分为R块来分布运行。划分的块数R和划分函数都由用户指定。</p>
-<p><img src="/2020/03/06/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/Execution_overview.png" alt="Execution_overview"></p>
+<p><img src="/.io//Execution_overview.png" alt="Execution_overview"></p>
 <p>图1展示了我们的实现中MapReduce操作的整体流程。当用户程序调用MapReduce函数时，会发生下面一系列动作（图1中的标号与下面列表顺序相同）：</p>
 <ol>
 <li>
@@ -6755,14 +6755,14 @@ Constructor.getAnnotation(Class)</p>
 <p>除了4GB的内存，还有1-1.5GB的内存保留给了集群上运行的其它任务。程序运行的时间是一个周末的下午，此时大多数CPU、磁盘和网络资源都空闲中。</p>
 <h4 id="5-2-Grep"><a class="header-anchor" href="#5-2-Grep"></a>5.2  Grep</h4>
 <p>grep程序要扫描1010个长度为100字节的记录来寻找一个相当罕见的三字符模式（这个模式出现于92337个记录中）。输入被切分成64MB大小的部分（M = 15000），整个输出为一个文件（R = 1）。</p>
-<p><img src="/2020/03/06/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/transfer.png" alt="transfer"></p>
+<p><img src="/.io//transfer.png" alt="transfer"></p>
 <p>图2显示了随时间变化的计算进度。Y轴是输入数据扫描的速率。这个速率逐渐提升代表更多的机器被分配给MapReduce计算，并在分配的机器数达到1764台时超过了30GB/s。随着map任务的结束，这个速率开始下降，并在计算开始后80s时降至0。整个计算过程共花费约150s。这包括了大约1分钟的启动开销。启动开销是由于要把程序传播到所有工作机器上，还包括GFS要打开1000个输入文件和获取局部优化所需信息而导致的延迟。</p>
 <h4 id="5-3-排序"><a class="header-anchor" href="#5-3-排序"></a>5.3  排序</h4>
 <p>排序程序要对10100个100字节的记录进行排序（差不多1TB数据）。这个程序模仿了TeraSort测试程序。</p>
 <p>排序程序只包括不到50行的用户代码。map函数一共3行，它从一个文本行中提取出10字节的排序key，再将key和原始文本行输出为中间key/value对。我们使用了一个内置的Identity函数作为reduce函数。这个函数会将未更改的中间key/value输出为结果。最终的排序后输出被出到一组2路复制的GFS文件（例如，这个程序的输出要写2TB的数据）。</p>
 <p>如前所述，输入数据被分成若干个64MB大小的部分（M = 15000）。我们将已排序的输出分成4000个文件（R = 4000）。划分函数使用key的首字节来将它分到R个文件中的一个。</p>
 <p>此次测试中我们的划分函数使用了key分布的内建知识。在一个一般的排序程序中，我们会预先加一轮MapReduce操作，收集key的样本，并使用key抽样的分布来计算最终输出文件的划分点。</p>
-<p><img src="/2020/03/06/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/rates.png" alt="rates"></p>
+<p><img src="/.io//rates.png" alt="rates"></p>
 <p>图3(a)是排序程序的正常执行过程。上边的图显示了输入读取的速度。输入速度的峰值为13GB/s，并在200秒后所有的map任务都完成时迅速下降至0。可以注意到这个速度要比grep的速度小。这是因为排序的map任务要在向本地磁盘写中间文件上花费大约一半的时间和I/O带宽。而grep中相应的中间输出则可以忽略不计。</p>
 <p>中间的图显示了数据从map节点通过网络向reduce节点发送的速度。这个移动开始于第一个map任务完成。图中的第一个驼峰出现在reduce任务第一次达到1700个时（整个MapReduce共分配到1700台机器，每台机器同时最多只运行一个reduce任务）。计算开始差不多300秒时，第一批reduce任务已经有部分完成，我们开始向剩余的reduce任务传送数据。所有传送过程在计算开始600秒后结束。</p>
 <p>下面的图是reduce任务向最终的输出文件写入已排序数据的速度。在第一个传输周期的结束与写入周期的开始之间有一个延迟，因为此时机器正在排序中间数据。写入速度在2-4GB/s下持续了一段时间。所有的写操作在计算开始后850秒左右结束。包括启动开销的话，整个计算花费了891秒。这与TeraSort上目前公布的最佳记录1057秒很接近。</p>
@@ -6791,9 +6791,9 @@ Constructor.getAnnotation(Class)</p>
 <p>大规模的图计算。</p>
 </li>
 </ul>
-<p><img src="/2020/03/06/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/instances.png" alt="instances"></p>
+<p><img src="/.io//instances.png" alt="instances"></p>
 <p>图4显示了在我们的源代码管理系统中进行了登记的MapReduce程序的数量随时间的显著增长，从2003年初的0到2004年9月底的接近900个不同版本。MapReduce取得如此成功的原因是它令花半小时时间写出一个简单的程序并运行在一千台机器上成为了可能，这极大地加速了开发和原型实现循环。进一步说，它允许没有分布式与并行系统经验的程序员也能轻松地利用大量的资源。</p>
-<p><img src="/2020/03/06/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/jobs.png" alt="jobs"></p>
+<p><img src="/.io//jobs.png" alt="jobs"></p>
 <p>在每项作业的结尾，MapReduce库会将作业花费的计算资源统计写入日志。在表1中，我们能看到Google在2004年8月运行的MapReduce作业的一部分统计情况。</p>
 <h4 id="6-1-大规模索引"><a class="header-anchor" href="#6-1-大规模索引"></a>6.1  大规模索引</h4>
 <p>迄今为止我们的一个最重要的MapReduce应用是完全重写了生产索引系统，它负责产生用于Google网络搜索服务的数据结构。索引系统把由我们的爬取系统检索的一个大的文档集合作为输入，并存储为一组GFS文件。这些文档的原始文本数据超过了20TB。索引进程分成了5-10个MapReduce操作运行。使用MapReduce（而不是之前版本使用的ad-hoc分布系统）提供了许多好处：</p>
@@ -7040,7 +7040,7 @@ IndexOutOfBoundsException：数组索引越界</li>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">byte</span>[] bs = toGBK(<span class="string">"中文"</span>);</span><br><span class="line">            System.out.println(Arrays.toString(bs));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123;</span><br><span class="line">            System.out.println(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">byte</span>[] toGBK(String s) <span class="keyword">throws</span> UnsupportedEncodingException &#123;</span><br><span class="line">        <span class="comment">// 用指定编码转换String为byte[]:</span></span><br><span class="line">        <span class="keyword">return</span> s.getBytes(<span class="string">"GBK"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果方法抛出了可能出现的异常，可以不写catch。</p>
 <h3 id="多捕获异常"><a class="header-anchor" href="#多捕获异常"></a>多捕获异常</h3>
-<p><img src="/2020/03/03/Java%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86/Exception.png" alt></p>
+<p><img src="/.io//Exception.png" alt></p>
 <p>子类一定要写在前面，否则子类永远捕获不到。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(string[] args)</span></span>&#123;</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        process1();</span><br><span class="line">        process2();</span><br><span class="line">        process3();</span><br><span class="line">    &#125;<span class="keyword">catch</span> (IOException e)(</span><br><span class="line">        System.out.println(<span class="string">"IO error"</span>);</span><br><span class="line">    ) <span class="keyword">catch</span> (UnsupportedEncodingException e) &#123; <span class="comment">// 永远捕获不到</span></span><br><span class="line">        System.out.println(<span class="string">"Bad encoding"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//合并异常处理，可以用｜：</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        process1();</span><br><span class="line">        process2();</span><br><span class="line">        process3();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException | NumberFormatException e) &#123; <span class="comment">// IOException或NumberFormatException</span></span><br><span class="line">        System.out.println(<span class="string">"Bad input"</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        System.out.println(<span class="string">"Unknown error"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="finally语句"><a class="header-anchor" href="#finally语句"></a>finally语句</h3>
@@ -7442,7 +7442,7 @@ protected可以字段和方法的访问权限控制在继承树内部，一个pr
 <p>一个接口可以继承自另一接口，用extends。</p>
 <h2 id="继承关系"><a class="header-anchor" href="#继承关系"></a>继承关系</h2>
 <p>充分的复用代码，参考集合类定义的一组接口：<br>
-<img src="/2020/02/29/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png" alt="继承关系"></p>
+<img src="/.io//%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png" alt="继承关系"></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//总是用更抽象的类来引用实际类型。</span></span><br><span class="line">List list = <span class="keyword">new</span> ArrayList(); <span class="comment">// 用List接口引用具体子类的实例</span></span><br><span class="line">Collection coll = list; <span class="comment">// 向上转型为Collection接口</span></span><br><span class="line">Iterable it = coll; <span class="comment">// 向上转型为Iterable接口</span></span><br></pre></td></tr></table></figure>
 <h2 id="default方法"><a class="header-anchor" href="#default方法"></a>default方法</h2>
 <p>实现类可以不必实现default方法。其目的：<br>

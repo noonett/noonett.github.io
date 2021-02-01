@@ -186,7 +186,7 @@ protected可以字段和方法的访问权限控制在继承树内部，一个pr
 <p>一个接口可以继承自另一接口，用extends。</p>
 <h2 id="继承关系"><a class="header-anchor" href="#继承关系"></a>继承关系</h2>
 <p>充分的复用代码，参考集合类定义的一组接口：<br>
-<img src="/2020/02/29/Java%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png" alt="继承关系"></p>
+<img src="/.io//%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.png" alt="继承关系"></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//总是用更抽象的类来引用实际类型。</span></span><br><span class="line">List list = <span class="keyword">new</span> ArrayList(); <span class="comment">// 用List接口引用具体子类的实例</span></span><br><span class="line">Collection coll = list; <span class="comment">// 向上转型为Collection接口</span></span><br><span class="line">Iterable it = coll; <span class="comment">// 向上转型为Iterable接口</span></span><br></pre></td></tr></table></figure>
 <h2 id="default方法"><a class="header-anchor" href="#default方法"></a>default方法</h2>
 <p>实现类可以不必实现default方法。其目的：<br>
