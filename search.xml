@@ -157,24 +157,20 @@ Both of them use the conception of atomic operation group, which means one modif
 <h2 id="File-Storage"><a class="header-anchor" href="#File-Storage"></a>File Storage</h2>
 <h4 id="1-Incremental-files-writing-In-MongoDB"><a class="header-anchor" href="#1-Incremental-files-writing-In-MongoDB"></a>1. Incremental files writing In MongoDB</h4>
 <p>The Journals are stored as names with the following format WiredTigerLog. ‘sequence’ where 'sequence’is a zero-padded number starting from 0000000001.<br>
-MongoDB uses an incremental writing files mechanism. And the size limit of each Log files is 100MB, if the data size in one file exceeds 100MB, WiredTiger would create a new file to store. WiredTiger automatically removes old journal files to maintain only the files needed to recover from the last checkpoint. We can see the file create and remove in the following experiment.</p>
-<p><img src="/2020/11/12/mongodb/1.png" alt="Figure 1. Journals files"></p>
-<center>Figure 1. Journals files</center>
+MongoDB uses an incremental writing files mechanism. And the size limit of each Log files is 100MB, if the data size in one file exceeds 100MB, WiredTiger would create a new file to store. WiredTiger automatically removes old journal files to maintain only the files needed to recover from the last checkpoint. We can see the file create and remove in the following experiment.<br>
+<img src="/2020/11/12/mongodb/1.png" alt="Figure 1. Journals files"></p>
 <h4 id="2-Circular-files-writing-In-MySQL"><a class="header-anchor" href="#2-Circular-files-writing-In-MySQL"></a>2. Circular files writing In MySQL</h4>
 <p>MySQL uses a group of fixed size (default 48MB) file names with the format ib_logfile’sequence’ to store Redo log. The group size is 2 by default.<br>
-MySQL uses a circular writing files mechanism. For example, if the data size in ib_logfile0 exceed 48MB, MySQL would write to ib_logfile1 and if the data size in ib_logfile1 exceed 48MB, MySQL would rewrite to ib_logfile0. We can see the log files are always in same size in the following experiment 1.</p>
-<p><img src="/2020/11/12/mongodb/2.png" alt="Figure 2. Redo Logs files"></p>
-<center>Figure 2. Redo Logs files</center>
+MySQL uses a circular writing files mechanism. For example, if the data size in ib_logfile0 exceed 48MB, MySQL would write to ib_logfile1 and if the data size in ib_logfile1 exceed 48MB, MySQL would rewrite to ib_logfile0. We can see the log files are always in same size in the following experiment 1.<br>
+<img src="/2020/11/12/mongodb/2.png" alt="Figure 2. Redo Logs files"></p>
 <h2 id="Mechanism"><a class="header-anchor" href="#Mechanism"></a>Mechanism</h2>
 <p>Their inner mechanism when modification occurs is quite different. The following is a brief comparison of the two mechanisms for writing WAL. Validation on these mechanisms is in the following experiments.</p>
 <h4 id="1-Journaling-Mechanism-in-MongoDB"><a class="header-anchor" href="#1-Journaling-Mechanism-in-MongoDB"></a>1. Journaling Mechanism in MongoDB</h4>
-<p>MongoDB uses a timestamp in MVCC which is used to the checkpoint. Cache would flush data to disk every 60s and remove the Journal Records in files which are before the checkpoint. And Journal cache would flush Journal records to disk every 100ms by default. Also if the write concern has attribute j:true, the Journal would write to disk immediately.</p>
-<p><img src="/2020/11/12/mongodb/3.png" alt="Figure 3. Persistency mechanism of Journal and cache"></p>
-<center>Figure 3. Persistency mechanism of Journal and cache</center>
+<p>MongoDB uses a timestamp in MVCC which is used to the checkpoint. Cache would flush data to disk every 60s and remove the Journal Records in files which are before the checkpoint. And Journal cache would flush Journal records to disk every 100ms by default. Also if the write concern has attribute j:true, the Journal would write to disk immediately.<br>
+<img src="/2020/11/12/mongodb/3.png" alt="Figure 3. Persistency mechanism of Journal and cache"></p>
 <h4 id="2-Redo-Log-Mechanism-in-MySQL"><a class="header-anchor" href="#2-Redo-Log-Mechanism-in-MySQL"></a>2. Redo Log Mechanism in MySQL</h4>
-<p>Similarly, MySQL InnoDB will continually brush the dirty data in the buffer pool back to the disk data file and flush bytes to Redo Log files. The Redo Log is done after the data is written into the buffer (MongoDB stores the journal record into the private view first). What’s more, the Redo Log is flushed to disk immediately before the transaction is committed to ensure the integrity of the transaction. Similarly, InnoDB will also enable background threads to persist Redo Log to disk every one second. And also if the Redo Log is filled full , Mysql would flush the dirty page to disk immediately and the file space can be re-used to write new coming operations. The following is the flow chart:</p>
-<p><img src="/2020/11/12/mongodb/4.png" alt="Figure 4. Persistency mechanism of Redo Log and Buffer Pool"></p>
-<center>Figure 4. Persistency mechanism of Redo Log and Buffer Pool</center>
+<p>Similarly, MySQL InnoDB will continually brush the dirty data in the buffer pool back to the disk data file and flush bytes to Redo Log files. The Redo Log is done after the data is written into the buffer (MongoDB stores the journal record into the private view first). What’s more, the Redo Log is flushed to disk immediately before the transaction is committed to ensure the integrity of the transaction. Similarly, InnoDB will also enable background threads to persist Redo Log to disk every one second. And also if the Redo Log is filled full , Mysql would flush the dirty page to disk immediately and the file space can be re-used to write new coming operations. The following is the flow chart:<br>
+<img src="/2020/11/12/mongodb/4.png" alt="Figure 4. Persistency mechanism of Redo Log and Buffer Pool"></p>
 <h2 id="Experiment"><a class="header-anchor" href="#Experiment"></a>Experiment</h2>
 <p>In this session, we are going to compare the difference of the writing mechanism and file storage of Write Ahead Log of two Databases.<br>
 In the first experiment, we write the same large number of data to two databases. With the same large write load, we try to explore what is the difference between log files and mechanisms.<br>
@@ -201,13 +197,11 @@ same time, so the total documents written to each database is 75204 and the tota
 size is 312.8MB in one round.</li>
 <li>We continually write these documents in two databases for the 180s.</li>
 <li>We use another process to inspect the total log files size of two databases every 50ms.<br>
-In MongoDB, we also inspect the bytes written from cache to disk and the bytes written for checkpoint (MongoDB server status variable). In MySQL, we also inspect the number of requests to flush pages from the InnoDB buffer pool and the bytes of Redo Log written (MySQL server status variable).</li>
+In MongoDB, we also inspect the bytes written from cache to disk and the bytes written for checkpoint (MongoDB server status variable). In MySQL, we also inspect the number of requests to flush pages from the InnoDB buffer pool and the bytes of Redo Log written (MySQL server status variable).<br>
+<img src="/2020/11/12/mongodb/5.png" alt="Figure 5. MongoDB server status variables"></li>
 </ol>
-<p><img src="/2020/11/12/mongodb/5.png" alt="Figure 5. MongoDB server status variables"></p>
-<center>Figure 5. MongoDB server status variables</center>
 <p><img src="/2020/11/12/mongodb/6.png" alt="Figure 6. MySQL server status variables"></p>
-<center>Figure 6. MySQL server status variables</center>
-<ol start="5">
+<ol start="6">
 <li>In each database, the buffers were set to the same value and others configuration is default.</li>
 <li>In the MySQL experiment, we also run the SQL with transaction commit and without commit to see if the transaction commit would let the Redo Log persist immediately.</li>
 </ol>
@@ -217,62 +211,50 @@ In MongoDB, we also inspect the bytes written from cache to disk and the bytes w
 we can see two processes finished 23 rounds and two finished 24 rounds. So the total round is 94 rounds. Totally, we write 7350.8MB documents in the 180s to MongoDB and 40.8MB per second.<br>
 <img src="/2020/11/12/mongodb/7.png" alt="Figure 7. Total rounds of each process"></li>
 </ol>
-<center>Figure 7. Total rounds of each process</center>
 <p><img src="/2020/11/12/mongodb/8.png" alt="Figure 8. The bytes written from cache to disk"></p>
-<center>Figure 8. The bytes written from cache to disk</center>
-As shown on Figure 8, the MongoDB writes 27.8MB (slope of graph) from cache to disk per seconds which is less than the writing speed with 40.8MB/sec. With the continuous writing of documents, because the average data written per second exceeds the data persistent in MongoDB memory, the creation speed of records in Journal exceeds the speed of eliminating expired journals. The upper limit of a single Journal file in MongoDB is 100MB. Therefore, new journal files will be created continuously to persist the continuously written data.
-And we plot the Journal log files size in disk can see:
-<p><img src="/2020/11/12/mongodb/9.png" alt="Figure 9. The log files size of Journal"></p>
-<center>Figure 9. The log files size of Journal</center>
+<p>As shown on Figure 8, the MongoDB writes 27.8MB (slope of graph) from cache to disk per seconds which is less than the writing speed with 40.8MB/sec. With the continuous writing of documents, because the average data written per second exceeds the data persistent in MongoDB memory, the creation speed of records in Journal exceeds the speed of eliminating expired journals. The upper limit of a single Journal file in MongoDB is 100MB. Therefore, new journal files will be created continuously to persist the continuously written data.<br>
+And we plot the Journal log files size in disk can see:<br>
+<img src="/2020/11/12/mongodb/9.png" alt="Figure 9. The log files size of Journal"></p>
 <p><img src="/2020/11/12/mongodb/10.png" alt="Figure 10. The bytes written to disk for checkpoint"></p>
-<center>Figure 10. The bytes written to disk for checkpoint</center>
 <p>The result shows the incremental writing mechanism of MongoDB. As shown on Figure 9, When the write load exceeds the speed of writing data from to disk, MongoDB will continue to create journal files to undertake the task of persistence, so as to maintain the amount of data written from the cache to the disk at a certain speed. And as shown on Figure 9 and 10, the checkpoint every 60s will persist the data not persisted in the cache to the disk, and delete the expired Journal records.</p>
 <ol>
 <li>MySQL<br>
 <img src="/2020/11/12/mongodb/11.png" alt="Figure 11. Total rounds of each process"></li>
 </ol>
-<center>Figure 11. Total rounds of each process</center>
-<p>As shown in Figure 11, each process finished 9 rounds in 180 seconds. So total rounds are 36 and we write 2815.2MB documents in total in the 180s. Compared with the 7350.8MB written by MongoDB, we can see that MongoDB has higher throughput under the default system configuration.</p>
-<p><img src="/2020/11/12/mongodb/12.png" alt="Figure 12. Bytes written to Redo Log files with transaction commit"></p>
-<center>Figure 12. Bytes written to Redo Log files with transaction commit</center>
+<p>As shown in Figure 11, each process finished 9 rounds in 180 seconds. So total rounds are 36 and we write 2815.2MB documents in total in the 180s. Compared with the 7350.8MB written by MongoDB, we can see that MongoDB has higher throughput under the default system configuration.<br>
+<img src="/2020/11/12/mongodb/12.png" alt="Figure 12. Bytes written to Redo Log files with transaction commit"></p>
 <p><img src="/2020/11/12/mongodb/13.png" alt="Figure 13. Bytes written to Redo Log files without commit"></p>
-<center>Figure 13. Bytes written to Redo Log files without commit</center>
-<p>As shown in Figure 12 and Figure 13, comparing the write operation without a translation commit, after the 180s, there was no flushing on Redo Log. We can see when we run the write operation with transaction commit, the Redo Log would be flush to disk immediately. And. And in Figure 13, after 180s, we can see that MySQL continually flushes Redo Log from the buffer to the disk.</p>
-<p><img src="/2020/11/12/mongodb/14.png" alt="Figure 14. The files size of Redo Log"></p>
-<center>Figure 14. The files size of Redo Log</center>
+<p>As shown in Figure 12 and Figure 13, comparing the write operation without a translation commit, after the 180s, there was no flushing on Redo Log. We can see when we run the write operation with transaction commit, the Redo Log would be flush to disk immediately. And. And in Figure 13, after 180s, we can see that MySQL continually flushes Redo Log from the buffer to the disk.<br>
+<img src="/2020/11/12/mongodb/14.png" alt="Figure 14. The files size of Redo Log"></p>
 <p><img src="/2020/11/12/mongodb/15.png" alt="Figure 15. The number of requests sent to flush pages with commit"></p>
-<center>Figure 15. The number of requests sent to flush pages with commit</center>
 <p>And as shown on Figure 14, the size of Redo Log didn’t change. And the number of requests sent to flush pages increased at the very beginning when buffer pool and Redo Log file was gradually filled fully. With the stable write rate and limit of flushing I/O, the speed of flushing pages tends to be stable. At the end of line, when we stop to write data, we can see that MySQL continually flushes dirty pages into the disk with constant speed.</p>
 <h3 id="Experiment-2"><a class="header-anchor" href="#Experiment-2"></a>Experiment 2</h3>
 <p>Motivation:<br>
 In the last experiment, we compare the log file writing between two databases in terms of document data model. In this experiment, we are curious about how different Redo Log size affects the I/O of flushing dirty pages to disk, and further affects the write time of the database in MySQL in terms of JSON dataset.</p>
 <h4 id="1-Experimental-setup-v2"><a class="header-anchor" href="#1-Experimental-setup-v2"></a>1. Experimental setup:</h4>
 <ol>
-<li>We still use the same dataset companies.json whose size is 78.2MB with 18801<br>
-documents. We only use one process to write these documents in each experiment. Experiments will be conducted based on the initial settings of different Redo Log sizes. And each log size will be tested 10 times to get the average value.</li>
-<li>As shown in Figure 16, we query system status variables to get how many pages were flushed to the disk from the buffer during writing.</li>
+<li>
+<p>We still use the same dataset companies.json whose size is 78.2MB with 18801<br>
+documents. We only use one process to write these documents in each experiment. Experiments will be conducted based on the initial settings of different Redo Log sizes. And each log size will be tested 10 times to get the average value.</p>
+</li>
+<li>
+<p>As shown in Figure 16, we query system status variables to get how many pages were flushed to the disk from the buffer during writing.<br>
+<img src="/2020/11/12/mongodb/16.png" alt="Figure 16. SQL to get system status"></p>
+</li>
+<li>
+<p>As shown in Figure 17, we modify the log file size in the configuration file of MySQL. We do experiments when the single log size is 10MB, 15MB, 20MB, 25MB, 37.5MB, 50MB, 75MB, 100MB, 150MB and 250MB. The number of log groups is 2. So the total log size is 20MB, 30MB, 40MB, 50MB, 75MB, 100MB, 150MB, 200MB, 300MB and 500MB.<br>
+<img src="/2020/11/12/mongodb/17.png" alt="Figure 17. Setting of log files size"></p>
+</li>
+<li>
+<p>In addition, before doing each experiment, we would clean the bin log (Figure 18) and restart the server to keep the same usage of buffer pool (Figure 19, we inspect the usage using MySQL workbench) to make sure the isolation between each experiment.<br>
+<img src="/2020/11/12/mongodb/18.png" alt="Figure 18. Query to clean bin log"></p>
+</li>
 </ol>
-<p><img src="/2020/11/12/mongodb/16.png" alt="Figure 16. SQL to get system status"></p>
-<center>Figure 16. SQL to get system status</center>
-<ol start="3">
-<li>As shown in Figure 17, we modify the log file size in the configuration file of MySQL. We do experiments when the single log size is 10MB, 15MB, 20MB, 25MB, 37.5MB, 50MB, 75MB, 100MB, 150MB and 250MB. The number of log groups is 2. So the total log size is 20MB, 30MB, 40MB, 50MB, 75MB, 100MB, 150MB, 200MB, 300MB and 500MB.</li>
-</ol>
-<p><img src="/2020/11/12/mongodb/17.png" alt="Figure 17. Setting of log files size"></p>
-<center>Figure 17. Setting of log files size</center>
-<ol start="4">
-<li>In addition, before doing each experiment, we would clean the bin log (Figure 18) and restart the server to keep the same usage of buffer pool (Figure 19, we inspect the usage using MySQL workbench) to make sure the isolation between each experiment.</li>
-<li></li>
-</ol>
-<p><img src="/2020/11/12/mongodb/18.png" alt="Figure 18. Query to clean bin log"></p>
-<center>Figure 18. Query to clean bin log</center>
 <p><img src="/2020/11/12/mongodb/19.png" alt="Figure 19. Buffer usage in MySQL Workbench"></p>
-<center>Figure 19. Buffer usage in MySQL Workbench</center>
 <h4 id="2-Experimental-Result-v2"><a class="header-anchor" href="#2-Experimental-Result-v2"></a>2. Experimental Result</h4>
-<p>As shown in Figure 20, we can see from that there are two slopes. One is that when the size of a single log is less than the amount of data written, the number of disk pages flushed from the buffer increases sharply. The other is that when the size of a single log is larger than the amount of data written, the pages flushed into the disk from the buffer change slowly.</p>
-<p><img src="/2020/11/12/mongodb/20.png" alt="Figure 20. Log size versus number of pages flushed into the disk"></p>
-<center>Figure 20. Log size versus number of pages flushed into the disk</center>
+<p>As shown in Figure 20, we can see from that there are two slopes. One is that when the size of a single log is less than the amount of data written, the number of disk pages flushed from the buffer increases sharply. The other is that when the size of a single log is larger than the amount of data written, the pages flushed into the disk from the buffer change slowly.<br>
+<img src="/2020/11/12/mongodb/20.png" alt="Figure 20. Log size versus number of pages flushed into the disk"></p>
 <p><img src="/2020/11/12/mongodb/21.png" alt="Figure 21. Log size versus time to finish writing"></p>
-<center>Figure 21. Log size versus time to finish writing</center>
 <p>As shown in Figure 21, we can see that when the log size is too small, the time of writing is a sharp rise.<br>
 The result shows that according to the description of the adaptive flushing algorithm in the official documents, the buffer will dynamically adjust the buffer flushing speed according to the write speed of the Redo Log. When the log file is not too small, because the speed of writing the Redo Log does not change, the buffer maintains a certain speed of flushing dirty pages, and the completion time of writing is roughly the same. However, as described in the official documents, when the amount of data written is greater than the size of a single log file, in order to have enough space to write Redo Log files, the system has to increase the number of dirty pages that the buffer flushes into the disk. And when the log file is too small, due to the experimental conditions, the maximum disk I / O limit of input dirty pages is 9000 per round, which affects the writing time. (When log size is less than 40MB in this experiment)</p>
 <h2 id="Discussion"><a class="header-anchor" href="#Discussion"></a>Discussion</h2>
@@ -8385,13 +8367,13 @@ post在请求体中间</p>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>categories</title>
-    <url>/categories/index.html</url>
+    <title>All tags</title>
+    <url>/tags/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>All tags</title>
-    <url>/tags/index.html</url>
+    <title>categories</title>
+    <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
