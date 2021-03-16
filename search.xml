@@ -7,30 +7,38 @@
 ]]></content>
   </entry>
   <entry>
-    <title>MapReduce：Simplified Data Processing on Large Clusters</title>
+    <title>MapReduce：Simplified Data Processing on Large Clusters论文阅读笔记</title>
     <url>/2021/03/15/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/</url>
-    <content><![CDATA[<h3 id="摘要"><a class="header-anchor" href="#摘要"></a>摘要</h3>
+    <content><![CDATA[<p>翻译后的论文加上自己的阅读笔记。</p>
+<h3 id="摘要"><a class="header-anchor" href="#摘要"></a>摘要</h3>
 <pre><code>MapReduce既是一种编程模型，也是一种与之关联的、用于处理和产生大数据集的实现。用户要特化一个map程序去处理key/value对，并产生中间key/value对的集合，以及一个reduce程序去合并有着相同key的所有中间key/value对。本文指出，许多实际的任务都可以用这种模型来表示。
 
-用这种函数式风格写出的程序自动就拥有了在一个大的PC机集群上并行执行的能力。运行时系统会负责细节：切分输入数据，在一组机器上调度执行程序，处理机器错误，以及管理所需的机器间通信。这允许不具备任何并行和分布式系统经验的程序员也能轻松地利用一个大型分布式系统的资源。
+用这种函数式风格写出的程序就自动拥有了在一个大的PC机集群上并行执行的能力。因为运行时系统会负责细节：切分输入数据，在一组机器上调度执行程序，处理机器错误，以及管理所需的机器间通信。这允许不具备任何并行和分布式系统经验的程序员也能轻松地利用一个大型分布式系统的资源。
 
-我们的MapReduce实现运行在一个大型PC机集群上，且具有很好的扩展性：一个典型的MapReduce计算要在数千台机器上处理若干TB的数据。程序员可以很轻松的使用这一系统：目前已经实现的MapReduce程序数以百计，每天有上千个MapReduce作业运行在Google的集群上。
+Google的MapReduce实现运行在一个大型PC机集群上：一个典型的MapReduce在数千台机器上处理若干TB的数据，且具有很好的扩展性。且程序员可以很轻松的使用这一系统：目前已经实现的MapReduce程序数以百计，每天有上千个MapReduce作业运行在Google的集群上。
 </code></pre>
 <a id="more"></a>
 <h3 id="1-介绍"><a class="header-anchor" href="#1-介绍"></a>1 介绍</h3>
-<p>在过去的5年中，作者以及许多其他Google员工实现了数百个特定用途的计算过程，其中包括了处理大量的原始数据（抓取文档、网络请求日志等等），计算许多种类的衍生数据（倒排索引、网络文档图结构的多种表示、单台主机抓取页面数量的概要、指定日期频次最高的请求集合等等）。大多数这样的计算过程在概念上都很直接。但输入数据量通常都很大，因此计算过程需要分布到数百或数千台机器上进行，才能保证过程在一个合理时间内结束。而为了处理计算并行化、数据分发和错误处理等问题而引入大量复杂的代码则令原本简单的计算过程变的晦涩难懂。</p>
+<p>在过去的5年中，作者以及许多其他Google员工实现了数百个特定用途的计算过程，其中包括了处理大量的原始数据（抓取文档、网络请求日志等等），计算许多种类的衍生数据（倒排索引、网络文档图结构的多种表示、单台主机抓取页面数量的概要、指定日期频次最高的请求集合等等）。大多数这样的计算过程在概念上都很直接，但输入数据量通常都很大，因此计算过程需要分布到数百或数千台机器上进行，才能保证过程在一个合理时间内结束。而为了处理计算并行化、数据分发和错误处理等问题而引入大量复杂的代码则令原本简单的计算过程变的晦涩难懂。</p>
 <p>作为对这种复杂性的回应，我们设计了一种新的抽象，允许我们表达出原本简单的计算过程，且将涉及并行、容错性、数据分发和负载均衡的凌乱细节隐藏在一个函数库中。我们的抽象受到了Lisp等函数式语言中的map和reduce原语的启发。我们意识到我们大多数的计算都包含了在每个输入的逻辑“记录”上应用map操作，从而计算出一组中间key/value对的集合，然后再向共享同一个key的所有中间value应用reduce操作，从而适当地合并衍生数据。我们对用户定义的map和reduce操作的使用允许我们轻松地将大型计算并行化，以及将再执行作为容错性的主要机制。</p>
 <p>本项工作的主要贡献是一个简单但功能强大的接口，允许自动实现并行化和大范围的分布计算，和一个与此接口结合的实现，能在普通PC机集群上达到很高的性能。</p>
 <p>第2部分描述了基本的编程模型并给出了几个例子。第3部分描述了针对我们基于集群的计算环境而裁剪的MapReduce接口的一个实现。第4部分描述了我们觉得非常有用的一些编程模型的技巧。第5部分针对多种不同的任务，对我们的实现进行了性能测量。第6部分探索了在Google中MapReduce的应用，包括了我们在将其作为生产索引系统的重写基础的经验。第7部分讨论了相关的和未来要做的工作。</p>
+<pre><code>场景：计算任务通常直接，但是大数据量，有实效要求的时候，如何并行计算，分发数据，处理错误异常这些问题导致要解决简单的计算任务，却需要大量复杂的代码。
+作者统一了一个抽象模型，这个抽象模型配合使用者自己的配置可以应对大多数的计算场景，并且使用者自身不用接触集群和分布式相关的代码。
+</code></pre>
 <h3 id="2-编程模型"><a class="header-anchor" href="#2-编程模型"></a>2 编程模型</h3>
 <p>计算过程就是输入一组key/value对，再生成输出一组key/value对。MapReduce库的使用者用两个函数来表示这个过程：map和reduce。</p>
 <p>map由使用者编写，使用一个输入key/value对，生成一组中间key/value对。MapReduce库将有着相同中间key I的中间value都组合在一起，再传给reduce函数。</p>
 <p>reduce也由使用者编写，它接受一个中间key I和一组与I对应的value。它将这些value合并为一个可能更小的value集合。通常每个reduce调用只产生0或1个输出value。中间value是通过一个迭代器提供给reduce函数的。这允许我们操作那些因为大到找不到连续存放的内存而使用链表的value集合。</p>
+<pre><code>key-value pair是这个模型的关键，相同的中间状态的key可以被分到相同的节点上去处理，并且reduce函数的节点可以通过迭代器分批的将value集载入内存，从而达到分布式处理大批量数据的目的。
+</code></pre>
 <h4 id="2-1-示例"><a class="header-anchor" href="#2-1-示例"></a>2.1 示例</h4>
 <p>考虑一个问题：统计一个很大的文档集合中每个单词出现的次数。使用者能写出与下面的伪代码相似的代码：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="built_in">map</span>(String key,String value):</span><br><span class="line">    // key: 文档名</span><br><span class="line">    // value: 文档内容</span><br><span class="line">    <span class="keyword">for</span> each word w <span class="keyword">in</span> value:</span><br><span class="line">        EmitIntermediate(w,<span class="string">&quot;1&quot;</span>);</span><br><span class="line">   </span><br><span class="line">reduce(Stringkey, Iterator values):</span><br><span class="line">    // key: 一个单词</span><br><span class="line">    // value: 计数值列表</span><br><span class="line">    <span class="built_in">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> each v <span class="keyword">in</span> values:</span><br><span class="line">        result += ParseInt(v);</span><br><span class="line">    Emit(AsString(result));</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">map(String key,String value):</span><br><span class="line">    &#x2F;&#x2F; key: 文档名</span><br><span class="line">    &#x2F;&#x2F; value: 文档内容</span><br><span class="line">    for each word w in value:</span><br><span class="line">        EmitIntermediate(w,&quot;1&quot;);</span><br><span class="line">   </span><br><span class="line">reduce(String key, Iterator values):</span><br><span class="line">    &#x2F;&#x2F; key: 一个单词</span><br><span class="line">    &#x2F;&#x2F; value: 计数值列表</span><br><span class="line">    int result &#x3D; 0;</span><br><span class="line">    for each v in values:</span><br><span class="line">        result +&#x3D; ParseInt(v);</span><br><span class="line">    Emit(AsString(result));</span><br></pre></td></tr></table></figure>
 <p>map函数将每个单词与出现次数一同输出（本例中简单的输出“1”）。reduce函数将针对某个特定词输出的次数都合并相加。</p>
 <p>另外，使用者要写代码填充一个符合MapReduce规格的对象，内容包括输入和输出文件的名字，以及可选的调节参数。之后使用者调用MapReduce函数，将指定的对象传进去。用户代码会与MapReduce库（C++实现）链接到一起。附录A包括了这个例子的全部程序文本。</p>
+<pre><code>可以注意map的输入是一对文档名+文档，将文档内的word构造成（w, &quot;1&quot;）的中间态key-value之后，相同key的(w, &quot;1&quot;)被分配到了reduce做集中处理。
+</code></pre>
 <h4 id="2-2-类型"><a class="header-anchor" href="#2-2-类型"></a>2.2 类型</h4>
 <p>尽管前面的伪代码写成了用字符串进行输入输出，但从概念上讲用户提供的map和reduce函数是关联着类型的：</p>
 <table>
@@ -51,6 +59,8 @@
 </table>
 <p>也就是说，输入的key和value与输出的key和value的域不同。进一步说，中间的key和value与输出的key和value的域相同。</p>
 <p>我们的C++实现使用字符串与用户定义的函数交互，而将字符串与相应类型的转换留给用户代码完成。</p>
+<pre><code>统一字符串处理，使用者具体想要啥类型就自己转型，这也解释了为啥上面的源代码的是“1”而不是1。
+</code></pre>
 <h4 id="2-3-更多例子"><a class="header-anchor" href="#2-3-更多例子"></a>2.3 更多例子</h4>
 <p>这里例举了一些有趣的程序，它们都可以很轻松的用MapReduce模型表达。</p>
 <p><b>分布式Grep：</b>map函数在匹配到给定的pattern时输出一行。reduce函数只是将给定的中间数据复制到输出上。</p>
@@ -77,6 +87,7 @@
 </li>
 <li>
 <p>用户向一个调度系统提交作业。每个作业包括了一个任务集，会由调度器调度到集群内可用的一组机器上。</p>
+<p>大批农民工机器做的集群…</p>
 </li>
 </ol>
 <h4 id="执行过程概述"><a class="header-anchor" href="#执行过程概述"></a>执行过程概述</h4>
@@ -97,7 +108,7 @@
 <p>缓存的数据对会被周期性的由划分函数分成R块，并写入本地磁盘中。这些缓存对在本地磁盘中的位置会被传回给主节点，主节点负责将这些位置再传给reduce工作节点。</p>
 </li>
 <li>
-<p>当一个reduce工作节点得到了主节点的这些位置通知后，它使用RPC调用去读map工作节点的本地磁盘中的缓存数据。当reduce工作节点读取完了所有的中间数据，它会将这些数据按中间key排序，这样相同key的数据就被排列在一起了。同一个reduce任务经常会分到有着不同key的数据，因此这个排序很有必要。如果中间数据数量过多，不能全部载入内存，则会使用外部排序。</p>
+<p>当一个reduce工作节点得到了主节点的这些位置通知后，它使用RPC调用去读map工作节点的本地磁盘中的缓存数据。当reduce工作节点读取完了所有的中间数据，它会将这些数据按中间key<b>排序</b>，这样相同key的数据就被排列在一起了。同一个reduce任务经常会分到有着不同key的数据，因此这个排序很有必要。如果中间数据数量过多，不能全部载入内存，则会使用外部排序。</p>
 </li>
 <li>
 <p>reduce工作节点遍历排序好的中间数据，并将遇到的每个中间key和与它关联的一组中间value传递给用户的reduce函数。reduce函数的输出会写到由reduce划分过程划分出来的最终输出文件的末尾。</p>
@@ -107,33 +118,50 @@
 </li>
 </ol>
 <p>成功完成后，MapReduce执行的输出都在R个输出文件中（每个reduce任务产生一个，文件名由用户指定）。通常用户不需要合并这R个输出文件——他们经常会把这些文件当作另一个MapReduce调用的输入，或是用于另一个可以处理分成多个文件输入的分布式应用。</p>
+<pre><code>GFS文件系统保证可用性和可靠性，Master负责整体的调度，将任务映射到空闲可用的工作节点，每一个工作节点既可以是map节点也可以是reduce节点，具体取决于分派给它的任务是啥，全局文件系统以及任务的状态使得工作节点的crash变得可以容忍。
+</code></pre>
 <h4 id="3-2-主节点数据结构"><a class="header-anchor" href="#3-2-主节点数据结构"></a>3.2 主节点数据结构</h4>
 <p>主节点维持多种数据结构。它会存储每个map和reduce任务的状态（空闲、处理中、完成），和每台工作机器的ID（对应非空闲的任务）。</p>
 <p>主节点是将map任务产生的中间文件的位置传递给reduce任务的通道。因此，主节点要存储每个已完成的map任务产生的R个中间文件的位置和大小。位置和大小信息的更新情况会在map任务完成时接收到。这些信息会被逐步发送到正在处理中的reduce任务节点处。</p>
+<pre><code>主要存文件位置和相关信息，以及各个任务的状态。
+</code></pre>
 <h4 id="3-3-容错性"><a class="header-anchor" href="#3-3-容错性"></a>3.3 容错性</h4>
 <p>既然MapReduce库是为了帮助使用成百上千台机器处理数量非常大的数据的，它就必须能够优雅地承受机器错误。</p>
 <h5 id="工作节点错误"><a class="header-anchor" href="#工作节点错误"></a>工作节点错误</h5>
 <p>主节点周期性的ping每个工作节点。如果工作节点在一定时间内没有回应，主节点就将它标记为已失败。这个工作节点完成的任何map任务都被重置为空闲状态，并可被调度到其它工作节点上。同样地，失败的工作节点上正在处理的任何map或reduce任务也被重置为空闲状态，允许被调度。</p>
-<p>失败节点上已完成的map任务需要重执行的原因是它们的输出存储在失败机器的本地磁盘上，因此无法访问到了。已完成的reduce任务不需要重执行，因为它们的输出存储在了一个全球文件系统上。</p>
+<p>失败节点上已完成的map任务需要重执行的原因是它们的输出存储在失败机器的本地磁盘上，因此无法访问到了。已完成的reduce任务不需要重执行，因为它们的输出存储在了一个全局文件系统上。</p>
 <p>当一个map任务先被A节点执行过，随后又被B节点重执行（A节点已失败），所有执行reduce任务的工作节点都能收到重执行的通知。任何没有读取完A节点数据的reduce任务都会从B节点读取数据。</p>
 <p>MapReduce可以弹性应对大范围的工作节点失败。例如，在一次MapReduce操作期间，运行系统上的网络维护导致了一组约80台机器在同一时间无法访问，持续了数分钟。MapReduce主节点只是简单的重执行了已由无法访问的机器完成的任务，并继续向前执行，最终完成了这次MapReduce操作。</p>
+<pre><code>Master采用了心跳检测，重试操作来应对工作节点的不可达，同时任务的状态可以保证任务不会被重复的消费，工作节点的失败也不会影响整个集群。
+</code></pre>
 <h5 id="主节点错误"><a class="header-anchor" href="#主节点错误"></a>主节点错误</h5>
 <p>一种简单的方法是令主节点定期将上面描述的数据结构保存为恢复点。如果主节点任务失败，就可以从上一个恢复点状态启动一个新的程序副本。但是给定的条件是只有一个主节点，它也不太可能失败；因此我们当前的实现会在主节点失败时中止MapReduce计算 。客户可以检查到这一情况，并在他们需要时重启MapReduce操作。</p>
+<pre><code>对数据结构定期做checkpoint，Master一旦崩了，整个集群都要停工，直到Master重启恢复。
+</code></pre>
 <h5 id="出现故障时的语义"><a class="header-anchor" href="#出现故障时的语义"></a>出现故障时的语义</h5>
 <p>当用户提供的map和reduce操作对于它们输入的值都是确定性的，我们的分布式实现产生的输出值就如同将整个程序分成一个不间断的串行执行过程一样。</p>
 <p>为了实现这个性质，我们依赖于map和reduce任务输出结果的提交是原子的。每个处理中的任务都会将它的输出写入私有的临时文件中。一个reduce任务产生一个这样的文件，而一个map任务则产生R个这样的文件（每个reduce任务一个）。当map任务完成时，工作节点发送给主节点的消息中带有R个临时文件的名字。如果主节点收到了一个来自已完成节点的完成消息，它就会忽略这个消息。否则，主节点会将R个文件的名字记录在相应的数据结构中。</p>
 <p>当reduce任务完成时，工作节点会执行原子性的更名操作，将临时输出文件更名为最终输出文件。如果相同的reduce任务在多个机器上执行，就会有多个更名调用应用在相同的最终输出文件上。我们依赖于由底层文件系统提供的原子更名操作，才能保证最终的文件系统中只包含由其中一个reduce执行产生的数据。</p>
 <p>我们的绝大多数map和reduce操作都是确定性的，这种情况下我们的语义和一个串行执行过程是等同的，这也使程序员很容易推出他们程序的行为。当map和reduce操作有不确定性时，我们提供较弱但仍然合理的语义。当存在不确定的操作时，某个reduce任务R1的输出等价于一个不确定程序的串行执行输出。但某个reduce任务R2的输出可能符合这个不确定程序的另一个串行执行输出。</p>
 <p>考虑map任务M和reduce任务R1、R2。令e(Ri)为Ri的已提交的执行结果（只执行一次）。此时弱语义生效，因为e(R1)可能读取了M的一次输出，而e(R2)则可能读取了M的另一次输出。</p>
+<pre><code>每个节点完成任务的提交都是原子的，可以让整体并行的结果等效于串行的结果，这样的好处是让使用者能推出自己写的程序的行为。
+</code></pre>
 <h4 id="3-4-局部性"><a class="header-anchor" href="#3-4-局部性"></a>3.4  局部性</h4>
 <p>在我们的计算环境中，网络带宽是一种比较稀缺的资源。我们利用下面的事实来节省带宽：输入数据（由GFS管理）就存储在组成集群的机器的本地磁盘上。GFS将每个文件分成64MB大小的区块，每块复制若干份（通常为3份）存储到不同的机器上。MapReduce主节点会把输入文件的位置信息考虑进去，并尝试将map任务分配到保存有相应输入数据的机器上。如果失败的话，它会试图将map任务调度到临近这些数据的机器上（例如与保存输入数据的机器处于同一网关的工作节点）。当在一个集群的相当一部分节点上运行MapReduce操作时，大多数输入数据都是本地读取，并不消耗网络带宽。</p>
+<pre><code>调度的优先级： 本地-&gt;距离最近，节省网络带宽，联想到了CDN。
+</code></pre>
 <h4 id="3-5-任务粒度"><a class="header-anchor" href="#3-5-任务粒度"></a>3.5  任务粒度</h4>
 <p>如上所述，我们将map阶段分成M份，将reduce阶段分成R份。理想情况下，M和R应该比工作节点机器的数量大很多。每个工作节点处理很多不同的任务，可以增强动态负责均衡能力，也能加速有工作节点失败时的恢复情况：失败节点已经完成的map任务有很多的时候也能传递给其它所有工作节点来完成。</p>
 <p>在我们的实现中M和R的数量有一个实际的上限：如上所述，主节点必须做O(M+R)的调度决定以及在内存中保持O(M<em>R)个状态。（但是内存使用的常数项很小：O(M</em>R)个状态中每个map/reduce任务对只需要差不多1字节数据。）</p>
 <p>进一步分析，R通常由用户指定，因为每个reduce任务都会产生一个独立的输出文件。在实践中我们倾向于这样选择M，即可以将每个单独的任务分成16-64MB大的输入数据（此时上面所说的局部性优化效果最好），同时我们令R为待使用的工作节点数量较小的整数倍。我们经常使用M=200000，R=5000，使用2000台机器来运行MapReduce计算。</p>
+<pre><code>回顾一下，M是输入被分片后的Map任务数量，R是map处理出来的Reduce任务数量，M是按照输入数据分的，R是用户指定的。
+</code></pre>
 <h4 id="3-6-备用任务"><a class="header-anchor" href="#3-6-备用任务"></a>3.6  备用任务</h4>
 <p>导致MapReduce操作用时延长的一个常见原因是出现了“落后者”：某台机器在完成最后的一个map或reduce任务时花费了反常的漫长时间。很多原因都会导致落后者的产生。例如，一台磁盘损坏的机器可能会遭遇频繁的可校正错误，导致它的读取性能从30MB/s降至1MB/s。集群调度系统可能已经调度了其它任务到这台机器，导致它在执行MapReduce代码时因为CPU、内存、本地磁盘或网络带宽的竞争而更加缓慢。最近我们遇到的一个问题是机器的初始化代码有一个bug，导致处理器缓存被禁用：受影响的机器上的计算速度下降了超过100倍。</p>
 <p>我们有一个通用的机制来减轻落后者问题。当MapReduce操作接近完成时，主节点会将仍在处理中的剩余任务调度给其它机器作备用执行。原本的执行和备用执行中的任一个完成时都会将对应任务标记为已完成。我们已经调整过这个机制，使它因这个机制而增加的计算资源消耗通常只有一点点。我们已经观察到这一机制有效地减少了大型MapReduce操作花费的时间。例如，5.3节中的排序程序在禁用这一机制时要多花费44%的时间。</p>
+<pre><code>某几台机拖累了整体进度...
+做法是快结束的时候，把处理中的任务扔给一帮空闲工作节点一起干，谁先干完算谁的，效果拔群～
+</code></pre>
 <h3 id="4-技巧"><a class="header-anchor" href="#4-技巧"></a>4 技巧</h3>
 <p>尽管仅仅用map和reduce函数提供的基本功能就足够解决大多数需求了，我们还是发现了一些很有用的扩展。这些扩展将在本节进行描述。</p>
 <h4 id="4-1-划分函数"><a class="header-anchor" href="#4-1-划分函数"></a>4.1  划分函数</h4>
@@ -143,15 +171,19 @@
 <h4 id="4-3-合并函数"><a class="header-anchor" href="#4-3-合并函数"></a>4.3  合并函数</h4>
 <p>某些情况中，不同的map任务产生的中间key重复率非常高，而且用户指定的reduce函数可进行交换组合。一个典型的例子就是2.1节中的单词统计。单词频率符合齐夫分布（百度百科），因此每个map任务都会产生非常多的&lt;the, 1&gt;这样的记录。所有这些记录都会通过网络被发送给一个reduce任务，然后再通过reduce函数将它们相加，产生结果。我们允许用户指定一个可选的合并函数，在数据被发送之前进行局部合并。</p>
 <p>合并函数由每个执行map任务的机器调用。通常合并函数与reduce函数的实现代码是相同的。它们唯一的区别就是MapReduce库处理函数输出的方式。reduce函数的输出会写到最终的输出文件中，而合并函数的输出会写到中间文件中，并在随后发送给一个reduce任务。</p>
+<pre><code>解决sharding key不平衡的问题，再加一个合并函数，让Map工作节点多干点活，从而Reduce的某些节点不会因为太不平衡一直干，成为拖累者。
+</code></pre>
 <h4 id="4-4-输入和输出类型"><a class="header-anchor" href="#4-4-输入和输出类型"></a>4.4  输入和输出类型</h4>
 <p>MapReduce库支持多种不同格式输入数据的读取。例如，“text”模式将每行输入当作一个key/value对：key是文件中的偏移，而value则是该行的内容。另一种支持的常见格式将key/value对按key排序后连续存储在一起。每种输入类型的实现都知道如何将它本身分成有意义的区间从而能分成独立的map任务进行处理（例如text模式的区间划分保证了划分点只出现在行边界处）。用户也可以通过实现一个简单的reader接口来提供对新的输入类型的支持，尽管大多数用户只是使用为数不多的几种预定义输入类型中的一种。</p>
 <p>reader的实现不一定要提供从文件中读数据的功能。例如，可以很容易的定义一个从数据库读记录的reader，或是从映射在内存中的某种数据结构中。</p>
 <p>类似的，我们也支持一组输出类型来产生不同格式的数据，而用户提供代码去支持新的输出类型也不难。</p>
 <h4 id="4-5-边界效应"><a class="header-anchor" href="#4-5-边界效应"></a>4.5  边界效应</h4>
-<p>有些情况下，MapReduce的用户发现从他们的map或reduce操作中产生一些额外的辅助文件很有帮助。我们依赖于应用作者来确保这样的边界效应是原子且幂等的。通常应用会写一个临时文件，并在文件生成完毕时将其原子的更名。</p>
+<p>有些情况下，MapReduce的使用者发现从他们的map或reduce操作中产生一些额外的辅助文件很有帮助。我们依赖于使用者来确保这样的边界效应是原子且幂等的。通常应用会写一个临时文件，并在文件生成完毕时将其原子的更名。</p>
 <p>我们不提供在单一任务产生的多个输出文件中原子的两段提交。因此，如果一个任务产生多个输出文件，且要求有跨文件的一致性，它必须是确定性的。这个限制在实践中还没有引起过问题。</p>
+<pre><code>单一任务的提交必须有原子幂等性以支持一致性。
+</code></pre>
 <h4 id="4-6-略过坏记录"><a class="header-anchor" href="#4-6-略过坏记录"></a>4.6  略过坏记录</h4>
-<p>有时用户代码中的bug会导致map或reduce函数一遇到特定的记录就崩溃。这些bug会导致MapReduce操作无法完成。通常的应用措施是修复这些bug，但有时难以实现：也许bug存在于得不到源代码的第三方库中。同样地，有时忽略一些记录是可以接受的，例如在一个大数据集上做统计分析时。我们提供了一个可选的执行模式，在MapReduce库检测到确定会导致崩溃的记录时路过它们从而继续进度。</p>
+<p>有时用户代码中的bug会导致map或reduce函数一遇到特定的记录就崩溃。这些bug会导致MapReduce操作无法完成。通常的应用措施是修复这些bug，但有时难以实现：也许bug存在于得不到源代码的第三方库中。同样地，有时忽略一些记录是可以接受的，例如在一个大数据集上做统计分析时。我们提供了一个可选的执行模式，在MapReduce库检测到确定会导致崩溃的记录时略过它们从而继续进度。</p>
 <p>每个工作进程都要安装一个信号处理程序来捕捉违规操作和总线错误。在调用用户的map或reduce操作前，MapReduce库将用于验证的序列号保存在全局变量中。如果用户代码产生了信号，信号处理程序就将一个包含这个序列号的“最后一步”UDP包发送给MapReduce主节点。当主节点在某个记录上发现了超过一个错误时，就表明下一次重执行相应的map或reduce任务时要跳过这个记录。</p>
 <h4 id="4-7-本地执行"><a class="header-anchor" href="#4-7-本地执行"></a>4.7  本地执行</h4>
 <p>map或reduce函数的调试问题常常令人难以捉摸，因为实际的计算过程都发生在分布式系统上，经常包含数千台机器，而工作分配决策都由主节点动态产生。为了帮助调试、性能分析、小范围测试，我们开发了MapReduce库的一个替代实现，可以将MapReduce操作的全部工作在一台本地机器上顺序执行。用户拥有控制权，因此计算可以被限制在特定的map任务中。用户调用他们的程序时加上一个特殊标志，就可以方便的使用任何有用的调试或测试工具。</p>
@@ -161,12 +193,12 @@
 <h4 id="4-9-计数器"><a class="header-anchor" href="#4-9-计数器"></a>4.9  计数器</h4>
 <p>MapReduce库提供了计数器机制，可以统计多种事件的发生次数。例如，用户代码可能想统计已处理的单词总数，或被索引的德语文献的数量等。</p>
 <p>为了使用这一机制，用户代码需要创建一个有名的计数器对象，并在map和reduce函数的适当位置增加它的值。例如：</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">Counter *uppercase = GetCounter(<span class="string">&quot;uppercase&quot;</span>);</span><br><span class="line">    </span><br><span class="line"><span class="built_in">map</span>(String name, String contents):</span><br><span class="line">    <span class="keyword">for</span> each word w in contents:</span><br><span class="line">        <span class="keyword">if</span> (IsCapitalized(w)):</span><br><span class="line">            uppercase-&gt;Increment();</span><br><span class="line">        EmitIntermediate(w, <span class="string">&quot;1&quot;</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Counter *uppercase &#x3D; GetCounter(&quot;uppercase&quot;);</span><br><span class="line">    </span><br><span class="line">map(String name, String contents):</span><br><span class="line">    for each word w in contents:</span><br><span class="line">        if (IsCapitalized(w)):</span><br><span class="line">            uppercase-&gt;Increment();</span><br><span class="line">        EmitIntermediate(w, &quot;1&quot;);</span><br></pre></td></tr></table></figure>
 <p>工作节点上的计数器值会定期发送给主节点（附在ping的回应里）。当MapReduce操作完成时，主节点会将运行成功的map和reduce任务发来的计数器值合并后返回给用户代码。当前的计数器值也会显示在主节点的状态网页上，其它人可以看到实时的计算进度。在合并计数器值时，主节点会忽略同一个map或reduce任务的重复的结果，从而避免多次叠加。（重复执行可能发生在我们的备用任务和失败节点重执行中。）</p>
 <p>有些计数值是由MapReduce库自动维护的，例如输入key/value对已处理的数量和输出key/value对产生的数量等。</p>
 <p>用户们观察到这一机制在对MapReduce操作的智能检查上很有帮助。例如，在一些MapReduce操作中，用户代码可能想要确认产生的输出对的数量恰好与输入对的数量相等，或是已处理的德语文献占处理文献总数的比例是在接受范围内的。</p>
 <h3 id="5-性能"><a class="header-anchor" href="#5-性能"></a>5 性能</h3>
-<p>本节中我们会在一个大型集群上测量MapReduce在两个计算上的性能。一个计算是在差不多1TB的数据中查找指定的模式。另一个计算则是排序1TB的数据。</p>
+<p>本节中我们会在一个大型集群上测量MapReduce在两个计算任务上的性能。一个计算任务是在差不多1TB的数据中查找指定的模式。另一个计算则是排序1TB的数据。</p>
 <p>这两个程序能代表大量真实的MapReduce程序——一类程序是将数据从一种表示形式转换为另一种，另一类程序则是从很大数量的数据集中提取出一小部分感兴趣的数据。</p>
 <h4 id="5-1-集群配置"><a class="header-anchor" href="#5-1-集群配置"></a>5.1  集群配置</h4>
 <p>所有的程序都运行在由1800台机器组成的集群上。每台机器配有：2GHz的Intel Xeon处理器且支持超线程，4GB内存，2块160GB的IDE硬盘，和1GB以太网连接。所有机器都安排在2层树结构的网关内，根节点的可用带宽加起来有100-200Gbps。所有的机器都处于相同的托管设施下，因此任意两台机器间的往返通信时间都少于1ms。</p>
@@ -177,7 +209,7 @@
 <p>图2显示了随时间变化的计算进度。Y轴是输入数据扫描的速率。这个速率逐渐提升代表更多的机器被分配给MapReduce计算，并在分配的机器数达到1764台时超过了30GB/s。随着map任务的结束，这个速率开始下降，并在计算开始后80s时降至0。整个计算过程共花费约150s。这包括了大约1分钟的启动开销。启动开销是由于要把程序传播到所有工作机器上，还包括GFS要打开1000个输入文件和获取局部优化所需信息而导致的延迟。</p>
 <h4 id="5-3-排序"><a class="header-anchor" href="#5-3-排序"></a>5.3  排序</h4>
 <p>排序程序要对10100个100字节的记录进行排序（差不多1TB数据）。这个程序模仿了TeraSort测试程序。</p>
-<p>排序程序只包括不到50行的用户代码。map函数一共3行，它从一个文本行中提取出10字节的排序key，再将key和原始文本行输出为中间key/value对。我们使用了一个内置的Identity函数作为reduce函数。这个函数会将未更改的中间key/value输出为结果。最终的排序后输出被出到一组2路复制的GFS文件（例如，这个程序的输出要写2TB的数据）。</p>
+<p>排序程序只包括不到50行的用户代码。map函数一共3行，它从一个文本行中提取出10字节的排序key，再将key和原始文本行输出为中间key/value对。我们使用了一个内置的Identity函数作为reduce函数。这个函数会将未更改的中间key/value输出为结果。最终的排序后输出被输出到一组2路复制的GFS文件（例如，这个程序的输出要写2TB的数据）。</p>
 <p>如前所述，输入数据被分成若干个64MB大小的部分（M = 15000）。我们将已排序的输出分成4000个文件（R = 4000）。划分函数使用key的首字节来将它分到R个文件中的一个。</p>
 <p>此次测试中我们的划分函数使用了key分布的内建知识。在一个一般的排序程序中，我们会预先加一轮MapReduce操作，收集key的样本，并使用key抽样的分布来计算最终输出文件的划分点。</p>
 <p><img src="/2021/03/15/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/rates.png" alt="rates"></p>
@@ -238,14 +270,16 @@
 <p>两个系统都使用了备用执行来恢复因错误而导致的数据丢失。</p>
 <p>两个系统都使用了局部感知调度来减少在拥堵的网络连接上发送的数据量。</p>
 <p>TACC被设计为一个高度可用的网络服务的简化结构系统。类似于MapReduce，它依赖于重执行机制来实现容错性。</p>
+<pre><code>横向比较了一波..
+</code></pre>
 <h3 id="8-结论"><a class="header-anchor" href="#8-结论"></a>8 结论</h3>
 <p>MapReduce编程模型已经成功的用于Google的许多不同的用途中。我们将它的成功归功于几个原因。首先，该模型即使是对于没有并行和分布式系统经验的程序员也是很易于使用的，因为它隐藏了并行化、容错机制、局部性优化、以及负载平衡的细节。其次，很多种类的问题都很容易表示成MapReduce计算。例如，MapReduce被用于为Google的网络搜索服务的数据产生、排序、数据挖掘、机器学习、以及许多其它系统。第三，我们已经开发了一个MapReduce的实现，可以扩展到包含上千台机器的大型集群。该实现可以高效使用这些机器的资源，因此适合于Google遇到的很多大型计算问题。</p>
 <p>我们从这项工作中学到了很多东西。首先，约束这个编程模型令并行和分布式计算，以及令这些计算可容错，变得简单了。其次，网络带宽是一种稀缺资源。我们系统中的很多优化都因此针对减少通过网络发送的数据总量：局部性优化允许我们从本地磁盘读，同时将中间文件写入本地磁盘也节省了网络带宽。第三，备用执行可以用于减小缓慢的机器的影响，及应对机器失败和数据丢失。</p>
 <h3 id="附录A-词频统计源代码"><a class="header-anchor" href="#附录A-词频统计源代码"></a>附录A 词频统计源代码</h3>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;mapreduce/mapreduce.h&quot;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="comment">// User&#x27;s map fuction</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WordCounter</span>:</span> <span class="keyword">public</span> Mapper &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Map</span><span class="params">(<span class="keyword">const</span> MapInput &amp;input)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">const</span> <span class="built_in">string</span> &amp;text = input.value();</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> n = text.size();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ) &#123;</span><br><span class="line">            <span class="comment">// Skip past leading whitespace</span></span><br><span class="line">            <span class="keyword">while</span> ((i &lt; n) &amp;&amp; <span class="built_in">isspace</span>(text[i]))</span><br><span class="line">                ++i;</span><br><span class="line">             </span><br><span class="line">            <span class="comment">// Find word end</span></span><br><span class="line">            <span class="keyword">int</span> start = i;</span><br><span class="line">            <span class="keyword">while</span> ((i &lt; n) &amp;&amp; !<span class="built_in">isspace</span>(text[i]))</span><br><span class="line">                ++i;</span><br><span class="line">                 </span><br><span class="line">            <span class="keyword">if</span> (start &lt; i)</span><br><span class="line">                Emit(text.substr(start, i-start), <span class="string">&quot;1&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">REGISTER_MAPPER(WordCounter);</span><br><span class="line"> </span><br><span class="line"><span class="comment">// User&#x27;s reduce function</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Adder</span>:</span> <span class="keyword">public</span> Reducer &#123;</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">Reduce</span><span class="params">(ReduceInput *input)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// Iterate over all entries with the</span></span><br><span class="line">        <span class="comment">// same key and add the values</span></span><br><span class="line">        <span class="keyword">int64_t</span> value = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (!input-&gt;done()) &#123;</span><br><span class="line">            value += StringToInt(input-&gt;value());</span><br><span class="line">            input-&gt;NextValue();</span><br><span class="line">        &#125;</span><br><span class="line">         </span><br><span class="line">        <span class="comment">// Emit sum for input-&gt;key()</span></span><br><span class="line">        Emit(IntToString(value));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">REGISTER_REDUCER(Adder);</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> **argv)</span> </span>&#123;</span><br><span class="line">    ParseCommandLineFlags(argc, argv);</span><br><span class="line">     </span><br><span class="line">    MapReduceSpecification spec;</span><br><span class="line">     </span><br><span class="line">    <span class="comment">// Store list of input files into &quot;spec&quot;</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; argc; ++i) &#123;</span><br><span class="line">        MapReduceInput *input = spec.add_input();</span><br><span class="line">        input-&gt;set_format(<span class="string">&quot;text&quot;</span>);</span><br><span class="line">        input-&gt;set_filepattern(argv[i]);</span><br><span class="line">        input-&gt;set_mapper_class(<span class="string">&quot;WordCounter&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">     </span><br><span class="line">    <span class="comment">// Specify the output files:</span></span><br><span class="line">    <span class="comment">//    /gfs/test/freq-00000-of-00100</span></span><br><span class="line">    <span class="comment">//    /gfs/test/freq-00001-of-00100</span></span><br><span class="line">    <span class="comment">//    ...</span></span><br><span class="line">    MapReduceOutput *out = spec.output();</span><br><span class="line">    out-&gt;set_filebase(<span class="string">&quot;/gfs/test/freq&quot;</span>);</span><br><span class="line">    out-&gt;set_num_tasks(<span class="number">100</span>);</span><br><span class="line">    out-&gt;set_format(<span class="string">&quot;text&quot;</span>);</span><br><span class="line">    out-&gt;set_reducer_class(<span class="string">&quot;Adder&quot;</span>);</span><br><span class="line">     </span><br><span class="line">    <span class="comment">// Optional: do partial sums within map</span></span><br><span class="line">    <span class="comment">// tasks to save network bandwidth</span></span><br><span class="line">    out-&gt;set_combine_class(<span class="string">&quot;Adder&quot;</span>);</span><br><span class="line">     </span><br><span class="line">    <span class="comment">// Tuning parameters: use at most 2000</span></span><br><span class="line">    <span class="comment">// machines and 100MB of memory per task</span></span><br><span class="line">    spec.set_machines(<span class="number">2000</span>);</span><br><span class="line">    spec.set_map_megabytes(<span class="number">100</span>);</span><br><span class="line">    spec.set_reduce_megabytes(<span class="number">100</span>);</span><br><span class="line">     </span><br><span class="line">    <span class="comment">// Now run it</span></span><br><span class="line">    MapReduceResult result;</span><br><span class="line">    <span class="keyword">if</span> (!MapReduce(spec, &amp;result))</span><br><span class="line">        <span class="built_in">abort</span>();</span><br><span class="line">         </span><br><span class="line">    <span class="comment">// Done: &#x27;result&#x27; structure contains info</span></span><br><span class="line">    <span class="comment">// about counters, time taken, number of</span></span><br><span class="line">    <span class="comment">// machines used, etc.</span></span><br><span class="line">     </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <tags>
+        <tag>论文</tag>
         <tag>大数据</tag>
-        <tag>翻译</tag>
       </tags>
   </entry>
   <entry>
