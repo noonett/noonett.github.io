@@ -7,6 +7,57 @@
 ]]></content>
   </entry>
   <entry>
+    <title>容器和docker小记</title>
+    <url>/2021/03/20/%E5%AE%B9%E5%99%A8%E5%8C%96%E5%92%8Cdocker%E5%B0%8F%E8%AE%B0/</url>
+    <content><![CDATA[<p>学会容器，部署起来，一劳永逸。<br>
+先开个坑…这周的Tut跟了一趟Get Start(<a href="https://docs.docker.com/get-started/">https://docs.docker.com/get-started/</a>)</p>
+<a id="more"></a>
+<p>虚拟化技术让不同操作系统运行在同一台物理环境上，解决了操作系统的异构性；通过池化技术虚拟化可以对硬件资源的有效利用，比如CPU使用率；还有一个是对系统的隔离，虚拟机们使用同一台物理机上对硬件资源的同时，不牺牲安全性。<br>
+容器化是操作系统层面的虚拟化，让同一个操作系统中同时跑多个相互隔离并且共享系统资源的进程。对比起来，容器更轻量级，虚拟化分配的硬件会一直占用着即使一个进程也不跑，也因为资源的分配，虚拟机启动会比容器更久，但是虚拟化的隔离性更好，而容器只能通过内核特性实现一定程度的隔离。</p>
+<h3 id="容器化是怎么做到的？"><a class="header-anchor" href="#容器化是怎么做到的？"></a>容器化是怎么做到的？</h3>
+<h4 id="命名空间-namespace"><a class="header-anchor" href="#命名空间-namespace"></a>命名空间 namespace</h4>
+<ol>
+<li>Mount： 设定不同容器的根目录（工作目录）</li>
+<li>进程ID：通过进程ID的映射，可以让多个容器内的进程号ID重复</li>
+<li>UserID：同样是ID的映射，容器内的用户可以灵活的映射外部的UID，起到权限的控制</li>
+<li>网络端口号映射等…</li>
+</ol>
+<h4 id="控制组-CGROUP"><a class="header-anchor" href="#控制组-CGROUP"></a>控制组 CGROUP</h4>
+<p>控制进程对内核内资源CPU、内存、IO的访问权限，通过层级结构来组织的：<br>
+(控制组相关文档：<a href="https://docs.docker.com/engine/install/linux-postinstall/">https://docs.docker.com/engine/install/linux-postinstall/</a>)<br>
+<img src="/2021/03/20/%E5%AE%B9%E5%99%A8%E5%8C%96%E5%92%8Cdocker%E5%B0%8F%E8%AE%B0/%E6%8E%A7%E5%88%B6%E7%BB%84%E4%BE%8B%E5%AD%90.png" alt="控制组例子"></p>
+<h2 id="Docker"><a class="header-anchor" href="#Docker"></a>Docker</h2>
+<h3 id="为啥大家都用Docker"><a class="header-anchor" href="#为啥大家都用Docker"></a>为啥大家都用Docker?</h3>
+<p>依赖管理和到处部署。Docker承诺能帮大家解决依赖冲突、版本、依赖丢失等问题，它的运行环境还允许在各个异构平台都能跑。怎么跟Maven和Java的成功有点那么点相似的意思。</p>
+<h3 id="Docker内的名词"><a class="header-anchor" href="#Docker内的名词"></a>Docker内的名词</h3>
+<p>容器：跑应用的相互隔离的运行环境。<br>
+镜像：只读的build和run应用的模版，就是源代码，Dockerfile（定义镜像的文件，里面写要怎么build，怎么运行应用）这些东西，只读。可以本地存，也能传到中央仓库去。<br>
+数据卷：跑的应用存数据的地方，不配置的话，应用一停，持久化的数据就没。<br>
+网络：做端口映射</p>
+<h4 id="镜像分层"><a class="header-anchor" href="#镜像分层"></a>镜像分层</h4>
+<p>CopyOnWrite: 所有底层文件都是不可写的，底层的文件可以被多个上层文件复用，如果说某个镜像需要做修改，就在上一层复制要修改的那部分来修改。也因为所有底层文件都是不可写的，启动时候会创多一层文件，做临时存储，在容器结束的时候会删掉这一层，所以应用数据的持久化需要额外处理。<br>
+(DockerFile相关文档：<a href="https://docs.docker.com/develop/develop-images/dockerfile_best-practices/">https://docs.docker.com/develop/develop-images/dockerfile_best-practices/</a>)</p>
+<h4 id="数据卷-Data-Volume"><a class="header-anchor" href="#数据卷-Data-Volume"></a>数据卷 Data Volume</h4>
+<ol>
+<li>Bind mount: 早期版本用的，可以分配主机里的任何文件或者目录给容器。</li>
+<li>Volumes: 由容器管理特定容器区域，不会影响目录下其他文件。</li>
+<li>tmpfs: 分配主机内存给容器<br>
+(数据持久化文档：<a href="https://docs.docker.com/get-started/05_persisting_data/">https://docs.docker.com/get-started/05_persisting_data/</a>)<br>
+<img src="/2021/03/20/%E5%AE%B9%E5%99%A8%E5%8C%96%E5%92%8Cdocker%E5%B0%8F%E8%AE%B0/%E6%8E%A7%E5%88%B6%E7%BB%84%E4%BE%8B%E5%AD%90.png" alt="控制组例子"></li>
+</ol>
+<h4 id="镜像网络"><a class="header-anchor" href="#镜像网络"></a>镜像网络</h4>
+<ol>
+<li>Host：直连到主机网络命名空间（NIC）</li>
+<li>Bridge：Docker管理自己的私有网络，通过NAT做内部网络和NIC的映射。</li>
+</ol>
+<h4 id="为什么Docker的隔离性不能完全保证"><a class="header-anchor" href="#为什么Docker的隔离性不能完全保证"></a>为什么Docker的隔离性不能完全保证</h4>
+<p>它提供了直连操作系统的方式，比如bind mount可以让操作系统的存储空间直接对容器可见，Host的网络连接方式会让容器直连NIC。</p>
+]]></content>
+      <tags>
+        <tag>部署</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MapReduce：Simplified Data Processing on Large Clusters论文阅读笔记</title>
     <url>/2021/03/15/MapReduce%EF%BC%9ASimplified%20Data%20Processing%20on%20Large%20Clusters/</url>
     <content><![CDATA[<p>翻译后的论文加上自己的阅读笔记。</p>
@@ -523,7 +574,7 @@ JDK版本：11, ES版本:6.4.3</li>
 <p>可以看到配置环境还是很麻烦的。要找资源，安装好软件，配置环境。将来考虑进一步学习docker，就不用这么麻烦，整一次跑一趟流程了。</p>
 ]]></content>
       <tags>
-        <tag>云部署</tag>
+        <tag>部署</tag>
       </tags>
   </entry>
   <entry>
@@ -731,7 +782,7 @@ The incremental write mechanism used by MongoDB can continuously generate Journa
 ]]></content>
       <tags>
         <tag>论文</tag>
-        <tag>数据管理系统</tag>
+        <tag>大数据</tag>
       </tags>
   </entry>
   <entry>
@@ -2141,7 +2192,6 @@ mt.start();<br>
       <tags>
         <tag>字符串</tag>
         <tag>动态规划</tag>
-        <tag>leetcode</tag>
         <tag>前缀树</tag>
       </tags>
   </entry>
@@ -2308,7 +2358,6 @@ mt.start();<br>
 <h2 id="五、常见消息队列对比"><a class="header-anchor" href="#五、常见消息队列对比"></a>五、常见消息队列对比</h2>
 <h3 id="Kafka"><a class="header-anchor" href="#Kafka"></a>Kafka</h3>
 <p>kafka 的特点其实很明显，就是仅仅提供较少的核心功能，但是提供超高的吞吐量，ms 级的延迟，极高的可用性以及可靠性，而且分布式可以任意扩展。同时 kafka 最好是支撑较少的 topic 数量即可，保证其超高吞吐量。kafka 唯一的一点劣势是有可能消息重复消费，那么对数据准确性会造成极其轻微的影响，在大数据领域中以及日志采集中，这点轻微影响可以忽略这个特性天然适合大数据实时计算以及日志收集。</p>
-<p><em>XMind: ZEN - Trial Version</em></p>
 ]]></content>
       <tags>
         <tag>系统设计</tag>
