@@ -7,6 +7,77 @@
 ]]></content>
   </entry>
   <entry>
+    <title>WebSocket服务器消息推送</title>
+    <url>/2021/03/31/WebSocket%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/</url>
+    <content><![CDATA[<p>之前做新消息提醒用的轮询，面试的时候也有面试官提醒有更优雅的方式。<br>
+学习一波WebSocket，顺便改进一波项目~</p>
+<a id="more"></a>
+<h3 id="服务器消息推送的几种方式"><a class="header-anchor" href="#服务器消息推送的几种方式"></a>服务器消息推送的几种方式</h3>
+<p>直接看图…<br>
+<img src="/2021/03/31/WebSocket%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F.png" alt="服务器消息推送的几种方式"></p>
+<h3 id="目前使用的场景"><a class="header-anchor" href="#目前使用的场景"></a>目前使用的场景</h3>
+<p>目前考虑的场景是一方消息发送之后，另一方在前端收到新消息的提醒，主要分成两类：</p>
+<ol>
+<li>用户之间点对点通信</li>
+<li>服务端发送消息广播<br>
+先做服务端发送广播这块，也是目前项目用的，系统消息群发的场景。</li>
+</ol>
+<h3 id="Spring实现WebSocket"><a class="header-anchor" href="#Spring实现WebSocket"></a>Spring实现WebSocket</h3>
+<pre><code>这一步主要是实现客户端与服务端某一节点建立WebSocket协议连接，同时这一节点在内存中保存WebSocketSession，通信过程也跟这个服务端节点直接通信。
+</code></pre>
+<h4 id="配置WebSocket服务器："><a class="header-anchor" href="#配置WebSocket服务器："></a>配置WebSocket服务器：</h4>
+<ol>
+<li>连接建立</li>
+<li>保存Session</li>
+<li>接收到客户端新消息的处理</li>
+<li>对异常的处理</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * WebSocket支持</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableWebSocket</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebSocketConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServerEndpointExporter <span class="title">serverEndpointExporter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ServerEndpointExporter();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>JAVAEE的注解ServerEndpoint注册Endpoint，监听特定路径以调用onOpen注解的方法（Spirng其实就是对WebSocket进行了一层封装，提供了可以通过注解的方式管理方法。不使用Spring，直接用Java的WebSocket，通过继承WebSocketServer类并覆写方法也是可以的）</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">    新消息提醒的订阅</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@ServerEndpoint(&quot;/letternotice/&#123;sid&#125;&quot;)</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LetterNoticeWebSocketEndPoint</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Logger logger = LoggerFactory.getLogger(getClass());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 存所有客户端的对象</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> ConcurrentHashMap&lt;Integer, LetterNoticeWebSocketEndPoint&gt; webSockets = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用户ID，连接会话的唯一标识</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> sid;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//与某个客户端的连接会话，需要通过它来给客户端发送数据</span></span><br><span class="line">    <span class="keyword">private</span> Session session;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/***</span></span><br><span class="line"><span class="comment">     * 提醒 toId 用户有新消息到来</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> toId  消息接受方</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name  消息发送方</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> content</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">notifyNewLetter</span><span class="params">(<span class="keyword">int</span> toId, String name, String content)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (webSockets.containsKey(toId)) &#123;</span><br><span class="line">            Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">            map.put(<span class="string">&quot;name&quot;</span>, name);</span><br><span class="line">            map.put(<span class="string">&quot;content&quot;</span>, content);</span><br><span class="line">            webSockets.get(toId).sendMessage(CommunityUtil.getJSONString(<span class="number">1</span>, <span class="string">&quot;新消息提醒！&quot;</span>, map));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 成员方法：收消息 To-Do</span></span><br><span class="line">    <span class="meta">@OnMessage</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onMessage</span><span class="params">(String message)</span> </span>&#123;</span><br><span class="line">        logger.info(<span class="string">&quot;收到来自用户[&quot;</span> + sid + <span class="string">&quot;]的信息:&quot;</span> + message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OnOpen</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onOpen</span><span class="params">(Session session, <span class="meta">@PathParam(&quot;sid&quot;)</span> <span class="keyword">int</span> sid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.session = session;</span><br><span class="line">        logger.info(<span class="string">&quot;有新窗口开始监听:&quot;</span> + sid);</span><br><span class="line">        <span class="keyword">this</span>.sid = sid;</span><br><span class="line">        webSockets.put(<span class="keyword">this</span>.sid, <span class="keyword">this</span>);   <span class="comment">// 加入集合中</span></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            sendMessage(CommunityUtil.getJSONString(<span class="number">0</span>, <span class="string">&quot;连接成功！&quot;</span>));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            logger.error(<span class="string">&quot;websocket IO异常&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">        这里一定要有处理异常的方法</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@OnError</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Session session, Throwable error)</span> </span>&#123;</span><br><span class="line">        logger.error(<span class="string">&quot;WebSocket发生错误!&quot;</span>);</span><br><span class="line">        error.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OnClose</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClose</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (webSockets.containsKey(<span class="keyword">this</span>.sid)) &#123;</span><br><span class="line">            webSockets.remove(<span class="keyword">this</span>.sid);  <span class="comment">//从set中删除</span></span><br><span class="line">            logger.info(<span class="string">&quot;有一连接关闭:&quot;</span> + sid);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 成员方法：向某客户端session推消息</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sendMessage</span><span class="params">(String message)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.session.getBasicRemote().sendText(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="前端配置"><a class="header-anchor" href="#前端配置"></a>前端配置</h4>
+<ol>
+<li>打开页面建立连接</li>
+<li>接受系统消息并做处理</li>
+<li>用户发送消息</li>
+<li>关闭页面关闭连接<br>
+前端这边用WebSocket+Notification达到提醒的效果：</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// websocket对象</span></span><br><span class="line"><span class="keyword">var</span> ws = <span class="literal">null</span>;</span><br><span class="line"><span class="comment">// 打开页面建立连接</span></span><br><span class="line">$().ready(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    connect();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">&quot;beforeunload&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    disconnect();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">//连接</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">connect</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> target =  $(<span class="string">&quot;#userId&quot;</span>).val();</span><br><span class="line">    ws = <span class="keyword">new</span> WebSocket(<span class="string">&quot;ws://localhost:8080/letternotice/&quot;</span> + target);</span><br><span class="line">    <span class="comment">// Socket建立连接状态触发函数</span></span><br><span class="line">    ws.onopen = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        log(<span class="string">&#x27;Info: WebSocket connection opened.&#x27;</span>);</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// Socket收到消息触发函数</span></span><br><span class="line">    ws.onmessage = <span class="function"><span class="keyword">function</span> (<span class="params">event</span>) </span>&#123;</span><br><span class="line">        log(<span class="string">&#x27;Info: New Letter.&#x27;</span>);</span><br><span class="line">        data = $.parseJSON(event.data);</span><br><span class="line">        <span class="keyword">var</span> code = data.code;</span><br><span class="line">        <span class="keyword">var</span> msg = data.msg;</span><br><span class="line">        <span class="keyword">if</span> (code == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> name = data.name;</span><br><span class="line">            <span class="keyword">var</span> content = data.content;</span><br><span class="line">            notifyMe(name, content);</span><br><span class="line">            <span class="built_in">console</span>.log(msg);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="built_in">console</span>.log(msg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// Socket关闭连接触发函数</span></span><br><span class="line">    ws.onclose = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        log(<span class="string">&#x27;Info: WebSocket connection closed.&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 断开连接</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">disconnect</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (ws != <span class="literal">null</span>) &#123;</span><br><span class="line">        ws.close();</span><br><span class="line">        ws = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// notification弹窗</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">notifyMe</span>(<span class="params">name, content</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!(<span class="string">&quot;Notification&quot;</span> <span class="keyword">in</span> <span class="built_in">window</span>)) &#123;</span><br><span class="line">        alert(<span class="string">&quot;浏览器不支持弹窗！&quot;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Notification.permission === <span class="string">&quot;granted&quot;</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> notification = <span class="keyword">new</span> Notification(name, &#123;</span><br><span class="line">            body: content,</span><br><span class="line">            icon: <span class="string">&#x27;https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1493952301,1278532971&amp;fm=26&amp;gp=0.jpg&#x27;</span>,</span><br><span class="line">        &#125;);</span><br><span class="line">        notification.onclick = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">var</span> userId = $(<span class="string">&quot;#userId&quot;</span>).val();</span><br><span class="line">            <span class="keyword">var</span> url = <span class="string">&quot;http://localhost:8080/elec5619/notification/user/&quot;</span> + userId;</span><br><span class="line">            <span class="built_in">window</span>.location.href = url;</span><br><span class="line">            <span class="built_in">window</span>.focus();</span><br><span class="line">            notification.close();</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="built_in">setTimeout</span>(notification.close.bind(notification), <span class="number">15000</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (Notification.permission !== <span class="string">&#x27;denied&#x27;</span>) &#123;</span><br><span class="line">        Notification.requestPermission(<span class="function"><span class="keyword">function</span> (<span class="params">permission</span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (permission === <span class="string">&quot;granted&quot;</span>) &#123;</span><br><span class="line">                <span class="keyword">var</span> notification = <span class="keyword">new</span> Notification(<span class="string">&#x27;Covid-19 Check-In&#x27;</span>, &#123;</span><br><span class="line">                    body: <span class="string">&#x27;Successfully subscribed to Covid-19 Alert!&#x27;</span></span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="分布式场景如何解决WebSocketSession局部存储的问题？"><a class="header-anchor" href="#分布式场景如何解决WebSocketSession局部存储的问题？"></a>分布式场景如何解决WebSocketSession局部存储的问题？</h4>
+<p>正如上面说的，目前是客户端与单一节点建立连接，这个节点在内存中保存WebSocketSession，这就需要处理session共享的问题，向某一特定客户端发送消息，是需要通过与这个客户端建立连接之后的session的，如果这个session不在当前节点上，如何发送消息？<br>
+目前想到几个：</p>
+<ol>
+<li>
+<p>Redis共享WebSession: (abort)<br>
+每次建立连接后将WebSocketSession序列化，存到Redis共享，发送消息时先检查本地的，检查本地没有再去Redis拿。<br>
+但是这个需要解决一个问题，WebSocketSession的序列化，没有实现序列化方法，这样的话存到Redis是一个带有类型但是不包含数据的空对象,需要自己去实现WriteObject，ReadObject方法。<br>
+<img src="/2021/03/31/WebSocket%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/WebSocket%E5%BA%8F%E5%88%97%E5%8C%96.png" alt="WebSocket序列化"><br>
+直接序列化WebSession也会循环引用的错，处理起来很麻烦…<br>
+<img src="/2021/03/31/WebSocket%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/WebSession%E5%BA%8F%E5%88%97%E5%8C%96.png" alt="WebSession序列化"></p>
+</li>
+<li>
+<p>既然没办法共享存Session，那可以中心化存各个节点所管理的session的列表，发送方通过查这个中心化的记录找到要让哪个节点去发。大致的思路就是:<br>
+Client1 --&gt; Sever1 &lt;-- 返回对应server2 --&gt; center<br>
+–&gt; server2 --&gt; client2<br>
+从用户之间点对点通信的角度来说，比较适合这种方式，但是实现跟特定节点通信，这个可以以后实现一下。</p>
+</li>
+<li>
+<p>利用Kafka的发布/订阅模式，订阅共同Topics，发送消息时，扔到消息队列，订阅者们拉取到消息检查自己持有的session集合并选择是否发送。这样Session还是被持有在各个节点上，但是可以通过Kafka做广播，各个节点拿到消息，检查列表中是否有自己下面的客户端，以判断是否有需要被通知的。这种方式比较符合系统发送广播的初衷，系统要提醒的客户端越多，这种方式的成本（节点与消息队列通信，检查列表）兑换出来的价值就越高。</p>
+</li>
+</ol>
+<p>综上，最后用kafka发系统消息广播。</p>
+<h4 id="Future"><a class="header-anchor" href="#Future"></a>Future</h4>
+<ol>
+<li>用上STOMP协议。</li>
+<li>使用RPC做用户之间点对点的通信。</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>WebSocket</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>初步理解Redis Cluster</title>
     <url>/2021/03/24/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3Redis%E9%9B%86%E7%BE%A4/</url>
     <content><![CDATA[<p>Redis Cluster是如何做的sharding？如何保证的高可用？如何保证数据一致性，达到什么程度？内部是也是用Gossip算法做新节点的感知和节点的不可达吗？如何保证集群线性可拓展性（数据迁移）？</p>
@@ -16,7 +87,7 @@
 <p>不是完全的一致性哈希，但是很类似的去中心化。</p>
 <ol>
 <li>将数据划分为16384个slots，每个节点负责一部分槽位，所有节点均分槽位，类似于一致性哈希的概念，数据节点的新增和移除，只要迁移临近的节点的数据即可。</li>
-<li>使用crc16算法计算hash对16384取模（14次方）来定位槽位，通过槽位映射表可以知道找哪台机。</li>
+<li>使用crc16算法计算hash对16384取模（14次方）来定位槽位，客户端通过槽位映射表可以知道找哪台机。</li>
 <li>允许强制某key挂在特定槽位，在key中嵌入tag标记。（同一个事务的处理）</li>
 </ol>
 <h3 id="Master-Slave模式：如何保证高可用性？"><a class="header-anchor" href="#Master-Slave模式：如何保证高可用性？"></a>Master-Slave模式：如何保证高可用性？</h3>
@@ -30,7 +101,9 @@
 <li>写入的ACK机制：Master写入完成直接向client发ACK（不关心Slave的ACK），性能与一致性之间的权衡…（但是WAIT &lt;至少几台&gt; &lt;等多久&gt;命令可以支持同步复制）</li>
 <li>网络分区发生时：如果分区的时间很久，某一个主节点被分到少数端，另一边多数端会在跟这个主节点交流失败timeout后认为它不可达，从而选出新主节点，同样的少数端的主节点会在timeout后检测出它没办法跟大多数节点交流就会停止接受写入，而在少数端这个窗口时间的写入数据将会丢失（对集群来说）。如果在timeout前恢复了，那就没啥。</li>
 <li>避免合并操作：Redis Cluster的设计避免了多个节点中相同键值对的冲突版本，使用原生自带Relica Set而没有像Dynamo那样多台机子可以同时拥有不同版本的数据，而在读的时候通过向量时钟做版本合并，原因是Redis的数据模型有多种数据结构，在有大量list和zset的场景下合并和传输的成本太高了。<br>
-为了高可用和高性能做的妥协…</li>
+思考一下：Dynamo在分区产生时，即使存在多个分区，这些写操作在分区恢复之后，都可以通过合并操作去达到最终一致性，而Redis作者设计Redis集群的时候，为了性能不支持合并操作，导致分区产生时，选举前的timeout窗口时间丢失掉的写操作只能丢弃。从缓存设计的初衷是高可用和高性能的角度来说，这些丢失都是可以容忍的。<br>
+但是如果以后要用于一些一致性要求较高的场景应该注意，使用WAIT命令去保证大多数副本的数据一致性，这样即使分区发生，多数端选举出来的Master也可以持有最新版本的数据，但是这势必会影响可用性（WAIT命令会一直阻塞直到接收到规定的ACK的数量）。不过既然如此为什么不考虑其他存储呢…<br>
+既然应对的场景就是可以容忍数据不一致和数据的丢失，那么可以考虑让SLAVE也一起干活，做一手读写分离，分担负载，还得去看看Redis集群的doc才行，看看有没有提供这样的工具，如果没有可能需要做一层代理之类的东西，不过应该也有老哥做过了…</li>
 </ol>
 <h3 id="Gossip协议：集群变更通知"><a class="header-anchor" href="#Gossip协议：集群变更通知"></a>Gossip协议：集群变更通知</h3>
 <h4 id="分端口号"><a class="header-anchor" href="#分端口号"></a>分端口号</h4>
@@ -7547,8 +7620,8 @@ OFF level：关闭所有日志记录开关；是最高等级的，用于关闭�
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#main</span></span><br><span class="line">headers = &#123;</span><br><span class="line">        <span class="string">&#x27;user-agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chro&#x27;</span></span><br><span class="line">                      <span class="string">&#x27;me/53.0.2785.104 Safari/537.36 Core/1.53.2372.400 QQBrowser/9.5.10548.400&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line">domain = <span class="string">&#x27;http://www.liaoxuefeng.com&#x27;</span>           <span class="comment">#廖雪峰网站的域名</span></span><br><span class="line">url =  <span class="string">&quot;https://www.liaoxuefeng.com/wiki/1252599548343744&quot;</span> <span class="comment">#Java教程的url</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#获取Java教程的页面</span></span><br><span class="line">resp = send_request(url, headers)</span><br><span class="line"><span class="comment">#提取所有的数据回来，包括标题和urls</span></span><br><span class="line">titles, urls = fetch(domain, resp, headers)</span><br><span class="line"><span class="comment">#开始下载</span></span><br><span class="line">download(titles,urls)</span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
-        <tag>爬虫</tag>
         <tag>Python</tag>
+        <tag>爬虫</tag>
       </tags>
   </entry>
   <entry>
@@ -8281,8 +8354,8 @@ Download success!!
 </code></pre>
 ]]></content>
       <tags>
-        <tag>爬虫</tag>
         <tag>Python</tag>
+        <tag>爬虫</tag>
       </tags>
   </entry>
   <entry>
@@ -8607,6 +8680,11 @@ post在请求体中间</p>
       </tags>
   </entry>
   <entry>
+    <title>All tags</title>
+    <url>/tags/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>404</title>
     <url>/404/index.html</url>
     <content><![CDATA[]]></content>
@@ -8614,11 +8692,6 @@ post在请求体中间</p>
   <entry>
     <title>categories</title>
     <url>/categories/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>All tags</title>
-    <url>/tags/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
