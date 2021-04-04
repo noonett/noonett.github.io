@@ -7,6 +7,96 @@
 ]]></content>
   </entry>
   <entry>
+    <title>再次理解Redis Cluster</title>
+    <url>/2021/04/04/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3Redis%E9%9B%86%E7%BE%A4/</url>
+    <content><![CDATA[<pre><code>继续加深理解一下，主要是粗略看Replication和sentinal的document。
+</code></pre>
+<a id="more"></a>
+<p>Redis Cluster是如何做的sharding？如何保证的高可用？如何保证数据一致性，达到什么程度？内部是也是用Gossip算法做新节点的感知和节点的不可达吗？如何保证集群线性可拓展性（数据迁移）？</p>
+<p>还是好久之前🐱厂的面试题，当时不是很了解，答了Dynamo的一致性哈希的论文，心里也一直心心念念的，所以带着上面的疑问读了一下Tutorial：<a href="https://redis.io/topics/cluster-tutorial%E5%92%8CSpecification%EF%BC%9Ahttps://redis.io/topics/cluster-spec%EF%BC%8C%E6%B2%A1%E6%9C%89%E4%BB%94%E4%BB%94%E7%BB%86%E7%BB%86%E5%9C%B0%E5%85%A8%E8%AF%BB%E3%80%82">https://redis.io/topics/cluster-tutorial和Specification：https://redis.io/topics/cluster-spec，没有仔仔细细地全读。</a></p>
+<h3 id="data-sharding：如何保证易拓展？"><a class="header-anchor" href="#data-sharding：如何保证易拓展？"></a>data sharding：如何保证易拓展？</h3>
+<p>不是完全的一致性哈希，但是很类似的去中心化。</p>
+<ol>
+<li>将数据划分为16384个slots，每个节点负责一部分槽位，所有节点均分槽位，类似于一致性哈希的概念，数据节点的新增和移除，只要迁移临近的节点的数据即可。</li>
+<li>使用crc16算法计算hash对16384取模（14次方）来定位槽位，客户端通过槽位映射表可以知道找哪台机。</li>
+<li>允许强制某key挂在特定槽位，在key中嵌入tag标记。（同一个事务的处理）</li>
+</ol>
+<h3 id="Master-Slave模式：如何保证高可用性？"><a class="header-anchor" href="#Master-Slave模式：如何保证高可用性？"></a>Master-Slave模式：如何保证高可用性？</h3>
+<ol>
+<li>也就是设置Relica set，每个主节点可以设置若干个从节点，单点故障的时候，集群会自动将从节点提升为主节点.</li>
+<li>如果主节点没有从节点，发生故障时，默认下集群将处于不可用状态.（可以配置cluster-require-full-coverage，这样允许部分Relica set全崩了也继续干活）<br>
+用了内部自己的集群，并没有像Dynamo那样，规定某一个虚拟节点顺时针的Relica factor个存当前节点的副本。</li>
+</ol>
+<h4 id="Redis高可用的基础-–-主从复制"><a class="header-anchor" href="#Redis高可用的基础-–-主从复制"></a>Redis高可用的基础 – 主从复制</h4>
+<p><a href="https://redis.io/topics/replication">https://redis.io/topics/replication</a></p>
+<ol>
+<li>Redis默认采用的是异步复制，在连接良好的情况下，Master会将指令流推给Slave，Slave从而得一更新，同时为了降低Master的同步负担，Slave也可以极联式地向Slave推指令流。</li>
+<li>一般情况下 – Stream of commands： Redis本地内存指令的buffer size是有限的环形结构，新的指令会覆盖旧的指令， buffer中的指令同步到从节点，从节点一边执行同步的指令流来达到和主节点一样的状态，一边向主节点反馈自己同步到哪里了 (偏移量)。</li>
+</ol>
+<p>Replication ID, offset<br>
+通过这个ID和offset可以判断Master和slaves之间数据是否一直，如果有着相同的ID，offset却不同，以为着offset较少的那个，缺少一些指令。而某一个网络分区短暂的发生的时候，也可以通过ID和offset判断需要提供哪些特定的指令。</p>
+<ol start="3">
+<li>如果Master-slave之间长时间不可达，slave本来应该更新的数据已经被新数据覆盖掉了，就必须进行全量的复制。</li>
+<li>连接状况不好 – Full resynchronization：Master创建其所有数据的快照，将RDB持久化的文件传送给从节点，执行全量覆盖。如果Master的buffer太小或者Slave全量覆盖的时间过长，就会导致这次全量同步失败，然后继续新一轮全量同步，十分吃资源。（Buffer size不要设置太小）</li>
+<li>WAIT指令：wait N t，表示最多等待t毫秒将之前的写操作同步到N个从节点，用于保证一定的数据一致性.如果t=0表示无限期等待，如果出现了网络分区，从节点的crash会导致主节点永久阻塞。</li>
+<li>优化：Master在全量复制时使用无盘复制，主节点以遍历的方式，直接将内存数据通过套接字发送数据给从节点存入磁盘，然后从节点进行数据覆盖。主要是减少主节点的IO消耗。</li>
+<li>为了减少Master持久化导致的成本，可以配置Master不进行持久化，使用主从复制代替Master持久化，让Slave做持久化，但是要注意在redis.conf中配置<b>禁止Master自动重启</b>，不然Master自动重启之后，buffer里是空的，同步给Slave，Slave内的数据都给干没了。</li>
+</ol>
+<h4 id="Redis高可用的心脏-–-Sentinel"><a class="header-anchor" href="#Redis高可用的心脏-–-Sentinel"></a>Redis高可用的心脏 – Sentinel</h4>
+<p>Sentinel是什么？分布式系统，3-5个节点组成。</p>
+<ol>
+<li>监测。Sentinel不断检查主实例和副本实例是否按预期工作。</li>
+<li>通知。被监视的Redis实例出问题时，Sentinel可以通过API通知系统管理员或其他计算机程序。</li>
+<li>自动故障切换。如果Master不可达，Sentinel可以启动故障转移过程，其中一个Slave升级为Master，并告知客户端新Master的地址。</li>
+<li>服务发现提供者。Sentinel充当客户端服务发现的提供者：客户端连接到Sentinel时，向Sentinal请求干活的Master地址。如果Master发生故障，哨兵将告知客户端新地址。</li>
+<li>消息丢失：两个选项限制网络分区发生时的消息丢失，Min-slaves-to-write N：至少有N个从节点可达，否则停止写服务（会丧失一部分可用性），Min-slaves-max-lag 10:设置最大延迟，超过10s就算不可达。</li>
+</ol>
+<h3 id="最终一致性"><a class="header-anchor" href="#最终一致性"></a>最终一致性</h3>
+<ol>
+<li>
+<p>写入的ACK机制：Master写入完成直接向client发ACK（不关心Slave的ACK），性能与一致性之间的权衡…（但是WAIT &lt;至少几台&gt; &lt;等多久&gt;命令可以支持同步复制）</p>
+</li>
+<li>
+<p>网络分区发生时：如果分区的时间很久，某一个主节点被分到少数端，另一边多数端会在跟这个主节点交流失败timeout后认为它不可达，从而选出新主节点，同样的少数端的主节点会在timeout后检测出它没办法跟大多数节点交流就会停止接受写入，而在少数端这个窗口时间的写入数据将会丢失（对集群来说，当少数端恢复的时候，它会从零开始，成为从节点）。如果在timeout前恢复了，那就没啥。</p>
+</li>
+<li>
+<p>避免合并操作：Redis Cluster的设计避免了多个节点中相同键值对的冲突版本，使用原生自带Relica Set而没有像Dynamo那样多台机子可以同时拥有不同版本的数据，而在读的时候通过向量时钟做版本合并，原因是Redis的数据模型有多种数据结构，在有大量list和zset的场景下合并和传输的成本太高了。<br>
+思考一下：Dynamo在分区产生时，即使存在多个分区，这些写操作在分区恢复之后，都可以通过合并操作去达到最终一致性，而Redis作者设计Redis集群的时候，为了性能不支持合并操作，导致分区产生时，选举前的timeout窗口时间丢失掉的写操作只能丢弃。从缓存设计的初衷是高可用和高性能的角度来说，这些丢失都是可以容忍的。</p>
+<p>但是如果以后要用于一些一致性要求较高的场景应该注意：</p>
+<ol>
+<li>使用WAIT命令去保证大多数副本的数据一致性，这样即使分区发生，多数端选举出来的Master也可以持有最新版本的数据，但是这势必会影响可用性（WAIT命令会一直阻塞直到接收到规定的ACK的数量）。</li>
+<li>通过哨兵去限制少数端Master的写命令，Min-slaves-to-write N配置可以强制要求，至少有N个从节点可达，否则停止写服务，这样可以中止客户端的事务，避免客户端在窗口时间内写入，导致数据不一致。Min-slaves-max-lag 10可以设置Replica set节点间不可达的最大延迟，超过10s就算不可达。</li>
+</ol>
+<p>如果使用的场景就是可以容忍数据不一致和数据的丢失，那么可以考虑让SLAVE也一起干活，做一手读写分离，分担负载，在2.6之后Redis默认Slave为Read-only，在redis.conf中可以配置是否启用（<a href="https://redis.io/commands/config-set%EF%BC%89%EF%BC%8C">https://redis.io/commands/config-set），</a></p>
+</li>
+</ol>
+<h3 id="Gossip协议：集群变更通知"><a class="header-anchor" href="#Gossip协议：集群变更通知"></a>Gossip协议：集群变更通知</h3>
+<h4 id="分端口号"><a class="header-anchor" href="#分端口号"></a>分端口号</h4>
+<ol>
+<li>干活用的端口号</li>
+<li>Redis CLuster Bus：用的二进制协议，节点间沟通的端口号（干活沟通端口号+10000，固定的）</li>
+</ol>
+<h4 id="与docker的兼容"><a class="header-anchor" href="#与docker的兼容"></a>与docker的兼容</h4>
+<p>就是网络映射模式的选择，Redis Cluster不提供NAT转换，所以docker要选直连模式（host networking mode，配置：–net=host）</p>
+<h4 id="新节点加入"><a class="header-anchor" href="#新节点加入"></a>新节点加入</h4>
+<p>PING包是用来核实节点是否可达的。而如果节点不是集群的一部分，接受节点会丢弃所有除了PING包之外的数据包，加入新节点必须通过人工发送CLUSTER MEET ip port命令，让节点A发送一个MEET包，就会强制接收节点B注册这个节点同时告诉A还有哪些节点，从而A又会把这些节点注册，尝试与他们连接，最终成为一个连通图。</p>
+<h4 id="节点不可达"><a class="header-anchor" href="#节点不可达"></a>节点不可达</h4>
+<ol>
+<li>当节点PING某一个节点不可达（PFail），会在集群广播。</li>
+<li>如果(Pfail Count)达到了集群的大多数，可以标记为下线状态（Fail）并广播，其他节点也接受到会立即对失联节点进行主从切换。</li>
+<li>主从切换是怎么做的？    选举，竞争上岗，所有master node都对slave投票，大部分master都投票给的从节点（判断可达数量，从节点会广播，主节点投票给收到的第一个从节点并在timeout<em>2的时间内不会再投票），如果某一个报文中的从节点的投票数超过集群master数量的一半，那么选举通过，否则将会在timeout</em>4后重新选举。</li>
+<li>客户端如何知道节点更换了？   客户端会维护一个槽位对节点的映射表，如果目标节点挂了会返回conectionError，此时就会随机选节点更新映射表。</li>
+<li>客户端向错误节点发出指令（不归他管），这个节点就会向客户端发送跳转指令和节点地址。MOVED 3999 127.0.0.1:6381，客户端会纠正本地的槽位映射表</li>
+</ol>
+<h4 id="集群信息变更"><a class="header-anchor" href="#集群信息变更"></a>集群信息变更</h4>
+<p>集群信息调整了，比如运维手动将master切换到其他节点，且旧的Master被移出集群。打到旧节点的指令会收到ClusterDown错误，告知客户端这个节点在集群中不可用了，然后客户端清空连接和槽位映射表并向上报错，重新初始化节点信息。</p>
+]]></content>
+      <tags>
+        <tag>Redis</tag>
+        <tag>分布式</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>WebSocket服务器消息推送</title>
     <url>/2021/03/31/WebSocket%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%B6%88%E6%81%AF%E6%8E%A8%E9%80%81/</url>
     <content><![CDATA[<p>之前做新消息提醒用的轮询，面试的时候也有面试官提醒有更优雅的方式。<br>
@@ -75,60 +165,6 @@ Client1 --&gt; Sever1 &lt;-- 返回对应server2 --&gt; center<br>
 ]]></content>
       <tags>
         <tag>WebSocket</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>初步理解Redis Cluster</title>
-    <url>/2021/03/24/%E5%88%9D%E6%AD%A5%E7%90%86%E8%A7%A3Redis%E9%9B%86%E7%BE%A4/</url>
-    <content><![CDATA[<p>Redis Cluster是如何做的sharding？如何保证的高可用？如何保证数据一致性，达到什么程度？内部是也是用Gossip算法做新节点的感知和节点的不可达吗？如何保证集群线性可拓展性（数据迁移）？</p>
-<a id="more"></a>
-<p>还是好久之前🐱厂的面试题，当时不是很了解，答了Dynamo的一致性哈希的论文，心里也一直心心念念的，所以带着上面的疑问读了一下Tutorial：<a href="https://redis.io/topics/cluster-tutorial%E5%92%8CSpecification%EF%BC%9Ahttps://redis.io/topics/cluster-spec%EF%BC%8C%E6%B2%A1%E6%9C%89%E4%BB%94%E4%BB%94%E7%BB%86%E7%BB%86%E5%9C%B0%E5%85%A8%E8%AF%BB%E3%80%82">https://redis.io/topics/cluster-tutorial和Specification：https://redis.io/topics/cluster-spec，没有仔仔细细地全读。</a></p>
-<h3 id="data-sharding：如何保证易拓展？"><a class="header-anchor" href="#data-sharding：如何保证易拓展？"></a>data sharding：如何保证易拓展？</h3>
-<p>不是完全的一致性哈希，但是很类似的去中心化。</p>
-<ol>
-<li>将数据划分为16384个slots，每个节点负责一部分槽位，所有节点均分槽位，类似于一致性哈希的概念，数据节点的新增和移除，只要迁移临近的节点的数据即可。</li>
-<li>使用crc16算法计算hash对16384取模（14次方）来定位槽位，客户端通过槽位映射表可以知道找哪台机。</li>
-<li>允许强制某key挂在特定槽位，在key中嵌入tag标记。（同一个事务的处理）</li>
-</ol>
-<h3 id="Master-Slave模式：如何保证高可用性？"><a class="header-anchor" href="#Master-Slave模式：如何保证高可用性？"></a>Master-Slave模式：如何保证高可用性？</h3>
-<ol>
-<li>也就是设置Relica set，每个主节点可以设置若干个从节点，单点故障的时候，集群会自动将从节点提升为主节点.</li>
-<li>如果主节点没有从节点，发生故障时，默认下集群将处于不可用状态.（可以配置cluster-require-full-coverage，这样允许部分Relica set全崩了继续干活）<br>
-用了内部自己的集群，并没有像Dynamo那样，规定某一个虚拟节点顺时针的Relica factor个存当前节点的副本。</li>
-</ol>
-<h3 id="最终一致性"><a class="header-anchor" href="#最终一致性"></a>最终一致性</h3>
-<ol>
-<li>写入的ACK机制：Master写入完成直接向client发ACK（不关心Slave的ACK），性能与一致性之间的权衡…（但是WAIT &lt;至少几台&gt; &lt;等多久&gt;命令可以支持同步复制）</li>
-<li>网络分区发生时：如果分区的时间很久，某一个主节点被分到少数端，另一边多数端会在跟这个主节点交流失败timeout后认为它不可达，从而选出新主节点，同样的少数端的主节点会在timeout后检测出它没办法跟大多数节点交流就会停止接受写入，而在少数端这个窗口时间的写入数据将会丢失（对集群来说）。如果在timeout前恢复了，那就没啥。</li>
-<li>避免合并操作：Redis Cluster的设计避免了多个节点中相同键值对的冲突版本，使用原生自带Relica Set而没有像Dynamo那样多台机子可以同时拥有不同版本的数据，而在读的时候通过向量时钟做版本合并，原因是Redis的数据模型有多种数据结构，在有大量list和zset的场景下合并和传输的成本太高了。<br>
-思考一下：Dynamo在分区产生时，即使存在多个分区，这些写操作在分区恢复之后，都可以通过合并操作去达到最终一致性，而Redis作者设计Redis集群的时候，为了性能不支持合并操作，导致分区产生时，选举前的timeout窗口时间丢失掉的写操作只能丢弃。从缓存设计的初衷是高可用和高性能的角度来说，这些丢失都是可以容忍的。<br>
-但是如果以后要用于一些一致性要求较高的场景应该注意，使用WAIT命令去保证大多数副本的数据一致性，这样即使分区发生，多数端选举出来的Master也可以持有最新版本的数据，但是这势必会影响可用性（WAIT命令会一直阻塞直到接收到规定的ACK的数量）。不过既然如此为什么不考虑其他存储呢…<br>
-既然应对的场景就是可以容忍数据不一致和数据的丢失，那么可以考虑让SLAVE也一起干活，做一手读写分离，分担负载，还得去看看Redis集群的doc才行，看看有没有提供这样的工具，如果没有可能需要做一层代理之类的东西，不过应该也有老哥做过了…</li>
-</ol>
-<h3 id="Gossip协议：集群变更通知"><a class="header-anchor" href="#Gossip协议：集群变更通知"></a>Gossip协议：集群变更通知</h3>
-<h4 id="分端口号"><a class="header-anchor" href="#分端口号"></a>分端口号</h4>
-<ol>
-<li>干活用的端口号</li>
-<li>Redis CLuster Bus：用的二进制协议，节点间沟通的端口号（干活沟通端口号+10000，固定的）</li>
-</ol>
-<h4 id="与docker的兼容"><a class="header-anchor" href="#与docker的兼容"></a>与docker的兼容</h4>
-<p>就是网络映射模式的选择，Redis Cluster不提供NAT转换，所以docker要选直连模式（host networking mode，配置：–net=host）</p>
-<h4 id="新节点加入"><a class="header-anchor" href="#新节点加入"></a>新节点加入</h4>
-<p>PING包是用来核实节点是否可达的。而如果节点不是集群的一部分，接受节点会丢弃所有除了PING包之外的数据包，加入新节点必须通过人工发送CLUSTER MEET ip port命令，让节点A发送一个MEET包，就会强制接收节点B注册这个节点同时告诉A还有哪些节点，从而A又会把这些节点注册，尝试与他们连接，最终成为一个连通图。</p>
-<h4 id="节点不可达"><a class="header-anchor" href="#节点不可达"></a>节点不可达</h4>
-<ol>
-<li>当节点PING某一个节点不可达（PFail），会在集群广播。</li>
-<li>如果(Pfail Count)达到了集群的大多数，可以标记为下线状态（Fail）并广播，其他节点也接受到会立即对失联节点进行主从切换。</li>
-<li>主从切换是怎么做的？    选举，所有master node都对slave投票，大部分master都投票给从节点（是否可达），那么选举通过。</li>
-<li>客户端如何知道节点更换了？   客户端会维护一个槽位对节点的映射表，如果目标节点挂了会返回conectionError，此时就会随机选节点更新映射表。</li>
-<li>客户端向错误节点发出指令（不归他管），这个节点就会向客户端发送跳转指令和节点地址。MOVED 3999 127.0.0.1:6381，客户端会纠正本地的槽位映射表</li>
-</ol>
-<h4 id="集群信息变更"><a class="header-anchor" href="#集群信息变更"></a>集群信息变更</h4>
-<p>集群信息调整了，比如运维手动将master切换到其他节点，且旧的Master被移出集群。打到旧节点的指令会收到ClusterDown错误，告知客户端这个节点在集群中不可用了，然后客户端清空连接和槽位映射表并向上报错，重新初始化节点信息。</p>
-]]></content>
-      <tags>
-        <tag>Redis</tag>
-        <tag>分布式</tag>
       </tags>
   </entry>
   <entry>
@@ -8680,11 +8716,6 @@ post在请求体中间</p>
       </tags>
   </entry>
   <entry>
-    <title>All tags</title>
-    <url>/tags/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>404</title>
     <url>/404/index.html</url>
     <content><![CDATA[]]></content>
@@ -8692,6 +8723,11 @@ post在请求体中间</p>
   <entry>
     <title>categories</title>
     <url>/categories/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>All tags</title>
+    <url>/tags/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
 </search>
