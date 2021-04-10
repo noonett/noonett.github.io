@@ -14,6 +14,8 @@
 <h3 id="WebSocket总览"><a class="header-anchor" href="#WebSocket总览"></a>WebSocket总览</h3>
 <p><img src="/2021/04/10/WebSocket%E5%85%B3%E9%97%AD%E9%87%8D%E8%BF%9E%E5%92%8C%E5%BF%83%E8%B7%B3%E6%A3%80%E6%B5%8B/WebSocket%E6%80%BB%E8%A7%88.png" alt="WebSocket总览"></p>
 <h3 id="连接突然中断导致的问题"><a class="header-anchor" href="#连接突然中断导致的问题"></a>连接突然中断导致的问题</h3>
+<p>正常关闭的情况下，前端发送带key的FIN包，服务端接受后触发OnClose事件，清除Session并返回一个FIN包。<br>
+<img src="/2021/04/10/WebSocket%E5%85%B3%E9%97%AD%E9%87%8D%E8%BF%9E%E5%92%8C%E5%BF%83%E8%B7%B3%E6%A3%80%E6%B5%8B/%E6%AD%A3%E5%B8%B8%E5%85%B3%E9%97%AD.png" alt="正常关闭"></p>
 <ol>
 <li>服务端：WebSocketSession无法正确的清除</li>
 <li>前端：无法收到服务端的消息推送</li>
@@ -8752,13 +8754,13 @@ post在请求体中间</p>
       </tags>
   </entry>
   <entry>
-    <title>404</title>
-    <url>/404/index.html</url>
+    <title>categories</title>
+    <url>/categories/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>categories</title>
-    <url>/categories/index.html</url>
+    <title>404</title>
+    <url>/404/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
